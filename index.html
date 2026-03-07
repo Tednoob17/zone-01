@@ -79,7 +79,10 @@
   .search-input::placeholder { color: var(--muted2); }
   .search-count { position: absolute; right: .85rem; font-family: 'JetBrains Mono', monospace; font-size: .55rem; color: var(--muted); pointer-events: none; white-space: nowrap; }
   .ex.search-hidden { display: none !important; }
-  .quest.search-collapsed > .quest-exercises { display: none; }
+  .quest.search-collapsed > .q-body, .quest.search-collapsed > .quest-exercises { display: none !important; }
+  .q-n { font-family: 'JetBrains Mono', monospace; font-size: .6rem; font-weight: 700; padding: .13rem .45rem; border-radius: 4px; flex-shrink: 0; }
+  .q-arr { color: var(--muted); font-size: .65rem; transition: transform .2s; flex-shrink: 0; }
+  .quest.open .q-arr { transform: rotate(180deg); }
 
   /* ── SECTIONS ── */
   .sec { padding: 4rem 0; border-bottom: 1px solid var(--border); }
