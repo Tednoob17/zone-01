@@ -985,23 +985,31 @@
     _renderSidebar();
     const f = _files[idx];
     panelBody.innerHTML = LOADING;
+
+    async function tryFetch(url) {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(r.status);
+      return r.text();
+    }
+
     try {
-      const res = await fetch(f.url);
-      if (res.ok) {
-        let md = await res.text();
-        if (f.base) md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${f.base}$2)`);
-        panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
-      } else {
-        panelBody.innerHTML = `<div class="panel-error">
-          <span style="font-size:2rem;">📄</span>
-          <span>Fichier introuvable : ${f.label}</span>
-          <a href="${f.url}" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;margin-top:.5rem;">↗ Ouvrir le fichier</a>
-        </div>`;
+      let md;
+      try {
+        md = await tryFetch(f.url);
+      } catch(_) {
+        if (f.fallback) {
+          md = await tryFetch(f.fallback);
+        } else {
+          throw _;
+        }
       }
+      if (f.base) md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${f.base}$2)`);
+      panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
     } catch(e) {
       panelBody.innerHTML = `<div class="panel-error">
         <span style="font-size:2rem;">📄</span>
-        <span>Erreur de chargement : ${f.label}</span>
+        <span>Fichier introuvable : ${f.label}</span>
+        <a href="${f.fallback || f.url}" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;margin-top:.5rem;">↗ Voir sur GitHub</a>
       </div>`;
     }
   }
@@ -1022,14 +1030,19 @@
   }
 
   /* ── Exercise subject ── */
+  const GH_RAW = 'https://raw.githubusercontent.com/01-edu/public/master/subjects';
   function openSubject(name) {
     _openPanel({
       title:   name,
-      linkPub: `./01-edu-repos/public/subjects/${name}/`,
+      linkPub: `https://github.com/01-edu/public/tree/master/subjects/${name}`,
       linkGh:  `./01-edu-repos/public/subjects/${name}/`,
       files: [
-        { label: 'README.md', url: `./01-edu-repos/public/subjects/${name}/README.md`, base: `./01-edu-repos/public/subjects/${name}/` },
-        { label: 'en.md',     url: `./01-edu-repos/public/subjects/${name}/en.md`,     base: `./01-edu-repos/public/subjects/${name}/` },
+        {
+          label:    'README.md',
+          url:      `./01-edu-repos/public/subjects/${name}/README.md`,
+          fallback: `${GH_RAW}/${name}/README.md`,
+          base:     `./01-edu-repos/public/subjects/${name}/`
+        },
       ]
     });
   }
