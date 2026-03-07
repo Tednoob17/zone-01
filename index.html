@@ -999,69 +999,76 @@
   <div class="wrap">
     <div class="sec-head"><span class="sec-tag">03</span><h2 class="sec-title">Les 8 Branches — 6 mois de spécialisation</h2><span class="sec-sub">Repos dédiés par branche</span></div>
     <div class="branches rev">
-      <div class="br" onclick="openBranch('Branch-AI','Artificial Intelligence')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('ai-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--ai);"></div>
         <div class="br-top"><span class="br-ico">🧠</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--ai);">Artificial Intelligence</div>
         <div class="br-desc">ML, deep learning, NLP, image processing. Les sujets AI ont été déplacés vers <code style="font-size:.65rem;">public/subjects/ai/</code> — 26 projets disponibles.</div>
         <div class="br-stack"><span class="stag">Python</span><span class="stag">TensorFlow</span><span class="stag">Pandas</span><span class="stag">Sklearn</span><span class="stag">NLP</span></div>
-        <div class="br-readme-hint">📖 Voir README · <a href="#ai-subjects" style="color:var(--ai);text-decoration:none;" onclick="event.stopPropagation()">→ Voir sujets ›</a></div>
+        <div class="br-readme-hint">↓ Voir les 26 sujets · <a href="javascript:void(0)" style="color:var(--ai);text-decoration:none;" onclick="event.stopPropagation();openBranch('Branch-AI','Artificial Intelligence')">📖 README</a></div>
         <div class="br-bar" style="background:var(--ai);"></div>
       </div>
-      <div class="br" onclick="openBranch('Branch-Blockchain','Blockchain &amp; Crypto')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('blockchain-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--blockchain);"></div>
         <div class="br-top"><span class="br-ico">⛓️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--blockchain);">Blockchain &amp; Crypto</div>
         <div class="br-desc">Smart contracts, DeFi, NFTs. Développement dApps avec Solidity et Web3.</div>
         <div class="br-stack"><span class="stag">Solidity</span><span class="stag">Ethereum</span><span class="stag">Web3.js</span><span class="stag">Hardhat</span><span class="stag">React</span></div>
+        <div class="br-readme-hint">↓ Voir les 49 sujets · <a href="javascript:void(0)" style="color:var(--blockchain);text-decoration:none;" onclick="event.stopPropagation();openBranch('Branch-Blockchain','Blockchain &amp; Crypto')">📖 README</a></div>
         <div class="br-bar" style="background:var(--blockchain);"></div>
       </div>
-      <div class="br" onclick="openBranch('devops','Cloud DevOps')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('devops-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--devops);"></div>
         <div class="br-top"><span class="br-ico">☁️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--devops);">Cloud DevOps</div>
         <div class="br-desc">Déploiement réseau, serveurs, IaC, CI/CD, conteneurisation et orchestration Kubernetes.</div>
         <div class="br-stack"><span class="stag">Docker</span><span class="stag">Kubernetes</span><span class="stag">Terraform</span><span class="stag">Jenkins</span><span class="stag">AWS</span></div>
+        <div class="br-readme-hint">↓ Voir les 69 exercices</div>
         <div class="br-bar" style="background:var(--devops);"></div>
       </div>
-      <div class="br" onclick="openBranch('cyber','Cybersecurity')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('cyber-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--cyber);"></div>
         <div class="br-top"><span class="br-ico">🔐</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--cyber);">Cybersecurity</div>
         <div class="br-desc">Pentest, cryptographie, reverse engineering, exploitation, CTF et forensics.</div>
         <div class="br-stack"><span class="stag">CTF</span><span class="stag">Pentest</span><span class="stag">Cryptography</span><span class="stag">Forensics</span><span class="stag">Reverse</span></div>
+        <div class="br-readme-hint">↓ Voir les 20 sujets</div>
         <div class="br-bar" style="background:var(--cyber);"></div>
       </div>
-      <div class="br" onclick="openBranch('mobile','Mobile Applications')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('mobile-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--mobile);"></div>
         <div class="br-top"><span class="br-ico">📱</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--mobile);">Mobile Applications</div>
         <div class="br-desc">Développement cross-platform avec Dart &amp; Flutter. Apps iOS et Android, gestion d'état, REST.</div>
         <div class="br-stack"><span class="stag">Dart</span><span class="stag">Flutter</span><span class="stag">iOS</span><span class="stag">Android</span><span class="stag">REST</span></div>
+        <div class="br-readme-hint">↓ Voir les 27 sujets</div>
         <div class="br-bar" style="background:var(--mobile);"></div>
       </div>
-      <div class="br" onclick="openBranch('java','Java Full Stack')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('java-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--java);"></div>
         <div class="br-top"><span class="br-ico">🏗️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--java);">Java Full Stack</div>
         <div class="br-desc">Spring Boot, Angular, PostgreSQL, MongoDB, Jenkins, SonarQube. Apps enterprise scalables.</div>
         <div class="br-stack"><span class="stag">Spring Boot</span><span class="stag">Angular</span><span class="stag">PostgreSQL</span><span class="stag">MongoDB</span><span class="stag">Jenkins</span></div>
+        <div class="br-readme-hint">↓ Voir les 49 exercices &amp; 11 projets</div>
         <div class="br-bar" style="background:var(--java);"></div>
       </div>
-      <div class="br" onclick="openBranch('games','Video Games — Unreal Engine 5')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('gaming-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--games);"></div>
         <div class="br-top"><span class="br-ico">🎮</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--games);">Video Games — Unreal Engine 5</div>
         <div class="br-desc">Game design et development avec UE5 (Epic Games). Blueprints, C++, 3D, physique, animations.</div>
         <div class="br-stack"><span class="stag">Unreal Engine 5</span><span class="stag">C++</span><span class="stag">Blueprints</span><span class="stag">3D</span></div>
+        <div class="br-readme-hint">↓ Voir les 11 projets UE5</div>
         <div class="br-bar" style="background:var(--games);"></div>
       </div>
-      <div class="br" onclick="openBranch('UX-UI','User Experience UX/UI')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('uxui-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--ux);"></div>
         <div class="br-top"><span class="br-ico">✨</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--ux);">User Experience UX/UI</div>
         <div class="br-desc">UX Research, wireframing, prototypage haute fidélité, Design System, tests utilisateurs.</div>
         <div class="br-stack"><span class="stag">Figma</span><span class="stag">UX Research</span><span class="stag">Prototyping</span><span class="stag">Design System</span></div>
+        <div class="br-readme-hint">↓ Voir les 49 exercices &amp; 4 projets</div>
         <div class="br-bar" style="background:var(--ux);"></div>
       </div>
     </div>
