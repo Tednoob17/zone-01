@@ -1049,46 +1049,44 @@
 
   /* ── Branch specialisation ── */
   const BRANCH_MAP = {
-    'Branch-AI':         { path: './01-edu-repos/Branch-AI/' },
-    'Branch-Blockchain': { path: './01-edu-repos/Branch-Blockchain/' },
-    'UX-UI':             { path: './01-edu-repos/UX-UI/' },
-    'devops':            { path: './01-edu-repos/public/' },
-    'cyber':             { path: './01-edu-repos/public/' },
-    'mobile':            { path: './01-edu-repos/public/' },
-    'java':              { path: './01-edu-repos/public/' },
-    'games':             { path: './01-edu-repos/public/' },
+    'Branch-AI':         { path: './01-edu-repos/Branch-AI/',         gh: 'https://raw.githubusercontent.com/01-edu/Branch-AI/master' },
+    'Branch-Blockchain': { path: './01-edu-repos/Branch-Blockchain/', gh: 'https://raw.githubusercontent.com/01-edu/Branch-Blockchain/master' },
+    'UX-UI':             { path: './01-edu-repos/UX-UI/',             gh: 'https://raw.githubusercontent.com/01-edu/UX-UI/master' },
+    'devops':            { path: './01-edu-repos/public/',             gh: 'https://raw.githubusercontent.com/01-edu/public/master' },
+    'cyber':             { path: './01-edu-repos/public/',             gh: 'https://raw.githubusercontent.com/01-edu/public/master' },
+    'mobile':            { path: './01-edu-repos/public/',             gh: 'https://raw.githubusercontent.com/01-edu/public/master' },
+    'java':              { path: './01-edu-repos/public/',             gh: 'https://raw.githubusercontent.com/01-edu/public/master' },
+    'games':             { path: './01-edu-repos/public/',             gh: 'https://raw.githubusercontent.com/01-edu/public/master' },
   };
 
   function openBranch(key, displayName) {
-    const b = BRANCH_MAP[key] || { path: './' };
+    const b = BRANCH_MAP[key] || { path: './', gh: 'https://raw.githubusercontent.com/01-edu/public/master' };
     _openPanel({
       title:   displayName,
-      linkPub: b.path,
+      linkPub: `https://github.com/01-edu/${key}`,
       linkGh:  b.path,
       files: [
-        { label: 'README.md',       url: `${b.path}README.md`,       base: b.path },
-        { label: 'instructions.md', url: `${b.path}instructions.md`, base: b.path },
+        { label: 'README.md', url: `${b.path}README.md`, fallback: `${b.gh}/README.md`, base: b.path },
       ]
     });
   }
 
   /* ── Tool / moulinette ── */
   const TOOL_MAP = {
-    'go-tests':          { path: './01-edu-repos/go-tests/' },
-    'rust-tests':        { path: './01-edu-repos/rust-tests/' },
-    'rc':                { path: './01-edu-repos/rc/' },
-    'go-tests-training': { path: './01-edu-repos/go-tests-training/' },
+    'go-tests':          { path: './01-edu-repos/go-tests/',          gh: 'https://raw.githubusercontent.com/01-edu/go-tests/master' },
+    'rust-tests':        { path: './01-edu-repos/rust-tests/',        gh: 'https://raw.githubusercontent.com/01-edu/rust-tests/master' },
+    'rc':                { path: './01-edu-repos/rc/',                gh: 'https://raw.githubusercontent.com/01-edu/rc/master' },
+    'go-tests-training': { path: './01-edu-repos/go-tests-training/', gh: 'https://raw.githubusercontent.com/01-edu/go-tests-training/master' },
   };
 
   function openTool(key, displayName) {
-    const t = TOOL_MAP[key] || { path: './' };
+    const t = TOOL_MAP[key] || { path: './', gh: 'https://raw.githubusercontent.com/01-edu/public/master' };
     _openPanel({
       title:   displayName,
-      linkPub: t.path,
+      linkPub: `https://github.com/01-edu/${key}`,
       linkGh:  t.path,
       files: [
-        { label: 'README.md',       url: `${t.path}README.md`,       base: t.path },
-        { label: 'CONTRIBUTING.md', url: `${t.path}CONTRIBUTING.md`, base: t.path },
+        { label: 'README.md', url: `${t.path}README.md`, fallback: `${t.gh}/README.md`, base: t.path },
       ]
     });
   }
