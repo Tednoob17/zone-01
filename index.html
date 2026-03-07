@@ -169,21 +169,9 @@
   .md-content hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
   .md-content img { max-width: 100%; border-radius: 8px; }
 
-  /* ── PANEL LAYOUT (file sidebar) ── */
-  .panel-layout { display: flex; flex: 1; overflow: hidden; }
-  .panel-files { width: 155px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--surface); padding: .6rem .5rem; display: flex; flex-direction: column; gap: .15rem; overflow-y: auto; }
-  .pf-section { font-family: 'JetBrains Mono', monospace; font-size: .48rem; text-transform: uppercase; letter-spacing: .14em; color: var(--muted2); padding: .3rem .5rem .5rem; border-bottom: 1px solid var(--border); margin-bottom: .3rem; }
-  .pf-btn { font-family: 'JetBrains Mono', monospace; font-size: .63rem; color: var(--muted); padding: .45rem .6rem; border-radius: 5px; cursor: pointer; text-align: left; background: transparent; border: 1px solid transparent; width: 100%; transition: all .13s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pf-btn:hover { color: var(--text); background: var(--surface2); }
-  .pf-btn.active { color: var(--accent); border-color: rgba(57,255,143,.25); background: rgba(57,255,143,.06); }
-  .tool-readme-hint { font-family: 'JetBrains Mono', monospace; font-size: .55rem; color: var(--muted2); margin-top: auto; padding-top: .6rem; transition: color .15s; }
-  .tool:hover .tool-readme-hint { color: var(--accent); }
-  .br-readme-hint { font-family: 'JetBrains Mono', monospace; font-size: .52rem; color: var(--muted2); margin-top: .6rem; transition: color .15s; }
-  .br:hover .br-readme-hint { color: var(--accent); }
-
   /* ── TOOLS SECTION ── */
   .tools-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(320px,1fr)); gap: 1rem; }
-  .tool { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; display: flex; flex-direction: column; gap: .8rem; position: relative; overflow: hidden; transition: all .15s; text-decoration: none; cursor: pointer; }
+  .tool { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; display: flex; flex-direction: column; gap: .8rem; position: relative; overflow: hidden; transition: all .15s; text-decoration: none; }
   .tool:hover { border-color: var(--border2); transform: translateY(-2px); }
   .tool-top { display: flex; align-items: flex-start; gap: 1rem; }
   .tool-icon { font-size: 1.5rem; flex-shrink: 0; }
@@ -199,7 +187,7 @@
 
   /* ── BRANCHES ── */
   .branches { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-  .br { background: var(--surface); padding: 1.75rem; text-decoration: none; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: background .2s; cursor: pointer; }
+  .br { background: var(--surface); padding: 1.75rem; text-decoration: none; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: background .2s; }
   .br:hover { background: var(--surface2); }
   .br-glow { position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; border-radius: 50%; opacity: .06; transition: opacity .3s; pointer-events: none; }
   .br:hover .br-glow { opacity: .14; }
@@ -238,6 +226,14 @@
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  /* ── PANEL FILE SIDEBAR ── */
+  .panel-main { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+  .panel-files { width: 145px; border-right: 1px solid var(--border); background: var(--surface2); overflow-y: auto; flex-shrink: 0; padding: .5rem 0; }
+  .panel-files-label { font-family: 'JetBrains Mono', monospace; font-size: .48rem; text-transform: uppercase; letter-spacing: .13em; color: var(--muted2); padding: .5rem .75rem .25rem; }
+  .panel-file-btn { display: flex; align-items: center; gap: .4rem; width: 100%; padding: .42rem .75rem; border: none; background: transparent; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: .56rem; cursor: pointer; text-align: left; transition: all .12s; border-left: 2px solid transparent; }
+  .panel-file-btn:hover { background: rgba(255,255,255,.03); color: var(--text); }
+  .panel-file-btn.active { color: var(--accent); border-left-color: var(--accent); background: rgba(57,255,143,.05); }
 </style>
 </head>
 <body>
@@ -248,18 +244,13 @@
   <div class="panel-bar">
     <span class="panel-name" id="panel-name">—</span>
     <div class="panel-links">
-      <a class="panel-link" id="panel-link-pub" href="#" target="_blank">↗ README</a>
-      <a class="panel-link" id="panel-link-gh" href="#" target="_blank">↗ Dossier</a>
+      <a class="panel-link" id="panel-link-pub" href="#" target="_blank">↗ Sujet</a>
+      <a class="panel-link" id="panel-link-gh" href="#" target="_blank">↗ Repo</a>
     </div>
     <button class="panel-close" onclick="closePanel()">✕</button>
   </div>
-  <div class="panel-layout">
-    <aside class="panel-files">
-      <div class="pf-section">Fichiers</div>
-      <button class="pf-btn active" data-file="README.md" onclick="loadPanelFile('README.md')">📄 README.md</button>
-      <button class="pf-btn" data-file="instruction.md" onclick="loadPanelFile('instruction.md')">📋 instruction.md</button>
-      <button class="pf-btn" data-file="en.md" onclick="loadPanelFile('en.md')">🌐 en.md</button>
-    </aside>
+  <div class="panel-main">
+    <div class="panel-files" id="panel-files"></div>
     <div class="panel-body" id="panel-body">
       <div class="panel-loading">
         <div class="panel-loading-dot"></div>
@@ -305,6 +296,7 @@
       <div><div class="hstat-n">92+</div><div class="hstat-l">Exercices Rust</div></div>
       <div><div class="hstat-n">8</div><div class="hstat-l">Branches</div></div>
     </div>
+
   </div>
 </section>
 
@@ -676,78 +668,70 @@
 <!-- ── BRANCHES ── -->
 <section class="sec" id="branches">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-tag">03</span><h2 class="sec-title">Les 8 Branches — 6 mois de spécialisation</h2><span class="sec-sub"><a href="branches.html" style="color:var(--muted);text-decoration:none;">Page dédiée →</a></span></div>
+    <div class="sec-head"><span class="sec-tag">03</span><h2 class="sec-title">Les 8 Branches — 6 mois de spécialisation</h2><span class="sec-sub">Repos dédiés par branche</span></div>
     <div class="branches rev">
-      <div class="br" onclick="openBranch('./01-edu-repos/Branch-AI/', 'Branch — AI')">
+      <div class="br" onclick="openBranch('Branch-AI','Artificial Intelligence')" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--ai);"></div>
         <div class="br-top"><span class="br-ico">🧠</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--ai);">Artificial Intelligence</div>
         <div class="br-desc">ML, deep learning, NLP, image processing. Cas réels : finance, vision, traitement du langage naturel.</div>
         <div class="br-stack"><span class="stag">Python</span><span class="stag">TensorFlow</span><span class="stag">Pandas</span><span class="stag">Sklearn</span><span class="stag">NLP</span></div>
-        <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--ai);"></div>
       </div>
-      <div class="br" onclick="openBranch('./01-edu-repos/Branch-Blockchain/', 'Branch — Blockchain')">
+      <div class="br" onclick="openBranch('Branch-Blockchain','Blockchain &amp; Crypto')" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--blockchain);"></div>
         <div class="br-top"><span class="br-ico">⛓️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--blockchain);">Blockchain &amp; Crypto</div>
         <div class="br-desc">Smart contracts, DeFi, NFTs. Développement dApps avec Solidity et Web3.</div>
         <div class="br-stack"><span class="stag">Solidity</span><span class="stag">Ethereum</span><span class="stag">Web3.js</span><span class="stag">Hardhat</span><span class="stag">React</span></div>
-        <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--blockchain);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Cloud DevOps')">
+      <div class="br" onclick="openBranch('devops','Cloud DevOps')" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--devops);"></div>
         <div class="br-top"><span class="br-ico">☁️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--devops);">Cloud DevOps</div>
         <div class="br-desc">Déploiement réseau, serveurs, IaC, CI/CD, conteneurisation et orchestration Kubernetes.</div>
         <div class="br-stack"><span class="stag">Docker</span><span class="stag">Kubernetes</span><span class="stag">Terraform</span><span class="stag">Jenkins</span><span class="stag">AWS</span></div>
-        <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--devops);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Cybersecurity')">
+      <div class="br" onclick="openBranch('cyber','Cybersecurity')" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--cyber);"></div>
         <div class="br-top"><span class="br-ico">🔐</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--cyber);">Cybersecurity</div>
         <div class="br-desc">Pentest, cryptographie, reverse engineering, exploitation, CTF et forensics.</div>
         <div class="br-stack"><span class="stag">CTF</span><span class="stag">Pentest</span><span class="stag">Cryptography</span><span class="stag">Forensics</span><span class="stag">Reverse</span></div>
-        <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--cyber);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Mobile Applications')">
+      <div class="br" onclick="openBranch('mobile','Mobile Applications')" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--mobile);"></div>
         <div class="br-top"><span class="br-ico">📱</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--mobile);">Mobile Applications</div>
         <div class="br-desc">Développement cross-platform avec Dart &amp; Flutter. Apps iOS et Android, gestion d'état, REST.</div>
         <div class="br-stack"><span class="stag">Dart</span><span class="stag">Flutter</span><span class="stag">iOS</span><span class="stag">Android</span><span class="stag">REST</span></div>
-        <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--mobile);"></div>
-      </a>
-      <div class="br" onclick="openBranch(null, 'Branch — Java Full Stack')">
+      </div>
+      <div class="br" onclick="openBranch('java','Java Full Stack')" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--java);"></div>
         <div class="br-top"><span class="br-ico">🏗️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--java);">Java Full Stack</div>
         <div class="br-desc">Spring Boot, Angular, PostgreSQL, MongoDB, Jenkins, SonarQube. Apps enterprise scalables.</div>
         <div class="br-stack"><span class="stag">Spring Boot</span><span class="stag">Angular</span><span class="stag">PostgreSQL</span><span class="stag">MongoDB</span><span class="stag">Jenkins</span></div>
-        <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--java);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Video Games UE5')">
+      <div class="br" onclick="openBranch('games','Video Games — Unreal Engine 5')" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--games);"></div>
         <div class="br-top"><span class="br-ico">🎮</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--games);">Video Games — Unreal Engine 5</div>
         <div class="br-desc">Game design et development avec UE5 (Epic Games). Blueprints, C++, 3D, physique, animations.</div>
         <div class="br-stack"><span class="stag">Unreal Engine 5</span><span class="stag">C++</span><span class="stag">Blueprints</span><span class="stag">3D</span></div>
-        <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--games);"></div>
       </div>
-      <div class="br" onclick="openBranch('./01-edu-repos/UX-UI/', 'Branch — UX/UI')">
+      <div class="br" onclick="openBranch('UX-UI','User Experience UX/UI')" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--ux);"></div>
         <div class="br-top"><span class="br-ico">✨</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--ux);">User Experience UX/UI</div>
         <div class="br-desc">UX Research, wireframing, prototypage haute fidélité, Design System, tests utilisateurs.</div>
         <div class="br-stack"><span class="stag">Figma</span><span class="stag">UX Research</span><span class="stag">Prototyping</span><span class="stag">Design System</span></div>
-        <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--ux);"></div>
       </div>
     </div>
@@ -757,11 +741,11 @@
 <!-- ── TOOLS / MOULINETTE ── -->
 <section class="sec" id="tools">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-tag">04</span><h2 class="sec-title">Outils de test — La moulinette Zone01</h2><span class="sec-sub"><a href="outils.html" style="color:var(--muted);text-decoration:none;">Page dédiée →</a></span></div>
+    <div class="sec-head"><span class="sec-tag">04</span><h2 class="sec-title">Outils de test — La moulinette Zone01</h2><span class="sec-sub">Pas de norminette, mais un système complet</span></div>
 
     <div class="tools-grid rev">
 
-      <a class="tool" href="./01-edu-repos/go-tests/" target="_blank">
+      <div class="tool" onclick="openTool('go-tests','go-tests')" style="cursor:pointer;">
         <div class="tool-bar" style="background:var(--go);"></div>
         <div class="tool-top">
           <span class="tool-icon">🐹</span>
@@ -778,9 +762,9 @@
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_all.sh</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_with_docker.sh [EX] [PATH] [ALLOWED_FN]*</div>
         </div>
-      </a>
+      </div>
 
-      <a class="tool" href="./01-edu-repos/rust-tests/" target="_blank">
+      <div class="tool" onclick="openTool('rust-tests','rust-tests')" style="cursor:pointer;">
         <div class="tool-bar" style="background:var(--rust);"></div>
         <div class="tool-top">
           <span class="tool-icon">🦀</span>
@@ -796,9 +780,9 @@
           <div class="tool-cmd">./test_one.sh ownership</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_all.sh</div>
         </div>
-      </a>
+      </div>
 
-      <div class="tool" onclick="openReadme('./01-edu-repos/rc/', 'rc — Restrictions Checker')">
+      <div class="tool" onclick="openTool('rc','rc — Restrictions Checker')" style="cursor:pointer;">
         <div class="tool-bar" style="background:var(--accent);"></div>
         <div class="tool-top">
           <span class="tool-icon">🚔</span>
@@ -814,10 +798,9 @@
           <div class="tool-cmd">--allow-builtin github.com/01-edu/z01.PrintRune</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">strconv.Atoi os.Args fmt.Println</div>
         </div>
-        <div class="tool-readme-hint">📖 Cliquez pour lire le README ›</div>
       </div>
 
-      <div class="tool" onclick="openReadme('./01-edu-repos/go-tests-training/', 'go-tests-training')">
+      <div class="tool" onclick="openTool('go-tests-training','go-tests-training')" style="cursor:pointer;">
         <div class="tool-bar" style="background:var(--ai);"></div>
         <div class="tool-top">
           <span class="tool-icon">🏋️</span>
@@ -833,7 +816,6 @@
           <div class="tool-cmd">~/Desktop/piscine-go/</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">~/Desktop/go-tests-training/</div>
         </div>
-        <div class="tool-readme-hint">📖 Cliquez pour lire le README ›</div>
       </div>
 
       <div class="tool" style="cursor:default;">
@@ -967,95 +949,145 @@
   }, { threshold: 0.04 });
   document.querySelectorAll('.rev').forEach(el => io.observe(el));
 
-  /* ── PANEL SUBJECT VIEWER ── */
-  const panel = document.getElementById('panel');
-  const overlay = document.getElementById('overlay');
-  const panelBody = document.getElementById('panel-body');
-  const panelName = document.getElementById('panel-name');
+  /* ── PANEL ── */
+  const panel      = document.getElementById('panel');
+  const overlay    = document.getElementById('overlay');
+  const panelBody  = document.getElementById('panel-body');
+  const panelFiles = document.getElementById('panel-files');
+  const panelName  = document.getElementById('panel-name');
   const panelLinkPub = document.getElementById('panel-link-pub');
-  const panelLinkGh = document.getElementById('panel-link-gh');
+  const panelLinkGh  = document.getElementById('panel-link-gh');
 
-  let currentSubject = null;
+  let _files   = [];
+  let _fileIdx = 0;
 
-  // Configure marked options
   if (typeof marked !== 'undefined') {
-    marked.setOptions({
-      breaks: true,
-      gfm: true,
-    });
+    marked.setOptions({ breaks: true, gfm: true });
   }
 
-  async function openSubject(name) {
-    if (currentSubject === name && panel.classList.contains('open')) return;
-    currentSubject = name;
+  const LOADING = `<div class="panel-loading">
+    <div class="panel-loading-dot"></div>
+    <div class="panel-loading-dot"></div>
+    <div class="panel-loading-dot"></div>
+  </div>`;
 
-    panelName.textContent = name;
-    panelLinkPub.href = `./01-edu-repos/public/subjects/${name}/README.md`;
-    panelLinkGh.href = `./01-edu-repos/public/subjects/${name}/`;
+  /* Render the left file list sidebar */
+  function _renderSidebar() {
+    panelFiles.innerHTML = '<div class="panel-files-label">Fichiers</div>' +
+      _files.map((f, i) =>
+        `<button class="panel-file-btn${i === _fileIdx ? ' active' : ''}" onclick="switchFile(${i})">📄 ${f.label}</button>`
+      ).join('');
+  }
 
-    // Open panel
+  /* Fetch a file and render its markdown */
+  async function _loadFile(idx) {
+    _fileIdx = idx;
+    _renderSidebar();
+    const f = _files[idx];
+    panelBody.innerHTML = LOADING;
+    try {
+      const res = await fetch(f.url);
+      if (res.ok) {
+        let md = await res.text();
+        if (f.base) md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${f.base}$2)`);
+        panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
+      } else {
+        panelBody.innerHTML = `<div class="panel-error">
+          <span style="font-size:2rem;">📄</span>
+          <span>Fichier introuvable : ${f.label}</span>
+          <a href="${f.url}" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;margin-top:.5rem;">↗ Ouvrir le fichier</a>
+        </div>`;
+      }
+    } catch(e) {
+      panelBody.innerHTML = `<div class="panel-error">
+        <span style="font-size:2rem;">📄</span>
+        <span>Erreur de chargement : ${f.label}</span>
+      </div>`;
+    }
+  }
+
+  /* Public: switch visible file from sidebar click */
+  function switchFile(idx) { _loadFile(idx); }
+
+  /* Internal: open panel with a given config */
+  function _openPanel({ title, linkPub, linkGh, files }) {
+    panelName.textContent = title;
+    panelLinkPub.href = linkPub;
+    panelLinkGh.href  = linkGh;
+    _files = files;
     panel.classList.add('open');
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-
-    // Show loading
-    panelBody.innerHTML = `
-      <div class="panel-loading">
-        <div class="panel-loading-dot"></div>
-        <div class="panel-loading-dot"></div>
-        <div class="panel-loading-dot"></div>
-      </div>`;
-
-    // Read the subject directly from the local cloned repository.
-    const urls = [
-      `./01-edu-repos/public/subjects/${name}/README.md`,
-      `./01-edu-repos/public/subjects/${name}/en.md`,
-    ];
-
-    let md = null;
-    for (const url of urls) {
-      try {
-        const res = await fetch(url);
-        if (res.ok) {
-          md = await res.text();
-          break;
-        }
-      } catch(e) {}
-    }
-
-    if (md) {
-      // Keep relative images resolving against the local subject folder.
-      md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g,
-        `![$1](./01-edu-repos/public/subjects/${name}/$2)`);
-
-      const html = marked.parse(md);
-      panelBody.innerHTML = `<div class="md-content">${html}</div>`;
-    } else {
-      // Fallback: direct local file link when fetch is blocked (e.g. file://).
-      panelBody.innerHTML = `
-        <div class="panel-error">
-          <span style="font-size:2rem;">📄</span>
-          <span>Impossible de charger le README via fetch.</span>
-          <span style="margin-top:.5rem;">
-            <a href="./01-edu-repos/public/subjects/${name}/README.md" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;">
-              ↗ Ouvrir le README local
-            </a>
-          </span>
-        </div>`;
-    }
+    _loadFile(0);
   }
 
+  /* ── Exercise subject ── */
+  function openSubject(name) {
+    _openPanel({
+      title:   name,
+      linkPub: `./01-edu-repos/public/subjects/${name}/`,
+      linkGh:  `./01-edu-repos/public/subjects/${name}/`,
+      files: [
+        { label: 'README.md', url: `./01-edu-repos/public/subjects/${name}/README.md`, base: `./01-edu-repos/public/subjects/${name}/` },
+        { label: 'en.md',     url: `./01-edu-repos/public/subjects/${name}/en.md`,     base: `./01-edu-repos/public/subjects/${name}/` },
+      ]
+    });
+  }
+
+  /* ── Branch specialisation ── */
+  const BRANCH_MAP = {
+    'Branch-AI':         { path: './01-edu-repos/Branch-AI/' },
+    'Branch-Blockchain': { path: './01-edu-repos/Branch-Blockchain/' },
+    'UX-UI':             { path: './01-edu-repos/UX-UI/' },
+    'devops':            { path: './01-edu-repos/public/' },
+    'cyber':             { path: './01-edu-repos/public/' },
+    'mobile':            { path: './01-edu-repos/public/' },
+    'java':              { path: './01-edu-repos/public/' },
+    'games':             { path: './01-edu-repos/public/' },
+  };
+
+  function openBranch(key, displayName) {
+    const b = BRANCH_MAP[key] || { path: './' };
+    _openPanel({
+      title:   displayName,
+      linkPub: b.path,
+      linkGh:  b.path,
+      files: [
+        { label: 'README.md',       url: `${b.path}README.md`,       base: b.path },
+        { label: 'instructions.md', url: `${b.path}instructions.md`, base: b.path },
+      ]
+    });
+  }
+
+  /* ── Tool / moulinette ── */
+  const TOOL_MAP = {
+    'go-tests':          { path: './01-edu-repos/go-tests/' },
+    'rust-tests':        { path: './01-edu-repos/rust-tests/' },
+    'rc':                { path: './01-edu-repos/rc/' },
+    'go-tests-training': { path: './01-edu-repos/go-tests-training/' },
+  };
+
+  function openTool(key, displayName) {
+    const t = TOOL_MAP[key] || { path: './' };
+    _openPanel({
+      title:   displayName,
+      linkPub: t.path,
+      linkGh:  t.path,
+      files: [
+        { label: 'README.md',       url: `${t.path}README.md`,       base: t.path },
+        { label: 'CONTRIBUTING.md', url: `${t.path}CONTRIBUTING.md`, base: t.path },
+      ]
+    });
+  }
+
+  /* ── Close panel ── */
   function closePanel() {
     panel.classList.remove('open');
     overlay.classList.remove('open');
     document.body.style.overflow = '';
-    currentSubject = null;
   }
 
-  // Close on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closePanel();
-  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 </script>
 </body>
 </html>

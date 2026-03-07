@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zone01 — Les 8 Branches</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<style>
+  :root {
+    --bg: #060608;
+    --surface: #0e0e12;
+    --surface2: #13131a;
+    --surface3: #17171f;
+    --border: #1c1c26;
+    --border2: #242430;
+    --go: #00acd7;
+    --rust: #f74c00;
+    --js: #f0db4f;
+    --java: #e69500;
+    --ai: #a259ff;
+    --devops: #00e5c0;
+    --blockchain: #ff8c42;
+    --ux: #ff6eb4;
+    --cyber: #ff3c3c;
+    --mobile: #4c9eff;
+    --games: #ffd43b;
+    --accent: #39ff8f;
+    --text: #e8e8f0;
+    --muted: #52526e;
+    --muted2: #3a3a52;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
+
+  .wrap { position: relative; z-index: 1; max-width: 1440px; margin: 0 auto; padding: 0 2.5rem; }
+
+  /* ── HEADER ── */
+  header { position: sticky; top: 0; z-index: 100; background: rgba(6,6,8,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1rem; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+  .logo-box { width: 36px; height: 36px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: .8rem; font-weight: 700; color: #060608; flex-shrink: 0; }
+  .logo-text .t { font-weight: 800; font-size: 1rem; letter-spacing: -.02em; }
+  .logo-text .t span { color: var(--accent); }
+  .logo-text .s { font-family: 'JetBrains Mono', monospace; font-size: .55rem; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+  .nav { display: flex; gap: .2rem; }
+  .nav a { font-family: 'JetBrains Mono', monospace; font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); text-decoration: none; padding: .35rem .7rem; border-radius: 5px; transition: all .15s; }
+  .nav a:hover, .nav a.active { color: var(--accent); background: rgba(57,255,143,.07); }
+  .gh-link { font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: .35rem .8rem; border-radius: 5px; transition: all .15s; }
+  .gh-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero { padding: 3.5rem 0 3rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hero-glow { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 600px; height: 200px; background: radial-gradient(ellipse, rgba(57,255,143,.06) 0%, transparent 70%); pointer-events: none; }
+  .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-family: 'JetBrains Mono', monospace; font-size: .6rem; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); margin-bottom: 1.2rem; }
+  .eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+  .hero h1 { font-size: clamp(2rem,5vw,4rem); font-weight: 900; line-height: 1; letter-spacing: -.04em; margin-bottom: 1rem; }
+  .hero h1 .d { color: var(--muted); font-weight: 300; }
+  .hero h1 .h { color: var(--accent); }
+  .hero p { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--muted); line-height: 1.8; max-width: 700px; }
+
+  /* ── SECTIONS ── */
+  .sec { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+  .sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .sec-tag { font-family: 'JetBrains Mono', monospace; font-size: .55rem; text-transform: uppercase; letter-spacing: .2em; color: var(--muted); padding: .2rem .5rem; border: 1px solid var(--border2); border-radius: 3px; }
+  .sec-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; }
+  .sec-sub { font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--muted); margin-left: auto; }
+
+  /* ── SUBJECT PANEL ── */
+  .panel-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(6px); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .panel-overlay.open { opacity: 1; pointer-events: all; }
+  .panel { position: fixed; top: 0; right: 0; bottom: 0; width: min(780px, 100vw); background: var(--surface); border-left: 1px solid var(--border); z-index: 201; transform: translateX(100%); transition: transform .3s cubic-bezier(.22,.68,0,1.1); display: flex; flex-direction: column; }
+  .panel.open { transform: translateX(0); }
+  .panel-bar { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface2); flex-shrink: 0; }
+  .panel-name { font-family: 'JetBrains Mono', monospace; font-size: .85rem; font-weight: 700; color: var(--accent); flex: 1; }
+  .panel-links { display: flex; gap: .5rem; }
+  .panel-link { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: .3rem .65rem; border-radius: 5px; transition: all .15s; }
+  .panel-link:hover { border-color: var(--accent); color: var(--accent); }
+  .panel-close { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--muted); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0; }
+  .panel-close:hover { border-color: var(--rust); color: var(--rust); }
+  .panel-layout { display: flex; flex: 1; overflow: hidden; }
+  .panel-files { width: 155px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--surface); padding: .6rem .5rem; display: flex; flex-direction: column; gap: .15rem; overflow-y: auto; }
+  .pf-section { font-family: 'JetBrains Mono', monospace; font-size: .48rem; text-transform: uppercase; letter-spacing: .14em; color: var(--muted2); padding: .3rem .5rem .5rem; border-bottom: 1px solid var(--border); margin-bottom: .3rem; }
+  .pf-btn { font-family: 'JetBrains Mono', monospace; font-size: .63rem; color: var(--muted); padding: .45rem .6rem; border-radius: 5px; cursor: pointer; text-align: left; background: transparent; border: 1px solid transparent; width: 100%; transition: all .13s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pf-btn:hover { color: var(--text); background: var(--surface2); }
+  .pf-btn.active { color: var(--accent); border-color: rgba(57,255,143,.25); background: rgba(57,255,143,.06); }
+  .panel-body { flex: 1; overflow-y: auto; padding: 2rem 1.5rem; }
+  .panel-loading { display: flex; align-items: center; justify-content: center; height: 200px; gap: 1rem; }
+  .panel-loading-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: blink 1s infinite; }
+  .panel-loading-dot:nth-child(2) { animation-delay: .2s; }
+  .panel-loading-dot:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%,80%,100% { opacity: .2; } 40% { opacity: 1; } }
+  .panel-error { display: flex; flex-direction: column; gap: .5rem; align-items: center; justify-content: center; height: 200px; }
+  .panel-error span { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--muted); }
+  .md-content { font-size: .88rem; line-height: 1.75; color: var(--text); }
+  .md-content h1 { font-size: 1.6rem; font-weight: 800; margin: 0 0 1rem; letter-spacing: -.02em; border-bottom: 1px solid var(--border); padding-bottom: .75rem; }
+  .md-content h2 { font-size: 1.1rem; font-weight: 700; margin: 1.75rem 0 .6rem; color: var(--accent); }
+  .md-content h3 { font-size: .95rem; font-weight: 700; margin: 1.25rem 0 .5rem; color: var(--text); }
+  .md-content p { margin-bottom: .9rem; color: var(--muted); }
+  .md-content code { font-family: 'JetBrains Mono', monospace; font-size: .78rem; background: var(--surface2); border: 1px solid var(--border); padding: .12rem .35rem; border-radius: 4px; color: var(--accent); }
+  .md-content pre { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin: 1rem 0; overflow-x: auto; }
+  .md-content pre code { background: none; border: none; padding: 0; color: var(--text); font-size: .78rem; }
+  .md-content ul, .md-content ol { padding-left: 1.5rem; margin-bottom: .9rem; }
+  .md-content li { margin-bottom: .3rem; color: var(--muted); }
+  .md-content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(57,255,143,.3); }
+  .md-content a:hover { border-color: var(--accent); }
+  .md-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .8rem; }
+  .md-content th { background: var(--surface2); padding: .5rem .75rem; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+  .md-content td { padding: .5rem .75rem; border: 1px solid var(--border); color: var(--muted); }
+  .md-content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1rem 0; color: var(--muted); font-style: italic; }
+  .md-content hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .md-content img { max-width: 100%; border-radius: 8px; }
+
+  /* ── BRANCHES ── */
+  .branches { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .br { background: var(--surface); padding: 1.75rem; text-decoration: none; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: background .2s; cursor: pointer; }
+  .br:hover { background: var(--surface2); }
+  .br-glow { position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; border-radius: 50%; opacity: .06; transition: opacity .3s; pointer-events: none; }
+  .br:hover .br-glow { opacity: .14; }
+  .br-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .7rem; }
+  .br-ico { font-size: 1.4rem; line-height: 1; }
+  .br-dur { font-family: 'JetBrains Mono', monospace; font-size: .52rem; color: var(--muted); background: var(--bg); border: 1px solid var(--border); padding: .15rem .45rem; border-radius: 3px; }
+  .br-name { font-size: .95rem; font-weight: 800; margin-bottom: .45rem; }
+  .br-desc { font-size: .72rem; color: var(--muted); line-height: 1.65; flex: 1; margin-bottom: 1rem; }
+  .br-stack { display: flex; flex-wrap: wrap; gap: .3rem; }
+  .stag { font-family: 'JetBrains Mono', monospace; font-size: .5rem; text-transform: uppercase; letter-spacing: .07em; padding: .13rem .4rem; border-radius: 3px; background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--muted); }
+  .br-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; }
+  .br-readme-hint { font-family: 'JetBrains Mono', monospace; font-size: .52rem; color: var(--muted2); margin-top: .6rem; transition: color .15s; }
+  .br:hover .br-readme-hint { color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--border); padding: 2rem 0; }
+  .foot-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .foot-txt { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--muted); }
+  .foot-links { display: flex; gap: 1.25rem; }
+  .foot-links a { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .foot-links a:hover { color: var(--accent); }
+
+  /* ── REVEAL ── */
+  .rev { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
+  .rev.in { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ── SUBJECT VIEWER PANEL ── -->
+<div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
+<div class="panel" id="panel">
+  <div class="panel-bar">
+    <span class="panel-name" id="panel-name">—</span>
+    <div class="panel-links">
+      <a class="panel-link" id="panel-link-pub" href="#" target="_blank">↗ README</a>
+      <a class="panel-link" id="panel-link-gh" href="#" target="_blank">↗ Dossier</a>
+    </div>
+    <button class="panel-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="panel-layout">
+    <aside class="panel-files">
+      <div class="pf-section">Fichiers</div>
+      <button class="pf-btn active" data-file="README.md" onclick="loadPanelFile('README.md')">📄 README.md</button>
+      <button class="pf-btn" data-file="instruction.md" onclick="loadPanelFile('instruction.md')">📋 instruction.md</button>
+      <button class="pf-btn" data-file="en.md" onclick="loadPanelFile('en.md')">🌐 en.md</button>
+    </aside>
+    <div class="panel-body" id="panel-body">
+      <div class="panel-loading">
+        <div class="panel-loading-dot"></div>
+        <div class="panel-loading-dot"></div>
+        <div class="panel-loading-dot"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="wrap">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <div class="logo-box">01</div>
+        <div class="logo-text">
+          <div class="t">Zone<span>01</span></div>
+          <div class="s">Curriculum Map</div>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="branches.html" class="active">Branches</a>
+        <a href="outils.html">Outils</a>
+      </nav>
+      <a class="gh-link" href="./01-edu-repos/public/" target="_blank">↗ 01-edu/public</a>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-glow"></div>
+    <div class="eyebrow">Zone01 · Après la piscine · 6 mois de spécialisation</div>
+    <h1><span class="d">Choose your</span> <span class="h">path.</span><br><span class="d">Own your</span> <span class="h">stack.</span></h1>
+    <p>Après la piscine de 4 semaines, les étudiants choisissent une spécialisation de 6 mois parmi 8 branches. Cliquez sur une branche pour lire son README directement.</p>
+  </div>
+</section>
+
+<!-- ── BRANCHES SECTION ── -->
+<section class="sec" id="branches">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Branches</span>
+      <h2 class="sec-title">Les 8 Branches — 6 mois de spécialisation</h2>
+      <span class="sec-sub"><a href="index.html#branches" style="color:var(--muted);text-decoration:none;">← Retour accueil</a></span>
+    </div>
+    <div class="branches rev">
+      <div class="br" onclick="openBranch('./01-edu-repos/Branch-AI/', 'Branch — AI')">
+        <div class="br-glow" style="background:var(--ai);"></div>
+        <div class="br-top"><span class="br-ico">🧠</span><span class="br-dur">6 mois</span></div>
+        <div class="br-name" style="color:var(--ai);">Artificial Intelligence</div>
+        <div class="br-desc">ML, deep learning, NLP, image processing. Cas réels : finance, vision, traitement du langage naturel.</div>
+        <div class="br-stack"><span class="stag">Python</span><span class="stag">TensorFlow</span><span class="stag">Pandas</span><span class="stag">Sklearn</span><span class="stag">NLP</span></div>
+        <div class="br-readme-hint">📖 Voir README ›</div>
+        <div class="br-bar" style="background:var(--ai);"></div>
+      </div>
+      <div class="br" onclick="openBranch('./01-edu-repos/Branch-Blockchain/', 'Branch — Blockchain')">
+        <div class="br-glow" style="background:var(--blockchain);"></div>
+        <div class="br-top"><span class="br-ico">⛓️</span><span class="br-dur">6 mois</span></div>
+        <div class="br-name" style="color:var(--blockchain);">Blockchain &amp; Crypto</div>
+        <div class="br-desc">Smart contracts, DeFi, NFTs. Développement dApps avec Solidity et Web3.</div>
+        <div class="br-stack"><span class="stag">Solidity</span><span class="stag">Ethereum</span><span class="stag">Web3.js</span><span class="stag">Hardhat</span><span class="stag">React</span></div>
+        <div class="br-readme-hint">📖 Voir README ›</div>
+        <div class="br-bar" style="background:var(--blockchain);"></div>
+      </div>
+      <div class="br" onclick="openBranch(null, 'Branch — Cloud DevOps')">
+        <div class="br-glow" style="background:var(--devops);"></div>
+        <div class="br-top"><span class="br-ico">☁️</span><span class="br-dur">6 mois</span></div>
+        <div class="br-name" style="color:var(--devops);">Cloud DevOps</div>
+        <div class="br-desc">Déploiement réseau, serveurs, IaC, CI/CD, conteneurisation et orchestration Kubernetes.</div>
+        <div class="br-stack"><span class="stag">Docker</span><span class="stag">Kubernetes</span><span class="stag">Terraform</span><span class="stag">Jenkins</span><span class="stag">AWS</span></div>
+        <div class="br-readme-hint">📖 Voir README ›</div>
+        <div class="br-bar" style="background:var(--devops);"></div>
+      </div>
+      <div class="br" onclick="openBranch(null, 'Branch — Cybersecurity')">
+        <div class="br-glow" style="background:var(--cyber);"></div>
+        <div class="br-top"><span class="br-ico">🔐</span><span class="br-dur">6 mois</span></div>
+        <div class="br-name" style="color:var(--cyber);">Cybersecurity</div>
+        <div class="br-desc">Pentest, cryptographie, reverse engineering, exploitation, CTF et forensics.</div>
+        <div class="br-stack"><span class="stag">CTF</span><span class="stag">Pentest</span><span class="stag">Cryptography</span><span class="stag">Forensics</span><span class="stag">Reverse</span></div>
+        <div class="br-readme-hint">📖 Voir README ›</div>
+        <div class="br-bar" style="background:var(--cyber);"></div>
+      </div>
+      <div class="br" onclick="openBranch(null, 'Branch — Mobile Applications')">
+        <div class="br-glow" style="background:var(--mobile);"></div>
+        <div class="br-top"><span class="br-ico">📱</span><span class="br-dur">6 mois</span></div>
+        <div class="br-name" style="color:var(--mobile);">Mobile Applications</div>
+        <div class="br-desc">Développement cross-platform avec Dart &amp; Flutter. Apps iOS et Android, gestion d'état, REST.</div>
+        <div class="br-stack"><span class="stag">Dart</span><span class="stag">Flutter</span><span class="stag">iOS</span><span class="stag">Android</span><span class="stag">REST</span></div>
+        <div class="br-readme-hint">📖 Voir README ›</div>
+        <div class="br-bar" style="background:var(--mobile);"></div>
+      </div>
+      <div class="br" onclick="openBranch(null, 'Branch — Java Full Stack')">
+        <div class="br-glow" style="background:var(--java);"></div>
+        <div class="br-top"><span class="br-ico">🏗️</span><span class="br-dur">6 mois</span></div>
+        <div class="br-name" style="color:var(--java);">Java Full Stack</div>
+        <div class="br-desc">Spring Boot, Angular, PostgreSQL, MongoDB, Jenkins, SonarQube. Apps enterprise scalables.</div>
+        <div class="br-stack"><span class="stag">Spring Boot</span><span class="stag">Angular</span><span class="stag">PostgreSQL</span><span class="stag">MongoDB</span><span class="stag">Jenkins</span></div>
+        <div class="br-readme-hint">📖 Voir README ›</div>
+        <div class="br-bar" style="background:var(--java);"></div>
+      </div>
+      <div class="br" onclick="openBranch(null, 'Branch — Video Games UE5')">
+        <div class="br-glow" style="background:var(--games);"></div>
+        <div class="br-top"><span class="br-ico">🎮</span><span class="br-dur">6 mois</span></div>
+        <div class="br-name" style="color:var(--games);">Video Games — Unreal Engine 5</div>
+        <div class="br-desc">Game design et development avec UE5 (Epic Games). Blueprints, C++, 3D, physique, animations.</div>
+        <div class="br-stack"><span class="stag">Unreal Engine 5</span><span class="stag">C++</span><span class="stag">Blueprints</span><span class="stag">3D</span></div>
+        <div class="br-readme-hint">📖 Voir README ›</div>
+        <div class="br-bar" style="background:var(--games);"></div>
+      </div>
+      <div class="br" onclick="openBranch('./01-edu-repos/UX-UI/', 'Branch — UX/UI')">
+        <div class="br-glow" style="background:var(--ux);"></div>
+        <div class="br-top"><span class="br-ico">✨</span><span class="br-dur">6 mois</span></div>
+        <div class="br-name" style="color:var(--ux);">User Experience UX/UI</div>
+        <div class="br-desc">UX Research, wireframing, prototypage haute fidélité, Design System, tests utilisateurs.</div>
+        <div class="br-stack"><span class="stag">Figma</span><span class="stag">UX Research</span><span class="stag">Prototyping</span><span class="stag">Design System</span></div>
+        <div class="br-readme-hint">📖 Voir README ›</div>
+        <div class="br-bar" style="background:var(--ux);"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <span class="foot-txt">Zone01 Curriculum Map · Les 8 Branches</span>
+      <div class="foot-links">
+        <a href="index.html">Accueil</a>
+        <a href="outils.html">Outils</a>
+        <a href="https://github.com/01-edu" target="_blank">GitHub 01-edu</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── REVEAL ── */
+  const io = new IntersectionObserver((e) => {
+    e.forEach((el, i) => { if (el.isIntersecting) { setTimeout(() => el.target.classList.add('in'), i * 60); io.unobserve(el.target); }});
+  }, { threshold: 0.04 });
+  document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+  /* ── PANEL ── */
+  const panel = document.getElementById('panel');
+  const overlay = document.getElementById('overlay');
+  const panelBody = document.getElementById('panel-body');
+  const panelName = document.getElementById('panel-name');
+  const panelLinkPub = document.getElementById('panel-link-pub');
+  const panelLinkGh = document.getElementById('panel-link-gh');
+  let panelBasePath = null;
+
+  if (typeof marked !== 'undefined') {
+    marked.setOptions({ breaks: true, gfm: true });
+  }
+
+  function setActiveFile(filename) {
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`.pf-btn[data-file="${filename}"]`);
+    if (btn) btn.classList.add('active');
+  }
+
+  async function loadPanelFile(filename) {
+    setActiveFile(filename);
+    panelBody.innerHTML = `
+      <div class="panel-loading">
+        <div class="panel-loading-dot"></div>
+        <div class="panel-loading-dot"></div>
+        <div class="panel-loading-dot"></div>
+      </div>`;
+
+    if (!panelBasePath) {
+      panelBody.innerHTML = `<div class="panel-error"><span style="font-size:2rem;">📭</span><span>Aucune source configurée pour cette branche.</span></div>`;
+      return;
+    }
+
+    const url = panelBasePath + filename;
+    let md = null;
+    try {
+      const res = await fetch(url);
+      if (res.ok) md = await res.text();
+    } catch(e) {}
+
+    if (md) {
+      md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${panelBasePath}$2)`);
+      panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
+    } else {
+      panelBody.innerHTML = `
+        <div class="panel-error">
+          <span style="font-size:2rem;">📄</span>
+          <span><code>${filename}</code> introuvable</span>
+          <span style="margin-top:.5rem;">
+            <a href="${url}" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;">
+              ↗ Ouvrir directement
+            </a>
+          </span>
+        </div>`;
+    }
+  }
+
+  async function openPanel(title, basePath, pubHref, ghHref) {
+    panelBasePath = basePath;
+    panelName.textContent = title;
+    panelLinkPub.href = pubHref || '#';
+    panelLinkGh.href = ghHref || '#';
+    panel.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    await loadPanelFile('README.md');
+  }
+
+  function openBranch(basePath, displayName) {
+    openPanel(displayName, basePath,
+      basePath ? basePath + 'README.md' : '#',
+      basePath ? basePath : '#'
+    );
+  }
+
+  function closePanel() {
+    panel.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+</script>
+</body>
+</html>
