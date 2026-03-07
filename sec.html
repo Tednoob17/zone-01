@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SECU — Programme d'apprentissage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0d0b;
+  --bg2: #131310;
+  --bg3: #1a1a16;
+  --line: #2a2a24;
+  --line2: #3a3a32;
+  --rust: #c0440a;
+  --rust2: #8a3008;
+  --gold: #c89a30;
+  --sage: #4a7a40;
+  --sage2: #2d5c25;
+  --dim: #5a5a4a;
+  --mid: #8a8a70;
+  --text: #d4d0bc;
+  --bright: #ece8d4;
+  --ps: #2d6a9f;
+  --kr: #7a3e1a;
+  --jo: #5c3d7a;
+  --des: #2d7a4f;
+  --liv: #1a6b4a;
+  --blog: #b05a00;
+  --fd: #8b1a1a;
+  --vei: #4a6741;
+  --star: #1a5c6b;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line2);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  height: 42px;
+  overflow-x: auto;
+}
+
+.nav-brand {
+  padding: 0 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rust);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-right: 1px solid var(--line2);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 11px;
+  padding: 0 14px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--line);
+  white-space: nowrap;
+  transition: color .15s, background .15s;
+  letter-spacing: .06em;
+}
+nav a:hover { color: var(--bright); background: var(--bg2); }
+
+.nav-right {
+  margin-left: auto;
+  padding: 0 16px;
+  font-size: 11px;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 60px 0 40px;
+  border-bottom: 1px solid var(--line2);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.hero-label {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 600;
+  color: var(--bright);
+  letter-spacing: -.01em;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+h1 span { color: var(--rust); }
+
+.hero-sub {
+  color: var(--mid);
+  font-size: 13px;
+  margin-bottom: 32px;
+  font-family: var(--sans);
+  font-weight: 300;
+}
+
+.stats-row {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.stat {
+  padding: 16px 24px;
+  border: 1px solid var(--line2);
+  border-right: none;
+  min-width: 110px;
+}
+.stat:last-child { border-right: 1px solid var(--line2); }
+.stat-val {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--bright);
+  display: block;
+}
+.stat-label {
+  font-size: 10px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  display: block;
+  margin-top: 2px;
+}
+.stat.live .stat-val { color: var(--rust); }
+
+/* ── PROGRESS BAR ── */
+.progress-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.progress-track {
+  flex: 1;
+  height: 3px;
+  background: var(--line2);
+  position: relative;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--rust);
+  transition: width .4s ease;
+}
+.progress-label {
+  font-size: 11px;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+/* ── LEGEND ── */
+.legend {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+.leg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: .06em;
+}
+.leg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* ── MAIN LAYOUT ── */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px 80px;
+}
+
+/* ── PHASE BLOCK ── */
+.phase-block {
+  margin-top: 48px;
+}
+
+.phase-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--rust2);
+  margin-bottom: 0;
+}
+
+.phase-num {
+  font-size: 10px;
+  color: var(--rust);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.phase-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--bright);
+  letter-spacing: -.01em;
+}
+
+.phase-range {
+  font-size: 11px;
+  color: var(--dim);
+  margin-left: auto;
+}
+
+/* ── WEEK BLOCK ── */
+.week-block {
+  border: 1px solid var(--line);
+  border-top: none;
+  margin-bottom: 2px;
+}
+
+.week-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  user-select: none;
+  transition: background .12s;
+}
+.week-header:hover { background: var(--bg3); }
+
+.week-toggle {
+  font-size: 11px;
+  color: var(--dim);
+  width: 14px;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.week-toggle.open { transform: rotate(90deg); }
+
+.week-num {
+  font-size: 10px;
+  color: var(--rust);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.week-title {
+  font-size: 12px;
+  color: var(--text);
+  flex: 1;
+}
+
+.week-dates {
+  font-size: 11px;
+  color: var(--dim);
+  flex-shrink: 0;
+}
+
+.week-progress {
+  font-size: 11px;
+  color: var(--mid);
+  flex-shrink: 0;
+  min-width: 50px;
+  text-align: right;
+}
+
+.week-body {
+  display: none;
+}
+.week-body.open { display: block; }
+
+/* ── DAY ── */
+.day-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--line);
+}
+.day-row:last-child { border-bottom: none; }
+
+.day-label {
+  padding: 12px 14px;
+  border-right: 1px solid var(--line);
+  background: var(--bg2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+.day-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: .06em;
+}
+.day-date {
+  font-size: 10px;
+  color: var(--dim);
+}
+.day-row.weekend .day-label {
+  background: #161612;
+}
+.day-row.weekend .day-name { color: var(--mid); }
+
+.slot {
+  padding: 10px 14px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.slot:last-child { border-right: none; }
+
+.slot-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Checkbox custom */
+.cb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--line2);
+  background: var(--bg);
+  border-radius: 1px;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color .12s, background .12s;
+}
+.cb:hover { border-color: var(--rust); }
+.cb:checked {
+  background: var(--rust);
+  border-color: var(--rust);
+}
+.cb:checked::after {
+  content: '';
+  position: absolute;
+  left: 2px; top: 0px;
+  width: 5px; height: 8px;
+  border: 1.5px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.slot-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.slot-detail {
+  font-size: 11px;
+  color: var(--mid);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.5;
+  padding-left: 20px;
+}
+
+.slot.done .slot-tag { text-decoration: line-through; opacity: .5; }
+.slot.done .slot-detail { text-decoration: line-through; opacity: .4; }
+
+/* col headers */
+.day-col-header {
+  display: grid;
+  grid-template-columns: 130px 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--line2);
+  background: var(--bg);
+}
+.dch {
+  padding: 7px 14px;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-right: 1px solid var(--line);
+}
+.dch:last-child { border-right: none; }
+
+/* ── BOOK LIST ── */
+.books-section {
+  margin-top: 48px;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2px;
+  margin-top: 0;
+  border: 1px solid var(--line2);
+}
+
+.book-card {
+  padding: 18px;
+  border: none;
+  background: var(--bg2);
+  border-right: 1px solid var(--line2);
+  border-bottom: 1px solid var(--line2);
+}
+
+.book-type {
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 6px;
+}
+
+.book-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bright);
+  margin-bottom: 4px;
+}
+.book-author {
+  font-size: 11px;
+  color: var(--dim);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.task-label {
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.4;
+  cursor: pointer;
+  transition: color .1s;
+}
+.task-item.done .task-label {
+  text-decoration: line-through;
+  color: var(--dim);
+  opacity: .6;
+}
+
+/* ── PORTSWIGGER SECTION ── */
+.ps-section {
+  margin-top: 48px;
+}
+
+.ps-modules {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid var(--line2);
+}
+
+.ps-module {
+  border: none;
+  border-bottom: 1px solid var(--line2);
+}
+.ps-module:last-child { border-bottom: none; }
+
+.ps-module-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg2);
+  cursor: pointer;
+  user-select: none;
+}
+.ps-module-header:hover { background: var(--bg3); }
+
+.ps-module-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+}
+.ps-module-tag {
+  font-size: 9px;
+  letter-spacing: .1em;
+  padding: 2px 7px;
+  background: var(--ps);
+  color: #fff;
+  border-radius: 1px;
+  text-transform: uppercase;
+}
+.ps-module-month {
+  font-size: 10px;
+  color: var(--dim);
+}
+.ps-module-prog {
+  font-size: 11px;
+  color: var(--mid);
+  min-width: 45px;
+  text-align: right;
+}
+
+.ps-labs {
+  display: none;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+.ps-labs.open { display: block; }
+
+.lab-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lab-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lab-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border: 1px solid var(--line2);
+  border-radius: 1px;
+  color: var(--mid);
+  cursor: pointer;
+  transition: all .12s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.lab-badge:hover { border-color: var(--dim); color: var(--text); }
+.lab-badge input[type=checkbox] {
+  appearance: none; width: 9px; height: 9px;
+  border: 1px solid var(--dim); border-radius: 1px;
+  background: transparent; cursor: pointer;
+  flex-shrink: 0; position: relative;
+}
+.lab-badge input[type=checkbox]:checked {
+  background: var(--sage);
+  border-color: var(--sage);
+}
+.lab-badge input[type=checkbox]:checked::after {
+  content: '';
+  position: absolute;
+  left: 1px; top: -1px;
+  width: 4px; height: 6px;
+  border: 1.5px solid #fff;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+.lab-badge.done-lab {
+  background: var(--sage2);
+  border-color: var(--sage);
+  color: var(--text);
+}
+
+/* ── SECTION HEADERS ── */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 0 10px;
+  border-bottom: 1px solid var(--line2);
+  margin-bottom: 0;
+}
+.section-num {
+  font-size: 9px;
+  letter-spacing: .18em;
+  color: var(--rust);
+  text-transform: uppercase;
+}
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--bright);
+  letter-spacing: -.01em;
+}
+.section-count {
+  font-size: 11px;
+  color: var(--dim);
+  margin-left: auto;
+}
+
+/* ── PHRACK ── */
+.phrack-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line2);
+}
+
+.phrack-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg2);
+  transition: background .1s;
+}
+.phrack-item:last-child { border-bottom: none; }
+.phrack-item:hover { background: var(--bg3); }
+
+.phrack-ref {
+  font-size: 11px;
+  color: var(--rust);
+  font-weight: 600;
+  min-width: 80px;
+}
+.phrack-name {
+  font-size: 12px;
+  color: var(--text);
+  flex: 1;
+}
+.phrack-when {
+  font-size: 10px;
+  color: var(--dim);
+}
+.phrack-action {
+  font-size: 10px;
+  color: var(--dim);
+  margin-left: 8px;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--line2);
+  padding: 24px 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  font-size: 11px;
+  color: var(--rust);
+  font-weight: 600;
+  letter-spacing: .1em;
+}
+.footer-links {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+}
+.footer-links a {
+  font-size: 11px;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color .12s;
+}
+.footer-links a:hover { color: var(--text); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .day-row, .day-col-header { grid-template-columns: 90px 1fr; }
+  .slot:nth-child(3), .slot:nth-child(4) { display: none; }
+  .dch:nth-child(3), .dch:nth-child(4) { display: none; }
+  .day-col-header .dch:nth-child(2) { grid-column: 2; }
+  .stats-row { flex-direction: column; gap: 0; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.phase-block { animation: fadeIn .3s ease both; }
+.phase-block:nth-child(2) { animation-delay: .05s; }
+.phase-block:nth-child(3) { animation-delay: .1s; }
+
+/* tag colors */
+.tag-ps   { color: #5a9fd4; }
+.tag-kr   { color: #c07040; }
+.tag-jo   { color: #9a7ac0; }
+.tag-des  { color: #5ab87a; }
+.tag-liv  { color: #40c090; }
+.tag-blog { color: #e08030; }
+.tag-fd   { color: #c05050; }
+.tag-vei  { color: #7aaa68; }
+.tag-star { color: #40a0b0; }
+.tag-retro{ color: #808080; }
+.tag-flem { color: #606060; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">SECU//PROG</div>
+  <a href="#phase0">Phase 0</a>
+  <a href="#portswigger">PortSwigger</a>
+  <a href="#books">Livres</a>
+  <a href="#phrack">Phrack</a>
+  <a href="#phase1">Phase 1</a>
+  <div class="nav-right" id="nav-progress">0 / 0 tâches</div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <div class="hero-label">Roadmap firmware security</div>
+  <h1>Learn by doing.<br><span>Break by understanding.</span></h1>
+  <div class="hero-sub">9 mars 2026 → mi-2027 · Suisse · Web → Binary → Firmware → Startup</div>
+  <div class="stats-row">
+    <div class="stat live">
+      <span class="stat-val" id="stat-done">0</span>
+      <span class="stat-label">Tâches faites</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val" id="stat-total">0</span>
+      <span class="stat-label">Tâches total</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">16</span>
+      <span class="stat-label">Mois programme</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">4</span>
+      <span class="stat-label">Phases</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val" id="stat-reviews">0</span>
+      <span class="stat-label">Reviews publiées</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val" id="stat-labs">0</span>
+      <span class="stat-label">Labs terminés</span>
+    </div>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <span class="progress-label" id="prog-pct">0%</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+  <span class="progress-label">Phase 0 complète</span>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#5a9fd4"></div>PortSwigger</div>
+  <div class="leg"><div class="leg-dot" style="background:#c07040"></div>K&R C</div>
+  <div class="leg"><div class="leg-dot" style="background:#9a7ac0"></div>Jorgensen</div>
+  <div class="leg"><div class="leg-dot" style="background:#5ab87a"></div>Dessin carnet</div>
+  <div class="leg"><div class="leg-dot" style="background:#40c090"></div>📖 Livre dessin</div>
+  <div class="leg"><div class="leg-dot" style="background:#e08030"></div>Review blog</div>
+  <div class="leg"><div class="leg-dot" style="background:#c05050"></div>From Day 0</div>
+  <div class="leg"><div class="leg-dot" style="background:#7aaa68"></div>Veille</div>
+  <div class="leg"><div class="leg-dot" style="background:#40a0b0"></div>Startup</div>
+</div>
+
+<main>
+
+<!-- PHASE 0 -->
+<div class="phase-block" id="phase0">
+  <div class="phase-header">
+    <span class="phase-num">Phase 0</span>
+    <span class="phase-title">Web Security + Fondations C + Dessin</span>
+    <span class="phase-range">Mars → Août 2026</span>
+  </div>
+
+  <!-- COL HEADER (shared template) -->
+
+  <!-- SEMAINE 1 -->
+  <div class="week-block" id="w1">
+    <div class="week-header" onclick="toggleWeek('w1')">
+      <span class="week-toggle" id="w1-tog">▶</span>
+      <span class="week-num">S01</span>
+      <span class="week-title">Démarrage — PortSwigger + Dessin uniquement. K&R démarre le 16.</span>
+      <span class="week-dates">9–15 mars</span>
+      <span class="week-progress" id="w1-prog">0%</span>
+    </div>
+    <div class="week-body" id="w1-body">
+      <div class="day-col-header">
+        <div class="dch">Jour</div>
+        <div class="dch">Matin</div>
+        <div class="dch">Après-midi</div>
+        <div class="dch">Soir</div>
+      </div>
+      <!-- Days -->
+      <div class="day-row" data-week="w1">
+        <div class="day-label"><span class="day-name">Lun</span><span class="day-date">9 mar</span></div>
+        <div class="slot" id="s_w1_l1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l1_m','w1')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">SQLi — cours complet + labs Apprentice</div></div>
+        <div class="slot" id="s_w1_l1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l1_a','w1')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'injection' → 5 formes inventées. 1h.</div></div>
+        <div class="slot" id="s_w1_l1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l1_s','w1')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Lire : SSRF Complete Guide (intigriti.com)</div></div>
+      </div>
+      <div class="day-row" data-week="w1">
+        <div class="day-label"><span class="day-name">Mar</span><span class="day-date">10 mar</span></div>
+        <div class="slot" id="s_w1_l2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l2_m','w1')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">SQLi — labs Practitioner (suite)</div></div>
+        <div class="slot" id="s_w1_l2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l2_a','w1')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'authentication' → 5 formes. Archive.org : Bell Labs 1960s.</div></div>
+        <div class="slot" id="s_w1_l2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l2_s','w1')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Lire : Blind SSRF Chains (assetnote.io)</div></div>
+      </div>
+      <div class="day-row" data-week="w1">
+        <div class="day-label"><span class="day-name">Mer</span><span class="day-date">11 mar</span></div>
+        <div class="slot" id="s_w1_l3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l3_m','w1')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Authentication — cours + labs Apprentice</div></div>
+        <div class="slot" id="s_w1_l3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l3_a','w1')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'traversal' → 5 formes. Qu'évoque traverser une couche ?</div></div>
+        <div class="slot" id="s_w1_l3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l3_s','w1')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Lire : Digging for SSRF Next.js (assetnote.io)</div></div>
+      </div>
+      <div class="day-row" data-week="w1">
+        <div class="day-label"><span class="day-name">Jeu</span><span class="day-date">12 mar</span></div>
+        <div class="slot" id="s_w1_l4_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l4_m','w1')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Authentication — labs Practitioner</div></div>
+        <div class="slot" id="s_w1_l4_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l4_a','w1')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'firmware' → 5 formes. Qu'est-ce que firmware évoque ?</div></div>
+        <div class="slot" id="s_w1_l4_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l4_s','w1')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Lire : DNS Rebinding (wikipedia) + PONG (mizu.re)</div></div>
+      </div>
+      <div class="day-row" data-week="w1">
+        <div class="day-label"><span class="day-name">Ven</span><span class="day-date">13 mar</span></div>
+        <div class="slot" id="s_w1_l5_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l5_m','w1')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Path Traversal — cours + tous les labs</div></div>
+        <div class="slot" id="s_w1_l5_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l5_a','w1')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'privilege' → 5 formes. Bilan semaine dans le carnet.</div></div>
+        <div class="slot" id="s_w1_l5_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l5_s','w1')"><span class="slot-tag tag-retro">Rétrospective</span></div><div class="slot-detail">30 min : qu'est-ce que tu sais faire que tu ne savais pas lundi ?</div></div>
+      </div>
+      <div class="day-row weekend" data-week="w1">
+        <div class="day-label"><span class="day-name">Sam</span><span class="day-date">14 mar</span></div>
+        <div class="slot" id="s_w1_l6_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l6_m','w1')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Ch.1–2 : Intro + Architecture (~30p). Lire + noter les registres.</div></div>
+        <div class="slot" id="s_w1_l6_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l6_a','w1')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Session longue 2h — formes libres, pas de contrainte.</div></div>
+        <div class="slot" id="s_w1_l6_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l6_s','w1')"><span class="slot-tag tag-flem">Flemme</span></div><div class="slot-detail">Série / gaming / rien. C'est dans le programme.</div></div>
+      </div>
+      <div class="day-row weekend" data-week="w1">
+        <div class="day-label"><span class="day-name">Dim</span><span class="day-date">15 mar</span></div>
+        <div class="slot" id="s_w1_l7_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l7_m','w1')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Ch.1–2 suite : tester les exemples dans GDB.</div></div>
+        <div class="slot" id="s_w1_l7_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l7_a','w1')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Sketchbook libre. Pas de contrainte.</div></div>
+        <div class="slot" id="s_w1_l7_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w1_l7_s','w1')"><span class="slot-tag tag-vei">Veille légère</span></div><div class="slot-detail">1 article lu tranquillement.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMAINE 2 -->
+  <div class="week-block" id="w2">
+    <div class="week-header" onclick="toggleWeek('w2')">
+      <span class="week-toggle" id="w2-tog">▶</span>
+      <span class="week-num">S02</span>
+      <span class="week-title">K&R démarre · Ch.1+2 · 2 reviews publiées · Jorgensen Ch.3–4</span>
+      <span class="week-dates">16–22 mars</span>
+      <span class="week-progress" id="w2-prog">0%</span>
+    </div>
+    <div class="week-body" id="w2-body">
+      <div class="day-col-header"><div class="dch">Jour</div><div class="dch">Matin</div><div class="dch">Après-midi</div><div class="dch">Soir</div></div>
+      <div class="day-row" data-week="w2">
+        <div class="day-label"><span class="day-name">Lun</span><span class="day-date">16 mar</span></div>
+        <div class="slot" id="s_w2_l1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l1_m','w2')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Command Injection — cours + tous les labs</div></div>
+        <div class="slot" id="s_w2_l1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l1_a','w2')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'boot' → 5 formes. Qu'y a-t-il avant le démarrage ?</div></div>
+        <div class="slot" id="s_w2_l1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l1_s','w2')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Lire : OAuth Dirty Dancing (detectify)</div></div>
+      </div>
+      <div class="day-row" data-week="w2">
+        <div class="day-label"><span class="day-name">Mar</span><span class="day-date">17 mar</span></div>
+        <div class="slot" id="s_w2_l2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l2_m','w2')"><span class="slot-tag tag-kr">K&R Ch.1</span></div><div class="slot-detail">Lire Ch.1 Tutorial Introduction — 15p. Faire tous les exercices. ← K&R démarre</div></div>
+        <div class="slot" id="s_w2_l2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l2_a','w2')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'hidden' → 5 formes. Ce qui est caché sous l'OS.</div></div>
+        <div class="slot" id="s_w2_l2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l2_s','w2')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Lire : Second Order IDOR Delete (koalasec)</div></div>
+      </div>
+      <div class="day-row" data-week="w2">
+        <div class="day-label"><span class="day-name">Mer</span><span class="day-date">18 mar</span></div>
+        <div class="slot" id="s_w2_l3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l3_m','w2')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Business Logic — cours + labs Apprentice</div></div>
+        <div class="slot" id="s_w2_l3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l3_a','w2')"><span class="slot-tag tag-kr">K&R Ch.1 suite</span></div><div class="slot-detail">15p restants + exercices avancés.</div></div>
+        <div class="slot" id="s_w2_l3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l3_s','w2')"><span class="slot-tag tag-blog">Review K&R #1</span></div><div class="slot-detail">Rédiger + publier review Ch.1 — 1h30. tednoob17.github.io ✦</div></div>
+      </div>
+      <div class="day-row" data-week="w2">
+        <div class="day-label"><span class="day-name">Jeu</span><span class="day-date">19 mar</span></div>
+        <div class="slot" id="s_w2_l4_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l4_m','w2')"><span class="slot-tag tag-kr">K&R Ch.2</span></div><div class="slot-detail">Lire Ch.2 Types, Operators — 20p. Exercices.</div></div>
+        <div class="slot" id="s_w2_l4_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l4_a','w2')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'layer' → 5 formes. Les couches firmware/OS/appli.</div></div>
+        <div class="slot" id="s_w2_l4_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l4_s','w2')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Lire : XSS Filter Evasion (acunetix)</div></div>
+      </div>
+      <div class="day-row" data-week="w2">
+        <div class="day-label"><span class="day-name">Ven</span><span class="day-date">20 mar</span></div>
+        <div class="slot" id="s_w2_l5_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l5_m','w2')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Access Control + IDOR — cours + labs Apprentice</div></div>
+        <div class="slot" id="s_w2_l5_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l5_a','w2')"><span class="slot-tag tag-blog">Review K&R #2</span></div><div class="slot-detail">Rédiger + publier review Ch.2 — 1h30. ✦</div></div>
+        <div class="slot" id="s_w2_l5_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l5_s','w2')"><span class="slot-tag tag-retro">Rétrospective</span></div><div class="slot-detail">30 min : 2 reviews publiées ? PS avance ? Dessin chaque jour ?</div></div>
+      </div>
+      <div class="day-row weekend" data-week="w2">
+        <div class="day-label"><span class="day-name">Sam</span><span class="day-date">21 mar</span></div>
+        <div class="slot" id="s_w2_l6_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l6_m','w2')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Ch.3–4 : Data Representation (~30p). Tester dans GDB.</div></div>
+        <div class="slot" id="s_w2_l6_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l6_a','w2')"><span class="slot-tag tag-des">Dessin carnet 2h</span></div><div class="slot-detail">Archive.org : industrial safety poster 1950s</div></div>
+        <div class="slot" id="s_w2_l6_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l6_s','w2')"><span class="slot-tag tag-flem">Flemme</span></div><div class="slot-detail">Série / gaming / rien.</div></div>
+      </div>
+      <div class="day-row weekend" data-week="w2">
+        <div class="day-label"><span class="day-name">Dim</span><span class="day-date">22 mar</span></div>
+        <div class="slot" id="s_w2_l7_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l7_m','w2')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Ch.3–4 suite : écrire 3 exemples ASM à la main.</div></div>
+        <div class="slot" id="s_w2_l7_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l7_a','w2')"><span class="slot-tag tag-fd">From Day 0</span></div><div class="slot-detail">Ch.3 Fuzzing — lecture + début rédaction review.</div></div>
+        <div class="slot" id="s_w2_l7_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w2_l7_s','w2')"><span class="slot-tag tag-vei">Veille légère</span></div><div class="slot-detail">1 article lu tranquillement.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMAINES 3–7 collapsed by default with summary rows -->
+  <div class="week-block" id="w3">
+    <div class="week-header" onclick="toggleWeek('w3')">
+      <span class="week-toggle" id="w3-tog">▶</span>
+      <span class="week-num">S03</span>
+      <span class="week-title">K&R Ch.3+4 · SSRF+XXE PortSwigger · Jorgensen Ch.5–6</span>
+      <span class="week-dates">23–29 mars</span>
+      <span class="week-progress" id="w3-prog">0%</span>
+    </div>
+    <div class="week-body" id="w3-body">
+      <div class="day-col-header"><div class="dch">Jour</div><div class="dch">Matin</div><div class="dch">Après-midi</div><div class="dch">Soir</div></div>
+      <div class="day-row" data-week="w3"><div class="day-label"><span class="day-name">Lun</span><span class="day-date">23 mar</span></div><div class="slot" id="s_w3_l1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l1_m','w3')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">IDOR — labs Practitioner. Burp Intruder si besoin.</div></div><div class="slot" id="s_w3_l1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l1_a','w3')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'trust' → 5 formes.</div></div><div class="slot" id="s_w3_l1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l1_s','w3')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Self XSS → ATO via HTTPOnly (aretekzs)</div></div></div>
+      <div class="day-row" data-week="w3"><div class="day-label"><span class="day-name">Mar</span><span class="day-date">24 mar</span></div><div class="slot" id="s_w3_l2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l2_m','w3')"><span class="slot-tag tag-kr">K&R Ch.3</span></div><div class="slot-detail">Lire Ch.3 Control Flow — 15p. Boucles, switches. Exercices.</div></div><div class="slot" id="s_w3_l2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l2_a','w3')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'silence' → 5 formes.</div></div><div class="slot" id="s_w3_l2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l2_s','w3')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Stored XSS Pass Culture (aeth.cc)</div></div></div>
+      <div class="day-row" data-week="w3"><div class="day-label"><span class="day-name">Mer</span><span class="day-date">25 mar</span></div><div class="slot" id="s_w3_l3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l3_m','w3')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">SSRF — cours + labs Apprentice + Practitioner</div></div><div class="slot" id="s_w3_l3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l3_a','w3')"><span class="slot-tag tag-blog">Review K&R #3</span></div><div class="slot-detail">Rédiger + publier review Ch.3 — 1h30. ✦</div></div><div class="slot" id="s_w3_l3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l3_s','w3')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Do Not Use alert(1) (liveoverflow)</div></div></div>
+      <div class="day-row" data-week="w3"><div class="day-label"><span class="day-name">Jeu</span><span class="day-date">26 mar</span></div><div class="slot" id="s_w3_l4_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l4_m','w3')"><span class="slot-tag tag-kr">K&R Ch.4</span></div><div class="slot-detail">Ch.4 Functions — 25p. Récursion, scope. Exercices.</div></div><div class="slot" id="s_w3_l4_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l4_a','w3')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'implant' → 5 formes.</div></div><div class="slot" id="s_w3_l4_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l4_s','w3')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">WAF Evasion Techniques (isec.pl)</div></div></div>
+      <div class="day-row" data-week="w3"><div class="day-label"><span class="day-name">Ven</span><span class="day-date">27 mar</span></div><div class="slot" id="s_w3_l5_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l5_m','w3')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">XXE — cours + tous les labs</div></div><div class="slot" id="s_w3_l5_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l5_a','w3')"><span class="slot-tag tag-blog">Review K&R #4</span></div><div class="slot-detail">Rédiger + publier review Ch.4 — 1h30. ✦</div></div><div class="slot" id="s_w3_l5_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l5_s','w3')"><span class="slot-tag tag-retro">Rétrospective</span></div><div class="slot-detail">30 min : 4 reviews K&R publiées ? SSRF + XXE faits ?</div></div></div>
+      <div class="day-row weekend" data-week="w3"><div class="day-label"><span class="day-name">Sam</span><span class="day-date">28 mar</span></div><div class="slot" id="s_w3_l6_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l6_m','w3')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Ch.5–6 : Instructions + Addressing (~35p). Compiler les exemples.</div></div><div class="slot" id="s_w3_l6_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l6_a','w3')"><span class="slot-tag tag-des">Dessin carnet 2h</span></div><div class="slot-detail">letterformarchive.org</div></div><div class="slot" id="s_w3_l6_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l6_s','w3')"><span class="slot-tag tag-flem">Flemme</span></div><div class="slot-detail">Série / gaming / rien.</div></div></div>
+      <div class="day-row weekend" data-week="w3"><div class="day-label"><span class="day-name">Dim</span><span class="day-date">29 mar</span></div><div class="slot" id="s_w3_l7_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l7_m','w3')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Ch.5–6 suite : mini-programmes ASM.</div></div><div class="slot" id="s_w3_l7_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l7_a','w3')"><span class="slot-tag tag-fd">From Day 0</span></div><div class="slot-detail">Ch.3 suite + finir + publier review.</div></div><div class="slot" id="s_w3_l7_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w3_l7_s','w3')"><span class="slot-tag tag-vei">Veille légère</span></div><div class="slot-detail">1 article lu.</div></div></div>
+    </div>
+  </div>
+
+  <!-- S04 -->
+  <div class="week-block" id="w4">
+    <div class="week-header" onclick="toggleWeek('w4')">
+      <span class="week-toggle" id="w4-tog">▶</span>
+      <span class="week-num">S04</span>
+      <span class="week-title">K&R Ch.5 (DENSE, 3 jours) · XSS 3 types · Jorgensen Ch.7–8 (cœur)</span>
+      <span class="week-dates">30 mars – 5 avr</span>
+      <span class="week-progress" id="w4-prog">0%</span>
+    </div>
+    <div class="week-body" id="w4-body">
+      <div class="day-col-header"><div class="dch">Jour</div><div class="dch">Matin</div><div class="dch">Après-midi</div><div class="dch">Soir</div></div>
+      <div class="day-row" data-week="w4"><div class="day-label"><span class="day-name">Lun</span><span class="day-date">30 mar</span></div><div class="slot" id="s_w4_l1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l1_m','w4')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">XSS Reflected — cours + labs Apprentice + Practitioner</div></div><div class="slot" id="s_w4_l1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l1_a','w4')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'before' → 5 formes. Avant le boot = avant tout.</div></div><div class="slot" id="s_w4_l1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l1_s','w4')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">WAF as a Weapon DoS (zhero)</div></div></div>
+      <div class="day-row" data-week="w4"><div class="day-label"><span class="day-name">Mar</span><span class="day-date">31 mar</span></div><div class="slot" id="s_w4_l2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l2_m','w4')"><span class="slot-tag tag-kr">K&R Ch.5 (1/2)</span></div><div class="slot-detail">Pointers & Arrays — 18p MAX. Très dense. Exercices.</div></div><div class="slot" id="s_w4_l2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l2_a','w4')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'pointer' → 5 formes. Une adresse vers quelque chose d'invisible.</div></div><div class="slot" id="s_w4_l2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l2_s','w4')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">CSP unsafe-eval jQuery (statuscode.ch)</div></div></div>
+      <div class="day-row" data-week="w4"><div class="day-label"><span class="day-name">Mer</span><span class="day-date">1 avr</span></div><div class="slot" id="s_w4_l3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l3_m','w4')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">XSS Stored + DOM — cours + labs</div></div><div class="slot" id="s_w4_l3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l3_a','w4')"><span class="slot-tag tag-kr">K&R Ch.5 (2/2)</span></div><div class="slot-detail">17p restants + exercices pointeurs avancés.</div></div><div class="slot" id="s_w4_l3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l3_s','w4')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Sanitize Client Side (sonarsource)</div></div></div>
+      <div class="day-row" data-week="w4"><div class="day-label"><span class="day-name">Jeu</span><span class="day-date">2 avr</span></div><div class="slot" id="s_w4_l4_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l4_m','w4')"><span class="slot-tag tag-kr">K&R Ch.5 exos</span></div><div class="slot-detail">Exercices seuls — tableaux + pointeurs. Pas de nouvelle lecture.</div></div><div class="slot" id="s_w4_l4_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l4_a','w4')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'chain' → 5 formes. La chaîne de confiance.</div></div><div class="slot" id="s_w4_l4_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l4_s','w4')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Prototype Pollution Python (blog.abdulrah33m)</div></div></div>
+      <div class="day-row" data-week="w4"><div class="day-label"><span class="day-name">Ven</span><span class="day-date">3 avr</span></div><div class="slot" id="s_w4_l5_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l5_m','w4')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Insecure Deserialization — cours + labs</div></div><div class="slot" id="s_w4_l5_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l5_a','w4')"><span class="slot-tag tag-blog">Review K&R #5</span></div><div class="slot-detail">Rédiger + publier review Ch.5 — 2h (chapitre le plus dense). ✦</div></div><div class="slot" id="s_w4_l5_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l5_s','w4')"><span class="slot-tag tag-retro">Rétrospective</span></div><div class="slot-detail">30 min : XSS 3 types maîtrisés ? Ch.5 pointeurs vraiment compris ?</div></div></div>
+      <div class="day-row weekend" data-week="w4"><div class="day-label"><span class="day-name">Sam</span><span class="day-date">4 avr</span></div><div class="slot" id="s_w4_l6_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l6_m','w4')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Ch.7–8 : Stack + Fonctions (~30p). LE CŒUR. Prends tout le temps.</div></div><div class="slot" id="s_w4_l6_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l6_a','w4')"><span class="slot-tag tag-des">Dessin carnet 2h</span></div><div class="slot-detail">Scientific American covers 1970s archive.org</div></div><div class="slot" id="s_w4_l6_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l6_s','w4')"><span class="slot-tag tag-flem">Flemme</span></div><div class="slot-detail">Série / gaming / rien.</div></div></div>
+      <div class="day-row weekend" data-week="w4"><div class="day-label"><span class="day-name">Dim</span><span class="day-date">5 avr</span></div><div class="slot" id="s_w4_l7_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l7_m','w4')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Ch.7–8 suite : reproduire call stacks à la main + GDB.</div></div><div class="slot" id="s_w4_l7_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l7_a','w4')"><span class="slot-tag tag-fd">From Day 0</span></div><div class="slot-detail">Ch.4 — lecture + début rédaction review.</div></div><div class="slot" id="s_w4_l7_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w4_l7_s','w4')"><span class="slot-tag tag-vei">Veille légère</span></div><div class="slot-detail">1 article lu.</div></div></div>
+    </div>
+  </div>
+
+  <!-- S05 -->
+  <div class="week-block" id="w5">
+    <div class="week-header" onclick="toggleWeek('w5')">
+      <span class="week-toggle" id="w5-tog">▶</span>
+      <span class="week-num">S05</span>
+      <span class="week-title">K&R Ch.6 → 6 reviews K&R ✅ · Jorgensen review synthèse dimanche</span>
+      <span class="week-dates">6–12 avr</span>
+      <span class="week-progress" id="w5-prog">0%</span>
+    </div>
+    <div class="week-body" id="w5-body">
+      <div class="day-col-header"><div class="dch">Jour</div><div class="dch">Matin</div><div class="dch">Après-midi</div><div class="dch">Soir</div></div>
+      <div class="day-row" data-week="w5"><div class="day-label"><span class="day-name">Lun</span><span class="day-date">6 avr</span></div><div class="slot" id="s_w5_l1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l1_m','w5')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">HTTP Smuggling — cours + labs Apprentice</div></div><div class="slot" id="s_w5_l1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l1_a','w5')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'blindspot' → 5 formes.</div></div><div class="slot" id="s_w5_l1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l1_s','w5')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Next.js Cache Poisoning Black Hole (zhero)</div></div></div>
+      <div class="day-row" data-week="w5"><div class="day-label"><span class="day-name">Mar</span><span class="day-date">7 avr</span></div><div class="slot" id="s_w5_l2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l2_m','w5')"><span class="slot-tag tag-kr">K&R Ch.6</span></div><div class="slot-detail">Structures — 25p. Structs, unions, typedef. Exercices.</div></div><div class="slot" id="s_w5_l2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l2_a','w5')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'invisible' → 5 formes.</div></div><div class="slot" id="s_w5_l2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l2_s','w5')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Next.js Corrupt Middleware (zhero)</div></div></div>
+      <div class="day-row" data-week="w5"><div class="day-label"><span class="day-name">Mer</span><span class="day-date">8 avr</span></div><div class="slot" id="s_w5_l3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l3_m','w5')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">HTTP Smuggling — labs Practitioner</div></div><div class="slot" id="s_w5_l3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l3_a','w5')"><span class="slot-tag tag-blog">Review K&R #6</span></div><div class="slot-detail">Rédiger + publier review Ch.6 — 1h30. (6 reviews K&R publiées ✅) ✦</div></div><div class="slot" id="s_w5_l3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l3_s','w5')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">SvelteKit SSRF + DoS (zhero)</div></div></div>
+      <div class="day-row" data-week="w5"><div class="day-label"><span class="day-name">Jeu</span><span class="day-date">9 avr</span></div><div class="slot" id="s_w5_l4_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l4_m','w5')"><span class="slot-tag tag-ps">PortSwigger Expert</span></div><div class="slot-detail">1 lab Expert — y passer 2h.</div></div><div class="slot" id="s_w5_l4_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l4_a','w5')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Session libre 1h. Qu'est-ce qui revient souvent dans tes formes ?</div></div><div class="slot" id="s_w5_l4_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l4_s','w5')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Rails SQL Injection Gotchas (edgescan)</div></div></div>
+      <div class="day-row" data-week="w5"><div class="day-label"><span class="day-name">Ven</span><span class="day-date">10 avr</span></div><div class="slot" id="s_w5_l5_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l5_m','w5')"><span class="slot-tag tag-ps">PortSwigger Expert</span></div><div class="slot-detail">2e lab Expert ou labs Practitioner manquants.</div></div><div class="slot" id="s_w5_l5_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l5_a','w5')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Bilan visuel 5 semaines — 1 page de synthèse.</div></div><div class="slot" id="s_w5_l5_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l5_s','w5')"><span class="slot-tag tag-retro">Rétrospective</span></div><div class="slot-detail">30 min : 6 reviews K&R ✅. PS — où en es-tu exactement ?</div></div></div>
+      <div class="day-row weekend" data-week="w5"><div class="day-label"><span class="day-name">Sam</span><span class="day-date">11 avr</span></div><div class="slot" id="s_w5_l6_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l6_m','w5')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Révision Ch.1–8 + mini-programme ASM complet.</div></div><div class="slot" id="s_w5_l6_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l6_a','w5')"><span class="slot-tag tag-des">Dessin carnet 2h</span></div><div class="slot-detail">Esquisse : image qui résume 'firmware security'.</div></div><div class="slot" id="s_w5_l6_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l6_s','w5')"><span class="slot-tag tag-flem">Flemme</span></div><div class="slot-detail">Série / gaming / rien.</div></div></div>
+      <div class="day-row weekend" data-week="w5"><div class="day-label"><span class="day-name">Dim</span><span class="day-date">12 avr</span></div><div class="slot" id="s_w5_l7_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l7_m','w5')"><span class="slot-tag tag-blog">Jorgensen — Review synthèse</span></div><div class="slot-detail">Rédiger + publier review synthèse Jorgensen — 2h. ✦</div></div><div class="slot" id="s_w5_l7_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l7_a','w5')"><span class="slot-tag tag-fd">From Day 0</span></div><div class="slot-detail">Ch.4 suite + finir + publier review.</div></div><div class="slot" id="s_w5_l7_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w5_l7_s','w5')"><span class="slot-tag tag-vei">Veille légère</span></div><div class="slot-detail">1 article lu.</div></div></div>
+    </div>
+  </div>
+
+  <!-- S06 -->
+  <div class="week-block" id="w6">
+    <div class="week-header" onclick="toggleWeek('w6')">
+      <span class="week-toggle" id="w6-tog">▶</span>
+      <span class="week-num">S06</span>
+      <span class="week-title">Labs Expert · 📖 Steal Like an Artist samedi 18 avril ← livre dessin #1</span>
+      <span class="week-dates">13–19 avr</span>
+      <span class="week-progress" id="w6-prog">0%</span>
+    </div>
+    <div class="week-body" id="w6-body">
+      <div class="day-col-header"><div class="dch">Jour</div><div class="dch">Matin</div><div class="dch">Après-midi</div><div class="dch">Soir</div></div>
+      <div class="day-row" data-week="w6"><div class="day-label"><span class="day-name">Lun</span><span class="day-date">13 avr</span></div><div class="slot" id="s_w6_l1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l1_m','w6')"><span class="slot-tag tag-ps">PortSwigger Expert</span></div><div class="slot-detail">Deserialization Expert ou Smuggling Expert.</div></div><div class="slot" id="s_w6_l1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l1_a','w6')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'pre-boot' → 5 formes.</div></div><div class="slot" id="s_w6_l1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l1_s','w6')"><span class="slot-tag tag-star">Startup</span></div><div class="slot-detail">30 min : 2 advisories Binarly récents. Qui a ce problème ?</div></div></div>
+      <div class="day-row" data-week="w6"><div class="day-label"><span class="day-name">Mar</span><span class="day-date">14 avr</span></div><div class="slot" id="s_w6_l2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l2_m','w6')"><span class="slot-tag tag-ps">PortSwigger Expert</span></div><div class="slot-detail">Suite ou repasser labs ratés.</div></div><div class="slot" id="s_w6_l2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l2_a','w6')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot libre. 1h carnet.</div></div><div class="slot" id="s_w6_l2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l2_s','w6')"><span class="slot-tag tag-star">Startup</span></div><div class="slot-detail">30 min : postmortem BlackLotus — quel coût réel ?</div></div></div>
+      <div class="day-row" data-week="w6"><div class="day-label"><span class="day-name">Mer</span><span class="day-date">15 avr</span></div><div class="slot" id="s_w6_l3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l3_m','w6')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Révision finale — explique chaque vuln sans notes.</div></div><div class="slot" id="s_w6_l3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l3_a','w6')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'depth' → 5 formes.</div></div><div class="slot" id="s_w6_l3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l3_s','w6')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">React Router Remixed Path (zhero)</div></div></div>
+      <div class="day-row" data-week="w6"><div class="day-label"><span class="day-name">Jeu</span><span class="day-date">16 avr</span></div><div class="slot" id="s_w6_l4_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l4_m','w6')"><span class="slot-tag tag-ps">Test oral</span></div><div class="slot-detail">SQLi, SSRF, IDOR, XSS à voix haute sans notes.</div></div><div class="slot" id="s_w6_l4_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l4_a','w6')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'root' → 5 formes.</div></div><div class="slot" id="s_w6_l4_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l4_s','w6')"><span class="slot-tag tag-star">Startup</span></div><div class="slot-detail">30 min : postmortem AMI key leak.</div></div></div>
+      <div class="day-row" data-week="w6"><div class="day-label"><span class="day-name">Ven</span><span class="day-date">17 avr</span></div><div class="slot" id="s_w6_l5_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l5_m','w6')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Labs bonus libres — ce qui t'intéresse le plus.</div></div><div class="slot" id="s_w6_l5_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l5_a','w6')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Revois 6 semaines de carnet. Qu'est-ce qui revient en boucle ?</div></div><div class="slot" id="s_w6_l5_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l5_s','w6')"><span class="slot-tag tag-retro">Rétrospective</span></div><div class="slot-detail">30 min : Jorgensen synthèse publiée ✅ ? 5 labs Expert ?</div></div></div>
+      <div class="day-row weekend" data-week="w6"><div class="day-label"><span class="day-name">Sam</span><span class="day-date">18 avr</span></div>
+        <div class="slot" id="s_w6_l6_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l6_m','w6')"><span class="slot-tag tag-liv">📖 Steal Like an Artist</span></div><div class="slot-detail">Lu en ENTIER — 2h. (160p, lecture rapide) Note tes 3 idées qui résonnent.</div></div>
+        <div class="slot" id="s_w6_l6_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l6_a','w6')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Appliquer 1 idée du livre — dessine dans le style de quelqu'un que tu admires.</div></div>
+        <div class="slot" id="s_w6_l6_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l6_s','w6')"><span class="slot-tag tag-flem">Flemme</span></div><div class="slot-detail">Série / gaming / rien.</div></div>
+      </div>
+      <div class="day-row weekend" data-week="w6"><div class="day-label"><span class="day-name">Dim</span><span class="day-date">19 avr</span></div>
+        <div class="slot" id="s_w6_l7_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l7_m','w6')"><span class="slot-tag tag-blog">Review Steal Like Artist</span></div><div class="slot-detail">400 mots, format libre, 45 min max. Publier. ✦</div></div>
+        <div class="slot" id="s_w6_l7_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l7_a','w6')"><span class="slot-tag tag-fd">From Day 0</span></div><div class="slot-detail">Ch.5 — lecture + début rédaction review.</div></div>
+        <div class="slot" id="s_w6_l7_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w6_l7_s','w6')"><span class="slot-tag tag-vei">Veille légère</span></div><div class="slot-detail">1 article lu tranquillement.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S07 -->
+  <div class="week-block" id="w7">
+    <div class="week-header" onclick="toggleWeek('w7')">
+      <span class="week-toggle" id="w7-tog">▶</span>
+      <span class="week-num">S07</span>
+      <span class="week-title">Finalisation Phase 0 · 80%+ PortSwigger · Buffer avant Phase 1</span>
+      <span class="week-dates">20–26 avr</span>
+      <span class="week-progress" id="w7-prog">0%</span>
+    </div>
+    <div class="week-body" id="w7-body">
+      <div class="day-col-header"><div class="dch">Jour</div><div class="dch">Matin</div><div class="dch">Après-midi</div><div class="dch">Soir</div></div>
+      <div class="day-row" data-week="w7"><div class="day-label"><span class="day-name">Lun</span><span class="day-date">20 avr</span></div><div class="slot" id="s_w7_l1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l1_m','w7')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Labs restants. Objectif : 80%+ atteint.</div></div><div class="slot" id="s_w7_l1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l1_a','w7')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'trust chain' → 5 formes.</div></div><div class="slot" id="s_w7_l1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l1_s','w7')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">CSS Injection Credit Card (castilho.sh)</div></div></div>
+      <div class="day-row" data-week="w7"><div class="day-label"><span class="day-name">Mar</span><span class="day-date">21 avr</span></div><div class="slot" id="s_w7_l2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l2_m','w7')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Labs restants selon ton compteur.</div></div><div class="slot" id="s_w7_l2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l2_a','w7')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">1h — exploration libre archive.org.</div></div><div class="slot" id="s_w7_l2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l2_s','w7')"><span class="slot-tag tag-star">Startup</span></div><div class="slot-detail">30 min : postmortem Cisco IMC exploit.</div></div></div>
+      <div class="day-row" data-week="w7"><div class="day-label"><span class="day-name">Mer</span><span class="day-date">22 avr</span></div><div class="slot" id="s_w7_l3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l3_m','w7')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Labs restants ou Expert challenge.</div></div><div class="slot" id="s_w7_l3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l3_a','w7')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Mot : 'surface' → 5 formes.</div></div><div class="slot" id="s_w7_l3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l3_s','w7')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Mass Assignment (aeth.cc)</div></div></div>
+      <div class="day-row" data-week="w7"><div class="day-label"><span class="day-name">Jeu</span><span class="day-date">23 avr</span></div><div class="slot" id="s_w7_l4_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l4_m','w7')"><span class="slot-tag tag-ps">PortSwigger</span></div><div class="slot-detail">Labs restants + relire notes sur les plus durs.</div></div><div class="slot" id="s_w7_l4_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l4_a','w7')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Dessiner sans regarder ta main — exercice de perception.</div></div><div class="slot" id="s_w7_l4_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l4_s','w7')"><span class="slot-tag tag-star">Startup</span></div><div class="slot-detail">30 min : cartographier marché firmware en 1 page brouillon.</div></div></div>
+      <div class="day-row" data-week="w7"><div class="day-label"><span class="day-name">Ven</span><span class="day-date">24 avr</span></div><div class="slot" id="s_w7_l5_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l5_m','w7')"><span class="slot-tag tag-ps">Vérification finale</span></div><div class="slot-detail">Explique chaque vuln sans notes ?</div></div><div class="slot" id="s_w7_l5_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l5_a','w7')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">Bilan 7 semaines — 1 page de synthèse visuelle.</div></div><div class="slot" id="s_w7_l5_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l5_s','w7')"><span class="slot-tag tag-retro">Rétrospective</span></div><div class="slot-detail">30 min : 80%+ PS ✅ ? Toutes reviews publiées ? Dessin chaque jour ?</div></div></div>
+      <div class="day-row weekend" data-week="w7"><div class="day-label"><span class="day-name">Sam</span><span class="day-date">25 avr</span></div><div class="slot" id="s_w7_l6_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l6_m','w7')"><span class="slot-tag tag-jo">Jorgensen</span></div><div class="slot-detail">Révision ASM libre — programme qui lit des args en CLI.</div></div><div class="slot" id="s_w7_l6_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l6_a','w7')"><span class="slot-tag tag-des">Dessin carnet 2h</span></div><div class="slot-detail">letterformarchive.org</div></div><div class="slot" id="s_w7_l6_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l6_s','w7')"><span class="slot-tag tag-flem">Flemme</span></div><div class="slot-detail">Série / gaming / rien.</div></div></div>
+      <div class="day-row weekend" data-week="w7"><div class="day-label"><span class="day-name">Dim</span><span class="day-date">26 avr</span></div><div class="slot" id="s_w7_l7_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l7_m','w7')"><span class="slot-tag tag-flem">Buffer / Repos</span></div><div class="slot-detail">Rattrape un retard ou prends du repos. Pas de forcing.</div></div><div class="slot" id="s_w7_l7_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l7_a','w7')"><span class="slot-tag tag-fd">From Day 0</span></div><div class="slot-detail">Ch.5 suite + finir + publier review si prête.</div></div><div class="slot" id="s_w7_l7_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_w7_l7_s','w7')"><span class="slot-tag tag-vei">Veille légère</span></div><div class="slot-detail">1 article lu tranquillement.</div></div></div>
+    </div>
+  </div>
+
+  <!-- JUILLET — Drawing on the Right Side -->
+  <div class="week-block" id="wjuil">
+    <div class="week-header" onclick="toggleWeek('wjuil')">
+      <span class="week-toggle" id="wjuil-tog">▶</span>
+      <span class="week-num">JUIL</span>
+      <span class="week-title">📖 Drawing on the Right Side démarre — Mar+Jeu soir, 1 chapitre/semaine</span>
+      <span class="week-dates">Juillet 2026</span>
+      <span class="week-progress" id="wjuil-prog">0%</span>
+    </div>
+    <div class="week-body" id="wjuil-body">
+      <div class="day-col-header"><div class="dch">Jour</div><div class="dch">Matin</div><div class="dch">Après-midi</div><div class="dch">Soir</div></div>
+      <div class="day-row" data-week="wjuil"><div class="day-label"><span class="day-name">Lun</span><span class="day-date">Type</span></div><div class="slot" id="s_wj_l1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l1_m','wjuil')"><span class="slot-tag tag-ps">Pratique</span></div><div class="slot-detail">Préparer Phase 1 : GDB + pwntools install + tests.</div></div><div class="slot" id="s_wj_l1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l1_a','wjuil')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">1h — mot du jour → 5 formes.</div></div><div class="slot" id="s_wj_l1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l1_s','wjuil')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Article blog sécu lu.</div></div></div>
+      <div class="day-row" data-week="wjuil"><div class="day-label"><span class="day-name">Mar</span><span class="day-date">Type ←</span></div>
+        <div class="slot" id="s_wj_l2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l2_m','wjuil')"><span class="slot-tag tag-liv">📖 Drawing Ch.1–2</span></div><div class="slot-detail">Lire ~30p + exercices dans le carnet le jour même.</div></div>
+        <div class="slot" id="s_wj_l2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l2_a','wjuil')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">1h — appliquer l'exercice du chapitre lu ce matin.</div></div>
+        <div class="slot" id="s_wj_l2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l2_s','wjuil')"><span class="slot-tag tag-star">Startup</span></div><div class="slot-detail">30 min : advisories Binarly — mapping marché.</div></div>
+      </div>
+      <div class="day-row" data-week="wjuil"><div class="day-label"><span class="day-name">Mer</span><span class="day-date">Type</span></div><div class="slot" id="s_wj_l3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l3_m','wjuil')"><span class="slot-tag tag-ps">Pratique</span></div><div class="slot-detail">GDB + pwntools — tester, se familiariser.</div></div><div class="slot" id="s_wj_l3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l3_a','wjuil')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">1h — exercices du chapitre Drawing (contours purs).</div></div><div class="slot" id="s_wj_l3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l3_s','wjuil')"><span class="slot-tag tag-vei">Veille</span></div><div class="slot-detail">Article blog sécu lu.</div></div></div>
+      <div class="day-row" data-week="wjuil"><div class="day-label"><span class="day-name">Jeu</span><span class="day-date">Type ←</span></div>
+        <div class="slot" id="s_wj_l4_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l4_m','wjuil')"><span class="slot-tag tag-liv">📖 Drawing Ch.3–4</span></div><div class="slot-detail">Lire ~30p + exercices dans le carnet le jour même.</div></div>
+        <div class="slot" id="s_wj_l4_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l4_a','wjuil')"><span class="slot-tag tag-des">Dessin carnet</span></div><div class="slot-detail">1h — exercices Edwards : dessiner sans lever le crayon.</div></div>
+        <div class="slot" id="s_wj_l4_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l4_s','wjuil')"><span class="slot-tag tag-fd">From Day 0</span></div><div class="slot-detail">1 chapitre + début review.</div></div>
+      </div>
+      <div class="day-row" data-week="wjuil"><div class="day-label"><span class="day-name">Ven</span><span class="day-date">Type</span></div><div class="slot" id="s_wj_l5_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l5_m','wjuil')"><span class="slot-tag tag-ps">Pratique</span></div><div class="slot-detail">Continuer préparation Phase 1.</div></div><div class="slot" id="s_wj_l5_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l5_a','wjuil')"><span class="slot-tag tag-blog">Review Drawing bloc 1</span></div><div class="slot-detail">Review Drawing Ch.1–4 (bloc 1) — 1h30. Publier. Photos carnet. ✦</div></div><div class="slot" id="s_wj_l5_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l5_s','wjuil')"><span class="slot-tag tag-retro">Rétrospective</span></div><div class="slot-detail">Drawing exercices faits ? Nouveaux réflexes visuels ?</div></div></div>
+      <div class="day-row weekend" data-week="wjuil"><div class="day-label"><span class="day-name">Sam</span><span class="day-date">Type</span></div><div class="slot" id="s_wj_l6_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l6_m','wjuil')"><span class="slot-tag tag-liv">📖 Drawing exos</span></div><div class="slot-detail">Session pratique longue — espaces négatifs, mains.</div></div><div class="slot" id="s_wj_l6_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l6_a','wjuil')"><span class="slot-tag tag-des">Dessin carnet 2h</span></div><div class="slot-detail">Appliquer ce que tu viens de lire.</div></div><div class="slot" id="s_wj_l6_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l6_s','wjuil')"><span class="slot-tag tag-flem">Flemme</span></div><div class="slot-detail">Série / gaming / rien.</div></div></div>
+      <div class="day-row weekend" data-week="wjuil"><div class="day-label"><span class="day-name">Dim</span><span class="day-date">Type</span></div><div class="slot" id="s_wj_l7_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l7_m','wjuil')"><span class="slot-tag tag-liv">📖 Drawing exos libres</span></div><div class="slot-detail">Exercices Edwards libres — dessiner ce qui t'entoure.</div></div><div class="slot" id="s_wj_l7_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l7_a','wjuil')"><span class="slot-tag tag-fd">From Day 0</span></div><div class="slot-detail">Finir + publier review.</div></div><div class="slot" id="s_wj_l7_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_wj_l7_s','wjuil')"><span class="slot-tag tag-vei">Veille légère</span></div><div class="slot-detail">1 article lu.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTSWIGGER -->
+<div class="ps-section" id="portswigger">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-title">PortSwigger Academy — Labs tracker</span>
+    <span class="section-count" id="ps-count">0 / 0</span>
+  </div>
+  <div class="ps-modules" id="ps-modules-list">
+    <!-- dynamically rendered -->
+  </div>
+</div>
+
+<!-- BOOKS -->
+<div class="books-section" id="books">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-title">Livres — Reviews & avancement</span>
+    <span class="section-count" id="books-count">0 / 0 publiées</span>
+  </div>
+  <div class="books-grid">
+
+    <div class="book-card">
+      <div class="book-type">C Programming · Phase 0</div>
+      <div class="book-title">The C Programming Language</div>
+      <div class="book-author">Kernighan & Ritchie — Ch.1–6 uniquement</div>
+      <div class="task-list">
+        <div class="task-item" id="kr1"><input type="checkbox" class="cb" onchange="taskDone(this,'kr1','review')"> <label class="task-label">Ch.1 — Review publiée ✦</label></div>
+        <div class="task-item" id="kr2"><input type="checkbox" class="cb" onchange="taskDone(this,'kr2','review')"> <label class="task-label">Ch.2 — Review publiée ✦</label></div>
+        <div class="task-item" id="kr3"><input type="checkbox" class="cb" onchange="taskDone(this,'kr3','review')"> <label class="task-label">Ch.3 — Review publiée ✦</label></div>
+        <div class="task-item" id="kr4"><input type="checkbox" class="cb" onchange="taskDone(this,'kr4','review')"> <label class="task-label">Ch.4 — Review publiée ✦</label></div>
+        <div class="task-item" id="kr5"><input type="checkbox" class="cb" onchange="taskDone(this,'kr5','review')"> <label class="task-label">Ch.5 (Pointers) — Review publiée ✦</label></div>
+        <div class="task-item" id="kr6"><input type="checkbox" class="cb" onchange="taskDone(this,'kr6','review')"> <label class="task-label">Ch.6 — Review publiée ✦</label></div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="book-type">Assembly · Phase 0 weekends</div>
+      <div class="book-title">x86-64 Assembly Language Programming</div>
+      <div class="book-author">Jorgensen — Ch.1–8 uniquement</div>
+      <div class="task-list">
+        <div class="task-item" id="jo1"><input type="checkbox" class="cb" onchange="taskDone(this,'jo1')"> <label class="task-label">Ch.1–2 lus + exercices GDB</label></div>
+        <div class="task-item" id="jo2"><input type="checkbox" class="cb" onchange="taskDone(this,'jo2')"> <label class="task-label">Ch.3–4 lus + exercices GDB</label></div>
+        <div class="task-item" id="jo3"><input type="checkbox" class="cb" onchange="taskDone(this,'jo3')"> <label class="task-label">Ch.5–6 lus + exercices GDB</label></div>
+        <div class="task-item" id="jo4"><input type="checkbox" class="cb" onchange="taskDone(this,'jo4')"> <label class="task-label">Ch.7–8 lus + call stacks main GDB</label></div>
+        <div class="task-item" id="jo5"><input type="checkbox" class="cb" onchange="taskDone(this,'jo5','review')"> <label class="task-label">Review synthèse publiée ✦</label></div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="book-type">Firmware Security · dès Phase 0</div>
+      <div class="book-title">From Day 0 to 0day</div>
+      <div class="book-author">En cours — Ch.0+1+2 déjà publiés</div>
+      <div class="task-list">
+        <div class="task-item" id="fd0"><input type="checkbox" class="cb" onchange="taskDone(this,'fd0','review')"> <label class="task-label">Ch.0 — Review publiée ✅</label></div>
+        <div class="task-item" id="fd1"><input type="checkbox" class="cb" onchange="taskDone(this,'fd1','review')"> <label class="task-label">Ch.1 — Review publiée ✅</label></div>
+        <div class="task-item" id="fd2"><input type="checkbox" class="cb" onchange="taskDone(this,'fd2','review')"> <label class="task-label">Ch.2 — Review publiée ✅</label></div>
+        <div class="task-item" id="fd3"><input type="checkbox" class="cb" onchange="taskDone(this,'fd3','review')"> <label class="task-label">Ch.3 — Review publiée ✦</label></div>
+        <div class="task-item" id="fd4"><input type="checkbox" class="cb" onchange="taskDone(this,'fd4','review')"> <label class="task-label">Ch.4 — Review publiée ✦</label></div>
+        <div class="task-item" id="fd5"><input type="checkbox" class="cb" onchange="taskDone(this,'fd5','review')"> <label class="task-label">Ch.5 — Review publiée ✦</label></div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="book-type">Design · Samedi 18 avril</div>
+      <div class="book-title">Steal Like an Artist</div>
+      <div class="book-author">Austin Kleon — Lu en 1 session 2h</div>
+      <div class="task-list">
+        <div class="task-item" id="sl1"><input type="checkbox" class="cb" onchange="taskDone(this,'sl1')"> <label class="task-label">Lu en entier (samedi 18 avr)</label></div>
+        <div class="task-item" id="sl2"><input type="checkbox" class="cb" onchange="taskDone(this,'sl2','review')"> <label class="task-label">Review 400 mots publiée (dim 19 avr) ✦</label></div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="book-type">Livre dessin · Juillet → Novembre</div>
+      <div class="book-title">Drawing on the Right Side of the Brain</div>
+      <div class="book-author">Betty Edwards — Mar+Jeu soir, 1 ch/semaine</div>
+      <div class="task-list">
+        <div class="task-item" id="dr1"><input type="checkbox" class="cb" onchange="taskDone(this,'dr1')"> <label class="task-label">Ch.1–2 lus + exercices carnet (juil, semaine 1)</label></div>
+        <div class="task-item" id="dr2"><input type="checkbox" class="cb" onchange="taskDone(this,'dr2')"> <label class="task-label">Ch.3–4 lus + exercices carnet (juil, semaine 2)</label></div>
+        <div class="task-item" id="dr3"><input type="checkbox" class="cb" onchange="taskDone(this,'dr3','review')"> <label class="task-label">Review bloc 1 (Ch.1–4) publiée ✦</label></div>
+        <div class="task-item" id="dr4"><input type="checkbox" class="cb" onchange="taskDone(this,'dr4')"> <label class="task-label">Ch.5–6 lus + exercices carnet (août, semaine 1)</label></div>
+        <div class="task-item" id="dr5"><input type="checkbox" class="cb" onchange="taskDone(this,'dr5')"> <label class="task-label">Ch.7–8 lus + exercices carnet (août, semaine 2)</label></div>
+        <div class="task-item" id="dr6"><input type="checkbox" class="cb" onchange="taskDone(this,'dr6','review')"> <label class="task-label">Review bloc 2 (Ch.5–8) publiée ✦</label></div>
+        <div class="task-item" id="dr7"><input type="checkbox" class="cb" onchange="taskDone(this,'dr7')"> <label class="task-label">Ch.9–12 lus + exercices carnet (sept–oct)</label></div>
+        <div class="task-item" id="dr8"><input type="checkbox" class="cb" onchange="taskDone(this,'dr8','review')"> <label class="task-label">Review synthèse finale publiée (nov) ✦</label></div>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <div class="book-type">Design · Janvier 2027</div>
+      <div class="book-title">Logo Design Love</div>
+      <div class="book-author">David Airey — Phase 2, 2 blocs sur 2 semaines</div>
+      <div class="task-list">
+        <div class="task-item" id="ld1"><input type="checkbox" class="cb" onchange="taskDone(this,'ld1')"> <label class="task-label">Ch.1–6 lus + notes (semaine 1 jan 2027)</label></div>
+        <div class="task-item" id="ld2"><input type="checkbox" class="cb" onchange="taskDone(this,'ld2','review')"> <label class="task-label">Review bloc 1 publiée ✦</label></div>
+        <div class="task-item" id="ld3"><input type="checkbox" class="cb" onchange="taskDone(this,'ld3')"> <label class="task-label">Ch.7–12 lus + notes (semaine 2 jan 2027)</label></div>
+        <div class="task-item" id="ld4"><input type="checkbox" class="cb" onchange="taskDone(this,'ld4','review')"> <label class="task-label">Review bloc 2 publiée ✦</label></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PHRACK -->
+<div class="ps-section" id="phrack" style="margin-top:48px">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-title">Phrack — Articles à lire + blog posts</span>
+    <span class="section-count" id="phrack-count">0 / 9</span>
+  </div>
+  <div class="phrack-list">
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">#49/14</div><div class="phrack-name">Smashing the Stack for Fun and Profit</div><div class="phrack-when">Août 2026 (Phase 0 fin)</div><div class="phrack-action">→ Blog post stack overflow</div></div>
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">#57/9</div><div class="phrack-name">Vudo — malloc ou comment perdre son temps</div><div class="phrack-when">Oct 2026</div><div class="phrack-action">→ Blog post heap</div></div>
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">#59/7</div><div class="phrack-name">Exploiting Format String Vulnerabilities</div><div class="phrack-when">Oct 2026</div><div class="phrack-action">→ Blog post format strings</div></div>
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">#60/10</div><div class="phrack-name">Basic Integer Overflows</div><div class="phrack-when">Oct 2026</div><div class="phrack-action">→ Blog post integer overflows</div></div>
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">#58/4</div><div class="phrack-name">The Frame Pointer Overwrite</div><div class="phrack-when">Nov 2026</div><div class="phrack-action">→ Blog post ret2libc + pwntools</div></div>
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">#59/9</div><div class="phrack-name">Bypassing Non-eXecutable-Stack during Exploitation</div><div class="phrack-when">Nov 2026</div><div class="phrack-action">→ Blog post ASLR bypass</div></div>
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">Shacham 2007</div><div class="phrack-name">The Geometry of Innocent Flesh on the Bone (ROP)</div><div class="phrack-when">Déc 2026</div><div class="phrack-action">→ Blog post ROP chain 64-bit</div></div>
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">#59/4</div><div class="phrack-name">Handling Interrupt Descriptor Tables</div><div class="phrack-when">Jan 2027</div><div class="phrack-action">→ Blog post kernel IDT</div></div>
+    <div class="phrack-item"><input type="checkbox" class="cb" onchange="phrackDone(this)"><div class="phrack-ref">#71/7</div><div class="phrack-name">Bypassing CET & BTI</div><div class="phrack-when">Mai 2027</div><div class="phrack-action">→ Phase 3 research</div></div>
+  </div>
+</div>
+
+<!-- PHASE 1 SUMMARY -->
+<div class="phase-block" id="phase1" style="margin-top:48px">
+  <div class="phase-header">
+    <span class="phase-num">Phase 1</span>
+    <span class="phase-title">Binary Exploitation</span>
+    <span class="phase-range">Sept → Déc 2026</span>
+  </div>
+  <div class="week-block" id="wp1">
+    <div class="week-header" onclick="toggleWeek('wp1')">
+      <span class="week-toggle" id="wp1-tog">▶</span>
+      <span class="week-num">SEPT</span>
+      <span class="week-title">Phrack #49/14 Smashing the Stack · /bin/sh sans protections · Drawing Ch.9–10</span>
+      <span class="week-dates">Sept 2026</span>
+      <span class="week-progress" id="wp1-prog">0%</span>
+    </div>
+    <div class="week-body" id="wp1-body">
+      <div class="day-col-header"><div class="dch">Activité</div><div class="dch">Objectif</div><div class="dch">Blog post</div><div class="dch">Status</div></div>
+      <div class="day-row" data-week="wp1"><div class="day-label"><span class="day-name">Stack</span><span class="day-date">Sept</span></div><div class="slot" id="s_p1_1_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_1_m','wp1')"><span class="slot-tag tag-fd">Phrack #49/14</span></div><div class="slot-detail">Smashing the Stack — lire + comprendre + exploiter</div></div><div class="slot" id="s_p1_1_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_1_a','wp1')"><span class="slot-tag tag-ps">GDB/pwntools</span></div><div class="slot-detail">/bin/sh sans protections — exploit fonctionnel</div></div><div class="slot" id="s_p1_1_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_1_s','wp1')"><span class="slot-tag tag-blog">Blog post stack overflow ✦</span></div><div class="slot-detail">Publier write-up technique</div></div></div>
+      <div class="day-row" data-week="wp1"><div class="day-label"><span class="day-name">Heap</span><span class="day-date">Oct</span></div><div class="slot" id="s_p1_2_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_2_m','wp1')"><span class="slot-tag tag-fd">Phrack #57+59+60</span></div><div class="slot-detail">Heap, Format Strings, Integer Overflows</div></div><div class="slot" id="s_p1_2_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_2_a','wp1')"><span class="slot-tag tag-ps">Pratique</span></div><div class="slot-detail">Arbitrary read/write — exploit fonctionnel</div></div><div class="slot" id="s_p1_2_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_2_s','wp1')"><span class="slot-tag tag-blog">3 blog posts Phrack ✦</span></div><div class="slot-detail">Publier 3 write-ups</div></div></div>
+      <div class="day-row" data-week="wp1"><div class="day-label"><span class="day-name">ROP</span><span class="day-date">Déc</span></div><div class="slot" id="s_p1_3_m"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_3_m','wp1')"><span class="slot-tag tag-fd">Shacham 2007</span></div><div class="slot-detail">The Geometry of Innocent Flesh — ROP theory</div></div><div class="slot" id="s_p1_3_a"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_3_a','wp1')"><span class="slot-tag tag-ps">Pratique</span></div><div class="slot-detail">ROP chain 64-bit ASLR+NX fonctionnelle</div></div><div class="slot" id="s_p1_3_s"><div class="slot-header"><input type="checkbox" class="cb" onchange="slotDone(this,'s_p1_3_s','wp1')"><span class="slot-tag tag-blog">Blog post ROP chain ✦</span></div><div class="slot-detail">Publier write-up complet</div></div></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">SECU//PROG · 2026–2027</div>
+  <div class="footer-links">
+    <a href="https://tednoob17.github.io/book-reviews" target="_blank">book-reviews ↗</a>
+    <a href="https://portswigger.net/web-security" target="_blank">portswigger ↗</a>
+    <a href="https://phrack.org" target="_blank">phrack ↗</a>
+    <a href="https://pwn.college" target="_blank">pwn.college ↗</a>
+    <a href="https://fwscan.binarly.io" target="_blank">binarly ↗</a>
+  </div>
+</footer>
+
+<script>
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const STATE_KEY = 'secu_prog_v1';
+let state = {};
+
+function loadState() {
+  try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) { state = {}; }
+}
+function saveState() {
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+// ── PORTSWIGGER MODULES ───────────────────────────────────────────────────────
+const PS_MODULES = [
+  { id:'ps_sqli',   name:'SQL Injection',               month:'Mars',   labs:['Apprentice: Retrieving hidden data','Apprentice: Subverting logic','Apprentice: Query UNION 1 col','Apprentice: Query UNION multi col','Apprentice: DB type / version Oracle','Apprentice: DB type / version MySQL','Practitioner: Blind - boolean based','Practitioner: Blind - time based','Practitioner: Error based','Expert: Blind - out of band'] },
+  { id:'ps_auth',   name:'Authentication',              month:'Mars',   labs:['Apprentice: Username enumeration','Apprentice: 2FA bypass simple','Apprentice: Password reset broken','Practitioner: Username brute force','Practitioner: Broken brute force protection','Practitioner: 2FA broken logic','Expert: Offline password cracking'] },
+  { id:'ps_path',   name:'Path Traversal',              month:'Mars',   labs:['Apprentice: Simple traversal','Practitioner: Sequences stripped','Practitioner: Superfluous URL-decode','Practitioner: Non-standard base folder','Practitioner: Validated extension'] },
+  { id:'ps_cmdi',   name:'Command Injection',           month:'Mars',   labs:['Apprentice: OS command injection','Practitioner: Blind - time delays','Practitioner: Blind - output redirection','Practitioner: Blind - OOB interaction','Practitioner: Blind - OOB data exfil'] },
+  { id:'ps_bizlog', name:'Business Logic',              month:'Avril',  labs:['Apprentice: Excessive trust','Apprentice: High-level logic','Practitioner: Low-level logic','Practitioner: Inconsistent validation','Practitioner: Weak isolation','Expert: Authentication bypass'] },
+  { id:'ps_idor',   name:'Access Control & IDOR',       month:'Avril',  labs:['Apprentice: IDOR + user role','Apprentice: URL-based access control','Practitioner: Multi-step bypass','Practitioner: Referer-based control','Practitioner: IDOR objects'] },
+  { id:'ps_ssrf',   name:'SSRF',                        month:'Avril',  labs:['Apprentice: Basic SSRF admin','Apprentice: Basic SSRF blacklist','Practitioner: SSRF filter bypass','Practitioner: Open redirect','Expert: SSRF via referrer'] },
+  { id:'ps_xxe',    name:'XXE Injection',               month:'Avril',  labs:['Apprentice: File retrieval via XXE','Apprentice: SSRF via XXE','Practitioner: Blind XXE OOB','Practitioner: Blind XXE error messages','Expert: XXE via XInclude'] },
+  { id:'ps_xss',    name:'XSS — Reflected + Stored + DOM', month:'Mai', labs:['Apprentice: Reflected HTML ctx','Apprentice: Stored into anchor','Apprentice: DOM sink qs','Practitioner: Reflected attr','Practitioner: Stored into onclick','Practitioner: DOM innerHTML','Practitioner: Reflected jQuery hash','Expert: Reflected all ctx','Expert: Stored into location.href'] },
+  { id:'ps_deser',  name:'Insecure Deserialization',    month:'Mai',   labs:['Apprentice: Modifying serialized obj','Practitioner: Bypassing access controls','Practitioner: Java deserialization','Expert: Developing gadget chain'] },
+  { id:'ps_smuggl', name:'HTTP Request Smuggling',      month:'Juin',  labs:['Apprentice: HTTP/1 TE.CL','Practitioner: TE.CL bypass front-end','Practitioner: CL.TE bypass','Expert: Obfuscating TE header'] },
+];
+
+function renderPSModules() {
+  const container = document.getElementById('ps-modules-list');
+  container.innerHTML = '';
+  PS_MODULES.forEach(mod => {
+    const div = document.createElement('div');
+    div.className = 'ps-module';
+    const doneCount = mod.labs.filter((_,i) => state[`ps_${mod.id}_${i}`]).length;
+    div.innerHTML = `
+      <div class="ps-module-header" onclick="togglePS('${mod.id}')">
+        <input type="checkbox" class="cb" style="flex-shrink:0" onchange="psModDone(this,'${mod.id}')" ${doneCount===mod.labs.length&&mod.labs.length>0?'checked':''} onclick="event.stopPropagation()">
+        <span class="ps-module-name">${mod.name}</span>
+        <span class="ps-module-tag">PS</span>
+        <span class="ps-module-month">${mod.month}</span>
+        <span class="ps-module-prog" id="psprog_${mod.id}">${doneCount}/${mod.labs.length}</span>
+        <span class="week-toggle" id="pstog_${mod.id}" style="font-size:11px;color:var(--dim);width:14px;flex-shrink:0">▶</span>
+      </div>
+      <div class="ps-labs" id="pslab_${mod.id}">
+        <div class="lab-grid">
+          ${mod.labs.map((lab,i) => `
+            <div class="lab-item">
+              <label class="lab-badge ${state['ps_'+mod.id+'_'+i]?'done-lab':''}">
+                <input type="checkbox" ${state['ps_'+mod.id+'_'+i]?'checked':''} onchange="labDone(this,'${mod.id}',${i})">
+                ${lab}
+              </label>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+    container.appendChild(div);
+  });
+  updatePSCount();
+}
+
+function togglePS(id) {
+  const body = document.getElementById('pslab_'+id);
+  const tog  = document.getElementById('pstog_'+id);
+  const open = body.classList.toggle('open');
+  tog.style.transform = open ? 'rotate(90deg)' : '';
+}
+
+function labDone(cb, modId, idx) {
+  state[`ps_${modId}_${idx}`] = cb.checked;
+  if (cb.checked) cb.closest('.lab-badge').classList.add('done-lab');
+  else cb.closest('.lab-badge').classList.remove('done-lab');
+  saveState();
+  updatePSProgress(modId);
+  updateGlobalStats();
+}
+
+function psModDone(cb, modId) {
+  const mod = PS_MODULES.find(m => m.id === modId);
+  mod.labs.forEach((_,i) => { state[`ps_${modId}_${i}`] = cb.checked; });
+  renderPSModules();
+  updateGlobalStats();
+}
+
+function updatePSProgress(modId) {
+  const mod = PS_MODULES.find(m => m.id === modId);
+  const done = mod.labs.filter((_,i) => state[`ps_${mod.id}_${i}`]).length;
+  const el = document.getElementById(`psprog_${modId}`);
+  if (el) el.textContent = `${done}/${mod.labs.length}`;
+  updatePSCount();
+}
+
+function updatePSCount() {
+  let done=0, total=0;
+  PS_MODULES.forEach(mod => {
+    total += mod.labs.length;
+    done  += mod.labs.filter((_,i) => state[`ps_${mod.id}_${i}`]).length;
+  });
+  document.getElementById('ps-count').textContent = `${done} / ${total}`;
+  state._ps_done = done; state._ps_total = total;
+}
+
+// ── SLOTS ─────────────────────────────────────────────────────────────────────
+function slotDone(cb, slotId, weekId) {
+  state[slotId] = cb.checked;
+  const slot = cb.closest('.slot');
+  if (cb.checked) slot.classList.add('done');
+  else slot.classList.remove('done');
+  saveState();
+  updateWeekProgress(weekId);
+  updateGlobalStats();
+}
+
+function updateWeekProgress(weekId) {
+  const rows = document.querySelectorAll(`[data-week="${weekId}"]`);
+  let total = 0, done = 0;
+  rows.forEach(row => {
+    row.querySelectorAll('.cb').forEach(cb => {
+      total++;
+      if (cb.checked) done++;
+    });
+  });
+  const pct = total ? Math.round(done/total*100) : 0;
+  const el = document.getElementById(`${weekId}-prog`);
+  if (el) el.textContent = pct + '%';
+  if (pct === 100 && el) el.style.color = 'var(--sage)';
+}
+
+// ── TASKS (books) ─────────────────────────────────────────────────────────────
+function taskDone(cb, taskId, type) {
+  state['task_'+taskId] = cb.checked;
+  const item = document.getElementById(taskId);
+  if (cb.checked) item.classList.add('done');
+  else item.classList.remove('done');
+  saveState();
+  updateBooksCount();
+  updateGlobalStats();
+}
+
+function updateBooksCount() {
+  const all  = document.querySelectorAll('.task-item');
+  const done = document.querySelectorAll('.task-item.done');
+  document.getElementById('books-count').textContent = `${done.length} / ${all.length} publiées`;
+}
+
+// ── PHRACK ────────────────────────────────────────────────────────────────────
+function phrackDone(cb) {
+  const item = cb.closest('.phrack-item');
+  const idx  = Array.from(document.querySelectorAll('.phrack-item')).indexOf(item);
+  state['phrack_'+idx] = cb.checked;
+  if (cb.checked) {
+    item.style.opacity = '.5';
+    item.querySelector('.phrack-name').style.textDecoration = 'line-through';
+  } else {
+    item.style.opacity = '';
+    item.querySelector('.phrack-name').style.textDecoration = '';
+  }
+  saveState();
+  updatePhrackCount();
+  updateGlobalStats();
+}
+
+function updatePhrackCount() {
+  const done = document.querySelectorAll('.phrack-item input:checked').length;
+  const total = document.querySelectorAll('.phrack-item').length;
+  document.getElementById('phrack-count').textContent = `${done} / ${total}`;
+}
+
+// ── WEEK TOGGLE ───────────────────────────────────────────────────────────────
+function toggleWeek(id) {
+  const body = document.getElementById(id+'-body');
+  const tog  = document.getElementById(id+'-tog');
+  const open = body.classList.toggle('open');
+  if (tog) tog.className = 'week-toggle' + (open ? ' open' : '');
+}
+
+// ── GLOBAL STATS ──────────────────────────────────────────────────────────────
+function updateGlobalStats() {
+  // Count all checkboxes
+  const allCbs = document.querySelectorAll('.cb');
+  let done = 0, total = 0;
+  allCbs.forEach(cb => {
+    total++;
+    if (cb.checked) done++;
+  });
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('nav-progress').textContent = `${done} / ${total} tâches`;
+
+  // Reviews
+  const reviewDone = document.querySelectorAll('.task-item.done').length;
+  document.getElementById('stat-reviews').textContent = reviewDone;
+
+  // Labs
+  let labsDone = 0;
+  PS_MODULES.forEach(mod => {
+    labsDone += mod.labs.filter((_,i) => state[`ps_${mod.id}_${i}`]).length;
+  });
+  document.getElementById('stat-labs').textContent = labsDone;
+
+  // Progress bar (phase 0 = weeks 1-7)
+  const p0Cbs = document.querySelectorAll('[data-week^="w"] .cb, [data-week="wjuil"] .cb');
+  let p0done = 0, p0total = 0;
+  p0Cbs.forEach(cb => { p0total++; if (cb.checked) p0done++; });
+  const pct = p0total ? Math.round(p0done/p0total*100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+// ── RESTORE STATE ─────────────────────────────────────────────────────────────
+function restoreState() {
+  // Slots
+  document.querySelectorAll('.slot').forEach(slot => {
+    const cb = slot.querySelector('.cb');
+    if (!cb) return;
+    const form = slot.closest('[data-week]');
+    const slotId = slot.id;
+    if (slotId && state[slotId]) {
+      cb.checked = true;
+      slot.classList.add('done');
+    }
+  });
+
+  // Tasks
+  document.querySelectorAll('.task-item').forEach(item => {
+    const cb = item.querySelector('.cb');
+    if (state['task_'+item.id]) {
+      cb.checked = true;
+      item.classList.add('done');
+    }
+  });
+
+  // Phrack
+  document.querySelectorAll('.phrack-item').forEach((item, idx) => {
+    const cb = item.querySelector('.cb');
+    if (state['phrack_'+idx]) {
+      cb.checked = true;
+      item.style.opacity = '.5';
+      item.querySelector('.phrack-name').style.textDecoration = 'line-through';
+    }
+  });
+
+  // PS labs
+  PS_MODULES.forEach(mod => {
+    mod.labs.forEach((_,i) => {
+      const key = `ps_${mod.id}_${i}`;
+      // already handled in renderPSModules
+    });
+  });
+
+  // Week progress
+  ['w1','w2','w3','w4','w5','w6','w7','wjuil','wp1'].forEach(updateWeekProgress);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadState();
+renderPSModules();
+restoreState();
+updateGlobalStats();
+updateBooksCount();
+updatePhrackCount();
+
+// Open first week by default
+toggleWeek('w1');
+</script>
+</body>
+</html>
