@@ -1,8 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "@01-edu/api": "^1.1.0",
-    "better-sqlite3": "^7.6.2",
-    "nodemailer": "^6.9.9"
-  }
-}
