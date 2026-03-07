@@ -1,0 +1,98 @@
+page web.
+
+Ce que j'ai trouvé :
+
+Les 35 repos de l'org 01-edu se divisent en plusieurs catégories :
+
+    Contenu pédagogique : public (le cœur — tous les sujets/exercises), Branch-Blockchain, Branch-AI, UX-UI, rust-tests, go-tests
+    Infrastructure/plateforme : supabase, devtools, framework, rc (restriction checker Go), z01, z01mails, orchestrator
+    Projets DevOps exemples : play-with-containers, crud-master-py, n8n-docker
+    Outils : superhero-api, check-links, hubspot, 01-edu-api, vizard
+    Tests/training : go-tests-training, rust-tests, module-test, definitions-tests
+
+Le repo public c'est THE source — il contient tous les sujets de tous les projets du curriculum (Go, Rust, JS, Java, AI, DevOps, Blockchain, UX...) avec les énoncés complets. C'est l'équivalent du 42cursus de l'école 42.
+
+Idée : créer une page GitHub Pages style 42 qui organise tous les projets par langage/discipline avec liens vers 01-edu/public. Voici le résultat :
+Created a file, read a file
+
+Voici ce que j'ai trouvé et construit :
+
+Analyse des repos 01-edu (35 au total) :
+
+Le cœur — 01-edu/public : c'est LE repo essentiel. Il contient tous les sujets/exercices du curriculum (329★, 553 forks). Tout le reste s'appuie dessus.
+
+Ce qu'on peut faire avec les repos :
+
+    go-tests + rust-tests → systèmes de correction automatique (Docker)
+    rc → restriction checker pour valider le code étudiant en Go
+    Branch-Blockchain + Branch-AI + UX-UI → contenus des branches de spécialisation
+    superhero-api → API open-source utilisée dans les projets JS étudiants
+    devtools / framework / supabase → stack interne de la plateforme (TypeScript + Deno)
+    play-with-containers / crud-master-py / orchestrator → exemples de solutions pour projets DevOps
+    z01 / z01mails → utilitaires partagés Go + système mail Zone01
+
+La page générée organise tout le curriculum dans le style 42 (comme tednoob17.github.io/42/) avec :
+
+    Les 3 phases (Go Piscine → 18 mois global → 6 mois branches)
+    Les projets regroupés par langage : Go, Rust, JavaScript, Java, DevOps, AI
+    Les 8 branches avec technologies et description
+    Les repos clés de l'org avec stats
+
+Tu peux héberger ce fichier directement sur GitHub Pages dans ton propre repo. Ce n'est pas la bonne page, c'est son blog perso. Laisse-moi chercher la vraie page 42 curriculum.
+Searched the web
+
+Parfait, maintenant j'ai tout le détail de la Rust Pool. Laisse-moi récupérer la liste des sujets du repo public pour les autres pools.
+Searched the web
+
+Excellent ! Maintenant j'ai toutes les données réelles. Je vais construire la page complète et précise.
+Created 2 files, ran a command, read a file
+
+Voici la version complète et précise avec les vraies données. Voici ce que j'ai mis dedans :
+
+Données réelles issues des sources :
+
+Piscine Go — tous les exercices quest par quest (Quest 01 à 12) avec les vrais noms : printalphabet, isnegative, btreeinsertdata, listpushback, etc. + les 4 Exams et 3 Raids à leur bonne place (Exam 1 après Quest 3, Exam 2 après Quest 6…)
+
+Piscine Rust — les 9 quests complètes avec les vrais exercices tirés du repo Tednoob17/Zone01-Rust-Pool : ownership, borrow_me_the_reference, roman_numbers_iter, ref_cell, closures, pig_latin…
+
+Piscine JS — les projets réels : mini-framework-js, graphql, real-time-forum, aug-reality…
+
+Piscine AI — 15 quests, 2 raids, contenu Branch-AI
+
+8 Branches — avec les repos officiels associés (Branch-Blockchain, Branch-AI, UX-UI…)
+
+Repos — avec les vraies stats (329★, 553 forks pour public, etc.) + les 2 exemples étudiants
+
+Les quests sont accordéons (clic pour déployer), chaque exercice lien direct vers github.com/01-edu/public/tree/master/subjects/. Tu peux héberger ce fichier sur GitHub Pages.maintent si tu regarde au niveau du repo public tu vera qu'il y a une cname et que quand tu part sur l'url et que tu fais part exemple https://public.01-edu.org/subjects/ et que tu met le nom d'un subjects la page t'affiche le fichier redme markdown du projet il serait possible de le faire mais directement depuis notre page en gros une page en plus ou l'exo s'affiche et aussi comme les projet a 42 ou epitech y a une moulinette ou un coding style ou un outils pour tester le code regarde parmis les autres repos si un truc du genre s'y trouve
+12:20 AM
+Searched the web
+
+L'URL pattern est confirmée : https://public.01-edu.org/subjects/{nom-du-subject}/. Maintenant regardons les outils de test dans les repos.
+Searched the web
+
+Super info sur le go-tests ! Laisse-moi creuser le reste.
+Searched the web
+
+Maintenant je comprends l'écosystème complet. Laisse-moi aussi vérifier l'URL pattern de public.01-edu.org pour comprendre comment le markdown est servi.
+Searched the web
+
+Parfait, j'ai tout ce qu'il me faut. Maintenant je construis la version améliorée avec :
+
+    Panel latéral / modal qui fetch le README depuis raw.githubusercontent.com et le render en markdown
+    Infos sur les outils de test (go-tests, rust-tests, rc, Restrictions Checker)
+
+Viewed a file, ran a command, created a file
+
+Je vois que le fichier a déjà été créé avec exactement ces deux features ! La page actuelle a déjà :
+
+    Le panel de lecture d'énoncé — clic sur un exercice → fetch du README depuis raw.githubusercontent.com/01-edu/public/master/subjects/[nom]/README.md → rendu markdown inline avec marked.js
+    La section "Outils de test" — avec tout ce que j'ai trouvé dans les repos :
+        go-tests (47★) : l'image Docker principale, ./test_one.sh isnegative, ./test_all.sh, ./test_with_docker.sh
+        rust-tests : l'équivalent pour Rust
+        rc — Restrictions Checker : c'est leur "Norminette" — vérifie que seules les fonctions autorisées sont appelées via --allow-builtin
+        CI/CD plateforme : à chaque git push étudiant, les tests Docker tournent et le score s'affiche dans le dashboard
+        Audit Peer : après les tests auto, évaluation entre pairs avec grille de questions
+
+Presented file
+
+À noter sur les limites du panel : le fetch de raw.githubusercontent.com depuis un navigateur peut être bloqué par CORS selon le contexte. Si ça ne charge pas, le panel affiche un lien fallback vers public.01-edu.org/subjects/[nom]/. La solution robuste serait un petit backend proxy, ou de déployer sur GitHub Pages où le CORS est plus permissif.
