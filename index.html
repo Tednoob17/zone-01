@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,19 +28,24 @@
     --mobile: #4c9eff;
     --games: #ffd43b;
     --accent: #39ff8f;
+    --dot-color: rgba(255,255,255,0.03);
+    --header-bg: rgba(6,6,8,0.92);
+    --hero-glow: rgba(57,255,143,.07);
+    --panel-overlay-bg: rgba(0,0,0,.7);
     --text: #e8e8f0;
     --muted: #52526e;
     --muted2: #3a3a52;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
+  html, body { transition: background-color .35s, color .35s; }
   body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
 
   .wrap { position: relative; z-index: 1; max-width: 1440px; margin: 0 auto; padding: 0 2.5rem; }
 
   /* ── HEADER ── */
-  header { position: sticky; top: 0; z-index: 100; background: rgba(6,6,8,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  header { position: sticky; top: 0; z-index: 100; background: var(--header-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: background .35s; }
   .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1rem; flex-wrap: wrap; }
   .logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
   .logo-box { width: 36px; height: 36px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: .8rem; font-weight: 700; color: #060608; flex-shrink: 0; }
@@ -55,7 +60,7 @@
 
   /* ── HERO ── */
   .hero { padding: 5rem 0 4rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-  .hero-glow { position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 700px; height: 300px; background: radial-gradient(ellipse, rgba(57,255,143,.07) 0%, transparent 70%); pointer-events: none; }
+  .hero-glow { position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 700px; height: 300px; background: radial-gradient(ellipse, var(--hero-glow) 0%, transparent 70%); pointer-events: none; }
   .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-family: 'JetBrains Mono', monospace; font-size: .6rem; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); margin-bottom: 1.5rem; }
   .eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
   .hero h1 { font-size: clamp(2.8rem,7vw,6rem); font-weight: 900; line-height: .95; letter-spacing: -.04em; margin-bottom: 2rem; }
@@ -125,7 +130,7 @@
   .badge-ckpt { background: rgba(162,89,255,.1); color: var(--ai); }
 
   /* ── SUBJECT PANEL ── */
-  .panel-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(6px); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .panel-overlay { position: fixed; inset: 0; background: var(--panel-overlay-bg); backdrop-filter: blur(6px); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .25s; }
   .panel-overlay.open { opacity: 1; pointer-events: all; }
 
   .panel { position: fixed; top: 0; right: 0; bottom: 0; width: min(780px, 100vw); background: var(--surface); border-left: 1px solid var(--border); z-index: 201; transform: translateX(100%); transition: transform .3s cubic-bezier(.22,.68,0,1.1); display: flex; flex-direction: column; }
@@ -227,6 +232,47 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
+  /* ── THEME TOGGLE BUTTON ── */
+  .theme-toggle { display: flex; align-items: center; gap: .45rem; font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--muted); border: 1px solid var(--border); padding: .35rem .8rem; border-radius: 20px; background: transparent; cursor: pointer; transition: all .15s; flex-shrink: 0; }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-toggle-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; transition: background .35s; }
+
+  /* ── TRUFFLE LIGHT THEME ── */
+  [data-theme="truffle"] {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --surface2: #f0ece3;
+    --surface3: #e8e3d8;
+    --border: #d9d2c5;
+    --border2: #c4baa8;
+    --accent: #c96a00;
+    --go: #0081a8;
+    --rust: #c43600;
+    --js: #b88d00;
+    --java: #b87600;
+    --ai: #7a3dc9;
+    --devops: #008c78;
+    --blockchain: #c46030;
+    --ux: #c44080;
+    --cyber: #c42020;
+    --mobile: #2878cc;
+    --games: #c8940a;
+    --text: #1c1810;
+    --muted: #7a7060;
+    --muted2: #b0a890;
+    --dot-color: rgba(0,0,0,.04);
+    --header-bg: rgba(247,245,240,.95);
+    --hero-glow: rgba(201,106,0,.08);
+    --panel-overlay-bg: rgba(100,90,70,.55);
+  }
+  [data-theme="truffle"] .logo-box { color: #fff; }
+  [data-theme="truffle"] .q-head:hover { background: rgba(0,0,0,.025); }
+  [data-theme="truffle"] .panel-file-btn.active { background: rgba(201,106,0,.07); }
+  [data-theme="truffle"] .md-content code { background: var(--surface2); }
+  [data-theme="truffle"] .md-content pre { background: var(--surface2); }
+  [data-theme="truffle"] .ex:hover { background: var(--surface3); }
+  [data-theme="truffle"] .panel { background: var(--surface); border-left-color: var(--border); }
+
   /* ── PANEL FILE SIDEBAR ── */
   .panel-main { flex: 1; display: flex; overflow: hidden; min-height: 0; }
   .panel-files { width: 145px; border-right: 1px solid var(--border); background: var(--surface2); overflow-y: auto; flex-shrink: 0; padding: .5rem 0; }
@@ -278,6 +324,7 @@
         <a href="#tools">Outils</a>
 
       </nav>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn"><span class="theme-toggle-dot" id="theme-dot"></span><span id="theme-label">Truffle</span></button>
       <a class="gh-link" href="./01-edu-repos/public/" target="_blank">↗ 01-edu/public</a>
     </div>
   </div>
@@ -1115,7 +1162,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-inner">
-      <span class="foot-txt">// Zone01 Curriculum Map · ./01-edu-repos/public · Mars 2026</span>
+      <span class="foot-txt">Zone01 · Curriculum Map</span>
       <div class="foot-links">
         <a href="https://01edu.org" target="_blank">01edu.org</a>
         <a href="https://www.youtube.com/channel/UCDmJ2SyrBNWEekOCmheEocQ/playlists" target="_blank">YouTube</a>
@@ -1125,6 +1172,31 @@
 </footer>
 
 <script>
+  /* ── THEME TOGGLE ── */
+  (function() {
+    const saved = localStorage.getItem('z01-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    function _reflectUI() {
+      const t = document.documentElement.getAttribute('data-theme');
+      const lbl = document.getElementById('theme-label');
+      const dot = document.getElementById('theme-dot');
+      if (!lbl) return;
+      if (t === 'truffle') { lbl.textContent = 'Dark'; dot.style.background = '#c96a00'; }
+      else { lbl.textContent = 'Truffle'; dot.style.background = ''; }
+    }
+    document.addEventListener('DOMContentLoaded', _reflectUI);
+    window._reflectThemeUI = _reflectUI;
+  })();
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'truffle' ? 'dark' : 'truffle';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('z01-theme', next);
+    window._reflectThemeUI && window._reflectThemeUI();
+  }
+
   /* ── QUEST TOGGLE ── */
   function tog(h) { h.closest('.quest').classList.toggle('open'); }
 
