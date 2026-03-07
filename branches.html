@@ -81,12 +81,12 @@
   .panel-link:hover { border-color: var(--accent); color: var(--accent); }
   .panel-close { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--muted); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0; }
   .panel-close:hover { border-color: var(--rust); color: var(--rust); }
-  .panel-layout { display: flex; flex: 1; overflow: hidden; }
-  .panel-files { width: 155px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--surface); padding: .6rem .5rem; display: flex; flex-direction: column; gap: .15rem; overflow-y: auto; }
-  .pf-section { font-family: 'JetBrains Mono', monospace; font-size: .48rem; text-transform: uppercase; letter-spacing: .14em; color: var(--muted2); padding: .3rem .5rem .5rem; border-bottom: 1px solid var(--border); margin-bottom: .3rem; }
-  .pf-btn { font-family: 'JetBrains Mono', monospace; font-size: .63rem; color: var(--muted); padding: .45rem .6rem; border-radius: 5px; cursor: pointer; text-align: left; background: transparent; border: 1px solid transparent; width: 100%; transition: all .13s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pf-btn:hover { color: var(--text); background: var(--surface2); }
-  .pf-btn.active { color: var(--accent); border-color: rgba(57,255,143,.25); background: rgba(57,255,143,.06); }
+  .panel-main { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+  .panel-files { width: 145px; border-right: 1px solid var(--border); background: var(--surface2); overflow-y: auto; flex-shrink: 0; padding: .5rem 0; }
+  .panel-files-label { font-family: 'JetBrains Mono', monospace; font-size: .48rem; text-transform: uppercase; letter-spacing: .13em; color: var(--muted2); padding: .5rem .75rem .25rem; }
+  .panel-file-btn { display: flex; align-items: center; gap: .4rem; width: 100%; padding: .42rem .75rem; border: none; background: transparent; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: .56rem; cursor: pointer; text-align: left; transition: all .12s; border-left: 2px solid transparent; }
+  .panel-file-btn:hover { background: rgba(255,255,255,.03); color: var(--text); }
+  .panel-file-btn.active { color: var(--accent); border-left-color: var(--accent); background: rgba(57,255,143,.05); }
   .panel-body { flex: 1; overflow-y: auto; padding: 2rem 1.5rem; }
   .panel-loading { display: flex; align-items: center; justify-content: center; height: 200px; gap: 1rem; }
   .panel-loading-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: blink 1s infinite; }
@@ -161,13 +161,8 @@
     </div>
     <button class="panel-close" onclick="closePanel()">✕</button>
   </div>
-  <div class="panel-layout">
-    <aside class="panel-files">
-      <div class="pf-section">Fichiers</div>
-      <button class="pf-btn active" data-file="README.md" onclick="loadPanelFile('README.md')">📄 README.md</button>
-      <button class="pf-btn" data-file="instruction.md" onclick="loadPanelFile('instruction.md')">📋 instruction.md</button>
-      <button class="pf-btn" data-file="en.md" onclick="loadPanelFile('en.md')">🌐 en.md</button>
-    </aside>
+  <div class="panel-main">
+    <div class="panel-files" id="panel-files"></div>
     <div class="panel-body" id="panel-body">
       <div class="panel-loading">
         <div class="panel-loading-dot"></div>
@@ -218,7 +213,7 @@
       <span class="sec-sub"><a href="index.html#branches" style="color:var(--muted);text-decoration:none;">← Retour accueil</a></span>
     </div>
     <div class="branches rev">
-      <div class="br" onclick="openBranch('./01-edu-repos/Branch-AI/', 'Branch — AI')">
+      <div class="br" onclick="openBranch('Branch-AI','Artificial Intelligence')">
         <div class="br-glow" style="background:var(--ai);"></div>
         <div class="br-top"><span class="br-ico">🧠</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--ai);">Artificial Intelligence</div>
@@ -227,7 +222,7 @@
         <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--ai);"></div>
       </div>
-      <div class="br" onclick="openBranch('./01-edu-repos/Branch-Blockchain/', 'Branch — Blockchain')">
+      <div class="br" onclick="openBranch('Branch-Blockchain','Blockchain &amp; Crypto')">
         <div class="br-glow" style="background:var(--blockchain);"></div>
         <div class="br-top"><span class="br-ico">⛓️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--blockchain);">Blockchain &amp; Crypto</div>
@@ -236,7 +231,7 @@
         <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--blockchain);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Cloud DevOps')">
+      <div class="br" onclick="openBranch('devops','Cloud DevOps')">
         <div class="br-glow" style="background:var(--devops);"></div>
         <div class="br-top"><span class="br-ico">☁️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--devops);">Cloud DevOps</div>
@@ -245,7 +240,7 @@
         <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--devops);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Cybersecurity')">
+      <div class="br" onclick="openBranch('cyber','Cybersecurity')">
         <div class="br-glow" style="background:var(--cyber);"></div>
         <div class="br-top"><span class="br-ico">🔐</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--cyber);">Cybersecurity</div>
@@ -254,7 +249,7 @@
         <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--cyber);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Mobile Applications')">
+      <div class="br" onclick="openBranch('mobile','Mobile Applications')">
         <div class="br-glow" style="background:var(--mobile);"></div>
         <div class="br-top"><span class="br-ico">📱</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--mobile);">Mobile Applications</div>
@@ -263,7 +258,7 @@
         <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--mobile);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Java Full Stack')">
+      <div class="br" onclick="openBranch('java','Java Full Stack')">
         <div class="br-glow" style="background:var(--java);"></div>
         <div class="br-top"><span class="br-ico">🏗️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--java);">Java Full Stack</div>
@@ -272,7 +267,7 @@
         <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--java);"></div>
       </div>
-      <div class="br" onclick="openBranch(null, 'Branch — Video Games UE5')">
+      <div class="br" onclick="openBranch('games','Video Games — Unreal Engine 5')">
         <div class="br-glow" style="background:var(--games);"></div>
         <div class="br-top"><span class="br-ico">🎮</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--games);">Video Games — Unreal Engine 5</div>
@@ -281,7 +276,7 @@
         <div class="br-readme-hint">📖 Voir README ›</div>
         <div class="br-bar" style="background:var(--games);"></div>
       </div>
-      <div class="br" onclick="openBranch('./01-edu-repos/UX-UI/', 'Branch — UX/UI')">
+      <div class="br" onclick="openBranch('UX-UI','User Experience UX/UI')">
         <div class="br-glow" style="background:var(--ux);"></div>
         <div class="br-top"><span class="br-ico">✨</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--ux);">User Experience UX/UI</div>
@@ -316,78 +311,95 @@
   document.querySelectorAll('.rev').forEach(el => io.observe(el));
 
   /* ── PANEL ── */
-  const panel = document.getElementById('panel');
-  const overlay = document.getElementById('overlay');
-  const panelBody = document.getElementById('panel-body');
-  const panelName = document.getElementById('panel-name');
+  const panel      = document.getElementById('panel');
+  const overlay    = document.getElementById('overlay');
+  const panelBody  = document.getElementById('panel-body');
+  const panelFiles = document.getElementById('panel-files');
+  const panelName  = document.getElementById('panel-name');
   const panelLinkPub = document.getElementById('panel-link-pub');
-  const panelLinkGh = document.getElementById('panel-link-gh');
-  let panelBasePath = null;
+  const panelLinkGh  = document.getElementById('panel-link-gh');
+
+  let _files   = [];
+  let _fileIdx = 0;
 
   if (typeof marked !== 'undefined') {
     marked.setOptions({ breaks: true, gfm: true });
   }
 
-  function setActiveFile(filename) {
-    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-    const btn = document.querySelector(`.pf-btn[data-file="${filename}"]`);
-    if (btn) btn.classList.add('active');
+  const LOADING = `<div class="panel-loading">
+    <div class="panel-loading-dot"></div>
+    <div class="panel-loading-dot"></div>
+    <div class="panel-loading-dot"></div>
+  </div>`;
+
+  function _renderSidebar() {
+    panelFiles.innerHTML = '<div class="panel-files-label">Fichiers</div>' +
+      _files.map((f, i) =>
+        `<button class="panel-file-btn${i === _fileIdx ? ' active' : ''}" onclick="switchFile(${i})">📄 ${f.label}</button>`
+      ).join('');
   }
 
-  async function loadPanelFile(filename) {
-    setActiveFile(filename);
-    panelBody.innerHTML = `
-      <div class="panel-loading">
-        <div class="panel-loading-dot"></div>
-        <div class="panel-loading-dot"></div>
-        <div class="panel-loading-dot"></div>
-      </div>`;
-
-    if (!panelBasePath) {
-      panelBody.innerHTML = `<div class="panel-error"><span style="font-size:2rem;">📭</span><span>Aucune source configurée pour cette branche.</span></div>`;
-      return;
-    }
-
-    const url = panelBasePath + filename;
-    let md = null;
+  async function _loadFile(idx) {
+    _fileIdx = idx;
+    _renderSidebar();
+    const f = _files[idx];
+    panelBody.innerHTML = LOADING;
     try {
-      const res = await fetch(url);
-      if (res.ok) md = await res.text();
-    } catch(e) {}
-
-    if (md) {
-      md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${panelBasePath}$2)`);
-      panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
-    } else {
-      panelBody.innerHTML = `
-        <div class="panel-error">
+      const res = await fetch(f.url);
+      if (res.ok) {
+        let md = await res.text();
+        if (f.base) md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${f.base}$2)`);
+        panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
+      } else {
+        panelBody.innerHTML = `<div class="panel-error">
           <span style="font-size:2rem;">📄</span>
-          <span><code>${filename}</code> introuvable</span>
-          <span style="margin-top:.5rem;">
-            <a href="${url}" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;">
-              ↗ Ouvrir directement
-            </a>
-          </span>
+          <span>Fichier introuvable : ${f.label}</span>
+          <a href="${f.url}" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;margin-top:.5rem;">↗ Ouvrir le fichier</a>
         </div>`;
+      }
+    } catch(e) {
+      panelBody.innerHTML = `<div class="panel-error">
+        <span style="font-size:2rem;">📄</span>
+        <span>Erreur de chargement : ${f.label}</span>
+      </div>`;
     }
   }
 
-  async function openPanel(title, basePath, pubHref, ghHref) {
-    panelBasePath = basePath;
+  function switchFile(idx) { _loadFile(idx); }
+
+  function _openPanel({ title, linkPub, linkGh, files }) {
     panelName.textContent = title;
-    panelLinkPub.href = pubHref || '#';
-    panelLinkGh.href = ghHref || '#';
+    panelLinkPub.href = linkPub;
+    panelLinkGh.href  = linkGh;
+    _files = files;
     panel.classList.add('open');
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    await loadPanelFile('README.md');
+    _loadFile(0);
   }
 
-  function openBranch(basePath, displayName) {
-    openPanel(displayName, basePath,
-      basePath ? basePath + 'README.md' : '#',
-      basePath ? basePath : '#'
-    );
+  const BRANCH_MAP = {
+    'Branch-AI':         { path: './01-edu-repos/Branch-AI/' },
+    'Branch-Blockchain': { path: './01-edu-repos/Branch-Blockchain/' },
+    'UX-UI':             { path: './01-edu-repos/UX-UI/' },
+    'devops':            { path: './01-edu-repos/public/' },
+    'cyber':             { path: './01-edu-repos/public/' },
+    'mobile':            { path: './01-edu-repos/public/' },
+    'java':              { path: './01-edu-repos/public/' },
+    'games':             { path: './01-edu-repos/public/' },
+  };
+
+  function openBranch(key, displayName) {
+    const b = BRANCH_MAP[key] || { path: './' };
+    _openPanel({
+      title:   displayName,
+      linkPub: b.path,
+      linkGh:  b.path,
+      files: [
+        { label: 'README.md',       url: `${b.path}README.md`,       base: b.path },
+        { label: 'instructions.md', url: `${b.path}instructions.md`, base: b.path },
+      ]
+    });
   }
 
   function closePanel() {
@@ -396,7 +408,7 @@
     document.body.style.overflow = '';
   }
 
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 </script>
 </body>
 </html>

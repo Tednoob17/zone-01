@@ -81,12 +81,12 @@
   .panel-link:hover { border-color: var(--accent); color: var(--accent); }
   .panel-close { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--muted); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0; }
   .panel-close:hover { border-color: var(--rust); color: var(--rust); }
-  .panel-layout { display: flex; flex: 1; overflow: hidden; }
-  .panel-files { width: 155px; flex-shrink: 0; border-right: 1px solid var(--border); background: var(--surface); padding: .6rem .5rem; display: flex; flex-direction: column; gap: .15rem; overflow-y: auto; }
-  .pf-section { font-family: 'JetBrains Mono', monospace; font-size: .48rem; text-transform: uppercase; letter-spacing: .14em; color: var(--muted2); padding: .3rem .5rem .5rem; border-bottom: 1px solid var(--border); margin-bottom: .3rem; }
-  .pf-btn { font-family: 'JetBrains Mono', monospace; font-size: .63rem; color: var(--muted); padding: .45rem .6rem; border-radius: 5px; cursor: pointer; text-align: left; background: transparent; border: 1px solid transparent; width: 100%; transition: all .13s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pf-btn:hover { color: var(--text); background: var(--surface2); }
-  .pf-btn.active { color: var(--accent); border-color: rgba(57,255,143,.25); background: rgba(57,255,143,.06); }
+  .panel-main { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+  .panel-files { width: 145px; border-right: 1px solid var(--border); background: var(--surface2); overflow-y: auto; flex-shrink: 0; padding: .5rem 0; }
+  .panel-files-label { font-family: 'JetBrains Mono', monospace; font-size: .48rem; text-transform: uppercase; letter-spacing: .13em; color: var(--muted2); padding: .5rem .75rem .25rem; }
+  .panel-file-btn { display: flex; align-items: center; gap: .4rem; width: 100%; padding: .42rem .75rem; border: none; background: transparent; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: .56rem; cursor: pointer; text-align: left; transition: all .12s; border-left: 2px solid transparent; }
+  .panel-file-btn:hover { background: rgba(255,255,255,.03); color: var(--text); }
+  .panel-file-btn.active { color: var(--accent); border-left-color: var(--accent); background: rgba(57,255,143,.05); }
   .panel-body { flex: 1; overflow-y: auto; padding: 2rem 1.5rem; }
   .panel-loading { display: flex; align-items: center; justify-content: center; height: 200px; gap: 1rem; }
   .panel-loading-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: blink 1s infinite; }
@@ -162,13 +162,8 @@
     </div>
     <button class="panel-close" onclick="closePanel()">✕</button>
   </div>
-  <div class="panel-layout">
-    <aside class="panel-files">
-      <div class="pf-section">Fichiers</div>
-      <button class="pf-btn active" data-file="README.md" onclick="loadPanelFile('README.md')">📄 README.md</button>
-      <button class="pf-btn" data-file="instruction.md" onclick="loadPanelFile('instruction.md')">📋 instruction.md</button>
-      <button class="pf-btn" data-file="en.md" onclick="loadPanelFile('en.md')">🌐 en.md</button>
-    </aside>
+  <div class="panel-main">
+    <div class="panel-files" id="panel-files"></div>
     <div class="panel-body" id="panel-body">
       <div class="panel-loading">
         <div class="panel-loading-dot"></div>
@@ -221,7 +216,7 @@
 
     <div class="tools-grid rev">
 
-      <div class="tool" onclick="openReadme('./01-edu-repos/go-tests/', 'go-tests')">
+      <div class="tool" onclick="openTool('go-tests','go-tests')">
         <div class="tool-bar" style="background:var(--go);"></div>
         <div class="tool-top">
           <span class="tool-icon">🐹</span>
@@ -241,7 +236,7 @@
         <div class="tool-readme-hint">📖 Cliquez pour lire le README ›</div>
       </div>
 
-      <div class="tool" onclick="openReadme('./01-edu-repos/rust-tests/', 'rust-tests')">
+      <div class="tool" onclick="openTool('rust-tests','rust-tests')">
         <div class="tool-bar" style="background:var(--rust);"></div>
         <div class="tool-top">
           <span class="tool-icon">🦀</span>
@@ -260,7 +255,7 @@
         <div class="tool-readme-hint">📖 Cliquez pour lire le README ›</div>
       </div>
 
-      <div class="tool" onclick="openReadme('./01-edu-repos/rc/', 'rc — Restrictions Checker')">
+      <div class="tool" onclick="openTool('rc','rc — Restrictions Checker')">
         <div class="tool-bar" style="background:var(--accent);"></div>
         <div class="tool-top">
           <span class="tool-icon">🚔</span>
@@ -279,7 +274,7 @@
         <div class="tool-readme-hint">📖 Cliquez pour lire le README ›</div>
       </div>
 
-      <div class="tool" onclick="openReadme('./01-edu-repos/go-tests-training/', 'go-tests-training')">
+      <div class="tool" onclick="openTool('go-tests-training','go-tests-training')">
         <div class="tool-bar" style="background:var(--ai);"></div>
         <div class="tool-top">
           <span class="tool-icon">🏋️</span>
@@ -359,75 +354,91 @@
   document.querySelectorAll('.rev').forEach(el => io.observe(el));
 
   /* ── PANEL ── */
-  const panel = document.getElementById('panel');
-  const overlay = document.getElementById('overlay');
-  const panelBody = document.getElementById('panel-body');
-  const panelName = document.getElementById('panel-name');
+  const panel      = document.getElementById('panel');
+  const overlay    = document.getElementById('overlay');
+  const panelBody  = document.getElementById('panel-body');
+  const panelFiles = document.getElementById('panel-files');
+  const panelName  = document.getElementById('panel-name');
   const panelLinkPub = document.getElementById('panel-link-pub');
-  const panelLinkGh = document.getElementById('panel-link-gh');
-  let panelBasePath = null;
+  const panelLinkGh  = document.getElementById('panel-link-gh');
+
+  let _files   = [];
+  let _fileIdx = 0;
 
   if (typeof marked !== 'undefined') {
     marked.setOptions({ breaks: true, gfm: true });
   }
 
-  function setActiveFile(filename) {
-    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-    const btn = document.querySelector(`.pf-btn[data-file="${filename}"]`);
-    if (btn) btn.classList.add('active');
+  const LOADING = `<div class="panel-loading">
+    <div class="panel-loading-dot"></div>
+    <div class="panel-loading-dot"></div>
+    <div class="panel-loading-dot"></div>
+  </div>`;
+
+  function _renderSidebar() {
+    panelFiles.innerHTML = '<div class="panel-files-label">Fichiers</div>' +
+      _files.map((f, i) =>
+        `<button class="panel-file-btn${i === _fileIdx ? ' active' : ''}" onclick="switchFile(${i})">📄 ${f.label}</button>`
+      ).join('');
   }
 
-  async function loadPanelFile(filename) {
-    setActiveFile(filename);
-    panelBody.innerHTML = `
-      <div class="panel-loading">
-        <div class="panel-loading-dot"></div>
-        <div class="panel-loading-dot"></div>
-        <div class="panel-loading-dot"></div>
-      </div>`;
-
-    if (!panelBasePath) {
-      panelBody.innerHTML = `<div class="panel-error"><span style="font-size:2rem;">📭</span><span>Aucune source configurée.</span></div>`;
-      return;
-    }
-
-    const url = panelBasePath + filename;
-    let md = null;
+  async function _loadFile(idx) {
+    _fileIdx = idx;
+    _renderSidebar();
+    const f = _files[idx];
+    panelBody.innerHTML = LOADING;
     try {
-      const res = await fetch(url);
-      if (res.ok) md = await res.text();
-    } catch(e) {}
-
-    if (md) {
-      md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${panelBasePath}$2)`);
-      panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
-    } else {
-      panelBody.innerHTML = `
-        <div class="panel-error">
+      const res = await fetch(f.url);
+      if (res.ok) {
+        let md = await res.text();
+        if (f.base) md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${f.base}$2)`);
+        panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
+      } else {
+        panelBody.innerHTML = `<div class="panel-error">
           <span style="font-size:2rem;">📄</span>
-          <span><code>${filename}</code> introuvable</span>
-          <span style="margin-top:.5rem;">
-            <a href="${url}" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;">
-              ↗ Ouvrir directement
-            </a>
-          </span>
+          <span>Fichier introuvable : ${f.label}</span>
+          <a href="${f.url}" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.75rem;margin-top:.5rem;">↗ Ouvrir le fichier</a>
         </div>`;
+      }
+    } catch(e) {
+      panelBody.innerHTML = `<div class="panel-error">
+        <span style="font-size:2rem;">📄</span>
+        <span>Erreur de chargement : ${f.label}</span>
+      </div>`;
     }
   }
 
-  async function openPanel(title, basePath, pubHref, ghHref) {
-    panelBasePath = basePath;
+  function switchFile(idx) { _loadFile(idx); }
+
+  function _openPanel({ title, linkPub, linkGh, files }) {
     panelName.textContent = title;
-    panelLinkPub.href = pubHref || '#';
-    panelLinkGh.href = ghHref || '#';
+    panelLinkPub.href = linkPub;
+    panelLinkGh.href  = linkGh;
+    _files = files;
     panel.classList.add('open');
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    await loadPanelFile('README.md');
+    _loadFile(0);
   }
 
-  function openReadme(basePath, displayName) {
-    openPanel(displayName || basePath, basePath, basePath + 'README.md', basePath);
+  const TOOL_MAP = {
+    'go-tests':          { path: './01-edu-repos/go-tests/' },
+    'rust-tests':        { path: './01-edu-repos/rust-tests/' },
+    'rc':                { path: './01-edu-repos/rc/' },
+    'go-tests-training': { path: './01-edu-repos/go-tests-training/' },
+  };
+
+  function openTool(key, displayName) {
+    const t = TOOL_MAP[key] || { path: './' };
+    _openPanel({
+      title:   displayName,
+      linkPub: t.path,
+      linkGh:  t.path,
+      files: [
+        { label: 'README.md',       url: `${t.path}README.md`,       base: t.path },
+        { label: 'CONTRIBUTING.md', url: `${t.path}CONTRIBUTING.md`, base: t.path },
+      ]
+    });
   }
 
   function closePanel() {
@@ -436,7 +447,7 @@
     document.body.style.overflow = '';
   }
 
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 </script>
 </body>
 </html>
