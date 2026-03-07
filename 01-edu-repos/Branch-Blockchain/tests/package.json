@@ -15,7 +15,7 @@
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
     "@nomicfoundation/hardhat-ethers": "^3.0.9",
     "bitcoin-core": "^4.1.0",
-    "chai": "^4.5.0",
+    "chai": "^6.2.2",
     "express": "^4.21.2",
     "hardhat": "^2.22.17",
     "mocha": "^10.7.3",
