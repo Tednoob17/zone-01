@@ -1,0 +1,10 @@
+{
+	"type": "module",
+	"name": "module-m1",
+	"attrs": {
+		"capacity": 5
+	},
+	"children": {
+		"project-p1": {}
+	}
+}

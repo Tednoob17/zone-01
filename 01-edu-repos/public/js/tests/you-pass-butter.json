@@ -1,0 +1,14 @@
+[
+  {
+    "description": "passButter is defined and is a function",
+    "code": "equal(typeof passButter, 'function')"
+  },
+  {
+    "description": "passButter returns The butter properly",
+    "code": "equal(passButter(), 'The butter')"
+  },
+  {
+    "description": "calling passButter mulitple time should always return the butter",
+    "code": "equal(\n  [passButter(), passButter(), passButter()],\n  ['The butter', 'The butter', 'The butter'],\n)"
+  }
+]

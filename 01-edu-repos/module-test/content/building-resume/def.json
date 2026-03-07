@@ -1,0 +1,22 @@
+{
+  "type": "project",
+  "name": "building-resume",
+  "attrs": {
+    "groupMax": 1,
+    "groupMin": 1,
+    "validations": [
+      {
+        "delay": 20160,
+        "matchInfluence": {
+          "levelProximity": 1,
+          "auditsRatio": 1,
+          "auditsAssigned": 1
+        },
+        "matchWhere": { "name": "userInCampus", "type": "function" },
+        "ratio": 2,
+        "required": 2,
+        "type": "user_audit"
+      }
+    ]
+  }
+}

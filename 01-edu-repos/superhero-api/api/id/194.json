@@ -1,0 +1,54 @@
+{
+  "id": 194,
+  "name": "Cyborg",
+  "slug": "194-cyborg",
+  "powerstats": {
+    "intelligence": 75,
+    "strength": 53,
+    "speed": 42,
+    "durability": 85,
+    "power": 71,
+    "combat": 64
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": "Cyborg",
+    "height": [
+      "6'6",
+      "198 cm"
+    ],
+    "weight": [
+      "385 lb",
+      "173 kg"
+    ],
+    "eyeColor": "Brown",
+    "hairColor": "Black"
+  },
+  "biography": {
+    "fullName": "Victor Stone",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Cyberion Technis",
+      "Omegadrome",
+      "Planet Cyberion"
+    ],
+    "placeOfBirth": "New York City, New York",
+    "firstAppearance": "DC Comics Presents #26 (October, 1980)",
+    "publisher": "DC Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Adventurer, Teen Titan",
+    "base": "San Francisco"
+  },
+  "connections": {
+    "groupAffiliation": "Justice League; formerly Teen Titans, Titans, Titans East, New Teen Titans",
+    "relatives": "Silas Stone (father), Elinore Stone (mother), Tucker Stone (grandfather), Maude Stone (grandmother)"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/194-cyborg.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/194-cyborg.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/194-cyborg.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/194-cyborg.jpg"
+  }
+}

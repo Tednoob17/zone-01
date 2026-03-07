@@ -1,0 +1,55 @@
+{
+  "id": 338,
+  "name": "Hyperion",
+  "slug": "338-hyperion",
+  "powerstats": {
+    "intelligence": 88,
+    "strength": 100,
+    "speed": 100,
+    "durability": 95,
+    "power": 87,
+    "combat": 80
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": "Eternal",
+    "height": [
+      "6'0",
+      "183 cm"
+    ],
+    "weight": [
+      "460 lb",
+      "207 kg"
+    ],
+    "eyeColor": "Blue",
+    "hairColor": "Red"
+  },
+  "biography": {
+    "fullName": "Mark Milton",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Mark Milton",
+      "Zhib-Ran",
+      "Mr. Kant",
+      "Marcus Milton"
+    ],
+    "placeOfBirth": "-",
+    "firstAppearance": "Avengers #85",
+    "publisher": "Marvel Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Adventurer; (Formerly) Cartoonist, government agent",
+    "base": "-"
+  },
+  "connections": {
+    "groupAffiliation": "Squadron Supreme, (Formerly) Star Masters, ally of Exiles",
+    "relatives": "Mr. and Mrs. Hamilton (foster parents)"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/338-hyperion.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/338-hyperion.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/338-hyperion.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/338-hyperion.jpg"
+  }
+}

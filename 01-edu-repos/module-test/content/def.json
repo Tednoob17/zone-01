@@ -1,0 +1,206 @@
+{
+  "type": "module",
+  "name": "Module",
+  "attrs": {
+    "capacity": 200,
+    "eventDuration": 1051920,
+    "eventStartDelay": 240,
+    "graph": {
+      "centralPoint": "social-network-quiz",
+      "innerCircle": [
+        {
+          "id": "k9sioe82ws2",
+          "name": {
+            "text": "Employability",
+            "hidden": false
+          },
+          "type": "line",
+          "contents": ["building-resume"]
+        }
+      ],
+      "middleCircle": [],
+      "outerCircle": [
+        {
+          "id": "l468y07lpde",
+          "name": {
+            "text": "Life Skills",
+            "hidden": false
+          },
+          "contents": [
+            "self-management",
+            "communication",
+            "values"
+          ]
+        }
+      ]
+    },
+    "levelsDefinitions": [
+      { "level": 10, "requirements": { "skills": { "prog": 10 } } },
+      { "level": 20, "requirements": { "skills": { "prog": 20 } } },
+      { "level": 30, "requirements": { "skills": { "prog": 30 } } },
+      { "level": 40, "requirements": { "skills": { "prog": 40 } } },
+      { "level": 50, "requirements": { "skills": { "prog": 50 } } }
+    ],
+    "ranksDefinitions": [
+      {
+        "name": "Aspiring developer",
+        "level": 0,
+        "milestone": "Passed the piscine"
+      },
+      { "name": "Beginner developer", "level": 10 },
+      { "name": "Apprentice developer", "level": 20 },
+      { "name": "Assistant developer", "level": 30 },
+      { "name": "Basic developer", "level": 40 },
+      { "name": "Junior developer", "level": 50 },
+      { "name": "Confirmed developer", "level": 55 },
+      { "name": "Full-Stack developer", "level": 60 }
+    ],
+    "registrationDuration": 43200,
+    "timeline": [
+      {
+        "month": 1,
+        "minLevel": 0,
+        "expectedLevel": 0,
+        "checkpointLevel": 0,
+        "rank": "Aspiring developer",
+        "notes": "Online tests, Selection piscine"
+      },
+      {
+        "month": 2,
+        "minLevel": 5,
+        "expectedLevel": 7,
+        "checkpointLevel": 0,
+        "notes": "Imperative programming, Structured programming, Algorithms (basics), Go language development, Infrastructure: network and security (basics)"
+      },
+      {
+        "month": 3,
+        "minLevel": 6,
+        "expectedLevel": 10,
+        "checkpointLevel": 0
+      },
+      {
+        "month": 4,
+        "minLevel": 9,
+        "expectedLevel": 13,
+        "checkpointLevel": 0
+      },
+      {
+        "month": 5,
+        "minLevel": 12,
+        "expectedLevel": 17,
+        "checkpointLevel": 10,
+        "rank": "Beginner developer"
+      },
+      {
+        "month": 6,
+        "minLevel": 15,
+        "expectedLevel": 18,
+        "checkpointLevel": 20
+      },
+      {
+        "month": 7,
+        "minLevel": 17,
+        "expectedLevel": 20,
+        "checkpointLevel": 20,
+        "notes": "Event-driven programming, Web architecture and tech: HTML, CSS, JavaScript & Node.js, Backend programming in Go & JS, Infrastructure: system administration, network, security (intermediate), Algorithms (intermediate), Software security (basics)"
+      },
+      {
+        "month": 8,
+        "minLevel": 20,
+        "expectedLevel": 23,
+        "checkpointLevel": 30,
+        "rank": "Apprentice developer"
+      },
+      {
+        "month": 9,
+        "minLevel": 23,
+        "expectedLevel": 27,
+        "checkpointLevel": 30
+      },
+      {
+        "month": 10,
+        "minLevel": 28,
+        "expectedLevel": 34,
+        "checkpointLevel": 30
+      },
+      {
+        "month": 11,
+        "minLevel": 33,
+        "expectedLevel": 38,
+        "checkpointLevel": 40,
+        "rank": "Assistant developer"
+      },
+      {
+        "month": 12,
+        "minLevel": 34,
+        "expectedLevel": 38,
+        "checkpointLevel": 40
+      },
+      {
+        "month": 13,
+        "minLevel": 37,
+        "expectedLevel": 41,
+        "checkpointLevel": 40,
+        "notes": "Imperative programming (confirmed), Object-oriented programming and software architecture (confirmed), Network architecture design, Rust language programming, Infrastructure confirmed : system administration, network, security (confirmed), Software security (intermediate), Algorithms (advanced)"
+      },
+      {
+        "month": 14,
+        "minLevel": 39,
+        "expectedLevel": 53,
+        "checkpointLevel": 40
+      },
+      {
+        "month": 15,
+        "minLevel": 42,
+        "expectedLevel": 54,
+        "checkpointLevel": 40,
+        "rank": "Basic developer"
+      },
+      {
+        "month": 16,
+        "minLevel": 45,
+        "expectedLevel": 59,
+        "checkpointLevel": 40
+      },
+      {
+        "month": 17,
+        "minLevel": 47,
+        "expectedLevel": 60,
+        "checkpointLevel": 40
+      },
+      {
+        "month": 18,
+        "minLevel": 50,
+        "expectedLevel": 62,
+        "checkpointLevel": 50,
+        "rank": "Junior developer"
+      }
+    ]
+  },
+  "children": {
+    "social-network-quiz": {},
+    "building-resume": {
+      "baseXp": 1000,
+      "requiredAuditRatio": 0,
+      "baseSkills": { "employability": 20 }
+    },
+    "self-management": {
+      "baseXp": 1000,
+      "requiredAuditRatio": 0,
+      "requirements": { "objects": ["../social-network-quiz"] },
+      "baseSkills": { "personal-development": 20 }
+    },
+    "communication": {
+      "baseXp": 1000,
+      "requiredAuditRatio": 0,
+      "requirements": { "objects": ["../self-management"] },
+      "baseSkills": { "personal-development": 20 }
+    },
+    "values": {
+      "baseXp": 1000,
+      "requiredAuditRatio": 0,
+      "requirements": { "objects": ["../communication"] },
+      "baseSkills": { "personal-development": 20 }
+    }
+  }
+}

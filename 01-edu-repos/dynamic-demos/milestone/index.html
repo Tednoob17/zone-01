@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Milestone RNCP 39583</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', 'Calibri', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header h2 {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        
+        .overview-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border-left: 5px solid #059669;
+        }
+        
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .info-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .info-card h4 {
+            color: #2563eb;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .competency-section {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .competency-list {
+            padding: 2rem;
+        }
+        
+        .competency-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .competency-item:last-child {
+            border-bottom: none;
+        }
+        
+        .competency-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            min-width: 80px;
+            text-align: center;
+            margin-right: 1rem;
+        }
+        
+        .bc01-badge { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .bc03-badge { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .bc04-badge { background: linear-gradient(135deg, #059669, #047857); }
+        
+        .phase-section {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .phase-header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .phase-content {
+            padding: 2rem;
+        }
+        
+        .role-section {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 5px solid #059669;
+        }
+        
+        .role-title {
+            color: #059669;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .role-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(5, 150, 105, 0.1);
+        }
+        
+        .role-card h4 {
+            color: #059669;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .role-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .role-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0fdf4;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .role-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #059669;
+            font-weight: bold;
+        }
+        
+        .assessment-section {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 5px solid #2563eb;
+        }
+        
+        .assessment-title {
+            color: #1d4ed8;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .highlight-box h4 {
+            color: #1d4ed8;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header h1 { font-size: 2rem; }
+            .role-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PROJET MILESTONE</h1>
+            <h2>Capstone Stratégique RNCP 39583</h2>
+            <p>Expert en Développement Logiciel</p>
+        </div>
+        
+        <div class="overview-card">
+            <h3 style="color: #059669; font-size: 1.5rem; margin-bottom: 1rem;">Vue d'ensemble du projet</h3>
+            <div class="overview-grid">
+                <div class="info-card">
+                    <h4>Durée</h4>
+                    <p>5 semaines (3 projets capstone)</p>
+                </div>
+                <div class="info-card">
+                    <h4>Équipe</h4>
+                    <p>3-5 apprenants par groupe</p>
+                </div>
+                <div class="info-card">
+                    <h4>Objectif</h4>
+                    <p>Préparation technique puis développement stratégique RNCP</p>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h4>Mission principale</h4>
+                <p>Le Projet Milestone structure l'apprentissage en 3 capstones progressifs : mise en œuvre des compétences Java (Capstone 1), puis préparation des compétences stratégiques RNCP (Capstones 2 & 3) avec approbation pédagogique pour progression.</p>
+            </div>
+        </div>
+        
+        <div class="competency-section">
+            <div class="section-header">Compétences RNCP Ciblées (11 compétences stratégiques)</div>
+            <div class="competency-list">
+                <div class="competency-item">
+                    <div class="competency-badge bc01-badge">BC01</div>
+                    <div>
+                        <strong>Cadrage Stratégique (6/11 compétences)</strong><br>
+                        <span style="color: #64748b; font-size: 0.9rem;">Cartographie des acteurs, analyse SWOT, faisabilité technique, veille réglementaire, estimation des coûts, négociation client</span>
+                    </div>
+                </div>
+                <div class="competency-item">
+                    <div class="competency-badge bc03-badge">BC03</div>
+                    <div>
+                        <strong>Leadership & Management (3/7 compétences)</strong><br>
+                        <span style="color: #64748b; font-size: 0.9rem;">Arbitrages stratégiques, pilotage d'équipe, évaluation des compétences</span>
+                    </div>
+                </div>
+                <div class="competency-item">
+                    <div class="competency-badge bc04-badge">BC04</div>
+                    <div>
+                        <strong>Opérations Stratégiques (2/7 compétences)</strong><br>
+                        <span style="color: #64748b; font-size: 0.9rem;">Gestion des dépendances, documentation des versions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="phase-section">
+            <div class="phase-header">Structure en 3 Capstones Progressifs</div>
+            <div class="phase-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #f59e0b;">
+                        <h4 style="color: #d97706; font-size: 1.2rem; margin-bottom: 1rem;">CAPSTONE 1 - Préparation Technique</h4>
+                        <div style="background: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <strong style="color: #92400e;">Durée:</strong> 1.5 semaines<br>
+                            <strong style="color: #92400e;">Objectif:</strong> Vérification d'éligibilité
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 0.5rem 0;">→ <strong>Formulaire de validation rempli par les apprenants pour éligibilité aux étapes suivantes</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #2563eb;">
+                        <h4 style="color: #1d4ed8; font-size: 1.2rem; margin-bottom: 1rem;">CAPSTONE 2 - Stratégie Business</h4>
+                        <div style="background: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <strong style="color: #1e40af;">Durée:</strong> 1.5 semaines<br>
+                            <strong style="color: #1e40af;">Prérequis:</strong> Validation Capstone 1
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eff6ff;">→ Cartographie des parties prenantes</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eff6ff;">→ Analyse SWOT et faisabilité technique</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #eff6ff;">→ Estimation des coûts et budgétisation</li>
+                            <li style="padding: 0.5rem 0;">→ Leadership rotatif - analyse stratégique</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #7c3aed;">
+                        <h4 style="color: #6d28d9; font-size: 1.2rem; margin-bottom: 1rem;">CAPSTONE 3 - Leadership Exécutif</h4>
+                        <div style="background: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <strong style="color: #6b21a8;">Durée:</strong> 2 semaines<br>
+                            <strong style="color: #6b21a8;">Prérequis:</strong> Validation Capstone 2
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f5f3ff;">→ Simulation de crise et arbitrages</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f5f3ff;">→ Management d'équipe sous pression</li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #f5f3ff;">→ Négociation client et présentation</li>
+                            <li style="padding: 0.5rem 0;">→ Évaluation des compétences équipe</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="role-section">
+            <div class="role-title">Cadre de Double Rôle - Leadership Rotatif</div>
+            <div class="role-grid">
+                <div class="role-card">
+                    <h4>En tant que Leader d'Équipe (1-2 jours/semaine)</h4>
+                    <ul class="role-list">
+                        <li>Autorité décisionnelle stratégique</li>
+                        <li>Coordination d'équipe et résolution de conflits</li>
+                        <li>Gestion des parties prenantes et clients</li>
+                        <li>Management de performance</li>
+                        <li>Leadership de crise et adaptation</li>
+                    </ul>
+                </div>
+                <div class="role-card">
+                    <h4>En tant qu'Expert Contributeur (3-4 jours/semaine)</h4>
+                    <ul class="role-list">
+                        <li>Excellence technique et analyse approfondie</li>
+                        <li>Support stratégique et recherche</li>
+                        <li>Exécution collaborative</li>
+                        <li>Développement professionnel continu</li>
+                        <li>Transfert de connaissances</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

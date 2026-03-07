@@ -1,0 +1,52 @@
+{
+  "id": 296,
+  "name": "Gravity",
+  "slug": "296-gravity",
+  "powerstats": {
+    "intelligence": 50,
+    "strength": 32,
+    "speed": 33,
+    "durability": 40,
+    "power": 69,
+    "combat": 30
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": "Human",
+    "height": [
+      "5'10",
+      "178 cm"
+    ],
+    "weight": [
+      "175 lb",
+      "79 kg"
+    ],
+    "eyeColor": "Blue",
+    "hairColor": "Brown"
+  },
+  "biography": {
+    "fullName": "Greg Willis",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Protector of the Universe"
+    ],
+    "placeOfBirth": "Sheboygan, Wisconsin",
+    "firstAppearance": "Gravity #1 (August, 2005)",
+    "publisher": "Marvel Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Student",
+    "base": "New York City"
+  },
+  "connections": {
+    "groupAffiliation": "Young Allies; Formerly Great Lakes Initiative, Heavy Hitters",
+    "relatives": "Richard Willis (father), Mary Willis (mother)"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/296-gravity.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/296-gravity.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/296-gravity.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/296-gravity.jpg"
+  }
+}

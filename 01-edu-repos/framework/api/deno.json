@@ -1,0 +1,18 @@
+{
+  "imports": {
+    "@std/fmt": "jsr:@std/fmt@^1.0.8",
+    "@std/http": "jsr:@std/http@^1.0.22"
+  },
+  "name": "@01edu/api",
+  "version": "0.1.7",
+  "license": "MIT",
+  "exports": {
+    "./context": "./context.ts",
+    "./env": "./env.ts",
+    "./log": "./log.ts",
+    "./response": "./response.ts",
+    "./router": "./router.ts",
+    "./server": "./server.ts",
+    "./validator": "./validator.ts"
+  }
+}

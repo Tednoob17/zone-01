@@ -1,0 +1,184 @@
+/* === Body Styling === */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1d0731;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* === Chatbot Container === */
+#chatbot-container {
+  width: 360px;
+  max-width: 90%;
+  background-color: #2e0b45;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Chatbot Title === */
+h1 {
+  color: #ffffff;
+  font-size: 22px;
+  text-align: center;
+  padding: 16px 0;
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* === Chatbox Area === */
+#chatbox {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  background-color: #ffffff;
+}
+
+/* === Messages Area === */
+#messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* === Input Area (User Input + Send Button) === */
+#input-area {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+/* === User Input Field === */
+#user-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+/* === Send Button === */
+#send-button {
+  background-color: #8271e0;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* === Send Button Hover Effect === */
+#send-button:hover {
+  background-color: #681bb1;
+}
+
+/* === Message Bubbles (For Next Project) === */
+.message {
+  max-width: 80%;
+  padding: 10px 14px;
+  margin: 6px 0;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+/* === User Message Bubble === */
+.user {
+  align-self: flex-end;
+  background-color: #ff00a6;
+  color: #fff;
+}
+
+/* === Bot Message Bubble === */
+.bot {
+  align-self: flex-start;
+  background-color: #f1f0f0;
+  color: #333;
+}
+
+/* === Falling Circles Background Animation === */
+.falling-circles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* === Individual Falling Circle Style === */
+.falling-circles .circle {
+  position: absolute;
+  top: -100px;
+  border-radius: 50%;
+  background-color: rgba(135, 126, 225, 0.667);
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* === Falling Animation Keyframes === */
+@keyframes fall {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(120vh) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* === Individual Circle Positioning and Animation Timing === */
+.circle:nth-child(1) {
+  left: 10%;
+  width: 80px;
+  height: 80px;
+  animation-duration: 9s;
+  animation-delay: 0s;
+}
+
+.circle:nth-child(2) {
+  left: 30%;
+  width: 100px;
+  height: 100px;
+  animation-duration: 12s;
+  animation-delay: 1s;
+}
+
+.circle:nth-child(3) {
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  animation-duration: 7s;
+  animation-delay: 2s;
+}
+
+.circle:nth-child(4) {
+  left: 70%;
+  width: 120px;
+  height: 120px;
+  animation-duration: 10s;
+  animation-delay: 3s;
+}
+
+.circle:nth-child(5) {
+  left: 85%;
+  width: 95px;
+  height: 95px;
+  animation-duration: 11s;
+  animation-delay: 4s;
+}

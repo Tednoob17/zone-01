@@ -1,0 +1,56 @@
+{
+  "id": 336,
+  "name": "Hybrid",
+  "slug": "336-hybrid",
+  "powerstats": {
+    "intelligence": 63,
+    "strength": 63,
+    "speed": 58,
+    "durability": 75,
+    "power": 100,
+    "combat": 80
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": "Symbiote",
+    "height": [
+      "5'9",
+      "175 cm"
+    ],
+    "weight": [
+      "172 lb",
+      "77 kg"
+    ],
+    "eyeColor": "Brown",
+    "hairColor": "Black"
+  },
+  "biography": {
+    "fullName": "Scott Washington",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Guardsman Number Six",
+      "Terror of Brooklyn",
+      "Riot ,Phage ",
+      "Lasher",
+      "Agony"
+    ],
+    "placeOfBirth": "Bedford-Stuyvesant, Brooklyn, New York City",
+    "firstAppearance": "Venom Along Came A Spider #2 (as Hybrid)",
+    "publisher": "Marvel Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "-",
+    "base": "Bedford-Stuyvesant, Brooklyn, New York City, New York"
+  },
+  "connections": {
+    "groupAffiliation": "New Warriors, Guardsmen, NYPD",
+    "relatives": "Unnamed mother, Derek Washington (brother, deceased), Hybrid (\"former symbiote\", defused)"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/336-hybrid.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/336-hybrid.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/336-hybrid.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/336-hybrid.jpg"
+  }
+}

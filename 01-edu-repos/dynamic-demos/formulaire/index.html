@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire Validation Capstone 1 - RNCP 39583</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', 'Calibri', Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .form-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .form-content {
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            color: #1e293b;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .required {
+            color: #dc2626;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-top: 0.25rem;
+            transform: scale(1.2);
+        }
+        
+        .skill-level {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .skill-level label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+        
+        .skill-level input[type="radio"] {
+            margin: 0.25rem 0;
+        }
+        
+        .rating-labels {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-align: center;
+        }
+        
+        .file-upload {
+            border: 2px dashed #d1d5db;
+            border-radius: 6px;
+            padding: 2rem;
+            text-align: center;
+            background: #f9fafb;
+            transition: all 0.2s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: #f59e0b;
+            background: #fefbf3;
+        }
+        
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        
+        .file-upload-label {
+            cursor: pointer;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+        
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .info-box h4 {
+            color: #1d4ed8;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .info-box p {
+            color: #1e40af;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        
+        .info-box a {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+        
+        .submit-section {
+            background: #f8fafc;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .warning-box h4 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .skill-level { grid-template-columns: 1fr; }
+            .rating-labels { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>FORMULAIRE DE VALIDATION CAPSTONE 1</h1>
+        </div>
+        
+        <div class="form-content">
+            <div style="background: #fee2e2; border: 1px solid #fca5a5; border-radius: 6px; padding: 1rem; margin-bottom: 2rem;">
+                <h4 style="color: #991b1b; margin-bottom: 0.5rem; font-size: 0.9rem;">⚠️ PROTOTYPE - Version de Démonstration</h4>
+                <p style="color: #7f1d1d; font-size: 0.85rem; margin: 0;">Ce formulaire est sujet à modifications selon les informations nécessaires pour définir l'éligibilité des apprenants à poursuivre le Milestone Project.</p>
+            </div>
+            
+            <div class="warning-box">
+                <h4>Critères de Validation</h4>
+                <p>Tous les critères doivent être validés à 100% pour accéder au Capstone 2. L'approbation du staff pédagogique est obligatoire pour la progression vers les compétences RNCP stratégiques.</p>
+            </div>
+            
+            <form>
+                <!-- Section 1: Informations Personnelles -->
+                <div class="section">
+                    <h2 class="section-title">1. Informations Personnelles</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="prenom">Prénom <span class="required">*</span></label>
+                            <input type="text" id="prenom" name="prenom" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nom">Nom <span class="required">*</span></label>
+                            <input type="text" id="nom" name="nom" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email 01Talent <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="cohorte">Cohorte <span class="required">*</span></label>
+                            <select id="cohorte" name="cohorte" class="form-select" required>
+                                <option value="">Sélectionner votre cohorte</option>
+                                <option value="2024-A">2024-A (Janvier-Juin)</option>
+                                <option value="2024-B">2024-B (Juillet-Décembre)</option>
+                                <option value="2025-A">2025-A (Janvier-Juin)</option>
+                                <option value="2025-B">2025-B (Juillet-Décembre)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="date_naissance">Date de Naissance <span class="required">*</span></label>
+                            <input type="date" id="date_naissance" name="date_naissance" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="niveau_etudes">Niveau d'Études Antérieur</label>
+                            <select id="niveau_etudes" name="niveau_etudes" class="form-select">
+                                <option value="">Sélectionner</option>
+                                <option value="bac">Baccalauréat</option>
+                                <option value="bac+2">Bac+2 (BTS/DUT)</option>
+                                <option value="bac+3">Bac+3 (Licence)</option>
+                                <option value="bac+4">Bac+4 (Master 1)</option>
+                                <option value="bac+5">Bac+5+ (Master/Ingénieur)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Validation du Parcours Java -->
+                <div class="section">
+                    <h2 class="section-title">2. Validation du Parcours Java Full Stack</h2>
+                    <div class="info-box">
+                        <h4>Prérequis Obligatoires</h4>
+                        <p>Vous devez avoir terminé avec succès tous les modules de la branche Java Full Stack pour être éligible au Capstone 1.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="common_core_termine">Avez-vous terminé le Common Core (Tronc Commun) ? <span class="required">*</span></label>
+                        <select id="common_core_termine" name="common_core_termine" class="form-select" required>
+                            <option value="">Sélectionner</option>
+                            <option value="oui">Oui, Common Core complètement terminé</option>
+                            <option value="en_cours">Non, encore en cours</option>
+                            <option value="non">Non, pas encore commencé</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="branche_java_termine">Avez-vous terminé la branche Java Full Stack ? <span class="required">*</span></label>
+                        <select id="branche_java_termine" name="branche_java_termine" class="form-select" required>
+                            <option value="">Sélectionner</option>
+                            <option value="oui">Oui, branche Java complètement terminée</option>
+                            <option value="en_cours">Non, encore en cours</option>
+                            <option value="non">Non, pas encore commencé</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="parcours_termine">Confirmez-vous avoir terminé l'intégralité du parcours 01Talent ? <span class="required">*</span></label>
+                        <select id="parcours_termine" name="parcours_termine" class="form-select" required>
+                            <option value="">Sélectionner</option>
+                            <option value="oui">Oui, parcours complètement terminé</option>
+                            <option value="en_cours">Non, encore en cours</option>
+                            <option value="non">Non, pas encore commencé</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="date_debut_parcours">Date de début du parcours 01Talent <span class="required">*</span></label>
+                        <input type="date" id="date_debut_parcours" name="date_debut_parcours" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="heures_par_an">Nombre d'heures par an consacrées au parcours <span class="required">*</span></label>
+                        <select id="heures_par_an" name="heures_par_an" class="form-select" required>
+                            <option value="">Sélectionner</option>
+                            <option value="moins_200">Moins de 200 heures</option>
+                            <option value="200_400">200 à 400 heures</option>
+                            <option value="400_600">400 à 600 heures</option>
+                            <option value="600_800">600 à 800 heures</option>
+                            <option value="800_1000">800 à 1000 heures</option>
+                            <option value="plus_1000">Plus de 1000 heures</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Section 3: Expérience Professionnelle -->
+                <div class="section">
+                    <h2 class="section-title">3. Expérience Professionnelle</h2>
+                    <div class="form-group">
+                        <label class="form-label" for="experience_developpement">Avez-vous une expérience en développement logiciel ?</label>
+                        <select id="experience_developpement" name="experience_developpement" class="form-select">
+                            <option value="">Sélectionner</option>
+                            <option value="aucune">Aucune expérience</option>
+                            <option value="stage">Stage(s) uniquement</option>
+                            <option value="moins_1_an">Moins d'1 an</option>
+                            <option value="1_3_ans">1 à 3 ans</option>
+                            <option value="3_5_ans">3 à 5 ans</option>
+                            <option value="plus_5_ans">Plus de 5 ans</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="experience_java">Expérience spécifique avec Java</label>
+                        <select id="experience_java" name="experience_java" class="form-select">
+                            <option value="">Sélectionner</option>
+                            <option value="aucune">Aucune</option>
+                            <option value="formation">Formation uniquement</option>
+                            <option value="projets_perso">Projets personnels</option>
+                            <option value="stage">Stage/Projet étudiant</option>
+                            <option value="professionnel">Expérience professionnelle</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="projets_realises">Décrivez vos principaux projets Java réalisés</label>
+                        <textarea id="projets_realises" name="projets_realises" class="form-textarea" placeholder="Décrivez 2-3 projets Java significatifs que vous avez réalisés (technologies utilisées, durée, complexité)..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="experience_equipe">Expérience de travail en équipe sur des projets techniques</label>
+                        <select id="experience_equipe" name="experience_equipe" class="form-select">
+                            <option value="">Sélectionner</option>
+                            <option value="aucune">Aucune</option>
+                            <option value="scolaire">Projets scolaires uniquement</option>
+                            <option value="stage">Stage en équipe</option>
+                            <option value="professionnel">Expérience professionnelle</option>
+                            <option value="open_source">Projets open source</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Section 4: Documents et Diplômes -->
+                <div class="section">
+                    <h2 class="section-title">4. Documents et Diplômes</h2>
+                    <div class="info-box">
+                        <h4>Documents Requis</h4>
+                        <p>Veuillez télécharger vos diplômes et justificatifs académiques pour validation de votre parcours.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Diplôme le Plus Élevé <span class="required">*</span></label>
+                        <div class="file-upload">
+                            <input type="file" id="diplome" name="diplome" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <label for="diplome" class="file-upload-label">
+                                Cliquez pour télécharger votre diplôme<br>
+                                <small>Formats acceptés: PDF, JPG, PNG (max 5MB)</small>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Reconnaissance de Périodes d'Études - Centre ENIC-NARIC France</label>
+                        <div class="file-upload">
+                            <input type="file" id="enic_naric" name="enic_naric" accept=".pdf,.jpg,.jpeg,.png">
+                            <label for="enic_naric" class="file-upload-label">
+                                Cliquez pour télécharger l'attestation ENIC-NARIC<br>
+                                <small>Requis pour les diplômes étrangers - Formats: PDF, JPG, PNG</small>
+                            </label>
+                        </div>
+                        <div class="info-box" style="margin-top: 0.5rem;">
+                            <h4>Information ENIC-NARIC</h4>
+                            <p>Si vous avez obtenu vos diplômes à l'étranger, une attestation de reconnaissance du Centre ENIC-NARIC France est requise. Vous pouvez faire votre demande sur <a href="https://www.ciep.fr/enic-naric-france" target="_blank">www.ciep.fr/enic-naric-france</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Autres Diplômes ou Certifications</label>
+                        <div class="file-upload">
+                            <input type="file" id="autres_diplomes" name="autres_diplomes" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                            <label for="autres_diplomes" class="file-upload-label">
+                                Cliquez pour télécharger d'autres certifications<br>
+                                <small>Optionnel - Vous pouvez sélectionner plusieurs fichiers</small>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="pays_diplome">Pays d'obtention du diplôme principal <span class="required">*</span></label>
+                        <select id="pays_diplome" name="pays_diplome" class="form-select" required>
+                            <option value="">Sélectionner le pays</option>
+                            <option value="france">France</option>
+                            <option value="belgique">Belgique</option>
+                            <option value="suisse">Suisse</option>
+                            <option value="canada">Canada</option>
+                            <option value="maroc">Maroc</option>
+                            <option value="tunisie">Tunisie</option>
+                            <option value="algerie">Algérie</option>
+                            <option value="senegal">Sénégal</option>
+                            <option value="cote_ivoire">Côte d'Ivoire</option>
+                            <option value="cameroun">Cameroun</option>
+                            <option value="autre">Autre (préciser ci-dessous)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="autre_pays">Si "Autre", précisez le pays</label>
+                        <input type="text" id="autre_pays" name="autre_pays" class="form-input" placeholder="Nom du pays">
+                    </div>
+                </div>
+
+                <!-- Section 5: Motivation RNCP -->
+                <div class="section">
+                    <h2 class="section-title">5. Motivation pour la Certification RNCP</h2>
+                    <div class="form-group">
+                        <label class="form-label" for="objectifs_professionnels">Objectifs Professionnels <span class="required">*</span></label>
+                        <textarea id="objectifs_professionnels" name="objectifs_professionnels" class="form-textarea" required placeholder="Décrivez vos objectifs de carrière et comment la certification RNCP 39583 s'inscrit dans votre projet professionnel..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="motivation_leadership">Pourquoi souhaitez-vous développer des compétences de leadership ?</label>
+                        <textarea id="motivation_leadership" name="motivation_leadership" class="form-textarea" placeholder="Expliquez votre intérêt pour les compétences managériales et stratégiques..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="disponibilite">Confirmez-vous votre disponibilité pour les 5 semaines complètes du Milestone Project ? <span class="required">*</span></label>
+                        <select id="disponibilite" name="disponibilite" class="form-select" required>
+                            <option value="">Sélectionner</option>
+                            <option value="oui">Oui, disponibilité complète</option>
+                            <option value="partielle">Disponibilité partielle (préciser ci-dessous)</option>
+                            <option value="non">Non disponible</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="submit-section">
+            <button type="submit" class="submit-btn">Soumettre pour Validation</button>
+            <p style="margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">
+                Votre soumission sera évaluée par l'équipe pédagogique. Un retour vous sera donné sous 48h.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

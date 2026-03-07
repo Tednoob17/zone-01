@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffe4e1; /* Light pink - customized */
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: #2d2d2d;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style h1 */
+h1 {
+    font-size: 2.5rem;
+    color: #d72660; /* Custom magenta */
+    margin-bottom: 24px;
+}
+
+/* Style h3 */
+h3 {
+    margin-top: 32px;
+    color: #7c3f58; /* Custom deep mauve */
+}
+
+/* Style p */
+p {
+    font-size: 1.15rem;
+    margin: 12px 0;
+}
+
+/* Animal image */
+.animal {
+    margin-top: 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(215, 38, 96, 0.12);
+}
+
+/* Style search input */
+#searchInput {
+    padding: 12px;
+    width: 80%;
+    border: 2px solid #fbb1b1; /* Custom light pink border */
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+}
+
+/* Button styling */
+#searchButton {
+    padding: 12px 24px;
+    background-color: #f46036; /* Custom orange */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Add hover to button */
+#searchButton:hover {
+    background-color: #d72660; /* Custom magenta */
+}
+
+/* Result paragraph */
+#searchResult {
+    margin-top: 18px;
+    font-style: italic;
+    color: #7c3f58;
+}
+
+/* Remove bullets from lists and make list items bold */
+ul, ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li, ol li {
+    font-weight: bold;
+}

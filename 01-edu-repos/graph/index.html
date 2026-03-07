@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+<style type="text/css">
+svg {
+  background: #333;
+}
+svg.grab { cursor: grab }
+svg.grabbing { cursor: grabbing }
+g {
+  /* transition: transform 0.1s ease-out; */
+}
+</style>
+<script type="module">
+import { init } from './graph.js'
+
+init({
+  size: 21,
+  mountingPoint: document.body,
+  listenner: console.log
+})
+
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,8 @@
+query newUsers($before: Int!, $after: Int!) {
+  newUsers: user(where: { id: { _gt: $after, _lte: $before } }) {
+    id
+    login
+    email
+    createdAt
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": 605,
+  "name": "Skaar",
+  "slug": "605-skaar",
+  "powerstats": {
+    "intelligence": 50,
+    "strength": 85,
+    "speed": 27,
+    "durability": 90,
+    "power": 69,
+    "combat": 85
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": null,
+    "height": [
+      "6'6",
+      "198 cm"
+    ],
+    "weight": [
+      "400 lb",
+      "180 kg"
+    ],
+    "eyeColor": "Green",
+    "hairColor": "Black"
+  },
+  "biography": {
+    "fullName": "",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Savior",
+      "Son of Hulk",
+      "WorldBreaker",
+      "Long Hair",
+      "Little Monster",
+      "Conan"
+    ],
+    "placeOfBirth": "Sakaar",
+    "firstAppearance": "World War Hulk #5, 2007",
+    "publisher": "Marvel Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Warrior",
+    "base": "-"
+  },
+  "connections": {
+    "groupAffiliation": "-",
+    "relatives": "Morris Walters (granduncle), Elaine Banner-Walters (paternal grandaunt, deceased), Brian Banner (paternal grandfather, deceased), Rebecca Banner (paternal grandmother, deceased), She-Hulk (1st cousin once removed), Hulk (father), Caiera the Oldstrong (mother, deceased), Hiro-Kala (Twin brother), Lyra (half-sister)"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/605-skaar.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/605-skaar.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/605-skaar.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/605-skaar.jpg"
+  }
+}

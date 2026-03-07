@@ -1,0 +1,15 @@
+{
+  "imports": {
+    "@db/sqlite": "jsr:@db/sqlite@^0.13.0"
+  },
+  "name": "@01edu/types",
+  "version": "0.1.4",
+  "license": "MIT",
+  "exports": {
+    ".": "./mod.d.ts",
+    "./context": "./context.d.ts",
+    "./db": "./db.d.ts",
+    "./router": "./router.d.ts",
+    "./validator": "./validator.d.ts"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "id": 2,
+  "name": "Abe Sapien",
+  "slug": "2-abe-sapien",
+  "powerstats": {
+    "intelligence": 88,
+    "strength": 28,
+    "speed": 35,
+    "durability": 65,
+    "power": 100,
+    "combat": 85
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": "Icthyo Sapien",
+    "height": [
+      "6'3",
+      "191 cm"
+    ],
+    "weight": [
+      "145 lb",
+      "65 kg"
+    ],
+    "eyeColor": "Blue",
+    "hairColor": "No Hair"
+  },
+  "biography": {
+    "fullName": "Abraham Sapien",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Langdon Everett Caul",
+      "Abraham Sapien",
+      "Langdon Caul"
+    ],
+    "placeOfBirth": "-",
+    "firstAppearance": "Hellboy: Seed of Destruction (1993)",
+    "publisher": "Dark Horse Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Paranormal Investigator",
+    "base": "-"
+  },
+  "connections": {
+    "groupAffiliation": "Bureau for Paranormal Research and Defense",
+    "relatives": "Edith Howard (wife, deceased)"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/2-abe-sapien.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/2-abe-sapien.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/2-abe-sapien.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/2-abe-sapien.jpg"
+  }
+}

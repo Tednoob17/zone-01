@@ -1,0 +1,52 @@
+{
+  "id": 357,
+  "name": "Jean-Luc Picard",
+  "slug": "357-jean-luc-picard",
+  "powerstats": {
+    "intelligence": 75,
+    "strength": 10,
+    "speed": 17,
+    "durability": 30,
+    "power": 26,
+    "combat": 65
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": "Human",
+    "height": [
+      "-",
+      "0 cm"
+    ],
+    "weight": [
+      "- lb",
+      "0 kg"
+    ],
+    "eyeColor": "-",
+    "hairColor": "-"
+  },
+  "biography": {
+    "fullName": "Jean-Luc Picard",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Locutus"
+    ],
+    "placeOfBirth": "La Barre, France, Earth",
+    "firstAppearance": "Star Trek: The Next Generation (1987)",
+    "publisher": "Star Trek",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Commanding officer USS Enterprise (NCC-1701-E)",
+    "base": "-"
+  },
+  "connections": {
+    "groupAffiliation": "-",
+    "relatives": "Maurice Picard (father), Yvette Picard (mother), Robert Picard (brother), Shinzon (clone)"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/357-jean-luc-picard.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/357-jean-luc-picard.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/357-jean-luc-picard.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/357-jean-luc-picard.jpg"
+  }
+}

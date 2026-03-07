@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01Talent - Formateurs de Talents Tech Cloud DevOps</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-black text-white overflow-hidden">
+    
+    <!-- Slide Pagination -->
+    <div class="slide-pagination">
+        <button class="pagination-dot active" data-slide="0" onclick="goToSlide(0)" aria-label="Go to slide 1"></button>
+        <button class="pagination-dot" data-slide="1" onclick="goToSlide(1)" aria-label="Go to slide 2"></button>
+    </div>
+    
+    <!-- Slides Container -->
+    <div class="slides-container" id="slidesContainer">
+        
+        <!-- Slide 1: Hero Section -->
+        <section class="slide-section relative flex items-center justify-center gradient-bg overflow-hidden" id="slide-0">
+        
+        <!-- Animated Background Particles -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0 grid-pattern opacity-30"></div>
+        
+        <!-- Content Container -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20 h-full flex flex-col justify-center">
+            
+            <!-- Main Headline -->
+            <div class="text-center space-y-2 sm:space-y-4 md:space-y-1 hero-spacing">
+                
+                <!-- Main Title -->
+                <div class="container flex-col space-y-6">
+                    <!-- Logo -->
+                    <div class="text-reveal text-reveal-delay-0 flex justify-center mb-4">
+                        <img src="assets/images/Logo 01Talent France - Square.png" alt="01Talent Logo" class="h-28 w-48 sm:h-24 sm:w-48 md:h-28 md:w-48 lg:h-28 lg:w-48 object-cover" style="filter: brightness(0) invert(1);">
+                    </div>
+                    
+                    <div class="text-reveal text-reveal-delay-1">
+                        <h1 class="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight hero-title">
+                            <span class="block text-white">Recode our <b class="glow-text" style="color: #2f82fd;">World</b></span>
+                        </h1>
+                    </div>
+                    
+                    <!-- Description Slider -->
+                    <div class="text-reveal text-reveal-delay-2 max-w-4xl mx-auto px-4">
+                        <div class="hero-slider-container relative">
+                            <!-- Slider Wrapper -->
+                            <div class="hero-slider-wrapper" id="heroSlider">
+                                <!-- Slide 1 -->
+                                <div class="hero-slide active">
+                                    <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 font-light leading-relaxed hero-description">
+                                        Vous recherchez des <span class="text-blue-400 font-semibold">experts Cloud & DevOps</span> pour renforcer vos équipes ou piloter vos projets ?
+                                        Nous mettons à votre disposition un vivier de talents hautement qualifiés, expérimentés et formés selon la méthode 01Talent France, déjà déployée dans plus de 40 pays.
+                                    </p>
+                                </div>
+                                <!-- Slide 2 -->
+                                <div class="hero-slide">
+                                    <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 font-light leading-relaxed hero-description">
+                                        Nos développeurs <span class="text-blue-400 font-semibold">Cloud & DevOps</span> se distinguent par leur maîtrise technique, leur capacité à collaborer efficacement et leur autonomie sur l'ensemble du cycle de vos projets, de la conception à la mise en production.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation Arrows -->
+                            <button class="hero-slider-arrow hero-slider-prev" onclick="changeHeroSlide(-1)" aria-label="Previous slide">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                            </button>
+                            <button class="hero-slider-arrow hero-slider-next" onclick="changeHeroSlide(1)" aria-label="Next slide">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Section -->
+                <div class="text-reveal text-reveal-delay-3 flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-24 py-6 sm:py-8 md:py-12 hero-stats-spacing">
+                    <div class="text-center group hover:scale-110 transition-transform duration-300">
+                        <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold glow-text counter hero-stats-number" style="color: #0063f9;">100%</div>
+                        <div class="text-xs sm:text-sm md:text-base text-gray-400 mt-1 sm:mt-2 uppercase tracking-wider hero-stats-label">Certifiés</div>
+                    </div>
+                    <div class="text-center group hover:scale-110 transition-transform duration-300">
+                        <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white counter hero-stats-number">Cloud</div>
+                        <div class="text-xs sm:text-sm md:text-base text-gray-400 mt-1 sm:mt-2 uppercase tracking-wider hero-stats-label">DEVOPS Ready</div>
+                    </div>
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="text-reveal text-reveal-delay-4 pt-4 sm:pt-6 md:pt-8">
+                    <button class="cta-discover cursor-pointer" onclick="goToSlide(1)">
+                        <span class="relative z-10">Découvrez nos experts</span>
+                    </button>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </section>
+    
+    <!-- Slide 2: Talents Section -->
+    <section class="slide-section relative bg-black py-20 overflow-y-auto" id="slide-1">
+        
+        <!-- Background grid pattern -->
+        <div class="absolute inset-0 grid-pattern opacity-20"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-20">
+                <p class="text-sm md:text-base tracking-[0.3em] uppercase font-light mb-4" style="color: #2d64b8;">
+                    Promotion 2025
+                </p>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                    Nos Experts <span class="glow-text" style="color: #2d64b8;">Cloud DevOps</span>
+                </h2>
+                <p class="text-sm md:text-base text-gray-400 max-w-3xl mx-auto mb-8">
+                    Consultez un échantillon de CV anonymisés. <br>
+                    Nos talents sont disponibles dès aujourd'hui... mais peut-être plus demain.
+                </p>
+                <div class="inline-block px-6 py-3 border-2 border-blue-500 rounded-lg">
+                    <p class="text-base text-blue-400 text-sm font-semibold">
+                        💼 Sélectionnez les profils qui vous intéressent pour un entretien en visio-conférence
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Talents Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                
+                <!-- Talent Card 1: Rivo Rakotondrasoa -->
+                <div class="talent-card card-fade-in bg-zinc-900" data-talent-id="1" data-talent-name="Rivo Rakotondrasoa" data-talent-role="Expert DevOps">
+                    <div class="relative">
+                        <div class="talent-checkbox-container">
+                            <input type="checkbox" class="talent-checkbox" onchange="toggleTalentSelection(this)" data-talent-id="1">
+                        </div>
+                        <div class="talent-image">RR</div>
+                        <div class="talent-overlay">
+                            <button class="view-cv-btn px-8 py-4 text-white font-semibold transition-all" 
+                                    style="background: #0063f9;"
+                                    onclick="openModal('assets/cv/CV-rivo-rakotondrasoa-expert-devops.pdf', 'Rivo Rakotondrasoa')">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Voir le CV
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-2">Rivo Rakotondrasoa</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-wider">Expert DevOps</p>
+                    </div>
+                </div>
+                
+                <!-- Talent Card 2: Aubry Varen -->
+                <div class="talent-card card-fade-in bg-zinc-900" data-talent-id="2" data-talent-name="Aubry Varen" data-talent-role="Développeur DevOps">
+                    <div class="relative">
+                        <div class="talent-checkbox-container">
+                            <input type="checkbox" class="talent-checkbox" onchange="toggleTalentSelection(this)" data-talent-id="2">
+                        </div>
+                        <div class="talent-image">AV</div>
+                        <div class="talent-overlay">
+                            <button class="view-cv-btn px-8 py-4 text-white font-semibold transition-all" 
+                                    style="background: #0063f9;"
+                                    onclick="openModal('assets/cv/CV_Aubry_Varen_Dev_sm.pdf', 'Aubry Varen')">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Voir le CV
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-2">Aubry Varen</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-wider">Développeur DevOps</p>
+                    </div>
+                </div>
+                
+                <!-- Talent Card 3: Hamdi Mejri -->
+                <div class="talent-card card-fade-in bg-zinc-900" data-talent-id="3" data-talent-name="Hamdi Mejri" data-talent-role="Ingénieur DevOps">
+                    <div class="relative">
+                        <div class="talent-checkbox-container">
+                            <input type="checkbox" class="talent-checkbox" onchange="toggleTalentSelection(this)" data-talent-id="3">
+                        </div>
+                        <div class="talent-image">HM</div>
+                        <div class="talent-overlay">
+                            <button class="view-cv-btn px-8 py-4 text-white font-semibold transition-all" 
+                                    style="background: #0063f9;"
+                                    onclick="openModal('assets/cv/CV_DevOps_Hamdi_MEJRI.pdf', 'Hamdi Mejri')">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Voir le CV
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-2">Hamdi Mejri</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-wider">Ingénieur DevOps</p>
+                    </div>
+                </div>
+                
+                <!-- Talent Card 4: Axel Elachhab -->
+                <div class="talent-card card-fade-in bg-zinc-900" data-talent-id="4" data-talent-name="Axel Elachhab" data-talent-role="DevOps Engineer">
+                    <div class="relative">
+                        <div class="talent-checkbox-container">
+                            <input type="checkbox" class="talent-checkbox" onchange="toggleTalentSelection(this)" data-talent-id="4">
+                        </div>
+                        <div class="talent-image">AE</div>
+                        <div class="talent-overlay">
+                            <button class="view-cv-btn px-8 py-4 text-white font-semibold transition-all" 
+                                    style="background: #0063f9;"
+                                    onclick="openModal('assets/cv/ELACHHAB_AXEL_CVDO-1.pdf', 'Axel Elachhab')">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Voir le CV
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-2">Axel Elachhab</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-wider">DevOps Engineer</p>
+                    </div>
+                </div>
+                
+                <!-- Talent Card 5: Fabrice Kouadio -->
+                <div class="talent-card card-fade-in bg-zinc-900" data-talent-id="5" data-talent-name="Fabrice Kouadio" data-talent-role="Cloud DevOps">
+                    <div class="relative">
+                        <div class="talent-checkbox-container">
+                            <input type="checkbox" class="talent-checkbox" onchange="toggleTalentSelection(this)" data-talent-id="5">
+                        </div>
+                        <div class="talent-image">FK</div>
+                        <div class="talent-overlay">
+                            <button class="view-cv-btn px-8 py-4 text-white font-semibold transition-all" 
+                                    style="background: #0063f9;"
+                                    onclick="openModal('assets/cv/Fabrice kouadio.pdf', 'Fabrice Kouadio')">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Voir le CV
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-2">Fabrice Kouadio</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-wider">Cloud DevOps</p>
+                    </div>
+                </div>
+                
+                <!-- Talent Card 6: Justine Faure -->
+                <div class="talent-card card-fade-in bg-zinc-900" data-talent-id="6" data-talent-name="Justine Faure" data-talent-role="DevOps Specialist">
+                    <div class="relative">
+                        <div class="talent-checkbox-container">
+                            <input type="checkbox" class="talent-checkbox" onchange="toggleTalentSelection(this)" data-talent-id="6">
+                        </div>
+                        <div class="talent-image">JF</div>
+                        <div class="talent-overlay">
+                            <button class="view-cv-btn px-8 py-4 text-white font-semibold transition-all" 
+                                    style="background: #0063f9;"
+                                    onclick="openModal('assets/cv/Justine FAURE.pdf', 'Justine Faure')">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Voir le CV
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-2">Justine Faure</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-wider">DevOps Specialist</p>
+                    </div>
+                </div>
+                
+                <!-- Talent Card 7: Sulaiman Maimaitituerxun -->
+                <div class="talent-card card-fade-in bg-zinc-900" data-talent-id="7" data-talent-name="Sulaiman M." data-talent-role="Cloud Engineer">
+                    <div class="relative">
+                        <div class="talent-checkbox-container">
+                            <input type="checkbox" class="talent-checkbox" onchange="toggleTalentSelection(this)" data-talent-id="7">
+                        </div>
+                        <div class="talent-image">SM</div>
+                        <div class="talent-overlay">
+                            <button class="view-cv-btn px-8 py-4 text-white font-semibold transition-all" 
+                                    style="background: #0063f9;"
+                                    onclick="openModal('assets/cv/MAIMAITITUERXUN Sulaiman.pdf', 'Sulaiman Maimaitituerxun')">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Voir le CV
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-2">Sulaiman M.</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-wider">Cloud Engineer</p>
+                    </div>
+                </div>
+                
+                <!-- Talent Card 8: AIT -->
+                <div class="talent-card card-fade-in bg-zinc-900" data-talent-id="8" data-talent-name="AIT" data-talent-role="DevOps Professional">
+                    <div class="relative">
+                        <div class="talent-checkbox-container">
+                            <input type="checkbox" class="talent-checkbox" onchange="toggleTalentSelection(this)" data-talent-id="8">
+                        </div>
+                        <div class="talent-image">AIT</div>
+                        <div class="talent-overlay">
+                            <button class="view-cv-btn px-8 py-4 text-white font-semibold transition-all" 
+                                    style="background: #0063f9;"
+                                    onclick="openModal('assets/cv/AIT.pdf', 'AIT')">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Voir le CV
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-2">AIT</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-wider">DevOps Professional</p>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </section>
+    
+    </div>
+    
+    <!-- CV Modal -->
+    <div id="cvModal" class="modal">
+        <button class="close-modal" onclick="closeModal()">
+            <svg class="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="modal-content">
+            <iframe id="cvFrame" title="CV Viewer" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+    
+    <!-- Floating Action Button -->
+    <button class="floating-action-btn" id="floatingBtn" onclick="openOrderModal()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>Valider ma sélection</span>
+        <span class="talent-count-badge" id="talentCount">0</span>
+    </button>
+    
+    <!-- Order Form Modal -->
+    <div id="orderModal" class="order-modal">
+        <div class="order-modal-content">
+            <!-- Header -->
+            <div class="p-8 border-b border-gray-800">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-3xl font-bold text-white">Commander des talents</h2>
+                    <button onclick="closeOrderModal()" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-gray-400">Remplissez vos informations pour recevoir les profils sélectionnés</p>
+            </div>
+            
+            <!-- Selected Talents -->
+            <div class="p-8 border-b border-gray-800">
+                <h3 class="text-xl font-semibold text-white mb-4">Talents sélectionnés</h3>
+                <div id="selectedTalentsList" class="space-y-3">
+                    <!-- Selected talents will be inserted here -->
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="p-8">
+                <h3 class="text-xl font-semibold text-white mb-6">Vos informations</h3>
+                <form id="orderForm" class="space-y-6" onsubmit="submitOrder(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Prénom *</label>
+                            <input type="text" name="firstName" required class="form-input" placeholder="Votre prénom">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Nom *</label>
+                            <input type="text" name="lastName" required class="form-input" placeholder="Votre nom">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Email *</label>
+                        <input type="email" name="email" required class="form-input" placeholder="votre.email@exemple.com">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Téléphone *</label>
+                        <input type="tel" name="phone" required class="form-input" placeholder="+33 6 12 34 56 78">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Entreprise</label>
+                        <input type="text" name="company" class="form-input" placeholder="Nom de votre entreprise">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Message (optionnel)</label>
+                        <textarea name="message" rows="4" class="form-input" placeholder="Décrivez vos besoins..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-order-btn">
+                        <span class="flex items-center justify-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            Envoyer ma demande
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- EmailJS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/email-service.js"></script>
+    
+</body>
+</html>

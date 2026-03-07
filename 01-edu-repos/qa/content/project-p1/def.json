@@ -1,0 +1,21 @@
+{
+  "type": "project",
+  "name": "project-p1",
+  "attrs": {
+    "groupMax": 2,
+    "groupMin": 1,
+    "validations": [
+      {
+        "type": "user_audit",
+        "delay": 0,
+        "ratio": 2,
+        "required": 1,
+        "matchWhere": {
+          "name": "userInEvent",
+          "type": "function"
+        }
+      }
+    ],
+    "requiredAuditRatio": 0
+  }
+}

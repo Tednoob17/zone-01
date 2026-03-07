@@ -1,0 +1,53 @@
+{
+  "id": 268,
+  "name": "Forge",
+  "slug": "268-forge",
+  "powerstats": {
+    "intelligence": 63,
+    "strength": 10,
+    "speed": 12,
+    "durability": 28,
+    "power": 25,
+    "combat": 48
+  },
+  "appearance": {
+    "gender": "-",
+    "race": null,
+    "height": [
+      "6'",
+      "183 cm"
+    ],
+    "weight": [
+      "180 lb",
+      "81 kg"
+    ],
+    "eyeColor": "Brown",
+    "hairColor": "Black"
+  },
+  "biography": {
+    "fullName": "",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "The Maker",
+      "Cheyenne"
+    ],
+    "placeOfBirth": "Unrevealed, presumably in the American West",
+    "firstAppearance": "Uncanny X-Men #184",
+    "publisher": "Marvel Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Inventor working for the U.S. government, former soldier",
+    "base": "Arlington, Virginia"
+  },
+  "connections": {
+    "groupAffiliation": "X-Factor",
+    "relatives": "-"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/268-forge.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/268-forge.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/268-forge.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/268-forge.jpg"
+  }
+}

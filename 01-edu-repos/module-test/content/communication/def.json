@@ -1,0 +1,20 @@
+{
+  "type": "project",
+  "name": "communication",
+  "attrs": {
+    "groupMin": 1,
+    "groupMax": 1,
+    "validations": [
+      {
+        "delay": 20160,
+        "matchWhere": {
+          "name": "userInCampus",
+          "type": "function"
+        },
+        "ratio": 2,
+        "required": 2,
+        "type": "user_audit"
+      }
+    ]
+  }
+}

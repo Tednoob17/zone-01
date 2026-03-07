@@ -1,0 +1,5 @@
+[package]
+name = "string_permutation"
+version = "0.1.0"
+authors = ["Augusto <aug.ornelas@gmail.com>"]
+edition = "2021"

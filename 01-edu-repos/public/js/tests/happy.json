@@ -1,0 +1,46 @@
+[
+  {
+    "description": "happy is defined and is a function",
+    "code": "equal(typeof happy, 'function')"
+  },
+  {
+    "description": "happy has 1 argument",
+    "code": "equal(happy.length, 1)"
+  },
+  {
+    "description": "very happy.",
+    "code": "equal(happy('Are you happy ?'), true)"
+  },
+  {
+    "description": "very happy.",
+    "code": "equal(happy('Happy ?'), true)"
+  },
+  {
+    "description": "very happy.",
+    "code": "equal(happy('Happy ! are we not ?'), true)"
+  },
+  {
+    "description": "not happy.",
+    "code": "equal(happy('Are you sad ?'), false)"
+  },
+  {
+    "description": "not happy.",
+    "code": "equal(happy('happy !'), false)"
+  },
+  {
+    "description": "not happy.",
+    "code": "equal(happy('Was I happy ? nope.'), false)"
+  },
+  {
+    "description": "happy has no curly braces {}.",
+    "code": "if (/\\{.*\\}/.test(happy)) {\n  throw Error('No curly braces {} ! ')\n}"
+  },
+  {
+    "description": "happy has no keyword return.",
+    "code": "if (String(happy).includes('return')) {\n  throw Error('No keyword return allowed ! ')\n}"
+  },
+  {
+    "description": "happy has no keyword if.",
+    "code": "if (String(happy).includes('if')) {\n  throw Error('No keyword if allowed ! ')\n}"
+  }
+]

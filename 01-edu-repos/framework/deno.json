@@ -1,0 +1,22 @@
+{
+  "license": "MIT",
+  "workspace": [
+    "./api",
+    "./db",
+    "./time",
+    "./types",
+    "./signal-router",
+    "./api-client",
+    "./api-proxy"
+  ],
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 80,
+    "indentWidth": 2,
+    "semiColons": false,
+    "singleQuote": true
+  },
+  "imports": {
+    "@deno/dnt": "jsr:@deno/dnt@^0.42.3"
+  }
+}

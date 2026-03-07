@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing-app
+spec:
+  selector:
+    app: billing-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: billing-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing-app
+  template:
+    metadata:
+      labels:
+        app: billing-app
+    spec:
+      restartPolicy: Always
+      initContainers:
+        - name: wait-for-db-and-queue
+          image: busybox
+          command: ['sh', '-c', 'until nc -z -w 3 billing-db 5432 && nc -z -w 3 billing-queue 5672; do echo waiting for services; sleep 5; done;']
+      containers:
+        - name: billing-app
+          image: ghcr.io/01-edu/content-billing-app:latest
+          env:
+            - name: BILLING_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: BILLING_DB_USER
+            - name: BILLING_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: BILLING_DB_PASSWORD
+            - name: BILLING_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: BILLING_DB_NAME
+            - name: RABBITMQ_HOST
+              value: billing-queue
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_QUEUE
+              value: billing-queue
+            - name: RABBITMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: RABBITMQ_USER
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: RABBITMQ_PASSWORD
+          ports:
+            - containerPort: 8080

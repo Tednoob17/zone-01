@@ -1,0 +1,52 @@
+{
+  "id": 314,
+  "name": "Hawkeye II",
+  "slug": "314-hawkeye-ii",
+  "powerstats": {
+    "intelligence": 50,
+    "strength": 6,
+    "speed": 8,
+    "durability": 10,
+    "power": 24,
+    "combat": 50
+  },
+  "appearance": {
+    "gender": "Female",
+    "race": "Human",
+    "height": [
+      "5'5",
+      "165 cm"
+    ],
+    "weight": [
+      "126 lb",
+      "57 kg"
+    ],
+    "eyeColor": "Blue",
+    "hairColor": "Black"
+  },
+  "biography": {
+    "fullName": "Katherine Elizabeth Bishop",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Kate Bishop"
+    ],
+    "placeOfBirth": "New York City, New York",
+    "firstAppearance": "Young Avengers #1 (April, 2005)",
+    "publisher": "Marvel Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Student; Adventurer; Fugitive",
+    "base": "Bishop Publishing, New York City, New York"
+  },
+  "connections": {
+    "groupAffiliation": "Young Avengers, partner of Hawkeye (Clint Barton); formerly Secret Avengers",
+    "relatives": "Derek Bishop (father); Eleanor Bishop (mother, deceased); Susan Bishop (sister);"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/314-hawkeye-ii.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/314-hawkeye-ii.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/314-hawkeye-ii.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/314-hawkeye-ii.jpg"
+  }
+}

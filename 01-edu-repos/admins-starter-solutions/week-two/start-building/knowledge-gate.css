@@ -1,0 +1,82 @@
+/* 1. Style the body element */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #1d0731;
+}
+
+/* 2. Style the #chatbot-container element */
+#chatbot-container {
+    width: 360px;
+    max-width: 90%;
+    background-color: #2e0b45;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. Style the h1 element */
+h1 {
+    color: #ffffff;
+    font-size: 22px;
+    text-align: center;
+    padding: 16px 0;
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 4. Style the #chatbox element */
+#chatbox {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    background-color: #ffffff;
+}
+
+/* 5. Style the #messages element */
+#messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+/* 6. Style the #input-area element */
+#input-area {
+    display: flex;
+    padding: 10px;
+    background: #f9f9f9;
+    border-top: 1px solid #ccc;
+}
+
+/* 7. Style the #user-input element */
+#user-input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+}
+
+/* 8. Style the #send-button element */
+#send-button {
+    background: #007bff;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+#send-button:hover {
+    background-color: #0056b3;
+}

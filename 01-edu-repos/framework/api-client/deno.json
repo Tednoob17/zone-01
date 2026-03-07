@@ -1,0 +1,12 @@
+{
+  "imports": {
+    "@preact/signals": "npm:@preact/signals@^2.5.1"
+  },
+  "name": "@01edu/api-client",
+  "version": "0.1.7",
+  "license": "MIT",
+  "exports": { ".": "./mod.ts" },
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "esnext"]
+  }
+}

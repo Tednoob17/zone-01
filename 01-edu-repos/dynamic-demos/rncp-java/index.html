@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RNCP 39583 - Analyse 01Talent</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8fafc;
+        color: #1f2937;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .header {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        margin-bottom: 3rem;
+        text-align: center;
+        border: 1px solid #d1d5db;
+      }
+
+      .header h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 1rem;
+      }
+
+      .header p {
+        color: #4b5563;
+        font-size: 1.125rem;
+        font-weight: 500;
+      }
+
+      .coverage-display {
+        margin: 2rem 0;
+        text-align: center;
+      }
+
+      .coverage-circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: conic-gradient(#3b82f6 0deg 360deg, #e5e7eb 360deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        position: relative;
+        border: 3px solid #3b82f6;
+      }
+
+      .coverage-circle::before {
+        content: "";
+        width: 70px;
+        height: 70px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      .coverage-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #3b82f6;
+        z-index: 1;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        text-align: center;
+        border: 1px solid #d1d5db;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-desc {
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+
+      .projects {
+        color: #2563eb;
+      }
+      .projects .stat-label {
+        color: #2563eb;
+      }
+
+      .lifeskills {
+        color: #f59e0b;
+      }
+      .lifeskills .stat-label {
+        color: #f59e0b;
+      }
+
+      .milestone {
+        color: #7c3aed;
+      }
+      .milestone .stat-label {
+        color: #7c3aed;
+      }
+
+      .total {
+        color: #059669;
+      }
+      .total .stat-label {
+        color: #059669;
+      }
+
+      .competency-sections {
+        display: grid;
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .section {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        border: 1px solid #d1d5db;
+      }
+
+      .section-header {
+        background: #374151;
+        color: white;
+        padding: 1.5rem 2rem;
+        font-weight: 600;
+        font-size: 1.125rem;
+      }
+
+      .competency-list {
+        padding: 2rem;
+      }
+
+      .competency-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .competency-item:last-child {
+        border-bottom: none;
+      }
+
+      .competency-badge {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 1rem;
+        flex-shrink: 0;
+      }
+
+      .badge-projects {
+        background: #2563eb;
+      }
+      .badge-lifeskills {
+        background: #f59e0b;
+      }
+      .badge-milestone {
+        background: #7c3aed;
+      }
+
+      .competency-text {
+        flex: 1;
+      }
+
+      .competency-title {
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem;
+      }
+
+      .competency-source {
+        font-size: 0.875rem;
+        color: #6b7280;
+        font-weight: 500;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+        .header {
+          padding: 2rem 1rem;
+        }
+        .header h1 {
+          font-size: 2rem;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+        .stat-card {
+          padding: 1.5rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>RNCP 39583</h1>
+        <p>Expert en Développement Logiciel</p>
+        <p style="font-size: 1rem; margin-top: 0.5rem; color: #4b5563">
+          Programme 01Talent - Analyse de Couverture
+        </p>
+
+        <div class="coverage-display">
+          <div class="coverage-circle">
+            <span class="coverage-text">100%</span>
+          </div>
+          <p style="font-weight: 700; color: #3b82f6; font-size: 1.2rem">
+            Couverture Intégrale Validée
+          </p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card projects">
+          <span class="stat-number">10</span>
+          <div class="stat-label">Projets Techniques</div>
+          <div class="stat-desc">Tous les projets de développement</div>
+        </div>
+        <div class="stat-card lifeskills">
+          <span class="stat-number">4</span>
+          <div class="stat-label">Lifeskills + Internship</div>
+          <div class="stat-desc">Compétences professionnelles</div>
+        </div>
+        <div class="stat-card milestone">
+          <span class="stat-number">1</span>
+          <div class="stat-label">Milestone Project</div>
+          <div class="stat-desc">
+            Capstone projects building towards milestone
+          </div>
+        </div>
+        <div class="stat-card total">
+          <span class="stat-number">34</span>
+          <div class="stat-label">Compétences RNCP</div>
+          <div class="stat-desc">100% du référentiel officiel</div>
+        </div>
+      </div>
+
+      <div class="competency-sections">
+        <div class="section">
+          <div class="section-header">
+            BC01 - Cadrer un projet de développement d'applications (11
+            compétences)
+          </div>
+          <div class="competency-list">
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Cartographier les acteurs du projet et leurs rôles
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Cartographie stratégique
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Analyser la demande par entretiens d'explicitation
+                </div>
+                <div class="competency-source">
+                  Projets: buy-01, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Cartographier opportunités et menaces du projet
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Analyse SWOT
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Évaluer la faisabilité technique
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Évaluation technique
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Cartographier les risques techniques et fonctionnels
+                </div>
+                <div class="competency-source">
+                  Projets: safe-zone, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Réaliser veille technique et réglementaire
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Veille stratégique
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Sélectionner l'architecture technique adaptée
+                </div>
+                <div class="competency-source">
+                  Projets: buy-01, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Évaluer la charge de travail nécessaire
+                </div>
+                <div class="competency-source">
+                  Projets: buy-01, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Estimer le coût associé au projet
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Budgétisation
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Modéliser architecture logicielle
+                </div>
+                <div class="competency-source">
+                  Projets: buy-01, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Proposer décisions et solutions au client
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Négociation commerciale
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            BC02 - Concevoir et développer des applications (9 compétences)
+          </div>
+          <div class="competency-list">
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Mettre en œuvre environnements déploiement et test
+                </div>
+                <div class="competency-source">
+                  Projets: mr-jenk, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Configurer système intégration continue
+                </div>
+                <div class="competency-source">Projets: mr-jenk, safe-zone</div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Concevoir prototype application logicielle
+                </div>
+                <div class="competency-source">
+                  Projets: lets-play, angul-it
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Développer harnais de test unitaire
+                </div>
+                <div class="competency-source">
+                  Projets: mr-jenk, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">Développer le logiciel</div>
+                <div class="competency-source">
+                  Projets: lets-play, buy-01, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Déployer logiciel progressivement
+                </div>
+                <div class="competency-source">
+                  Projets: mr-jenk, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">Élaborer cahier de recettes</div>
+                <div class="competency-source">
+                  Projets: buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Élaborer plan correction bogues
+                </div>
+                <div class="competency-source">
+                  Projets: buy-02, travel-plan, lets-travel, lets-play
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Rédiger documentation technique
+                </div>
+                <div class="competency-source">
+                  Projets: Tous les projets techniques
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            BC03 - Coordonner et piloter un projet (7 compétences)
+          </div>
+          <div class="competency-list">
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Planifier l'exécution du projet
+                </div>
+                <div class="competency-source">
+                  Projets: travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Piloter l'avancement du projet
+                </div>
+                <div class="competency-source">
+                  Projets: travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Procéder aux arbitrages nécessaires
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Décisions stratégiques
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Piloter l'équipe tout au long du projet
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Management d'équipe
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Évaluer besoins en compétences équipe
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Gestion RH
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-lifeskills"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Effectuer comptes rendus client
+                </div>
+                <div class="competency-source">
+                  Lifeskills + Internship - Communication
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-lifeskills"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Réaliser démonstration fonctionnalités
+                </div>
+                <div class="competency-source">
+                  Lifeskills + Internship - Présentations
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            BC04 - Maintenir l'application en condition opérationnelle (7
+            compétences)
+          </div>
+          <div class="competency-list">
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Gérer mises à jour dépendances/bibliothèques
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Gestion packages
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Concevoir système supervision et alerte
+                </div>
+                <div class="competency-source">
+                  Projets: buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Consigner anomalies détectées
+                </div>
+                <div class="competency-source">
+                  Projets: safe-zone, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-projects"></div>
+              <div class="competency-text">
+                <div class="competency-title">Créer et déployer correctif</div>
+                <div class="competency-source">
+                  Projets: mr-jenk, safe-zone, buy-02, travel-plan, lets-travel
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-lifeskills"></div>
+              <div class="competency-text">
+                <div class="competency-title">Proposer axes d'amélioration</div>
+                <div class="competency-source">
+                  Lifeskills + Internship - Amélioration continue
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-milestone"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Établir journal versions déployées
+                </div>
+                <div class="competency-source">
+                  Milestone Project - Documentation versions
+                </div>
+              </div>
+            </div>
+            <div class="competency-item">
+              <div class="competency-badge badge-lifeskills"></div>
+              <div class="competency-text">
+                <div class="competency-title">
+                  Collaborer avec équipes support
+                </div>
+                <div class="competency-source">
+                  Lifeskills + Internship - Collaboration
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

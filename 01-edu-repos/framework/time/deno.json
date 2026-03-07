@@ -1,0 +1,7 @@
+{
+  "imports": {},
+  "name": "@01edu/time",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": { ".": "./mod.ts" }
+}

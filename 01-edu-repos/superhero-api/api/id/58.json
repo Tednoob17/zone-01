@@ -1,0 +1,52 @@
+{
+  "id": 58,
+  "name": "Azrael",
+  "slug": "58-azrael",
+  "powerstats": {
+    "intelligence": 63,
+    "strength": 18,
+    "speed": 17,
+    "durability": 20,
+    "power": 35,
+    "combat": 80
+  },
+  "appearance": {
+    "gender": "Male",
+    "race": "Human",
+    "height": [
+      "-",
+      "0 cm"
+    ],
+    "weight": [
+      "- lb",
+      "0 kg"
+    ],
+    "eyeColor": "Brown",
+    "hairColor": "Black"
+  },
+  "biography": {
+    "fullName": "Michael Washington Lane",
+    "alterEgos": "No alter egos found.",
+    "aliases": [
+      "Bat-Devil; Bat-Ghost"
+    ],
+    "placeOfBirth": "Gotham City",
+    "firstAppearance": "Batman #672 (February, 2008)",
+    "publisher": "DC Comics",
+    "alignment": "good"
+  },
+  "work": {
+    "occupation": "Former Police Officer, vigilante",
+    "base": "-"
+  },
+  "connections": {
+    "groupAffiliation": "Order of St. Dumas; formerly Gotham City Police Department; Three Ghosts of Batman",
+    "relatives": "Mitchell Lane (father; deceased), Barbara Lane (mother; deceased), Marion Lane (brother; deceased), Gwendolyn Lane (sister; deceased), Chante Coles (wife; deceased), Henry Mitchell Lane (son; deceased), Jenny Lane (Sister-in-law)"
+  },
+  "images": {
+    "xs": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/xs/58-azrael.jpg",
+    "sm": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/58-azrael.jpg",
+    "md": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/md/58-azrael.jpg",
+    "lg": "https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/lg/58-azrael.jpg"
+  }
+}

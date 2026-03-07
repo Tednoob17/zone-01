@@ -1,0 +1,26 @@
+[
+  {
+    "description": "add2 is defined and are functions",
+    "code": "equal(typeof add2, 'function')"
+  },
+  {
+    "description": "add2 takes 2 arguments",
+    "code": "equal(add2.length, 2)"
+  },
+  {
+    "description": "add2 returns the right results",
+    "code": "equal(add2(1, 1), 2)\nequal(add2(1, 2), 3)\nequal(add2(2, 2), 4)\nequal(add2(2, 3), 5)"
+  },
+  {
+    "description": "sub2 is defined and are functions",
+    "code": "equal(typeof sub2, 'function')"
+  },
+  {
+    "description": "sub2 takes 2 arguments",
+    "code": "equal(sub2.length, 2)"
+  },
+  {
+    "description": "sub2 returns the right results",
+    "code": "equal(sub2(1, 1), 0)\nequal(sub2(2, 1), 1)\nequal(sub2(3, 1), 2)\nequal(sub2(-4, -7), 3)"
+  }
+]

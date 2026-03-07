@@ -1,0 +1,7 @@
+{
+  "type": "quiz",
+  "name": "Social Network Quiz",
+  "attrs": {
+    "validations": [{ "type": "quiz" }]
+  }
+}

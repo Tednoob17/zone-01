@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: billing-db
+  name: billing-db
+spec:
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: billing-db
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: billing-db
+  name: billing-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing-db
+  template:
+    metadata:
+      labels:
+        app: billing-db
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: billing-db
+          image: ghcr.io/01-edu/content-postgres-db:latest 
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: BILLING_DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: BILLING_DB_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: BILLING_DB_NAME
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready
+            failureThreshold: 5
+            periodSeconds: 3
+            timeoutSeconds: 1
+          readinessProbe:
+            exec:
+              command:
+                - pg_isready
+            failureThreshold: 5
+            periodSeconds: 3
+            timeoutSeconds: 1
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: billing-database
+      volumes:
+        - name: billing-database
+          persistentVolumeClaim:
+            claimName: billing-database
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    service: billing-database
+  name: billing-database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

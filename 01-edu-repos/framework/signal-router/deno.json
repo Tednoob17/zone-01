@@ -1,0 +1,15 @@
+{
+  "imports": {
+    "@preact/signals": "npm:@preact/signals@^2.5.1",
+    "preact": "npm:preact@^10.27.2"
+  },
+  "name": "@01edu/signal-router",
+  "version": "0.1.7",
+  "license": "MIT",
+  "exports": { ".": "./mod.tsx" },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "lib": ["DOM", "DOM.Iterable", "esnext"]
+  }
+}

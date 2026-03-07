@@ -1,0 +1,26 @@
+[
+  {
+    "description": "countArgs is defined and are functions",
+    "code": "equal(typeof countArgs, 'function')"
+  },
+  {
+    "description": "countArgs returns the right results for 2 arguments",
+    "code": "equal(countArgs(1, 1), 2)"
+  },
+  {
+    "description": "countArgs returns the right results for 3 arguments",
+    "code": "equal(countArgs(1, 2, 3), 3)"
+  },
+  {
+    "description": "countArgs returns the right results for 4 arguments",
+    "code": "equal(countArgs(2, 2, 4, 10), 4)"
+  },
+  {
+    "description": "countArgs returns the right results for 6 arguments",
+    "code": "equal(countArgs(2, 3, 3, 5, 5, 10), 6)"
+  },
+  {
+    "description": "countArgs can count a lot of arguments",
+    "code": "equal(countArgs(...Array(999).fill()), 999)"
+  }
+]

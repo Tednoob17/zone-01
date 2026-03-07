@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    opacity: 0.85;
+}
+
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 100px;
+    padding: 100px;
+    border-radius: 10px;
+    /* Animated Gradient Background */
+    background: linear-gradient(45deg, #ae4448, #6821ed, #13e374, #ac078e);
+    background-size: 400% 400%;
+    animation: gradientBackground 2s ease infinite;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.oumaima-robot, .louis-robot, .amine-robot {
+    border: 2px solid #333;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 400px;
+}
+
+.oumaima-robot:hover, .louis-robot:hover, .amine-robot:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    height: 100vh;
+}
+
+section {
+    padding: 20px;
+    width: 100%;
+    height: auto; /* Allow sections to adjust height based on content */
+    display: flex;
+    justify-content: center;
+}
+
+div,
+p {
+    border: solid 1px black;
+    padding: 10px;
+    margin: 0;
+    border-radius: 30px;
+}
+
+h3{
+    margin-bottom: 10px;
+}
+
+#face {
+    align-items: center;
+    margin-bottom: 20px; 
+}
+
+#eyes {
+    display: flex;
+    background-color: yellow;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 50px;
+    width: 200px;
+}
+
+#torso {
+    width: 150px; 
+    height: 90%;
+    background-color: violet;
+}
+
+.eye {
+    width: 60px;
+    height: 60px;
+    background-color: rgb(106, 0, 255);
+    border-radius: 50%;
+}
+
+
+.arm {
+    background-color: aquamarine;
+    width: 50px;
+    height: 100px;
+    margin: 20px; 
+}
+
+.leg {
+    background-color: dodgerblue;
+    width: 50px;
+    height: 100px;
+    margin: 20px;
+}
+
+.body-member {
+    width: 50px;
+    margin: 30px;
+}
+
+#title
+{
+    text-align: center;
+    margin: 1rem;
+    background-color: #383086;
+    color: rgb(158, 235, 223);;
+}

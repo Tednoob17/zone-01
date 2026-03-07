@@ -1,0 +1,7 @@
+{
+	"type": "campus",
+	"name": "qa",
+	"children": {
+		"module-m1": {}
+	}
+}

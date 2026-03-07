@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-app
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: inventory-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-app
+  labels:
+    app: inventory-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-app
+  template:
+    metadata:
+      labels:
+        app: inventory-app
+    spec:
+      restartPolicy: Always
+      initContainers:
+        - name: wait-for-inventory-db
+          image: busybox
+          command: ['sh', '-c', 'until nc -z -w 3 inventory-db 5432; do echo waiting for inventory-db; sleep 5; done;']
+      containers:
+        - name: inventory-app
+          image: ghcr.io/01-edu/content-inventory-app:latest
+          env:
+            - name: INVENTORY_APP_PORT
+              value: "8080"
+            - name: INVENTORY_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: INVENTORY_DB_USER
+            - name: INVENTORY_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: INVENTORY_DB_PASSWORD
+            - name: INVENTORY_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: orchestrator-secrets
+                  key: INVENTORY_DB_NAME
+          ports:
+            - protocol: TCP
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 100m
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: inventory-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: inventory-app
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 60
