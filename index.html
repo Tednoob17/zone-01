@@ -200,6 +200,10 @@
   .tool-desc { font-size: .78rem; color: var(--muted); line-height: 1.65; }
   .tool-usage { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: .75rem 1rem; }
   .tool-usage-title { font-family: 'JetBrains Mono', monospace; font-size: .55rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted2); margin-bottom: .5rem; }
+  .tool-get { background: var(--surface2); border: 1px solid rgba(57,255,143,.25); border-radius: 6px; padding: .75rem 1rem; margin-bottom: .6rem; }
+  .tool-get-title { font-family: 'JetBrains Mono', monospace; font-size: .55rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: .5rem; }
+  .tool-dl-btn { display: inline-block; margin-top: .6rem; padding: .3rem .8rem; border-radius: 5px; background: rgba(57,255,143,.12); color: var(--accent); border: 1px solid rgba(57,255,143,.3); font-size: .65rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; cursor: pointer; transition: background .2s; }
+  .tool-dl-btn:hover { background: rgba(57,255,143,.22); }
   .tool-cmd { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent); }
   .tool-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
 
@@ -236,6 +240,9 @@
   .foot-links { display: flex; gap: 1.25rem; }
   .foot-links a { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--muted); text-decoration: none; transition: color .15s; }
   .foot-links a:hover { color: var(--accent); }
+  .foot-author { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--muted); display: flex; align-items: center; gap: .5rem; }
+  .foot-author a { color: var(--accent); text-decoration: none; transition: opacity .15s; }
+  .foot-author a:hover { opacity: .7; }
 
   /* ── REVEAL ── */
   .rev { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
@@ -1963,8 +1970,15 @@
           <span class="tool-badge" style="color:var(--go);border-color:rgba(0,172,215,.3);">★ 47</span>
         </div>
         <p class="tool-desc">La moulinette principale de la <strong>piscine Go</strong>. Image Docker contenant tous les tests unitaires pour chaque exercice. Le test passe silencieusement si correct, affiche des erreurs sinon — exactement comme la Norminette de 42.</p>
+        <div class="tool-get" onclick="event.stopPropagation()">
+          <div class="tool-get-title">⬇ Télécharger &amp; Installer</div>
+          <div class="tool-cmd">git clone https://github.com/Tednoob17/zone-01</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">cd zone-01/01-edu-repos/go-tests</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">docker build -t go_tests .</div>
+          <a class="tool-dl-btn" href="https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/go-tests" target="_blank" onclick="event.stopPropagation()">↗ Voir dans ce dépôt</a>
+        </div>
         <div class="tool-usage">
-          <div class="tool-usage-title">Commandes locales</div>
+          <div class="tool-usage-title">Utilisation</div>
           <div class="tool-cmd">./test_one.sh isnegative</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_all.sh</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_with_docker.sh [EX] [PATH] [ALLOWED_FN]*</div>
@@ -1982,10 +1996,17 @@
           <span class="tool-badge" style="color:var(--rust);border-color:rgba(247,76,0,.3);">★ 5</span>
         </div>
         <p class="tool-desc">Equivalent du go-tests pour la <strong>piscine Rust</strong>. Image Docker hébergeant les tests de chaque exercice Rust. Même fonctionnement : silence = succès, output = échec.</p>
+        <div class="tool-get" onclick="event.stopPropagation()">
+          <div class="tool-get-title">⬇ Télécharger &amp; Installer</div>
+          <div class="tool-cmd">git clone https://github.com/Tednoob17/zone-01</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">cd zone-01/01-edu-repos/rust-tests</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">docker build -t rust_tests .</div>
+          <a class="tool-dl-btn" href="https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/rust-tests" target="_blank" onclick="event.stopPropagation()">↗ Voir dans ce dépôt</a>
+        </div>
         <div class="tool-usage">
-          <div class="tool-usage-title">Même interface que go-tests</div>
-          <div class="tool-cmd">./test_one.sh ownership</div>
-          <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_all.sh</div>
+          <div class="tool-usage-title">Utilisation</div>
+          <div class="tool-cmd">./tests/test_exercises.sh</div>
+          <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./tests/test_exercises.sh -real &nbsp;# env production</div>
         </div>
       </div>
 
@@ -2000,8 +2021,17 @@
           <span class="tool-badge" style="color:var(--accent);border-color:rgba(57,255,143,.3);">Interne</span>
         </div>
         <p class="tool-desc">L'équivalent de la <strong>Norminette côté sécurité</strong> de 42. Analyse les fichiers source Go pour vérifier que seules les fonctions autorisées sont utilisées. Chaque exercice a sa liste de fonctions permises (<code>--allow-builtin</code>).</p>
+        <div class="tool-get" onclick="event.stopPropagation()">
+          <div class="tool-get-title">⬇ Télécharger &amp; Installer</div>
+          <div class="tool-cmd"># Option 1 — build depuis ce dépôt</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">git clone https://github.com/Tednoob17/zone-01</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">cd zone-01/01-edu-repos/rc &amp;&amp; go build -o rc .</div>
+          <div class="tool-cmd" style="margin-top:.6rem;opacity:.7;"># Option 2 — installer avec go</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">go install github.com/01-edu/rc@latest</div>
+          <a class="tool-dl-btn" href="https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/rc" target="_blank" onclick="event.stopPropagation()">↗ Voir dans ce dépôt</a>
+        </div>
         <div class="tool-usage">
-          <div class="tool-usage-title">Utilisé dans test_with_docker.sh</div>
+          <div class="tool-usage-title">Utilisation dans test_with_docker.sh</div>
           <div class="tool-cmd">--allow-builtin github.com/01-edu/z01.PrintRune</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">strconv.Atoi os.Args fmt.Println</div>
         </div>
@@ -2018,10 +2048,17 @@
           <span class="tool-badge" style="color:var(--ai);border-color:rgba(162,89,255,.3);">Training</span>
         </div>
         <p class="tool-desc">Version d'entraînement du système de test pour l'équipe pédagogique. Permet d'écrire et tester de nouveaux exercices localement avant de les intégrer sur la plateforme. Même structure que go-tests mais vide de tests.</p>
+        <div class="tool-get" onclick="event.stopPropagation()">
+          <div class="tool-get-title">⬇ Télécharger &amp; Installer</div>
+          <div class="tool-cmd">git clone https://github.com/Tednoob17/zone-01</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">cd zone-01/01-edu-repos/go-tests-training</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">docker build -t go_tests_training .</div>
+          <a class="tool-dl-btn" href="https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/go-tests-training" target="_blank" onclick="event.stopPropagation()">↗ Voir dans ce dépôt</a>
+        </div>
         <div class="tool-usage">
-          <div class="tool-usage-title">Dépôts nécessaires côte à côte</div>
-          <div class="tool-cmd">~/Desktop/piscine-go/</div>
-          <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">~/Desktop/go-tests-training/</div>
+          <div class="tool-usage-title">Utilisation</div>
+          <div class="tool-cmd">./test_one.sh [nom_exercice]</div>
+          <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_all.sh</div>
         </div>
       </div>
 
@@ -2067,6 +2104,7 @@
   <div class="wrap">
     <div class="foot-inner">
       <span class="foot-txt">Zone01 · Curriculum Map</span>
+      <div class="foot-author">Made by <a href="https://tednoob17.github.io" target="_blank">tednoob17.github.io</a> · <a href="https://github.com/Tednoob17" target="_blank">github.com/Tednoob17</a></div>
       <div class="foot-links">
         <a href="https://01edu.org" target="_blank">01edu.org</a>
         <a href="https://www.youtube.com/channel/UCDmJ2SyrBNWEekOCmheEocQ/playlists" target="_blank">YouTube</a>
@@ -2184,15 +2222,12 @@
 
     try {
       let md;
-      try {
-        md = await tryFetch(f.url);
-      } catch(_) {
-        if (f.fallback) {
-          md = await tryFetch(f.fallback);
-        } else {
-          throw _;
-        }
+      const urls = [f.url, ...(Array.isArray(f.fallback) ? f.fallback : f.fallback ? [f.fallback] : [])];
+      let loaded = false;
+      for (const url of urls) {
+        try { md = await tryFetch(url); loaded = true; break; } catch(_) {}
       }
+      if (!loaded) throw new Error('not found');
       if (f.base) {
         md = md.replace(/\?raw=true/g, '');
         md = md.replace(/!\[([^\]]*)\]\((?!https?:)([^)]+)\)/g, `![$1](${f.base}$2)`);
@@ -2234,12 +2269,7 @@
       linkGh:  base,
       files: [
         { label: 'README.md', url: `${base}README.md`, fallback: `${GH_RAW}/${name}/README.md`, base },
-        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: `${GH_RAW}/${name}/audit/README.md`, base: `${base}audit/` },
-      ]
-    });
-  }
-
-  /* ── Shell subject (sh/tests/) ── */
+        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${GH_RAW}/${name}/audit/README.md`, `${GH_RAW}/${name}/audit.md`], base: `${base}audit/` },
   const SH_GH = 'https://raw.githubusercontent.com/01-edu/public/master/sh/tests';
   function openShellSubject(name) {
     _openPanel({
@@ -2267,12 +2297,7 @@
       linkGh:  base,
       files: [
         { label: 'README.md', url: `${base}README.md`, fallback: `${AI_GH}/${name}/README.md`, base },
-        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: `${AI_GH}/${name}/audit/README.md`, base: `${base}audit/` },
-      ]
-    });
-  }
-
-  const UXUI_GH = 'https://raw.githubusercontent.com/01-edu/UX-UI/master/subjects';
+        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${AI_GH}/${name}/audit/README.md`, `${AI_GH}/${name}/audit.md`], base: `${base}audit/` }, = 'https://raw.githubusercontent.com/01-edu/UX-UI/master/subjects';
   function openUxSubject(subpath) {
     const base = `./01-edu-repos/UX-UI/subjects/${subpath}/`;
     _openPanel({
@@ -2281,7 +2306,7 @@
       linkGh:  base,
       files: [
         { label: 'README.md', url: `${base}README.md`, fallback: `${UXUI_GH}/${subpath}/README.md`, base },
-        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: `${UXUI_GH}/${subpath}/audit/README.md`, base: `${base}audit/` },
+        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${UXUI_GH}/${subpath}/audit/README.md`, `${UXUI_GH}/${subpath}/audit.md`], base: `${base}audit/` },
       ]
     });
   }
@@ -2302,7 +2327,7 @@
     const b = BRANCH_MAP[key] || { path: './', gh: 'https://raw.githubusercontent.com/01-edu/public/master' };
     _openPanel({
       title:   displayName,
-      linkPub: `https://github.com/01-edu/${key}`,
+      linkPub: `https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/${key}`,
       linkGh:  b.path,
       files: [
         { label: 'README.md', url: `${b.path}README.md`, fallback: `${b.gh}/README.md`, base: b.path },
@@ -2322,7 +2347,7 @@
     const t = TOOL_MAP[key] || { path: './', gh: 'https://raw.githubusercontent.com/01-edu/public/master' };
     _openPanel({
       title:   displayName,
-      linkPub: `https://github.com/01-edu/${key}`,
+      linkPub: `https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/${key}`,
       linkGh:  t.path,
       files: [
         { label: 'README.md', url: `${t.path}README.md`, fallback: `${t.gh}/README.md`, base: t.path },
