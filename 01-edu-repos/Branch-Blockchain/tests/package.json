@@ -19,7 +19,7 @@
     "express": "^4.21.2",
     "hardhat": "^2.22.17",
     "mocha": "^10.7.3",
-    "puppeteer-core": "^22.15.0",
+    "puppeteer-core": "^24.38.0",
     "web3": "^4.16.0"
   },
   "devDependencies": {
