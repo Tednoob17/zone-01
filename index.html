@@ -2270,6 +2270,11 @@
       files: [
         { label: 'README.md', url: `${base}README.md`, fallback: `${GH_RAW}/${name}/README.md`, base },
         { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${GH_RAW}/${name}/audit/README.md`, `${GH_RAW}/${name}/audit.md`], base: `${base}audit/` },
+      ]
+    });
+  }
+
+  /* ── Shell subject (sh/tests/) ── */
   const SH_GH = 'https://raw.githubusercontent.com/01-edu/public/master/sh/tests';
   function openShellSubject(name) {
     _openPanel({
@@ -2297,7 +2302,12 @@
       linkGh:  base,
       files: [
         { label: 'README.md', url: `${base}README.md`, fallback: `${AI_GH}/${name}/README.md`, base },
-        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${AI_GH}/${name}/audit/README.md`, `${AI_GH}/${name}/audit.md`], base: `${base}audit/` }, = 'https://raw.githubusercontent.com/01-edu/UX-UI/master/subjects';
+        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${AI_GH}/${name}/audit/README.md`, `${AI_GH}/${name}/audit.md`], base: `${base}audit/` },
+      ]
+    });
+  }
+
+  const UXUI_GH = 'https://raw.githubusercontent.com/01-edu/UX-UI/master/subjects';
   function openUxSubject(subpath) {
     const base = `./01-edu-repos/UX-UI/subjects/${subpath}/`;
     _openPanel({
