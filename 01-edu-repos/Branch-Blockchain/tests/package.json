@@ -16,7 +16,7 @@
     "@nomicfoundation/hardhat-ethers": "^3.0.9",
     "bitcoin-core": "^4.1.0",
     "chai": "^4.5.0",
-    "express": "^4.21.2",
+    "express": "^5.2.1",
     "hardhat": "^2.22.17",
     "mocha": "^10.7.3",
     "puppeteer-core": "^22.15.0",
