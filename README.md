@@ -120,3 +120,102 @@ docker build -t go_tests_training .
   UX-UI/               # Branche UX/UI
   ...
 ```
+
+---
+
+## Deploiement Vercel (index public + sec + archivage)
+
+Objectif:
+- `index.html` visible par tout le monde
+- `sec.html` accessible pour ton training
+- archivage actif via API `/api/archive`
+
+Important:
+- Si tu heberges seulement un fichier statique (`sec.html` seul), l'archivage ne peut pas marcher.
+- L'archivage a besoin des fonctions serverless dans `api/archive/*.js`.
+
+### 1. Preparer le repo
+
+Verifier que ces fichiers existent:
+- `sec.html`
+- `index.html`
+- `api/archive/index.js`
+- `api/archive/[id].js`
+- `api/_lib/archive-store.js`
+- `api/_lib/sanitize-html.js`
+
+Puis push:
+
+```bash
+git add .
+git commit -m "Configure Vercel archive API"
+git push
+```
+
+### 2. Configurer Vercel
+
+1. Importer le repo dans Vercel.
+2. Framework Preset: `Other`.
+3. Root directory: `/` (racine du repo).
+4. Build command: laisser vide.
+5. Output directory: laisser vide.
+
+### 3. Activer Vercel KV (obligatoire pour l'archivage)
+
+1. Vercel Dashboard -> Storage -> Create -> `KV`.
+2. Connecter ce KV au projet.
+3. Verifier que les variables sont presentes dans le projet:
+   - `KV_REST_API_URL`
+   - `KV_REST_API_TOKEN`
+4. Redepoyer le projet.
+
+Sans KV, l'API repondra `503` et l'UI affichera une erreur archive.
+
+### 4. URLs attendues apres deploiement
+
+- `https://ton-projet.vercel.app/` -> `index.html`
+- `https://ton-projet.vercel.app/sec.html` -> page training
+- `https://ton-projet.vercel.app/api/archive` -> JSON (liste des archives)
+
+Test rapide:
+
+```bash
+curl -i https://ton-projet.vercel.app/api/archive
+```
+
+Tu dois obtenir `200 OK` (ou `503` si KV manque), mais pas `404`.
+
+### 5. Pourquoi la Galaxy peut afficher 0.0%
+
+La progression Galaxy est stockee dans `localStorage` du navigateur:
+- domaine local (`localhost`) != domaine Vercel
+- navigateur A != navigateur B
+- mode prive peut repartir de zero
+
+Donc `0.0%` sur Vercel apres avoir coche en local est normal.
+
+### 6. Depannage concret
+
+- `Archivage echoue: HTTP 404`:
+  - l'API n'est pas deployee (ou mauvais repo/root sur Vercel)
+  - verifier la route `/api/archive`
+
+- `Archivage echoue: HTTP 503`:
+  - KV non configure
+  - ajouter `KV_REST_API_URL` et `KV_REST_API_TOKEN`, puis redeploy
+
+- `Galaxy reste a 0%`:
+  - recocher les taches sur le meme domaine et meme navigateur
+  - verifier que le navigateur n'efface pas le `localStorage`
+
+### 7. Option locale (hors Vercel)
+
+Pour tester localement avec serveur Node:
+
+```bash
+npm start
+```
+
+Puis ouvrir:
+- `http://localhost:4173/` (index)
+- `http://localhost:4173/sec` ou `http://localhost:4173/sec.html`
