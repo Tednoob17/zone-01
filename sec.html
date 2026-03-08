@@ -844,6 +844,12 @@ main {
   background: #fff;
 }
 
+.article-archive-btn {
+  margin-left: 8px;
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
 /* ── PHRACK ── */
 .phrack-list {
   display: flex;
@@ -2462,6 +2468,180 @@ function renderCustomVeilleLinks() {
     if (checked) row.style.opacity = '.5';
     list.appendChild(row);
   });
+
+  injectArchiveButtons();
+}
+
+let archiveItems = [];
+
+function archiveStatus(message, isError) {
+  const el = document.getElementById('archive-status');
+  if (!el) return;
+  el.textContent = message || '';
+  el.style.color = isError ? 'var(--warn)' : 'var(--mid)';
+}
+
+function normalizeArchiveUrl(url) {
+  try {
+    return new URL(url).toString();
+  } catch {
+    return String(url || '').trim();
+  }
+}
+
+function findArchiveByUrl(url) {
+  const normalized = normalizeArchiveUrl(url);
+  return archiveItems.find((item) => normalizeArchiveUrl(item.url) === normalized) || null;
+}
+
+function updateArchiveSelect() {
+  const select = document.getElementById('archive-select');
+  if (!select) return;
+  const previous = select.value;
+  select.innerHTML = '';
+
+  if (!archiveItems.length) {
+    const opt = document.createElement('option');
+    opt.value = '';
+    opt.textContent = 'Aucune archive';
+    select.appendChild(opt);
+    return;
+  }
+
+  archiveItems.forEach((item) => {
+    const opt = document.createElement('option');
+    opt.value = item.id;
+    opt.textContent = item.title;
+    select.appendChild(opt);
+  });
+
+  const keep = archiveItems.some((item) => item.id === previous);
+  select.value = keep ? previous : archiveItems[0].id;
+}
+
+function refreshArchiveButtons() {
+  document.querySelectorAll('.article-archive-btn').forEach((btn) => {
+    const url = btn.dataset.url || '';
+    const archived = findArchiveByUrl(url);
+    btn.textContent = archived ? 'Lire local' : 'Archiver';
+  });
+}
+
+async function loadArchives() {
+  try {
+    const res = await fetch('/api/archive');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    archiveItems = Array.isArray(data.items) ? data.items : [];
+    updateArchiveSelect();
+    refreshArchiveButtons();
+    archiveStatus(`${archiveItems.length} archive(s) locale(s).`, false);
+  } catch {
+    archiveStatus('Serveur offline. Lance: npm start puis ouvre http://localhost:4173/sec.html', true);
+  }
+}
+
+function toggleArchivePanel() {
+  const panel = document.getElementById('archive-panel');
+  if (!panel) return;
+  const opening = panel.style.display === 'none';
+  panel.style.display = opening ? '' : 'none';
+  if (opening) loadArchives();
+}
+
+async function openArchiveById(id) {
+  if (!id) return;
+  try {
+    const res = await fetch(`/api/archive/${encodeURIComponent(id)}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const viewer = document.getElementById('archive-viewer');
+    if (viewer) viewer.srcdoc = data.html || '<p>Archive vide</p>';
+    archiveStatus(`Lecture locale: ${data.title || id}`, false);
+  } catch {
+    archiveStatus('Impossible d\'ouvrir cette archive.', true);
+  }
+}
+
+function openSelectedArchive() {
+  const select = document.getElementById('archive-select');
+  if (!select || !select.value) return;
+  openArchiveById(select.value);
+}
+
+async function deleteSelectedArchive() {
+  const select = document.getElementById('archive-select');
+  if (!select || !select.value) return;
+  const id = select.value;
+  try {
+    const res = await fetch(`/api/archive/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const viewer = document.getElementById('archive-viewer');
+    if (viewer) viewer.srcdoc = '';
+    await loadArchives();
+    archiveStatus('Archive supprimee.', false);
+  } catch {
+    archiveStatus('Suppression impossible.', true);
+  }
+}
+
+async function archiveArticle(url, titleHint) {
+  const res = await fetch('/api/archive', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url, title: titleHint || '' })
+  });
+  if (!res.ok) {
+    const payload = await res.json().catch(() => ({}));
+    throw new Error(payload.error || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+async function archiveOrOpen(url, titleHint) {
+  const panel = document.getElementById('archive-panel');
+  if (panel && panel.style.display === 'none') panel.style.display = '';
+
+  const existing = findArchiveByUrl(url);
+  if (existing) {
+    await openArchiveById(existing.id);
+    return;
+  }
+
+  archiveStatus('Archivage en cours...', false);
+  try {
+    const created = await archiveArticle(url, titleHint);
+    await loadArchives();
+    const item = created.item || findArchiveByUrl(url);
+    if (item && item.id) {
+      const select = document.getElementById('archive-select');
+      if (select) select.value = item.id;
+      await openArchiveById(item.id);
+    }
+  } catch (err) {
+    archiveStatus(`Archivage echoue: ${err.message}`, true);
+  }
+}
+
+function injectArchiveButtons() {
+  const anchors = document.querySelectorAll('#articles-list .phrack-name a, #custom-veille-list .phrack-name a');
+  anchors.forEach((a) => {
+    if (a.dataset.archiveBtn === '1') return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'add-link-btn article-archive-btn';
+    btn.dataset.url = a.href;
+    btn.textContent = 'Archiver';
+    btn.onclick = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const titleHint = (a.textContent || '').replace(/↗/g, '').trim();
+      archiveOrOpen(a.href, titleHint);
+    };
+    a.insertAdjacentElement('afterend', btn);
+    a.dataset.archiveBtn = '1';
+  });
+  refreshArchiveButtons();
 }
 
 // ── PHRACK ────────────────────────────────────────────────────────────────────
@@ -2591,6 +2771,8 @@ ensureArticleKeys();
 renderCustomVeilleLinks();
 renderPSModules();
 restoreState();
+injectArchiveButtons();
+loadArchives();
 initHeroConstellation();
 initTrainingGalaxy();
 updateGlobalStats();
