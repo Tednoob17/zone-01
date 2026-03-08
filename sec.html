@@ -198,6 +198,18 @@ nav a:hover { color: var(--bright); background: var(--bg2); }
   cursor: pointer;
 }
 
+.galaxy-chip-name {
+  flex: 1;
+  text-align: left;
+}
+
+.galaxy-chip-pct {
+  font-size: 9px;
+  letter-spacing: .04em;
+  color: var(--bright);
+  opacity: .92;
+}
+
 .galaxy-chip:hover,
 .galaxy-chip.active {
   color: var(--bright);
@@ -1727,7 +1739,8 @@ function initTrainingGalaxy() {
     legend.innerHTML = tracks.map((node) => `
       <button type="button" class="galaxy-chip" data-galaxy-focus="${node.id}">
         <span class="galaxy-chip-dot" style="background:${node.color}"></span>
-        <span>${node.name}</span>
+        <span class="galaxy-chip-name">${node.name}</span>
+        <span class="galaxy-chip-pct" id="galaxy-pct-${node.id}">0%</span>
       </button>
     `).join('');
 
@@ -1746,6 +1759,14 @@ function initTrainingGalaxy() {
         highlighted = id;
         syncLegend();
       });
+    });
+  }
+
+  function updateLegendProgress() {
+    tracks.forEach((node) => {
+      const pct = Math.round((progressByTrack[node.id] || 0) * 100);
+      const el = document.getElementById(`galaxy-pct-${node.id}`);
+      if (el) el.textContent = `${pct}%`;
     });
   }
 
@@ -1804,6 +1825,8 @@ function initTrainingGalaxy() {
       startup: ratio(star.done, star.total),
       bb: ratio(bbDone, bbTotal)
     };
+
+    updateLegendProgress();
   }
 
   function resetCanvas() {
@@ -1924,9 +1947,18 @@ function initTrainingGalaxy() {
       ctx.textAlign = 'left';
       ctx.globalAlpha = inMission ? 0.25 : 1;
       ctx.fillText(node.name, pos.x + size + 6, pos.y - size - 2);
-      ctx.globalAlpha = inMission ? 0.18 : 0.85;
-      ctx.fillStyle = '#b9b39a';
-      ctx.fillText(`${Math.round(progress * 100)}%`, pos.x + size + 6, pos.y + size + 8);
+
+      const pctLabel = `${Math.round(progress * 100)}%`;
+      const pctX = pos.x + size + 6;
+      const pctY = pos.y + size + 11;
+      const pctW = Math.max(28, ctx.measureText(pctLabel).width + 10);
+      const pctH = 12;
+      ctx.globalAlpha = inMission ? 0.22 : 0.85;
+      ctx.fillStyle = '#0a0a08';
+      ctx.fillRect(pctX - 2, pctY - 10, pctW, pctH);
+      ctx.globalAlpha = inMission ? 0.3 : 1;
+      ctx.fillStyle = '#ece8d4';
+      ctx.fillText(pctLabel, pctX + 2, pctY - 1);
       ctx.globalAlpha = 1;
     });
   }
