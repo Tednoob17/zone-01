@@ -2477,6 +2477,31 @@ function renderCustomVeilleLinks() {
 }
 
 let archiveItems = [];
+const ARCHIVE_USER_KEY = 'secu_prog_archive_user_v1';
+
+function getArchiveUserId() {
+  let id = '';
+  try {
+    id = localStorage.getItem(ARCHIVE_USER_KEY) || '';
+  } catch {
+    id = '';
+  }
+
+  if (!id) {
+    const rand = Math.random().toString(36).slice(2, 10);
+    const ts = Date.now().toString(36);
+    id = `u_${ts}_${rand}`;
+    try { localStorage.setItem(ARCHIVE_USER_KEY, id); } catch {}
+  }
+
+  return id;
+}
+
+async function archiveFetch(url, options = {}) {
+  const headers = { ...(options.headers || {}) };
+  headers['X-Archive-User'] = getArchiveUserId();
+  return fetch(url, { ...options, headers });
+}
 
 function archiveStatus(message, isError) {
   const el = document.getElementById('archive-status');
@@ -2533,15 +2558,24 @@ function refreshArchiveButtons() {
 
 async function loadArchives() {
   try {
-    const res = await fetch('/api/archive');
+    const res = await archiveFetch('/api/archive');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     archiveItems = Array.isArray(data.items) ? data.items : [];
     updateArchiveSelect();
     refreshArchiveButtons();
     archiveStatus(`${archiveItems.length} archive(s) locale(s).`, false);
-  } catch {
-    archiveStatus('Serveur offline. Lance: npm start puis ouvre http://localhost:4173/ (index) ou /sec', true);
+  } catch (err) {
+    const msg = String(err && err.message ? err.message : 'Erreur archive');
+    if (/HTTP 404/.test(msg)) {
+      archiveStatus('API /api/archive introuvable sur ce deploy. Sur Vercel, ajoute les fonctions API.', true);
+      return;
+    }
+    if (/HTTP 503/.test(msg)) {
+      archiveStatus('Archive backend non configure. Ajoute Vercel KV (KV_REST_API_URL + KV_REST_API_TOKEN).', true);
+      return;
+    }
+    archiveStatus('Serveur archive indisponible. Local: npm start. Vercel: API + KV requis.', true);
   }
 }
 
@@ -2556,7 +2590,7 @@ function toggleArchivePanel() {
 async function openArchiveById(id) {
   if (!id) return;
   try {
-    const res = await fetch(`/api/archive/${encodeURIComponent(id)}`);
+    const res = await archiveFetch(`/api/archive/${encodeURIComponent(id)}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     const viewer = document.getElementById('archive-viewer');
@@ -2578,7 +2612,7 @@ async function deleteSelectedArchive() {
   if (!select || !select.value) return;
   const id = select.value;
   try {
-    const res = await fetch(`/api/archive/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    const res = await archiveFetch(`/api/archive/${encodeURIComponent(id)}`, { method: 'DELETE' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const viewer = document.getElementById('archive-viewer');
     if (viewer) viewer.srcdoc = '';
@@ -2590,7 +2624,7 @@ async function deleteSelectedArchive() {
 }
 
 async function archiveArticle(url, titleHint) {
-  const res = await fetch('/api/archive', {
+  const res = await archiveFetch('/api/archive', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ url, title: titleHint || '' })
