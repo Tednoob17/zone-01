@@ -1727,6 +1727,7 @@ function initTrainingGalaxy() {
   let stars = [];
   let nodePositions = {};
   let progressByTrack = {};
+  let countsByTrack = {};
   let lastProgressSample = 0;
   const mouse = { x: -1000, y: -1000 };
   let width = 0;
@@ -1764,10 +1765,22 @@ function initTrainingGalaxy() {
 
   function updateLegendProgress() {
     tracks.forEach((node) => {
-      const pct = Math.round((progressByTrack[node.id] || 0) * 100);
+      const pct = formatPercent(progressByTrack[node.id] || 0);
+      const counts = countsByTrack[node.id];
       const el = document.getElementById(`galaxy-pct-${node.id}`);
-      if (el) el.textContent = `${pct}%`;
+      if (el) {
+        if (counts && counts.total > 0) {
+          el.textContent = `${pct}% (${counts.done}/${counts.total})`;
+        } else {
+          el.textContent = `${pct}%`;
+        }
+      }
     });
+  }
+
+  function formatPercent(value) {
+    const pct = Math.max(0, Math.min(100, value * 100));
+    return pct.toFixed(1);
   }
 
   function syncLegend() {
@@ -1824,6 +1837,19 @@ function initTrainingGalaxy() {
       veille: ratio(vei.done, vei.total),
       startup: ratio(star.done, star.total),
       bb: ratio(bbDone, bbTotal)
+    };
+
+    countsByTrack = {
+      day0: { done: fd.done, total: fd.total },
+      portswigger: { done: psDone, total: psTotal },
+      kr: { done: kr.done, total: kr.total },
+      jorgensen: { done: jo.done, total: jo.total },
+      dessin: { done: des.done, total: des.total },
+      livre: { done: liv.done, total: liv.total },
+      review: { done: blog.done, total: blog.total },
+      veille: { done: vei.done, total: vei.total },
+      startup: { done: star.done, total: star.total },
+      bb: { done: bbDone, total: bbTotal }
     };
 
     updateLegendProgress();
@@ -1948,7 +1974,10 @@ function initTrainingGalaxy() {
       ctx.globalAlpha = inMission ? 0.25 : 1;
       ctx.fillText(node.name, pos.x + size + 6, pos.y - size - 2);
 
-      const pctLabel = `${Math.round(progress * 100)}%`;
+      const counts = countsByTrack[node.id];
+      const pctLabel = counts && counts.total > 0
+        ? `${formatPercent(progress)}% ${counts.done}/${counts.total}`
+        : `${formatPercent(progress)}%`;
       const pctX = pos.x + size + 6;
       const pctY = pos.y + size + 11;
       const pctW = Math.max(28, ctx.measureText(pctLabel).width + 10);
@@ -1964,13 +1993,17 @@ function initTrainingGalaxy() {
   }
 
   function setTooltipFor(node, pos, pinned) {
-    const progress = Math.round((progressByTrack[node.id] || 0) * 100);
+    const progress = formatPercent(progressByTrack[node.id] || 0);
+    const counts = countsByTrack[node.id];
+    const progressLine = counts && counts.total > 0
+      ? `Progress: ${progress}% (${counts.done}/${counts.total})`
+      : `Progress: ${progress}%`;
     const mode = missionId ? `<br />Mission mode: <em>${tracks.find((t) => t.id === missionId).name}</em>` : '';
     const pinHint = pinned ? '<br />Click empty space to unpin.' : '<br />Click node to pin.';
     tip.style.opacity = '1';
     tip.style.left = pos.x + 'px';
     tip.style.top = pos.y + 'px';
-    tip.innerHTML = `<strong>${node.name}</strong>${node.desc}<br />Progress: ${progress}%${mode}${pinHint}`;
+    tip.innerHTML = `<strong>${node.name}</strong>${node.desc}<br />${progressLine}${mode}${pinHint}`;
   }
 
   function draw() {
