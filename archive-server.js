@@ -138,7 +138,13 @@ function escapeHtml(value) {
 
 function safePathFromUrl(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
-  const clean = decoded === '/' ? '/sec.html' : decoded;
+  const clean = decoded === '/'
+    ? '/index.html'
+    : decoded === '/sec'
+      ? '/sec.html'
+      : decoded === '/index'
+        ? '/index.html'
+        : decoded;
   const full = path.normalize(path.join(ROOT, clean));
   if (!full.startsWith(ROOT)) return null;
   return full;
@@ -304,7 +310,8 @@ async function main() {
 
   server.listen(PORT, () => {
     console.log(`Archive server running on http://localhost:${PORT}`);
-    console.log('Open http://localhost:' + PORT + '/sec.html');
+    console.log('Open http://localhost:' + PORT + '/ (index)');
+    console.log('Tracker: http://localhost:' + PORT + '/sec or /sec.html');
   });
 }
 

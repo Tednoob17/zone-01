@@ -2541,7 +2541,7 @@ async function loadArchives() {
     refreshArchiveButtons();
     archiveStatus(`${archiveItems.length} archive(s) locale(s).`, false);
   } catch {
-    archiveStatus('Serveur offline. Lance: npm start puis ouvre http://localhost:4173/sec.html', true);
+    archiveStatus('Serveur offline. Lance: npm start puis ouvre http://localhost:4173/ (index) ou /sec', true);
   }
 }
 
