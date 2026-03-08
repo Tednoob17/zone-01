@@ -338,6 +338,22 @@ main {
   flex-direction: column;
   justify-content: center;
   gap: 2px;
+  cursor: pointer;
+  position: relative;
+}
+.day-label::after {
+  content: '▸';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dim);
+  font-size: 11px;
+  transition: transform .18s ease, color .18s ease;
+}
+.day-row.open .day-label::after {
+  transform: translateY(-50%) rotate(90deg);
+  color: var(--text);
 }
 .day-name {
   font-size: 11px;
@@ -357,9 +373,12 @@ main {
 .slot {
   padding: 10px 14px;
   border-right: 1px solid var(--line);
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 4px;
+}
+.day-row.open .slot {
+  display: flex;
 }
 .slot:last-child { border-right: none; }
 
@@ -1654,12 +1673,39 @@ function updatePhrackCount() {
   document.getElementById('phrack-count').textContent = `${done} / ${total}`;
 }
 
+// ── DAY TOGGLE ────────────────────────────────────────────────────────────────
+function toggleDay(row) {
+  row.classList.toggle('open');
+}
+
+function openFirstDay(weekId) {
+  const weekBody = document.getElementById(`${weekId}-body`);
+  if (!weekBody || !weekBody.classList.contains('open')) return;
+  const rows = weekBody.querySelectorAll('.day-row');
+  if (!rows.length) return;
+
+  // Keep the opened day if one is already expanded.
+  const hasOpen = Array.from(rows).some(r => r.classList.contains('open'));
+  if (!hasOpen) rows[0].classList.add('open');
+}
+
+function initDayDropdowns() {
+  document.querySelectorAll('.day-row .day-label').forEach(label => {
+    label.addEventListener('click', () => {
+      const row = label.closest('.day-row');
+      if (!row) return;
+      toggleDay(row);
+    });
+  });
+}
+
 // ── WEEK TOGGLE ───────────────────────────────────────────────────────────────
 function toggleWeek(id) {
   const body = document.getElementById(id+'-body');
   const tog  = document.getElementById(id+'-tog');
   const open = body.classList.toggle('open');
   if (tog) tog.className = 'week-toggle' + (open ? ' open' : '');
+  if (open) openFirstDay(id);
 }
 
 // ── GLOBAL STATS ──────────────────────────────────────────────────────────────
@@ -1754,6 +1800,7 @@ function restoreState() {
 loadState();
 renderPSModules();
 restoreState();
+initDayDropdowns();
 updateGlobalStats();
 updateBooksCount();
 updatePhrackCount();
