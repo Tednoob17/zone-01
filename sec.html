@@ -204,6 +204,12 @@ nav a:hover { color: var(--bright); background: var(--bg2); }
   background: var(--bg3);
 }
 
+.galaxy-chip.mission {
+  background: #21150f;
+  color: #f2d4c4;
+  box-shadow: inset 0 0 0 1px rgba(192, 68, 10, 0.55);
+}
+
 .galaxy-chip-dot {
   width: 9px;
   height: 9px;
@@ -1704,7 +1710,12 @@ function initTrainingGalaxy() {
 
   let highlighted = null;
   let hovered = null;
+  let pinnedId = null;
+  let missionId = null;
   let stars = [];
+  let nodePositions = {};
+  let progressByTrack = {};
+  let lastProgressSample = 0;
   const mouse = { x: -1000, y: -1000 };
   let width = 0;
   let height = 0;
@@ -1721,12 +1732,18 @@ function initTrainingGalaxy() {
     `).join('');
 
     legend.querySelectorAll('[data-galaxy-focus]').forEach((el) => {
+      const id = el.getAttribute('data-galaxy-focus');
       el.addEventListener('mouseenter', () => {
-        highlighted = el.getAttribute('data-galaxy-focus');
+        if (!pinnedId) highlighted = id;
         syncLegend();
       });
       el.addEventListener('mouseleave', () => {
-        highlighted = null;
+        if (!pinnedId) highlighted = null;
+        syncLegend();
+      });
+      el.addEventListener('click', () => {
+        missionId = missionId === id ? null : id;
+        highlighted = id;
         syncLegend();
       });
     });
@@ -1734,9 +1751,59 @@ function initTrainingGalaxy() {
 
   function syncLegend() {
     legend.querySelectorAll('[data-galaxy-focus]').forEach((el) => {
-      const isActive = highlighted && el.getAttribute('data-galaxy-focus') === highlighted;
+      const id = el.getAttribute('data-galaxy-focus');
+      const isActive = highlighted && id === highlighted;
+      const isMission = missionId && id === missionId;
       el.classList.toggle('active', isActive);
+      el.classList.toggle('mission', isMission);
     });
+  }
+
+  function ratio(done, total) {
+    if (!total) return 0;
+    return Math.max(0, Math.min(1, done / total));
+  }
+
+  function countTagProgress(tagClass) {
+    const tags = document.querySelectorAll(`.slot-tag.${tagClass}`);
+    let done = 0;
+    tags.forEach((tag) => {
+      const slot = tag.closest('.slot');
+      if (slot && slot.classList.contains('done')) done += 1;
+    });
+    return { done, total: tags.length };
+  }
+
+  function sampleProgress() {
+    const now = performance.now();
+    if (now - lastProgressSample < 700 && Object.keys(progressByTrack).length) return;
+    lastProgressSample = now;
+
+    const psDone = (state && Number.isFinite(state._ps_done)) ? state._ps_done : 0;
+    const psTotal = (state && Number.isFinite(state._ps_total)) ? state._ps_total : 0;
+    const kr = countTagProgress('tag-kr');
+    const jo = countTagProgress('tag-jo');
+    const des = countTagProgress('tag-des');
+    const liv = countTagProgress('tag-liv');
+    const fd = countTagProgress('tag-fd');
+    const vei = countTagProgress('tag-vei');
+    const star = countTagProgress('tag-star');
+    const blog = countTagProgress('tag-blog');
+    const bbDone = document.querySelectorAll('[id^="bb_"]:checked').length;
+    const bbTotal = document.querySelectorAll('[id^="bb_"]').length;
+
+    progressByTrack = {
+      day0: ratio(fd.done, fd.total),
+      portswigger: ratio(psDone, psTotal),
+      kr: ratio(kr.done, kr.total),
+      jorgensen: ratio(jo.done, jo.total),
+      dessin: ratio(des.done, des.total),
+      livre: ratio(liv.done, liv.total),
+      review: ratio(blog.done, blog.total),
+      veille: ratio(vei.done, vei.total),
+      startup: ratio(star.done, star.total),
+      bb: ratio(bbDone, bbTotal)
+    };
   }
 
   function resetCanvas() {
@@ -1794,11 +1861,17 @@ function initTrainingGalaxy() {
   function drawOrbits() {
     tracks.forEach((node) => {
       if (!node.orbit) return;
+      const inMission = missionId && missionId !== node.id;
       const radius = node.orbit * orbitScale;
       ctx.beginPath();
       ctx.ellipse(centerX, centerY, radius, radius * 0.62, 0, 0, Math.PI * 2);
-      ctx.strokeStyle = highlighted === node.id ? 'rgba(236,232,212,0.4)' : 'rgba(90,90,74,0.35)';
-      ctx.lineWidth = highlighted === node.id ? 1.4 : 1;
+      if (inMission) {
+        ctx.strokeStyle = 'rgba(70,70,58,0.15)';
+        ctx.lineWidth = 0.8;
+      } else {
+        ctx.strokeStyle = highlighted === node.id ? 'rgba(236,232,212,0.4)' : 'rgba(90,90,74,0.35)';
+        ctx.lineWidth = highlighted === node.id ? 1.4 : 1;
+      }
       ctx.setLineDash([6, 7]);
       ctx.stroke();
     });
@@ -1807,43 +1880,65 @@ function initTrainingGalaxy() {
 
   function drawNodes() {
     hovered = null;
+    nodePositions = {};
+    sampleProgress();
 
     tracks.forEach((node) => {
       const pos = nodePosition(node);
+      nodePositions[node.id] = pos;
       const size = Math.max(6, node.size * orbitScale);
       const dx = mouse.x - pos.x;
       const dy = mouse.y - pos.y;
       const hit = Math.hypot(dx, dy) <= size + 6;
-      const active = highlighted === node.id || hit;
+      const pinned = pinnedId === node.id;
+      const active = highlighted === node.id || hit || pinned;
+      const inMission = missionId && missionId !== node.id && node.id !== 'day0';
+      const progress = progressByTrack[node.id] || 0;
+      const glowScale = 1 + progress * 0.6;
 
       if (hit) hovered = { node, pos };
 
-      if (active && node.id !== 'day0') {
+      if (active && node.id !== 'day0' && !inMission) {
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(pos.x, pos.y);
-        ctx.strokeStyle = 'rgba(236,232,212,0.28)';
+        ctx.strokeStyle = `rgba(236,232,212,${0.18 + progress * 0.28})`;
         ctx.lineWidth = 1;
         ctx.stroke();
       }
 
       ctx.beginPath();
       ctx.fillStyle = node.color;
-      ctx.globalAlpha = active ? 1 : 0.86;
-      ctx.arc(pos.x, pos.y, active ? size + 1.5 : size, 0, Math.PI * 2);
+      ctx.globalAlpha = inMission ? 0.2 : (active ? 1 : 0.78 + progress * 0.2);
+      ctx.arc(pos.x, pos.y, active ? (size + 1.4 + progress * 2.2) : (size + progress * 1.1), 0, Math.PI * 2);
       ctx.fill();
 
       ctx.beginPath();
-      ctx.globalAlpha = active ? 0.28 : 0.16;
-      ctx.arc(pos.x, pos.y, size * 1.95, 0, Math.PI * 2);
+      ctx.globalAlpha = inMission ? 0.05 : (active ? 0.32 + progress * 0.22 : 0.14 + progress * 0.2);
+      ctx.arc(pos.x, pos.y, size * 1.95 * glowScale, 0, Math.PI * 2);
       ctx.fill();
       ctx.globalAlpha = 1;
 
       ctx.fillStyle = '#ece8d4';
       ctx.font = '10px var(--mono)';
       ctx.textAlign = 'left';
+      ctx.globalAlpha = inMission ? 0.25 : 1;
       ctx.fillText(node.name, pos.x + size + 6, pos.y - size - 2);
+      ctx.globalAlpha = inMission ? 0.18 : 0.85;
+      ctx.fillStyle = '#b9b39a';
+      ctx.fillText(`${Math.round(progress * 100)}%`, pos.x + size + 6, pos.y + size + 8);
+      ctx.globalAlpha = 1;
     });
+  }
+
+  function setTooltipFor(node, pos, pinned) {
+    const progress = Math.round((progressByTrack[node.id] || 0) * 100);
+    const mode = missionId ? `<br />Mission mode: <em>${tracks.find((t) => t.id === missionId).name}</em>` : '';
+    const pinHint = pinned ? '<br />Click empty space to unpin.' : '<br />Click node to pin.';
+    tip.style.opacity = '1';
+    tip.style.left = pos.x + 'px';
+    tip.style.top = pos.y + 'px';
+    tip.innerHTML = `<strong>${node.name}</strong>${node.desc}<br />Progress: ${progress}%${mode}${pinHint}`;
   }
 
   function draw() {
@@ -1851,16 +1946,18 @@ function initTrainingGalaxy() {
     drawOrbits();
     drawNodes();
 
-    if (hovered) {
-      tip.style.opacity = '1';
-      tip.style.left = hovered.pos.x + 'px';
-      tip.style.top = hovered.pos.y + 'px';
-      tip.innerHTML = `<strong>${hovered.node.name}</strong>${hovered.node.desc}`;
-      highlighted = hovered.node.id;
+    if (pinnedId && nodePositions[pinnedId]) {
+      const pinnedNode = tracks.find((node) => node.id === pinnedId);
+      setTooltipFor(pinnedNode, nodePositions[pinnedId], true);
+      highlighted = pinnedId;
+      syncLegend();
+    } else if (hovered) {
+      setTooltipFor(hovered.node, hovered.pos, false);
+      if (!missionId) highlighted = hovered.node.id;
       syncLegend();
     } else {
       tip.style.opacity = '0';
-      if (!legend.matches(':hover')) {
+      if (!legend.matches(':hover') && !missionId) {
         highlighted = null;
         syncLegend();
       }
@@ -1870,7 +1967,9 @@ function initTrainingGalaxy() {
   function tick() {
     if (!reducedMotion) {
       tracks.forEach((node) => {
-        if (node.speed) node.angle += node.speed;
+        if (!node.speed) return;
+        const speedFactor = missionId && missionId !== node.id && node.id !== 'day0' ? 0.18 : 1;
+        node.angle += node.speed * speedFactor;
       });
     }
     draw();
@@ -1886,8 +1985,26 @@ function initTrainingGalaxy() {
   canvas.addEventListener('mouseleave', () => {
     mouse.x = -1000;
     mouse.y = -1000;
-    tip.style.opacity = '0';
-    highlighted = null;
+    if (!pinnedId) tip.style.opacity = '0';
+    if (!pinnedId && !missionId) highlighted = null;
+    syncLegend();
+  });
+
+  canvas.addEventListener('click', () => {
+    const hitNode = tracks.find((node) => {
+      const pos = nodePositions[node.id];
+      if (!pos) return false;
+      const size = Math.max(6, node.size * orbitScale);
+      return Math.hypot(mouse.x - pos.x, mouse.y - pos.y) <= size + 6;
+    });
+
+    if (hitNode) {
+      pinnedId = pinnedId === hitNode.id ? null : hitNode.id;
+      highlighted = hitNode.id;
+    } else {
+      pinnedId = null;
+      if (!missionId) highlighted = null;
+    }
     syncLegend();
   });
 
