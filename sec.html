@@ -790,6 +790,60 @@ main {
   margin-left: auto;
 }
 
+.add-link-btn {
+  border: 1px solid var(--line2);
+  background: var(--bg2);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+.add-link-btn:hover {
+  background: var(--bg3);
+  border-color: var(--dim);
+}
+
+.archive-panel {
+  border: 1px solid var(--line2);
+  margin-top: 10px;
+  background: var(--bg2);
+}
+
+.archive-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.archive-select {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line2);
+  padding: 6px 8px;
+  min-width: 240px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.archive-status {
+  color: var(--mid);
+  font-size: 11px;
+}
+
+.archive-viewer {
+  width: 100%;
+  height: 520px;
+  border: 0;
+  background: #fff;
+}
+
 /* ── PHRACK ── */
 .phrack-list {
   display: flex;
@@ -1409,7 +1463,20 @@ footer {
     <span class="section-num">05</span>
     <span class="section-title">Articles à lire — Tous les articles du programme</span>
     <span class="section-count" id="art-count">0 / 0</span>
+    <button type="button" class="add-link-btn" onclick="toggleArchivePanel()">Bibliotheque offline</button>
+    <button type="button" class="add-link-btn" onclick="addVeilleLink()">+ Ajouter lien veille</button>
   </div>
+
+  <div id="archive-panel" class="archive-panel" style="display:none">
+    <div class="archive-toolbar">
+      <select id="archive-select" class="archive-select"></select>
+      <button type="button" class="add-link-btn" onclick="openSelectedArchive()">Ouvrir</button>
+      <button type="button" class="add-link-btn" onclick="deleteSelectedArchive()">Suppr archive</button>
+      <span id="archive-status" class="archive-status">Aucune archive chargee.</span>
+    </div>
+    <iframe id="archive-viewer" class="archive-viewer" sandbox="allow-same-origin"></iframe>
+  </div>
+
   <div id="articles-list">
 
     <!-- SSRF -->
@@ -1558,6 +1625,11 @@ footer {
       <div class="phrack-item"><input type="checkbox" class="cb" onchange="artDone(this)"><div class="phrack-ref">MISC</div><div class="phrack-name"><a href="https://vincent.bernat.ch/en/blog/2026-old-web-articles" target="_blank" style="color:var(--text);text-decoration:none">Old Web Articles — vincent.bernat.ch ↗</a></div><div class="phrack-when">Libre</div></div>
       <div class="phrack-item"><input type="checkbox" class="cb" onchange="artDone(this)"><div class="phrack-ref">AI</div><div class="phrack-name"><a href="https://aretekzs.com/posts/first-attempts-at-breaking-ai" target="_blank" style="color:var(--text);text-decoration:none">First Attempts Breaking AI — aretekzs ↗</a></div><div class="phrack-when">Libre</div></div>
       <div class="phrack-item"><input type="checkbox" class="cb" onchange="artDone(this)"><div class="phrack-ref">AI</div><div class="phrack-name"><a href="https://parsiya.net/blog/2021-04-30-testing-extensions-ai-assisted" target="_blank" style="color:var(--text);text-decoration:none">AI-Assisted Bug Bounty Automation — parsiya.net ↗</a></div><div class="phrack-when">Phase 2</div></div>
+    </div>
+
+    <div id="custom-veille-wrap" style="display:none;margin-top:2px">
+      <div style="padding:10px 16px;background:var(--bg2);border:1px solid var(--line2);border-bottom:none;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)">Veille personnalisée</div>
+      <div id="custom-veille-list" class="phrack-list" style="border-top:none"></div>
     </div>
 
   </div>
@@ -2260,8 +2332,13 @@ function updateBBCount() {
 function artDone(cb) {
   const item = cb.closest('.phrack-item');
   const allItems = Array.from(document.querySelectorAll('#articles-list .phrack-item'));
-  const idx = allItems.indexOf(item);
-  state['art_'+idx] = cb.checked;
+  let key = item.dataset.artKey;
+  if (!key) {
+    const idx = allItems.indexOf(item);
+    key = `art_${idx}`;
+    item.dataset.artKey = key;
+  }
+  state[key] = cb.checked;
   if (cb.checked) {
     item.style.opacity = '.5';
   } else {
@@ -2273,10 +2350,118 @@ function artDone(cb) {
 }
 
 function updateArtCount() {
-  const done = document.querySelectorAll('#articles-list .phrack-item input:checked').length;
-  const total = document.querySelectorAll('#articles-list .phrack-item').length;
+  const done = document.querySelectorAll('#articles .phrack-item input:checked').length;
+  const total = document.querySelectorAll('#articles .phrack-item').length;
   const el = document.getElementById('art-count');
   if (el) el.textContent = done + ' / ' + total;
+}
+
+function ensureArticleKeys() {
+  const items = document.querySelectorAll('#articles-list .phrack-item');
+  items.forEach((item, idx) => {
+    if (!item.dataset.artKey) item.dataset.artKey = `art_${idx}`;
+  });
+}
+
+function normalizeUrl(url) {
+  const trimmed = (url || '').trim();
+  if (!trimmed) return '';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
+function addVeilleLink() {
+  const name = (window.prompt('Nom du lien veille :') || '').trim();
+  if (!name) return;
+
+  const rawUrl = window.prompt('URL du lien :');
+  const url = normalizeUrl(rawUrl);
+  if (!url) return;
+
+  const links = Array.isArray(state.customVeilleLinks) ? state.customVeilleLinks : [];
+  const id = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+  links.push({ id, name, url });
+  state.customVeilleLinks = links;
+  state[`art_custom_${id}`] = false;
+  saveState();
+  renderCustomVeilleLinks();
+  updateArtCount();
+  updateGlobalStats();
+}
+
+function removeVeilleLink(id) {
+  const links = Array.isArray(state.customVeilleLinks) ? state.customVeilleLinks : [];
+  state.customVeilleLinks = links.filter((link) => link.id !== id);
+  delete state[`art_custom_${id}`];
+  saveState();
+  renderCustomVeilleLinks();
+  updateArtCount();
+  updateGlobalStats();
+}
+
+function renderCustomVeilleLinks() {
+  const wrap = document.getElementById('custom-veille-wrap');
+  const list = document.getElementById('custom-veille-list');
+  if (!wrap || !list) return;
+
+  const links = Array.isArray(state.customVeilleLinks) ? state.customVeilleLinks : [];
+  list.innerHTML = '';
+
+  if (!links.length) {
+    wrap.style.display = 'none';
+    return;
+  }
+
+  wrap.style.display = '';
+
+  links.forEach((link) => {
+    const key = `art_custom_${link.id}`;
+    const checked = Boolean(state[key]);
+
+    const row = document.createElement('div');
+    row.className = 'phrack-item';
+    row.dataset.artKey = key;
+    row.dataset.custom = '1';
+
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.className = 'cb';
+    cb.checked = checked;
+    cb.onchange = function () { artDone(this); };
+
+    const ref = document.createElement('div');
+    ref.className = 'phrack-ref';
+    ref.textContent = 'VEILLE';
+
+    const nameWrap = document.createElement('div');
+    nameWrap.className = 'phrack-name';
+    const a = document.createElement('a');
+    a.href = link.url;
+    a.target = '_blank';
+    a.style.color = 'var(--text)';
+    a.style.textDecoration = 'none';
+    a.textContent = `${link.name} ↗`;
+    nameWrap.appendChild(a);
+
+    const when = document.createElement('div');
+    when.className = 'phrack-when';
+    when.textContent = 'Custom';
+
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'add-link-btn';
+    remove.textContent = 'Suppr';
+    remove.onclick = function () { removeVeilleLink(link.id); };
+
+    row.appendChild(cb);
+    row.appendChild(ref);
+    row.appendChild(nameWrap);
+    row.appendChild(when);
+    row.appendChild(remove);
+
+    if (checked) row.style.opacity = '.5';
+    list.appendChild(row);
+  });
 }
 
 // ── PHRACK ────────────────────────────────────────────────────────────────────
@@ -2378,9 +2563,11 @@ function restoreState() {
   });
 
   // Articles
-  document.querySelectorAll('#articles-list .phrack-item').forEach((item, idx) => {
+  document.querySelectorAll('#articles .phrack-item').forEach((item, idx) => {
     const cb = item.querySelector('.cb');
-    if (cb && state['art_'+idx]) {
+    const key = item.dataset.artKey || `art_${idx}`;
+    item.dataset.artKey = key;
+    if (cb && state[key]) {
       cb.checked = true;
       item.style.opacity = '.5';
     }
@@ -2400,6 +2587,8 @@ function restoreState() {
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 loadState();
+ensureArticleKeys();
+renderCustomVeilleLinks();
 renderPSModules();
 restoreState();
 initHeroConstellation();

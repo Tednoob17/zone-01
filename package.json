@@ -1,0 +1,9 @@
+{
+  "name": "secu-prog-archive",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local archive server for sec.html offline reading flow",
+  "scripts": {
+    "start": "node archive-server.js"
+  }
+}
