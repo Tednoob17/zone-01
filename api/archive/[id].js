@@ -15,7 +15,7 @@ function sendJson(res, status, payload) {
 module.exports = async function handler(req, res) {
   if (!isKvConfigured()) {
     sendJson(res, 503, {
-      error: 'Archive backend not configured on Vercel. Add Vercel KV and env vars KV_REST_API_URL + KV_REST_API_TOKEN.'
+      error: 'Archive backend not configured. Add Vercel KV (KV_REST_API_*) or Upstash Redis (UPSTASH_REDIS_REST_*).'
     });
     return;
   }

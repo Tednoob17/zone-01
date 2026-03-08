@@ -160,16 +160,27 @@ git push
 4. Build command: laisser vide.
 5. Output directory: laisser vide.
 
-### 3. Activer Vercel KV (obligatoire pour l'archivage)
+### 3. Activer le Storage (obligatoire pour l'archivage)
 
+Si tu vois la liste Marketplace (Neon, Upstash, Supabase, etc.), prends `Upstash`.
+
+Option A (si tu vois Vercel KV directement):
 1. Vercel Dashboard -> Storage -> Create -> `KV`.
-2. Connecter ce KV au projet.
-3. Verifier que les variables sont presentes dans le projet:
-   - `KV_REST_API_URL`
-   - `KV_REST_API_TOKEN`
-4. Redepoyer le projet.
+2. Connecter KV au projet.
+3. Verifier les variables:
+  - `KV_REST_API_URL`
+  - `KV_REST_API_TOKEN`
 
-Sans KV, l'API repondra `503` et l'UI affichera une erreur archive.
+Option B (si KV n'apparait pas et tu vois Marketplace):
+1. Vercel Dashboard -> Storage -> Marketplace -> `Upstash`.
+2. Choisir `Redis` et connecter au projet.
+3. Verifier les variables:
+  - `UPSTASH_REDIS_REST_URL`
+  - `UPSTASH_REDIS_REST_TOKEN`
+
+Puis redeployer le projet.
+
+Sans storage configure, l'API repondra `503` et l'UI affichera une erreur archive.
 
 ### 4. URLs attendues apres deploiement
 
@@ -201,8 +212,8 @@ Donc `0.0%` sur Vercel apres avoir coche en local est normal.
   - verifier la route `/api/archive`
 
 - `Archivage echoue: HTTP 503`:
-  - KV non configure
-  - ajouter `KV_REST_API_URL` et `KV_REST_API_TOKEN`, puis redeploy
+  - storage non configure
+  - ajouter `KV_REST_API_*` ou `UPSTASH_REDIS_REST_*`, puis redeploy
 
 - `Galaxy reste a 0%`:
   - recocher les taches sur le meme domaine et meme navigateur

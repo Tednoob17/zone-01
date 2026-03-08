@@ -2,9 +2,17 @@ const crypto = require('node:crypto');
 
 const KV_URL = process.env.KV_REST_API_URL || '';
 const KV_TOKEN = process.env.KV_REST_API_TOKEN || '';
+const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL || '';
+const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || '';
 
 function isKvConfigured() {
-  return Boolean(KV_URL && KV_TOKEN);
+  return Boolean((KV_URL && KV_TOKEN) || (UPSTASH_URL && UPSTASH_TOKEN));
+}
+
+function storageMode() {
+  if (KV_URL && KV_TOKEN) return 'vercel-kv';
+  if (UPSTASH_URL && UPSTASH_TOKEN) return 'upstash';
+  return 'none';
 }
 
 function sanitizeUserId(raw) {
@@ -15,29 +23,57 @@ function sanitizeUserId(raw) {
 }
 
 async function kvCommand(args) {
-  if (!isKvConfigured()) {
-    throw new Error('Vercel KV is not configured (missing KV_REST_API_URL or KV_REST_API_TOKEN).');
+  const mode = storageMode();
+  if (mode === 'none') {
+    throw new Error('Storage is not configured (set KV_REST_API_* or UPSTASH_REDIS_REST_* env vars).');
   }
 
-  const res = await fetch(KV_URL, {
+  if (mode === 'vercel-kv') {
+    const res = await fetch(KV_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${KV_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(args)
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      throw new Error(`KV HTTP ${res.status}${text ? `: ${text}` : ''}`);
+    }
+
+    const payload = await res.json();
+    if (payload && payload.error) {
+      throw new Error(`KV error: ${payload.error}`);
+    }
+    return payload ? payload.result : null;
+  }
+
+  const endpoint = `${UPSTASH_URL.replace(/\/$/, '')}/pipeline`;
+  const res = await fetch(endpoint, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${KV_TOKEN}`,
+      Authorization: `Bearer ${UPSTASH_TOKEN}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(args)
+    body: JSON.stringify([args])
   });
 
   if (!res.ok) {
     const text = await res.text().catch(() => '');
-    throw new Error(`KV HTTP ${res.status}${text ? `: ${text}` : ''}`);
+    throw new Error(`Upstash HTTP ${res.status}${text ? `: ${text}` : ''}`);
   }
 
   const payload = await res.json();
-  if (payload && payload.error) {
-    throw new Error(`KV error: ${payload.error}`);
+  const first = Array.isArray(payload) ? payload[0] : payload;
+  if (first && first.error) {
+    throw new Error(`Upstash error: ${first.error}`);
   }
-  return payload ? payload.result : null;
+  if (first && Object.prototype.hasOwnProperty.call(first, 'result')) {
+    return first.result;
+  }
+  return first || null;
 }
 
 function indexKey(userId) {
@@ -70,6 +106,7 @@ function getUserIdFromRequest(req) {
 
 module.exports = {
   isKvConfigured,
+  storageMode,
   kvCommand,
   indexKey,
   itemKey,
