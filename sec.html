@@ -338,22 +338,6 @@ main {
   flex-direction: column;
   justify-content: center;
   gap: 2px;
-  cursor: pointer;
-  position: relative;
-}
-.day-label::after {
-  content: '▸';
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--dim);
-  font-size: 11px;
-  transition: transform .18s ease, color .18s ease;
-}
-.day-row.open .day-label::after {
-  transform: translateY(-50%) rotate(90deg);
-  color: var(--text);
 }
 .day-name {
   font-size: 11px;
@@ -373,12 +357,9 @@ main {
 .slot {
   padding: 10px 14px;
   border-right: 1px solid var(--line);
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 4px;
-}
-.day-row.open .slot {
-  display: flex;
 }
 .slot:last-child { border-right: none; }
 
@@ -1492,7 +1473,7 @@ const PS_MODULES = [
   { id:'ps_ssti',   name:'Server-side Template Injection', cat:'Advanced', month:'Août S2',     url:'https://portswigger.net/web-security/server-side-template-injection',  labs:['[A] Basic SSTI','[A] Basic SSTI (code context)','[P] Using documentation to exploit SSTI — FreeMarker','[P] Using documentation to exploit SSTI — Django','[P] Unknown language with a documented exploit','[P] Information disclosure via user-supplied objects','[E] Sandboxed environment with a documented exploit','[E] Custom template language (Python/Jinja2)'] },
   { id:'ps_wcp',    name:'Web Cache Poisoning',         cat:'Advanced',    month:'Sept S1',     url:'https://portswigger.net/web-security/web-cache-poisoning',  labs:['[A] Web cache poisoning with an unkeyed header','[P] Web cache poisoning with an unkeyed cookie','[P] Web cache poisoning with multiple headers','[P] Targeted web cache poisoning using an unknown header','[P] Web cache poisoning via an unkeyed query string','[P] Web cache poisoning via an unkeyed query parameter','[P] Parameter cloaking','[P] Web cache poisoning via a fat GET request','[P] URL normalization','[E] Cache key injection','[E] Internal cache poisoning','[E] Combining web cache poisoning vulnerabilities','[E] Cache poisoning to exploit a DOM vulnerability'] },
   { id:'ps_host',   name:'HTTP Host Header Attacks',    cat:'Advanced',    month:'Sept S1',     url:'https://portswigger.net/web-security/host-header',  labs:['[A] Basic password reset poisoning','[A] Host header authentication bypass','[P] Web cache poisoning via ambiguous requests','[P] Routing-based SSRF','[P] SSRF via flawed request parsing','[P] Host validation bypass via connection state attack','[E] Password reset poisoning via dangling markup'] },
-  { id:'ps_smuggl', name:'HTTP Request Smuggling',      cat:'Advanced',    month:'Sept S2',     url:'https://portswigger.net/web-security/request-smuggling',  labs:['[A] HTTP/1 request smuggling — CL.TE','[A] HTTP/1 request smuggling — TE.CL','[P] HTTP request smuggling confirming TE.CL via timing','[P] HTTP request smuggling finding TE.CL using differential responses','[P] Exploiting HTTP request smuggling to bypass access controls','[P] Exploiting HTTP request smuggling to capture other users' requests','[P] Exploiting HTTP request smuggling to deliver reflected XSS','[P] Response queue poisoning via H2.TE request smuggling','[P] H2.CL request smuggling','[P] HTTP/2 request smuggling via CRLF injection','[P] HTTP/2 request splitting via CRLF injection','[P] CL.0 request smuggling','[E] Bypassing access controls via HTTP/2 request tunnelling','[E] Web cache poisoning via HTTP/2 request tunnelling','[E] Client-side desync','[E] Browser-powered request smuggling','[E] Exploiting HTTP request smuggling to perform web cache poisoning','[E] Exploiting HTTP request smuggling to perform web cache deception','[E] Obfuscating attacks using HTTP/2 request splitting','[E] Exploiting HTTP request smuggling to bypass front-end security controls (TE.CL)','[E] Exploiting HTTP request smuggling to bypass front-end security controls (CL.TE)','[E] Exploiting HTTP request smuggling to reveal front-end request rewriting'] },
+  { id:'ps_smuggl', name:'HTTP Request Smuggling',      cat:'Advanced',    month:'Sept S2',     url:'https://portswigger.net/web-security/request-smuggling',  labs:['[A] HTTP/1 request smuggling — CL.TE','[A] HTTP/1 request smuggling — TE.CL','[P] HTTP request smuggling confirming TE.CL via timing','[P] HTTP request smuggling finding TE.CL using differential responses','[P] Exploiting HTTP request smuggling to bypass access controls','[P] Exploiting HTTP request smuggling to capture other users\' requests','[P] Exploiting HTTP request smuggling to deliver reflected XSS','[P] Response queue poisoning via H2.TE request smuggling','[P] H2.CL request smuggling','[P] HTTP/2 request smuggling via CRLF injection','[P] HTTP/2 request splitting via CRLF injection','[P] CL.0 request smuggling','[E] Bypassing access controls via HTTP/2 request tunnelling','[E] Web cache poisoning via HTTP/2 request tunnelling','[E] Client-side desync','[E] Browser-powered request smuggling','[E] Exploiting HTTP request smuggling to perform web cache poisoning','[E] Exploiting HTTP request smuggling to perform web cache deception','[E] Obfuscating attacks using HTTP/2 request splitting','[E] Exploiting HTTP request smuggling to bypass front-end security controls (TE.CL)','[E] Exploiting HTTP request smuggling to bypass front-end security controls (CL.TE)','[E] Exploiting HTTP request smuggling to reveal front-end request rewriting'] },
   { id:'ps_oauth',  name:'OAuth Authentication',        cat:'Advanced',    month:'Oct S1',      url:'https://portswigger.net/web-security/oauth',  labs:['[A] Authentication bypass via OAuth implicit flow','[P] Forced OAuth profile linking','[P] OAuth account hijacking via redirect_uri','[P] Stealing OAuth access tokens via an open redirect','[E] SSRF via OpenID dynamic client registration','[E] Stealing OAuth access tokens via a proxy page'] },
   { id:'ps_jwt',    name:'JWT Attacks',                 cat:'Advanced',    month:'Oct S1',      url:'https://portswigger.net/web-security/jwt',  labs:['[A] JWT authentication bypass via unverified signature','[A] JWT authentication bypass via flawed signature verification','[P] JWT authentication bypass via weak signing secret','[P] JWT authentication bypass via jwk header injection','[P] JWT authentication bypass via jku header injection','[P] JWT authentication bypass via kid header path traversal','[E] JWT authentication bypass via algorithm confusion','[E] JWT authentication bypass via algorithm confusion without exposed key'] },
   { id:'ps_proto',  name:'Prototype Pollution',         cat:'Advanced',    month:'Oct S2',      url:'https://portswigger.net/web-security/prototype-pollution',  labs:['[A] DOM XSS via client-side prototype pollution','[A] DOM XSS via alternative prototype pollution vector','[P] Client-side prototype pollution via flawed sanitization','[P] Client-side prototype pollution in third-party libraries','[P] Privilege escalation via server-side prototype pollution','[P] Detecting server-side prototype pollution without polluted property reflection','[P] Bypassing flawed input filters for server-side prototype pollution','[E] Remote code execution via server-side prototype pollution','[E] Exfiltrating sensitive data via server-side prototype pollution','[E] DOM XSS via client-side prototype pollution in fetch API'] },
@@ -1673,39 +1654,12 @@ function updatePhrackCount() {
   document.getElementById('phrack-count').textContent = `${done} / ${total}`;
 }
 
-// ── DAY TOGGLE ────────────────────────────────────────────────────────────────
-function toggleDay(row) {
-  row.classList.toggle('open');
-}
-
-function openFirstDay(weekId) {
-  const weekBody = document.getElementById(`${weekId}-body`);
-  if (!weekBody || !weekBody.classList.contains('open')) return;
-  const rows = weekBody.querySelectorAll('.day-row');
-  if (!rows.length) return;
-
-  // Keep the opened day if one is already expanded.
-  const hasOpen = Array.from(rows).some(r => r.classList.contains('open'));
-  if (!hasOpen) rows[0].classList.add('open');
-}
-
-function initDayDropdowns() {
-  document.querySelectorAll('.day-row .day-label').forEach(label => {
-    label.addEventListener('click', () => {
-      const row = label.closest('.day-row');
-      if (!row) return;
-      toggleDay(row);
-    });
-  });
-}
-
 // ── WEEK TOGGLE ───────────────────────────────────────────────────────────────
 function toggleWeek(id) {
   const body = document.getElementById(id+'-body');
   const tog  = document.getElementById(id+'-tog');
   const open = body.classList.toggle('open');
   if (tog) tog.className = 'week-toggle' + (open ? ' open' : '');
-  if (open) openFirstDay(id);
 }
 
 // ── GLOBAL STATS ──────────────────────────────────────────────────────────────
@@ -1800,7 +1754,6 @@ function restoreState() {
 loadState();
 renderPSModules();
 restoreState();
-initDayDropdowns();
 updateGlobalStats();
 updateBooksCount();
 updatePhrackCount();
