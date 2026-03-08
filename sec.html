@@ -1881,7 +1881,9 @@ function initTrainingGalaxy() {
     let done = 0;
     tags.forEach((tag) => {
       const slot = tag.closest('.slot');
-      if (slot && slot.classList.contains('done')) done += 1;
+      if (!slot) return;
+      const cb = slot.querySelector('input[type="checkbox"]');
+      if (cb && cb.checked) done += 1;
     });
     return { done, total: tags.length };
   }
@@ -1891,8 +1893,10 @@ function initTrainingGalaxy() {
     if (now - lastProgressSample < 700 && Object.keys(progressByTrack).length) return;
     lastProgressSample = now;
 
-    const psDone = (state && Number.isFinite(state._ps_done)) ? state._ps_done : 0;
-    const psTotal = (state && Number.isFinite(state._ps_total)) ? state._ps_total : 0;
+    const psLabCbs = document.querySelectorAll('#ps-modules-list .lab-item input[type="checkbox"]');
+    const psDoneDom = document.querySelectorAll('#ps-modules-list .lab-item input[type="checkbox"]:checked').length;
+    const psDone = (state && Number.isFinite(state._ps_done)) ? state._ps_done : psDoneDom;
+    const psTotal = (state && Number.isFinite(state._ps_total)) ? state._ps_total : psLabCbs.length;
     const kr = countTagProgress('tag-kr');
     const jo = countTagProgress('tag-jo');
     const des = countTagProgress('tag-des');
