@@ -2477,33 +2477,7 @@ function renderCustomVeilleLinks() {
 }
 
 let archiveItems = [];
-const ARCHIVE_USER_KEY = 'secu_prog_archive_user_v1';
 const ARCHIVE_LOCAL_KEY = 'secu_prog_archive_local_items_v1';
-let archiveBackendAvailable = true;
-
-function getArchiveUserId() {
-  let id = '';
-  try {
-    id = localStorage.getItem(ARCHIVE_USER_KEY) || '';
-  } catch {
-    id = '';
-  }
-
-  if (!id) {
-    const rand = Math.random().toString(36).slice(2, 10);
-    const ts = Date.now().toString(36);
-    id = `u_${ts}_${rand}`;
-    try { localStorage.setItem(ARCHIVE_USER_KEY, id); } catch {}
-  }
-
-  return id;
-}
-
-async function archiveFetch(url, options = {}) {
-  const headers = { ...(options.headers || {}) };
-  headers['X-Archive-User'] = getArchiveUserId();
-  return fetch(url, { ...options, headers });
-}
 
 function loadLocalArchiveItems() {
   try {
@@ -2595,22 +2569,10 @@ function refreshArchiveButtons() {
 }
 
 async function loadArchives() {
-  try {
-    const res = await archiveFetch('/api/archive');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    archiveItems = Array.isArray(data.items) ? data.items : [];
-    archiveBackendAvailable = true;
-    updateArchiveSelect();
-    refreshArchiveButtons();
-    archiveStatus(`${archiveItems.length} archive(s) locale(s).`, false);
-  } catch (err) {
-    archiveBackendAvailable = false;
-    archiveItems = loadLocalArchiveItems();
-    updateArchiveSelect();
-    refreshArchiveButtons();
-    archiveStatus(`Mode autonome: ${archiveItems.length} archive(s) locale(s).`, false);
-  }
+  archiveItems = loadLocalArchiveItems();
+  updateArchiveSelect();
+  refreshArchiveButtons();
+  archiveStatus(`${archiveItems.length} archive(s) sauvegardee(s).`, false);
 }
 
 function toggleArchivePanel() {
@@ -2623,27 +2585,14 @@ function toggleArchivePanel() {
 
 async function openArchiveById(id) {
   if (!id) return;
-  if (!archiveBackendAvailable || String(id).startsWith('local_')) {
-    const item = archiveItems.find((x) => x.id === id);
-    if (!item) {
-      archiveStatus('Archive locale introuvable.', true);
-      return;
-    }
-    const viewer = document.getElementById('archive-viewer');
-    if (viewer) viewer.srcdoc = item.html || localArchiveFallbackHtml(item.url, item.title);
-    archiveStatus(`Lecture locale: ${item.title || id}`, false);
+  const item = archiveItems.find((x) => x.id === id);
+  if (!item) {
+    archiveStatus('Archive introuvable.', true);
     return;
   }
-  try {
-    const res = await archiveFetch(`/api/archive/${encodeURIComponent(id)}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const viewer = document.getElementById('archive-viewer');
-    if (viewer) viewer.srcdoc = data.html || '<p>Archive vide</p>';
-    archiveStatus(`Lecture locale: ${data.title || id}`, false);
-  } catch {
-    archiveStatus('Impossible d\'ouvrir cette archive.', true);
-  }
+  const viewer = document.getElementById('archive-viewer');
+  if (viewer) viewer.srcdoc = item.html || localArchiveFallbackHtml(item.url, item.title);
+  archiveStatus(`Lecture: ${item.title || id}`, false);
 }
 
 function openSelectedArchive() {
@@ -2656,54 +2605,21 @@ async function deleteSelectedArchive() {
   const select = document.getElementById('archive-select');
   if (!select || !select.value) return;
   const id = select.value;
-  if (!archiveBackendAvailable || String(id).startsWith('local_')) {
-    archiveItems = archiveItems.filter((x) => x.id !== id);
-    saveLocalArchiveItems(archiveItems);
-    const viewer = document.getElementById('archive-viewer');
-    if (viewer) viewer.srcdoc = '';
-    updateArchiveSelect();
-    refreshArchiveButtons();
-    archiveStatus('Archive locale supprimee.', false);
-    return;
-  }
-  try {
-    const res = await archiveFetch(`/api/archive/${encodeURIComponent(id)}`, { method: 'DELETE' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const viewer = document.getElementById('archive-viewer');
-    if (viewer) viewer.srcdoc = '';
-    await loadArchives();
-    archiveStatus('Archive supprimee.', false);
-  } catch {
-    archiveStatus('Suppression impossible.', true);
-  }
+  archiveItems = archiveItems.filter((x) => x.id !== id);
+  saveLocalArchiveItems(archiveItems);
+  const viewer = document.getElementById('archive-viewer');
+  if (viewer) viewer.srcdoc = '';
+  updateArchiveSelect();
+  refreshArchiveButtons();
+  archiveStatus('Archive supprimee.', false);
 }
 
 async function archiveArticle(url, titleHint) {
-  if (!archiveBackendAvailable) {
-    const item = makeLocalArchiveItem(url, titleHint);
-    archiveItems.unshift(item);
-    saveLocalArchiveItems(archiveItems);
-    return { item };
-  }
-
-  const res = await archiveFetch('/api/archive', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url, title: titleHint || '' })
-  });
-  if (!res.ok) {
-    const payload = await res.json().catch(() => ({}));
-    const message = payload.error || `HTTP ${res.status}`;
-    if (/HTTP 404|HTTP 503|fetch|network|Failed to fetch/i.test(message)) {
-      archiveBackendAvailable = false;
-      const item = makeLocalArchiveItem(url, titleHint);
-      archiveItems.unshift(item);
-      saveLocalArchiveItems(archiveItems);
-      return { item };
-    }
-    throw new Error(message);
-  }
-  return res.json();
+  // Default: local-only stub. In Flutter app, the bridge overrides this to fetch real HTML.
+  const item = makeLocalArchiveItem(url, titleHint);
+  archiveItems.unshift(item);
+  saveLocalArchiveItems(archiveItems);
+  return { item };
 }
 
 async function archiveOrOpen(url, titleHint) {
