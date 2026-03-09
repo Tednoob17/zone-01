@@ -2478,6 +2478,8 @@ function renderCustomVeilleLinks() {
 
 let archiveItems = [];
 const ARCHIVE_USER_KEY = 'secu_prog_archive_user_v1';
+const ARCHIVE_LOCAL_KEY = 'secu_prog_archive_local_items_v1';
+let archiveBackendAvailable = true;
 
 function getArchiveUserId() {
   let id = '';
@@ -2501,6 +2503,42 @@ async function archiveFetch(url, options = {}) {
   const headers = { ...(options.headers || {}) };
   headers['X-Archive-User'] = getArchiveUserId();
   return fetch(url, { ...options, headers });
+}
+
+function loadLocalArchiveItems() {
+  try {
+    const raw = localStorage.getItem(ARCHIVE_LOCAL_KEY);
+    const data = JSON.parse(raw || '[]');
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalArchiveItems(items) {
+  try {
+    localStorage.setItem(ARCHIVE_LOCAL_KEY, JSON.stringify(Array.isArray(items) ? items : []));
+  } catch {}
+}
+
+function localArchiveFallbackHtml(url, title) {
+  const safeUrl = String(url || '').replace(/"/g, '&quot;');
+  const safeTitle = String(title || url || 'Archive locale');
+  return `<!doctype html><html><head><meta charset="utf-8"><title>${safeTitle}</title></head><body style="font-family:system-ui,Segoe UI,Arial,sans-serif;padding:24px;background:#0b1220;color:#e5e7eb"><h1 style="font-size:22px;margin:0 0 12px">${safeTitle}</h1><p style="opacity:.9">Mode autonome actif: le backend d'archivage n'est pas disponible.</p><p>Le lien source reste accessible:</p><p><a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color:#7dd3fc">${safeUrl}</a></p></body></html>`;
+}
+
+function makeLocalArchiveItem(url, titleHint) {
+  const normalized = normalizeArchiveUrl(url);
+  const now = new Date().toISOString();
+  const id = `local_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+  const title = (titleHint || normalized || 'Archive locale').trim();
+  return {
+    id,
+    url: normalized,
+    title,
+    createdAt: now,
+    html: localArchiveFallbackHtml(normalized, title)
+  };
 }
 
 function archiveStatus(message, isError) {
@@ -2562,20 +2600,16 @@ async function loadArchives() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     archiveItems = Array.isArray(data.items) ? data.items : [];
+    archiveBackendAvailable = true;
     updateArchiveSelect();
     refreshArchiveButtons();
     archiveStatus(`${archiveItems.length} archive(s) locale(s).`, false);
   } catch (err) {
-    const msg = String(err && err.message ? err.message : 'Erreur archive');
-    if (/HTTP 404/.test(msg)) {
-      archiveStatus('API /api/archive introuvable sur ce deploy. Sur Vercel, ajoute les fonctions API.', true);
-      return;
-    }
-    if (/HTTP 503/.test(msg)) {
-      archiveStatus('Archive backend non configure. Ajoute Vercel KV (KV_REST_API_*) ou Upstash Redis (UPSTASH_REDIS_REST_*).', true);
-      return;
-    }
-    archiveStatus('Serveur archive indisponible. Local: npm start. Vercel: API + KV requis.', true);
+    archiveBackendAvailable = false;
+    archiveItems = loadLocalArchiveItems();
+    updateArchiveSelect();
+    refreshArchiveButtons();
+    archiveStatus(`Mode autonome: ${archiveItems.length} archive(s) locale(s).`, false);
   }
 }
 
@@ -2589,6 +2623,17 @@ function toggleArchivePanel() {
 
 async function openArchiveById(id) {
   if (!id) return;
+  if (!archiveBackendAvailable || String(id).startsWith('local_')) {
+    const item = archiveItems.find((x) => x.id === id);
+    if (!item) {
+      archiveStatus('Archive locale introuvable.', true);
+      return;
+    }
+    const viewer = document.getElementById('archive-viewer');
+    if (viewer) viewer.srcdoc = item.html || localArchiveFallbackHtml(item.url, item.title);
+    archiveStatus(`Lecture locale: ${item.title || id}`, false);
+    return;
+  }
   try {
     const res = await archiveFetch(`/api/archive/${encodeURIComponent(id)}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -2611,6 +2656,16 @@ async function deleteSelectedArchive() {
   const select = document.getElementById('archive-select');
   if (!select || !select.value) return;
   const id = select.value;
+  if (!archiveBackendAvailable || String(id).startsWith('local_')) {
+    archiveItems = archiveItems.filter((x) => x.id !== id);
+    saveLocalArchiveItems(archiveItems);
+    const viewer = document.getElementById('archive-viewer');
+    if (viewer) viewer.srcdoc = '';
+    updateArchiveSelect();
+    refreshArchiveButtons();
+    archiveStatus('Archive locale supprimee.', false);
+    return;
+  }
   try {
     const res = await archiveFetch(`/api/archive/${encodeURIComponent(id)}`, { method: 'DELETE' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -2624,6 +2679,13 @@ async function deleteSelectedArchive() {
 }
 
 async function archiveArticle(url, titleHint) {
+  if (!archiveBackendAvailable) {
+    const item = makeLocalArchiveItem(url, titleHint);
+    archiveItems.unshift(item);
+    saveLocalArchiveItems(archiveItems);
+    return { item };
+  }
+
   const res = await archiveFetch('/api/archive', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -2631,7 +2693,15 @@ async function archiveArticle(url, titleHint) {
   });
   if (!res.ok) {
     const payload = await res.json().catch(() => ({}));
-    throw new Error(payload.error || `HTTP ${res.status}`);
+    const message = payload.error || `HTTP ${res.status}`;
+    if (/HTTP 404|HTTP 503|fetch|network|Failed to fetch/i.test(message)) {
+      archiveBackendAvailable = false;
+      const item = makeLocalArchiveItem(url, titleHint);
+      archiveItems.unshift(item);
+      saveLocalArchiveItems(archiveItems);
+      return { item };
+    }
+    throw new Error(message);
   }
   return res.json();
 }
@@ -2703,6 +2773,100 @@ function updatePhrackCount() {
   const done = document.querySelectorAll('.phrack-item input:checked').length;
   const total = document.querySelectorAll('.phrack-item').length;
   document.getElementById('phrack-count').textContent = `${done} / ${total}`;
+}
+
+const PHRACK_DIRECT_URLS_BY_REF = {
+  '#49/14': 'https://phrack.org/issues/49/14.html',
+  '#57/9': 'https://phrack.org/issues/57/9.html',
+  '#58/4': 'https://phrack.org/issues/58/4.html',
+  '#59/4': 'https://phrack.org/issues/59/4.html',
+  '#59/7': 'https://phrack.org/issues/59/7.html',
+  '#59/9': 'https://phrack.org/issues/59/9.html',
+  '#59/14': 'https://phrack.org/issues/59/14.html',
+  '#60/10': 'https://phrack.org/issues/60/10.html',
+  '#64': 'https://phrack.org/issues/64.html',
+  '#65': 'https://phrack.org/issues/65.html',
+  '#66/7': 'https://phrack.org/issues/66/7.html',
+  '#66-68': 'https://phrack.org/issues/66/17.html',
+  '#69-70': 'https://phrack.org/issues/69/12.html',
+  '#71 PDF': 'https://phrack.org/issues/71.html',
+  '#71/7': 'https://phrack.org/issues/71/7.html',
+  '#71/16': 'https://phrack.org/issues/71/16.html',
+  'Shacham 2007': 'https://hovav.net/ucsd/papers/rbss12.html'
+};
+
+const PHRACK_DIRECT_URLS_BY_TITLE = {
+  'Attacking JS Engines — Legacy Phrack (archive.org)': 'https://web.archive.org/web/*/http://phrack.org/*javascript*',
+  'The Geometry of Innocent Flesh on the Bone (ROP)': 'https://hovav.net/ucsd/papers/rbss12.html'
+};
+
+const PHRACK_ACTION_URL_BY_TITLE = {
+  'Smashing the Stack for Fun and Profit': 'https://phrack.org/issues/49/14.html',
+  'Vudo — malloc ou comment perdre son temps': 'https://phrack.org/issues/57/9.html',
+  'Exploiting Format String Vulnerabilities': 'https://phrack.org/issues/59/7.html',
+  'Basic Integer Overflows': 'https://phrack.org/issues/60/10.html',
+  'The Frame Pointer Overwrite': 'https://phrack.org/issues/58/4.html',
+  'Bypassing Non-eXecutable-Stack during Exploitation': 'https://phrack.org/issues/59/9.html',
+  'The Geometry of Innocent Flesh on the Bone (ROP)': 'https://hovav.net/ucsd/papers/rbss12.html',
+  'Handling Interrupt Descriptor Tables': 'https://phrack.org/issues/59/4.html',
+  'Linux Kernel Keylogger': 'https://phrack.org/issues/59/14.html',
+  'Persistent BIOS Infection': 'https://phrack.org/issues/66/7.html',
+  'Bypassing CET & BTI (FOP)': 'https://phrack.org/issues/71/7.html',
+  'Phrack #71 complet (archives)': 'https://phrack.org/issues/71.html',
+  'Phrack #64 — issues /16, /4, /14, /15': 'https://phrack.org/issues/64.html',
+  'Phrack #65 — issues /13, /14, /15': 'https://phrack.org/issues/65.html',
+  'Phrack #66/17 + #67/16 + #68/19': 'https://phrack.org/issues/66/17.html',
+  'Phrack #69/12 + #69/6 + #70/7 + #70/15': 'https://phrack.org/issues/69/12.html',
+  'Phrack #71/16': 'https://phrack.org/issues/71/16.html'
+};
+
+function enhancePhrackLinks() {
+  const items = document.querySelectorAll('#phrack .phrack-item');
+  items.forEach((item) => {
+    const nameEl = item.querySelector('.phrack-name');
+    const refEl = item.querySelector('.phrack-ref');
+    const actionEl = item.querySelector('.phrack-action');
+    if (!nameEl || nameEl.querySelector('a')) return;
+
+    const title = (nameEl.textContent || '').trim();
+    const ref = (refEl ? refEl.textContent : '').trim();
+    if (!title) return;
+
+    const query = [ref, title].filter(Boolean).join(' ');
+    const href =
+      PHRACK_DIRECT_URLS_BY_REF[ref] ||
+      PHRACK_DIRECT_URLS_BY_TITLE[title] ||
+      `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
+
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.style.color = 'var(--text)';
+    a.style.textDecoration = 'none';
+    a.textContent = `${title} ↗`;
+
+    nameEl.textContent = '';
+    nameEl.appendChild(a);
+
+    if (actionEl && !actionEl.querySelector('a')) {
+      const actionText = (actionEl.textContent || '').replace(/^\s*→\s*/, '').trim();
+      if (actionText) {
+        const actionHref =
+          PHRACK_ACTION_URL_BY_TITLE[title] ||
+          `https://duckduckgo.com/?q=${encodeURIComponent(`${title} ${actionText}`)}`;
+        const actionA = document.createElement('a');
+        actionA.href = actionHref;
+        actionA.target = '_blank';
+        actionA.rel = 'noopener noreferrer';
+        actionA.style.color = 'var(--mid)';
+        actionA.style.textDecoration = 'none';
+        actionA.textContent = `→ ${actionText}`;
+        actionEl.textContent = '';
+        actionEl.appendChild(actionA);
+      }
+    }
+  });
 }
 
 // ── WEEK TOGGLE ───────────────────────────────────────────────────────────────
@@ -2806,6 +2970,7 @@ function restoreState() {
 // ── INIT ──────────────────────────────────────────────────────────────────────
 loadState();
 ensureArticleKeys();
+enhancePhrackLinks();
 renderCustomVeilleLinks();
 renderPSModules();
 restoreState();

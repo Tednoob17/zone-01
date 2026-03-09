@@ -1,0 +1,7 @@
+# Root-level generated artifacts
+*.apk
+app-debug.apk
+app-release.apk
+
+# Android/Gradle transient cache
+**/.kotlin/

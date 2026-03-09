@@ -22,6 +22,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - ../sec.html
 
 flutter_launcher_icons:
   android: true

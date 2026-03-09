@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class IntegralSecPage extends StatefulWidget {
@@ -10,11 +10,7 @@ class IntegralSecPage extends StatefulWidget {
 }
 
 class _IntegralSecPageState extends State<IntegralSecPage> {
-  static const _baseUrlKey = 'sec_integral_base_url';
-  static const _defaultBaseUrl = 'http://10.0.2.2:4173';
-
   late final WebViewController _controller;
-  String _baseUrl = _defaultBaseUrl;
   bool _loading = true;
 
   @override
@@ -37,21 +33,12 @@ class _IntegralSecPageState extends State<IntegralSecPage> {
   }
 
   Future<void> _bootstrap() async {
-    final prefs = await SharedPreferences.getInstance();
-    final saved = prefs.getString(_baseUrlKey);
-    _baseUrl = (saved == null || saved.trim().isEmpty) ? _defaultBaseUrl : saved.trim();
     await _loadSecPage();
   }
 
   Future<void> _loadSecPage() async {
-    final url = _secPageUrl;
-    await _controller.loadRequest(Uri.parse(url));
-  }
-
-  String get _secPageUrl {
-    final trimmed = _baseUrl.trim();
-    final normalized = trimmed.endsWith('/') ? trimmed.substring(0, trimmed.length - 1) : trimmed;
-    return '$normalized/sec.html';
+    final html = await rootBundle.loadString('../sec.html');
+    await _controller.loadHtmlString(html, baseUrl: 'https://ahsec.local/');
   }
 
   Future<void> _injectInAppNavigationPatch() async {
@@ -68,51 +55,14 @@ class _IntegralSecPageState extends State<IntegralSecPage> {
     ''');
   }
 
-  Future<void> _showServerDialog() async {
-    final ctrl = TextEditingController(text: _baseUrl);
-    final result = await showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Serveur sec.html / archive'),
-        content: TextField(
-          controller: ctrl,
-          decoration: const InputDecoration(
-            hintText: 'http://10.0.2.2:4173',
-            labelText: 'Base URL',
-          ),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(context, ctrl.text.trim()), child: const Text('Save')),
-        ],
-      ),
-    );
-
-    if (result == null || result.isEmpty) return;
-
-    final value = result.endsWith('/') ? result.substring(0, result.length - 1) : result;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_baseUrlKey, value);
-
-    if (!mounted) return;
-    setState(() => _baseUrl = value);
-    await _loadSecPage();
-  }
-
   Future<void> _showHelp() async {
     final text = '''
-Mode integral actif: l'app charge exactement sec.html.
-
-Checklist pour que tout marche:
-1. Lance le serveur local: node archive-server.js (a la racine zone-01)
-2. Sur Android emulator utilise: http://10.0.2.2:4173
-3. Dans cette app: bouton reglages -> Base URL
-4. Recharge la page
+Mode integral autonome actif: l'app charge sec.html embarque dans l'APK.
 
 Tu recuperes ainsi:
 - training galaxy / systeme solaire
 - bouton + Ajouter lien veille
-- bibliotheque offline et archivage /api/archive
+- bibliotheque et archivage local (fallback interne)
 - toutes les sections exactes de sec.html
 ''';
 
@@ -141,11 +91,6 @@ Tu recuperes ainsi:
             icon: const Icon(Icons.help_outline_rounded),
           ),
           IconButton(
-            tooltip: 'Changer serveur',
-            onPressed: _showServerDialog,
-            icon: const Icon(Icons.settings_rounded),
-          ),
-          IconButton(
             tooltip: 'Recharger',
             onPressed: _loadSecPage,
             icon: const Icon(Icons.refresh_rounded),
@@ -167,7 +112,7 @@ Tu recuperes ainsi:
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
           child: Text(
-            'Source: $_secPageUrl',
+            'Source locale: ../sec.html (embarque)',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall,
