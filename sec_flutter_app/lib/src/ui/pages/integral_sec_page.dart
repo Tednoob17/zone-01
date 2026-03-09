@@ -45,16 +45,12 @@ class _IntegralSecPageState extends State<IntegralSecPage> {
   Future<void> _loadSecPage() async {
     String html;
     try {
-      html = await rootBundle.loadString('sec.html');
+      html = await rootBundle.loadString('assets/sec.html');
     } catch (_) {
-      try {
-        html = await rootBundle.loadString('../sec.html');
-      } catch (_) {
-        html =
-            '<!doctype html><html><head><meta charset="utf-8"><title>Ahsec</title></head>'
-            '<body style="font-family:system-ui;background:#0b1220;color:#e5e7eb;padding:24px">'
-            '<h1>Ahsec</h1><p>sec.html introuvable. Rebuild requis.</p></body></html>';
-      }
+      html =
+          '<!doctype html><html><head><meta charset="utf-8"><title>Ahsec</title></head>'
+          '<body style="font-family:system-ui;background:#0b1220;color:#e5e7eb;padding:24px">'
+          '<h1>Ahsec</h1><p>sec.html introuvable. Lance copy_assets.sh puis rebuild.</p></body></html>';
     }
     await _controller.loadHtmlString(html, baseUrl: 'https://ahsec.local/');
   }
