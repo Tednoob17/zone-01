@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'src/theme/app_theme.dart';
-import 'src/ui/pages/home_page.dart';
+import 'src/ui/pages/integral_sec_page.dart';
 
 void main() {
 	WidgetsFlutterBinding.ensureInitialized();
@@ -14,10 +14,10 @@ class SecApp extends StatelessWidget {
 	@override
 	Widget build(BuildContext context) {
 		return MaterialApp(
-			title: 'Secu Prog Mobile',
+			title: 'Ahsec',
 			debugShowCheckedModeBanner: false,
 			theme: AppTheme.build(),
-			home: const SecHomePage(),
+			home: const IntegralSecPage(),
 		);
 	}
 }
