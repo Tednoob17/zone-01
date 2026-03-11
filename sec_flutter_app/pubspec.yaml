@@ -1,0 +1,32 @@
+name: sec_flutter_app
+description: Mobile app for sec.html roadmap and archive workflow.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  http: ^1.2.2
+  shared_preferences: ^2.3.2
+  webview_flutter: ^4.10.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/sec.html
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "../eva.jpg"
+  min_sdk_android: 21

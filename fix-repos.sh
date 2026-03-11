@@ -1,18 +1,4 @@
 #!/usr/bin/env bash
-# ================================================================
-# fix-repos.sh
-# ─────────────────────────────────────────────────────────────────
-# Problème : les repos clonés dans 01-edu-repos/ avaient leur .git/
-#   → Git les a indexés comme gitlinks (mode 160000, "submodule fantôme")
-#   → VS Code crashe sur ces gitlinks (ENOPRO)
-#   → git status ne voit aucun changement car les gitlinks "existent"
-#
-# Solution :
-#   1. Supprimer toute trace de .git dans 01-edu-repos/
-#   2. Vider l'index Git pour ce dossier (git rm --cached)
-#   3. Ré-indexer le vrai contenu (git add)
-#   4. Commit + push
-# ================================================================
 set -e
 
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"

@@ -52,8 +52,8 @@
   .logo-text .t { font-weight: 800; font-size: 1rem; letter-spacing: -.02em; }
   .logo-text .t span { color: var(--accent); }
   .logo-text .s { font-family: 'JetBrains Mono', monospace; font-size: .55rem; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
-  .nav { display: flex; gap: .2rem; }
-  .nav a { font-family: 'JetBrains Mono', monospace; font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); text-decoration: none; padding: .35rem .7rem; border-radius: 5px; transition: all .15s; }
+  .nav { display: flex; gap: .1rem; flex-wrap: wrap; }
+  .nav a { font-family: 'JetBrains Mono', monospace; font-size: .6rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); text-decoration: none; padding: .35rem .55rem; border-radius: 5px; transition: all .15s; }
   .nav a:hover { color: var(--accent); background: rgba(57,255,143,.07); }
   .gh-link { font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: .35rem .8rem; border-radius: 5px; transition: all .15s; }
   .gh-link:hover { border-color: var(--accent); color: var(--accent); }
@@ -70,6 +70,19 @@
   .hstat-n { font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1; }
   .hstat-l { font-family: 'JetBrains Mono', monospace; font-size: .55rem; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; margin-top: .15rem; }
   .hero p { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--muted); line-height: 1.8; }
+
+  /* ── SEARCH ── */
+  .search-wrap { position: relative; max-width: 560px; margin: 1.75rem 0 0; display: flex; align-items: center; }
+  .search-icon { position: absolute; left: .85rem; color: var(--muted); font-size: 1rem; pointer-events: none; line-height: 1; }
+  .search-input { width: 100%; background: var(--surface); border: 1px solid var(--border2); color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: .72rem; padding: .65rem 3.5rem .65rem 2.2rem; border-radius: 8px; outline: none; transition: border-color .2s, background .35s; }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--muted2); }
+  .search-count { position: absolute; right: .85rem; font-family: 'JetBrains Mono', monospace; font-size: .55rem; color: var(--muted); pointer-events: none; white-space: nowrap; }
+  .ex.search-hidden { display: none !important; }
+  .quest.search-collapsed > .q-body, .quest.search-collapsed > .quest-exercises { display: none !important; }
+  .q-n { font-family: 'JetBrains Mono', monospace; font-size: .6rem; font-weight: 700; padding: .13rem .45rem; border-radius: 4px; flex-shrink: 0; }
+  .q-arr { color: var(--muted); font-size: .65rem; transition: transform .2s; flex-shrink: 0; }
+  .quest.open .q-arr { transform: rotate(180deg); }
 
   /* ── SECTIONS ── */
   .sec { padding: 4rem 0; border-bottom: 1px solid var(--border); }
@@ -187,6 +200,10 @@
   .tool-desc { font-size: .78rem; color: var(--muted); line-height: 1.65; }
   .tool-usage { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: .75rem 1rem; }
   .tool-usage-title { font-family: 'JetBrains Mono', monospace; font-size: .55rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted2); margin-bottom: .5rem; }
+  .tool-get { background: var(--surface2); border: 1px solid rgba(57,255,143,.25); border-radius: 6px; padding: .75rem 1rem; margin-bottom: .6rem; }
+  .tool-get-title { font-family: 'JetBrains Mono', monospace; font-size: .55rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: .5rem; }
+  .tool-dl-btn { display: inline-block; margin-top: .6rem; padding: .3rem .8rem; border-radius: 5px; background: rgba(57,255,143,.12); color: var(--accent); border: 1px solid rgba(57,255,143,.3); font-size: .65rem; font-family: 'JetBrains Mono', monospace; text-decoration: none; cursor: pointer; transition: background .2s; }
+  .tool-dl-btn:hover { background: rgba(57,255,143,.22); }
   .tool-cmd { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent); }
   .tool-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
 
@@ -223,6 +240,9 @@
   .foot-links { display: flex; gap: 1.25rem; }
   .foot-links a { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--muted); text-decoration: none; transition: color .15s; }
   .foot-links a:hover { color: var(--accent); }
+  .foot-author { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--muted); display: flex; align-items: center; gap: .5rem; }
+  .foot-author a { color: var(--accent); text-decoration: none; transition: opacity .15s; }
+  .foot-author a:hover { opacity: .7; }
 
   /* ── REVEAL ── */
   .rev { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
@@ -321,8 +341,16 @@
       <nav class="nav">
         <a href="#piscines">Piscines</a>
         <a href="#branches">Branches</a>
+        <a href="./sec.html">Sec Tracker</a>
+        <a href="#ai-subjects">AI</a>
+        <a href="#java-subjects">Java</a>
+        <a href="#devops-subjects">DevOps</a>
+        <a href="#cyber-subjects">Cyber</a>
+        <a href="#mobile-subjects">Mobile</a>
+        <a href="#gaming-subjects">Games</a>
+        <a href="#uxui-subjects">UX/UI</a>
+        <a href="#blockchain-subjects">Blockchain</a>
         <a href="#tools">Outils</a>
-
       </nav>
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn"><span class="theme-toggle-dot" id="theme-dot"></span><span id="theme-label">Truffle</span></button>
       <a class="gh-link" href="./01-edu-repos/public/" target="_blank">↗ 01-edu/public</a>
@@ -341,6 +369,7 @@
       <div><div class="hstat-n">5</div><div class="hstat-l">Piscines</div></div>
       <div><div class="hstat-n">130+</div><div class="hstat-l">Exercices Go</div></div>
       <div><div class="hstat-n">92+</div><div class="hstat-l">Exercices Rust</div></div>
+      <div><div class="hstat-n">26</div><div class="hstat-l">Sujets AI</div></div>
       <div><div class="hstat-n">8</div><div class="hstat-l">Branches</div></div>
     </div>
     <div class="search-wrap">
@@ -978,69 +1007,947 @@
   <div class="wrap">
     <div class="sec-head"><span class="sec-tag">03</span><h2 class="sec-title">Les 8 Branches — 6 mois de spécialisation</h2><span class="sec-sub">Repos dédiés par branche</span></div>
     <div class="branches rev">
-      <div class="br" onclick="openBranch('Branch-AI','Artificial Intelligence')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('ai-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--ai);"></div>
         <div class="br-top"><span class="br-ico">🧠</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--ai);">Artificial Intelligence</div>
         <div class="br-desc">ML, deep learning, NLP, image processing. Les sujets AI ont été déplacés vers <code style="font-size:.65rem;">public/subjects/ai/</code> — 26 projets disponibles.</div>
         <div class="br-stack"><span class="stag">Python</span><span class="stag">TensorFlow</span><span class="stag">Pandas</span><span class="stag">Sklearn</span><span class="stag">NLP</span></div>
+        <div class="br-readme-hint">↓ Voir les 26 sujets · <a href="javascript:void(0)" style="color:var(--ai);text-decoration:none;" onclick="event.stopPropagation();openBranch('Branch-AI','Artificial Intelligence')">📖 README</a></div>
         <div class="br-bar" style="background:var(--ai);"></div>
       </div>
-      <div class="br" onclick="openBranch('Branch-Blockchain','Blockchain &amp; Crypto')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('blockchain-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--blockchain);"></div>
         <div class="br-top"><span class="br-ico">⛓️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--blockchain);">Blockchain &amp; Crypto</div>
         <div class="br-desc">Smart contracts, DeFi, NFTs. Développement dApps avec Solidity et Web3.</div>
         <div class="br-stack"><span class="stag">Solidity</span><span class="stag">Ethereum</span><span class="stag">Web3.js</span><span class="stag">Hardhat</span><span class="stag">React</span></div>
+        <div class="br-readme-hint">↓ Voir les 49 sujets · <a href="javascript:void(0)" style="color:var(--blockchain);text-decoration:none;" onclick="event.stopPropagation();openBranch('Branch-Blockchain','Blockchain &amp; Crypto')">📖 README</a></div>
         <div class="br-bar" style="background:var(--blockchain);"></div>
       </div>
-      <div class="br" onclick="openBranch('devops','Cloud DevOps')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('devops-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--devops);"></div>
         <div class="br-top"><span class="br-ico">☁️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--devops);">Cloud DevOps</div>
         <div class="br-desc">Déploiement réseau, serveurs, IaC, CI/CD, conteneurisation et orchestration Kubernetes.</div>
         <div class="br-stack"><span class="stag">Docker</span><span class="stag">Kubernetes</span><span class="stag">Terraform</span><span class="stag">Jenkins</span><span class="stag">AWS</span></div>
+        <div class="br-readme-hint">↓ Voir les 69 exercices</div>
         <div class="br-bar" style="background:var(--devops);"></div>
       </div>
-      <div class="br" onclick="openBranch('cyber','Cybersecurity')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('cyber-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--cyber);"></div>
         <div class="br-top"><span class="br-ico">🔐</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--cyber);">Cybersecurity</div>
         <div class="br-desc">Pentest, cryptographie, reverse engineering, exploitation, CTF et forensics.</div>
         <div class="br-stack"><span class="stag">CTF</span><span class="stag">Pentest</span><span class="stag">Cryptography</span><span class="stag">Forensics</span><span class="stag">Reverse</span></div>
+        <div class="br-readme-hint">↓ Voir les 20 sujets</div>
         <div class="br-bar" style="background:var(--cyber);"></div>
       </div>
-      <div class="br" onclick="openBranch('mobile','Mobile Applications')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('mobile-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--mobile);"></div>
         <div class="br-top"><span class="br-ico">📱</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--mobile);">Mobile Applications</div>
         <div class="br-desc">Développement cross-platform avec Dart &amp; Flutter. Apps iOS et Android, gestion d'état, REST.</div>
         <div class="br-stack"><span class="stag">Dart</span><span class="stag">Flutter</span><span class="stag">iOS</span><span class="stag">Android</span><span class="stag">REST</span></div>
+        <div class="br-readme-hint">↓ Voir les 27 sujets</div>
         <div class="br-bar" style="background:var(--mobile);"></div>
       </div>
-      <div class="br" onclick="openBranch('java','Java Full Stack')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('java-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--java);"></div>
         <div class="br-top"><span class="br-ico">🏗️</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--java);">Java Full Stack</div>
         <div class="br-desc">Spring Boot, Angular, PostgreSQL, MongoDB, Jenkins, SonarQube. Apps enterprise scalables.</div>
         <div class="br-stack"><span class="stag">Spring Boot</span><span class="stag">Angular</span><span class="stag">PostgreSQL</span><span class="stag">MongoDB</span><span class="stag">Jenkins</span></div>
+        <div class="br-readme-hint">↓ Voir les 49 exercices &amp; 11 projets</div>
         <div class="br-bar" style="background:var(--java);"></div>
       </div>
-      <div class="br" onclick="openBranch('games','Video Games — Unreal Engine 5')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('gaming-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--games);"></div>
         <div class="br-top"><span class="br-ico">🎮</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--games);">Video Games — Unreal Engine 5</div>
         <div class="br-desc">Game design et development avec UE5 (Epic Games). Blueprints, C++, 3D, physique, animations.</div>
         <div class="br-stack"><span class="stag">Unreal Engine 5</span><span class="stag">C++</span><span class="stag">Blueprints</span><span class="stag">3D</span></div>
+        <div class="br-readme-hint">↓ Voir les 11 projets UE5</div>
         <div class="br-bar" style="background:var(--games);"></div>
       </div>
-      <div class="br" onclick="openBranch('UX-UI','User Experience UX/UI')" style="cursor:pointer;">
+      <div class="br" onclick="document.getElementById('uxui-subjects').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">
         <div class="br-glow" style="background:var(--ux);"></div>
         <div class="br-top"><span class="br-ico">✨</span><span class="br-dur">6 mois</span></div>
         <div class="br-name" style="color:var(--ux);">User Experience UX/UI</div>
         <div class="br-desc">UX Research, wireframing, prototypage haute fidélité, Design System, tests utilisateurs.</div>
         <div class="br-stack"><span class="stag">Figma</span><span class="stag">UX Research</span><span class="stag">Prototyping</span><span class="stag">Design System</span></div>
+        <div class="br-readme-hint">↓ Voir les 49 exercices &amp; 4 projets</div>
         <div class="br-bar" style="background:var(--ux);"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AI SUBJECTS ── -->
+<section class="sec" id="ai-subjects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag" style="color:var(--ai);border-color:rgba(162,89,255,.3);">AI</span>
+      <h2 class="sec-title">Branch AI — 26 Sujets</h2>
+      <span class="sec-sub" style="color:var(--ai);">Migrés vers public/subjects/ai/</span>
+    </div>
+    <div class="quests rev">
+      <div class="quest open">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ai);">ML/DS</span>
+          <span class="q-title">Machine Learning &amp; Data Science</span>
+          <span class="q-notion">Pandas · Sklearn · Stats · Viz</span>
+          <span class="q-count">13 sujets</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ai)">
+          <div class="ex" onclick="openAiSubject('numpy')"><span class="ex-n">numpy</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('pandas')"><span class="ex-n">pandas</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('data-wrangling')"><span class="ex-n">data-wrangling</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('visualizations')"><span class="ex-n">visualizations</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('linear-regression')"><span class="ex-n">linear-regression</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('classification')"><span class="ex-n">classification</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('model-selection')"><span class="ex-n">model-selection</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('pipeline')"><span class="ex-n">pipeline</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('forest-prediction')"><span class="ex-n">forest-prediction</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('credit-scoring')"><span class="ex-n">credit-scoring</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('training')"><span class="ex-n">training</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('matrix-factorization')"><span class="ex-n">matrix-factorization</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('spectral-learning')"><span class="ex-n">spectral-learning</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest open">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ai);">DL</span>
+          <span class="q-title">Deep Learning &amp; Neural Networks</span>
+          <span class="q-notion">Keras · TF · CNN · Vision</span>
+          <span class="q-count">5 sujets</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ai)">
+          <div class="ex" onclick="openAiSubject('keras')"><span class="ex-n">keras</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('keras-2')"><span class="ex-n">keras-2</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('neural-networks')"><span class="ex-n">neural-networks</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('vision-track')"><span class="ex-n">vision-track</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('emotions-detector')"><span class="ex-n">emotions-detector</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest open">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ai);">NLP</span>
+          <span class="q-title">NLP, Finance &amp; Séries temporelles</span>
+          <span class="q-notion">spaCy · NLTK · Time series · S&amp;P500</span>
+          <span class="q-count">8 sujets</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ai)">
+          <div class="ex" onclick="openAiSubject('nlp')"><span class="ex-n">nlp</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('nlp-scraper')"><span class="ex-n">nlp-scraper</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('nlp-spacy')"><span class="ex-n">nlp-spacy</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('document-categorization')"><span class="ex-n">document-categorization</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('time-series')"><span class="ex-n">time-series</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('kaggle-titanic')"><span class="ex-n">kaggle-titanic</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('backtesting-sp500')"><span class="ex-n">backtesting-sp500</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openAiSubject('sp500-strategies')"><span class="ex-n">sp500-strategies</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── JAVA BRANCH ── -->
+<section class="sec" id="java-subjects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag" style="color:var(--java);border-color:rgba(230,149,0,.3);">Java</span>
+      <h2 class="sec-title">Branch Java Full Stack — Piscine &amp; Projets</h2>
+      <span class="sec-sub">60+ exercices · 11 projets · public/subjects/java/</span>
+    </div>
+    <div class="quests rev">
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--java);">Piscine</span>
+          <span class="q-title">Fondamentaux — Chaînes, Nombres &amp; OOP de base</span>
+          <span class="q-notion">HelloWorld · Strings · Arithmetic · IsEven</span>
+          <span class="q-count">11 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--java)">
+          <div class="ex" onclick="openSubject('java/piscine/HelloWorld')"><span class="ex-n">HelloWorld</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StringConcat')"><span class="ex-n">StringConcat</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StringLength')"><span class="ex-n">StringLength</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StringContains')"><span class="ex-n">StringContains</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StringReplace')"><span class="ex-n">StringReplace</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/IntOperations')"><span class="ex-n">IntOperations</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/FloatOperations')"><span class="ex-n">FloatOperations</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/IsEven')"><span class="ex-n">IsEven</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/Capitalize')"><span class="ex-n">Capitalize</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/Palindrome')"><span class="ex-n">Palindrome</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/SortArgs')"><span class="ex-n">SortArgs</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--java);">Piscine</span>
+          <span class="q-title">POO — Classes, Héritage &amp; Star System</span>
+          <span class="q-notion">Classes · Inheritance · Override · Constructors</span>
+          <span class="q-count">13 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--java)">
+          <div class="ex" onclick="openSubject('java/piscine/Cat')"><span class="ex-n">Cat</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/CatInFile')"><span class="ex-n">CatInFile</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarProperties')"><span class="ex-n">StarProperties</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarGetters')"><span class="ex-n">StarGetters</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarConstructors')"><span class="ex-n">StarConstructors</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarStatic')"><span class="ex-n">StarStatic</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarMass')"><span class="ex-n">StarMass</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarPlanet')"><span class="ex-n">StarPlanet</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarUtils')"><span class="ex-n">StarUtils</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarGalaxy')"><span class="ex-n">StarGalaxy</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarInheritance')"><span class="ex-n">StarInheritance</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StarOverride')"><span class="ex-n">StarOverride</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/Chifoumi')"><span class="ex-n">Chifoumi</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--java);">Piscine</span>
+          <span class="q-title">Collections, Generics &amp; Streams</span>
+          <span class="q-notion">List · Map · Set · Stream API · Lambda</span>
+          <span class="q-count">10 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--java)">
+          <div class="ex" onclick="openSubject('java/piscine/ListContains')"><span class="ex-n">ListContains</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/ListEquals')"><span class="ex-n">ListEquals</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/ListSearchIndex')"><span class="ex-n">ListSearchIndex</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/MapEquals')"><span class="ex-n">MapEquals</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/MapInventory')"><span class="ex-n">MapInventory</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/SetEquals')"><span class="ex-n">SetEquals</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/SetOperations')"><span class="ex-n">SetOperations</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StreamCollect')"><span class="ex-n">StreamCollect</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StreamMap')"><span class="ex-n">StreamMap</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/StreamReduce')"><span class="ex-n">StreamReduce</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--java);">Piscine</span>
+          <span class="q-title">Design Patterns — GoF Classiques</span>
+          <span class="q-notion">Builder · Factory · Observer · Singleton · Strategy</span>
+          <span class="q-count">6 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--java)">
+          <div class="ex" onclick="openSubject('java/piscine/Builder')"><span class="ex-n">Builder</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/Decorator')"><span class="ex-n">Decorator</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/Factory')"><span class="ex-n">Factory</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/Observer')"><span class="ex-n">Observer</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/Singleton')"><span class="ex-n">Singleton</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/Strategy')"><span class="ex-n">Strategy</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--java);">Piscine</span>
+          <span class="q-title">Adventure Series — RPG en Java</span>
+          <span class="q-notion">Abstract · Interface · Exception · Polymorphism</span>
+          <span class="q-count">9 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--java)">
+          <div class="ex" onclick="openSubject('java/piscine/AdventureCharacter')"><span class="ex-n">AdventureCharacter</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/AdventureAbstract')"><span class="ex-n">AdventureAbstract</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/AdventureInterface')"><span class="ex-n">AdventureInterface</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/AdventureWeapon')"><span class="ex-n">AdventureWeapon</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/AdventureMonster')"><span class="ex-n">AdventureMonster</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/AdventureSorcerer')"><span class="ex-n">AdventureSorcerer</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/AdventureTemplar')"><span class="ex-n">AdventureTemplar</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/AdventureException')"><span class="ex-n">AdventureException</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/piscine/AdventureCatch')"><span class="ex-n">AdventureCatch</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--java);">Projets</span>
+          <span class="q-title">Projets Branch Java Full Stack</span>
+          <span class="q-notion">Spring Boot · Angular · MongoDB · Jenkins · Neo4j</span>
+          <span class="q-count">11 projets</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--java)">
+          <div class="ex" onclick="openSubject('java/projects/sharpen-it')"><span class="ex-n">sharpen-it</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/buy-01')"><span class="ex-n">buy-01</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/buy-02')"><span class="ex-n">buy-02</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/angul-it')"><span class="ex-n">angul-it</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/mr-jenk')"><span class="ex-n">mr-jenk</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/lets-travel')"><span class="ex-n">lets-travel</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/travel-plan')"><span class="ex-n">travel-plan</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/neo4flix')"><span class="ex-n">neo4flix</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/nexus')"><span class="ex-n">nexus</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/safe-zone')"><span class="ex-n">safe-zone</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('java/projects/lets-play')"><span class="ex-n">lets-play</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEVOPS BRANCH ── -->
+<section class="sec" id="devops-subjects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag" style="color:var(--devops);border-color:rgba(0,229,192,.3);">DevOps</span>
+      <h2 class="sec-title">Branch Cloud DevOps — Exercices &amp; Projets</h2>
+      <span class="sec-sub">79 exercices · public/subjects/devops/</span>
+    </div>
+    <div class="quests rev">
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--devops);">Bases</span>
+          <span class="q-title">Shell — Fondamentaux, Fichiers &amp; Permissions</span>
+          <span class="q-notion">Bash · Permissions · Env · File I/O</span>
+          <span class="q-count">28 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--devops)">
+          <div class="ex" onclick="openSubject('devops/hello-devops')"><span class="ex-n">hello-devops</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/append-output')"><span class="ex-n">append-output</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/array-selector')"><span class="ex-n">array-selector</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/better-cat')"><span class="ex-n">better-cat</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/burial')"><span class="ex-n">burial</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/calculator')"><span class="ex-n">calculator</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/comparator')"><span class="ex-n">comparator</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/concat-string')"><span class="ex-n">concat-string</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/count-files')"><span class="ex-n">count-files</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/details')"><span class="ex-n">details</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/dir-info')"><span class="ex-n">dir-info</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/division')"><span class="ex-n">division</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/easy-conditions')"><span class="ex-n">easy-conditions</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/easy-perm')"><span class="ex-n">easy-perm</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/env-format')"><span class="ex-n">env-format</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/file-checker')"><span class="ex-n">file-checker</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/file-details')"><span class="ex-n">file-details</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/file-struct')"><span class="ex-n">file-struct</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/hard-conditions')"><span class="ex-n">hard-conditions</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/hard-perm')"><span class="ex-n">hard-perm</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/head-and-tail')"><span class="ex-n">head-and-tail</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/set-env-vars')"><span class="ex-n">set-env-vars</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/set-internal-vars')"><span class="ex-n">set-internal-vars</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/skip-lines')"><span class="ex-n">skip-lines</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/skip-secrets')"><span class="ex-n">skip-secrets</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/write-file')"><span class="ex-n">write-file</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/read-file')"><span class="ex-n">read-file</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/strange-files')"><span class="ex-n">strange-files</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--devops);">Avancé</span>
+          <span class="q-title">Shell avancé — Scripts, Processus &amp; JSON</span>
+          <span class="q-notion">Jobs · Background · find · JSON · Parsing</span>
+          <span class="q-count">25 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--devops)">
+          <div class="ex" onclick="openSubject('devops/auto-exec-bin')"><span class="ex-n">auto-exec-bin</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/auto-jobs')"><span class="ex-n">auto-jobs</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/backup_manager')"><span class="ex-n">backup_manager</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/bin-status')"><span class="ex-n">bin-status</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/change-struct')"><span class="ex-n">change-struct</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/check-user')"><span class="ex-n">check-user</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/find-files')"><span class="ex-n">find-files</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/find-files-extension')"><span class="ex-n">find-files-extension</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/file-researcher')"><span class="ex-n">file-researcher</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/grades')"><span class="ex-n">grades</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/greatest-of-all')"><span class="ex-n">greatest-of-all</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/in-back-ground')"><span class="ex-n">in-back-ground</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/in-the-dark')"><span class="ex-n">in-the-dark</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/input-redirection')"><span class="ex-n">input-redirection</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/job-regist')"><span class="ex-n">job-regist</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/joker-num')"><span class="ex-n">joker-num</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/json-researcher')"><span class="ex-n">json-researcher</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/object-to-json')"><span class="ex-n">object-to-json</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/string-processing')"><span class="ex-n">string-processing</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/string-tokenizer-count')"><span class="ex-n">string-tokenizer-count</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/technical-file')"><span class="ex-n">technical-file</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/custom-ls')"><span class="ex-n">custom-ls</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/custom-calendar')"><span class="ex-n">custom-calendar</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/numerical-operations')"><span class="ex-n">numerical-operations</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/numerical-operations-the-return')"><span class="ex-n">numerical-operations-the-return</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--devops);">Cloud</span>
+          <span class="q-title">Cloud &amp; Conteneurs — DevOps avancé</span>
+          <span class="q-notion">Docker · Kubernetes · CI/CD · IaC · Serverless</span>
+          <span class="q-count">16 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--devops)">
+          <div class="ex" onclick="openSubject('devops/cloud-design')"><span class="ex-n">cloud-design</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/cloud-kube')"><span class="ex-n">cloud-kube</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/cloud-press')"><span class="ex-n">cloud-press</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/easy-cloud')"><span class="ex-n">easy-cloud</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/crud-master')"><span class="ex-n">crud-master</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/crud-master-py')"><span class="ex-n">crud-master-py</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/deep-in-net')"><span class="ex-n">deep-in-net</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/deep-in-system')"><span class="ex-n">deep-in-system</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/orchestrator')"><span class="ex-n">orchestrator</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/play-with-containers')"><span class="ex-n">play-with-containers</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/road-to-ccp')"><span class="ex-n">road-to-ccp</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/road-to-dofd')"><span class="ex-n">road-to-dofd</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/serverless')"><span class="ex-n">serverless</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/hello-python')"><span class="ex-n">hello-python</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/candidates-checker')"><span class="ex-n">candidates-checker</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('devops/credentials-searches')"><span class="ex-n">credentials-searches</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CYBERSECURITY BRANCH ── -->
+<section class="sec" id="cyber-subjects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag" style="color:var(--cyber);border-color:rgba(255,60,60,.3);">Cyber</span>
+      <h2 class="sec-title">Branch Cybersecurity — Sujets</h2>
+      <span class="sec-sub">20 sujets · public/subjects/cybersecurity/</span>
+    </div>
+    <div class="quests rev">
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--cyber);">Recon</span>
+          <span class="q-title">Reconnaissance &amp; OSINT</span>
+          <span class="q-notion">Passive · Active · OSINT</span>
+          <span class="q-count">3 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--cyber)">
+          <div class="ex" onclick="openSubject('cybersecurity/active')"><span class="ex-n">active</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/passive')"><span class="ex-n">passive</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/osint-master')"><span class="ex-n">osint-master</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--cyber);">Exploit</span>
+          <span class="q-title">Exploitation &amp; Pentest</span>
+          <span class="q-notion">Injection · Privilege escalation · Web hacking</span>
+          <span class="q-count">9 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--cyber)">
+          <div class="ex" onclick="openSubject('cybersecurity/defuse')"><span class="ex-n">defuse</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/escalator')"><span class="ex-n">escalator</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/evasion')"><span class="ex-n">evasion</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/hole-in-bin')"><span class="ex-n">hole-in-bin</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/injector')"><span class="ex-n">injector</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/local')"><span class="ex-n">local</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/pentest-kit')"><span class="ex-n">pentest-kit</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/vuln-hunter')"><span class="ex-n">vuln-hunter</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/web-hack')"><span class="ex-n">web-hack</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--cyber);">Forensics</span>
+          <span class="q-title">Forensics, Malware &amp; Obfuscation</span>
+          <span class="q-notion">Reverse · Malware analysis · Ransomware · Steganography</span>
+          <span class="q-count">8 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--cyber)">
+          <div class="ex" onclick="openSubject('cybersecurity/hidden-bytes')"><span class="ex-n">hidden-bytes</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/image-inspector')"><span class="ex-n">image-inspector</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/inspector-image')"><span class="ex-n">inspector-image</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/mal-track')"><span class="ex-n">mal-track</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/malware')"><span class="ex-n">malware</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/merge')"><span class="ex-n">merge</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/obfuscator')"><span class="ex-n">obfuscator</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('cybersecurity/ransomware-lab')"><span class="ex-n">ransomware-lab</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MOBILE BRANCH ── -->
+<section class="sec" id="mobile-subjects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag" style="color:var(--mobile);border-color:rgba(76,158,255,.3);">Mobile</span>
+      <h2 class="sec-title">Branch Mobile — Dart &amp; Flutter</h2>
+      <span class="sec-sub">27 sujets · public/subjects/mobile-dev/</span>
+    </div>
+    <div class="quests rev">
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--mobile);">Intro</span>
+          <span class="q-title">Fondamentaux Dart &amp; Flutter</span>
+          <span class="q-notion">Variables · Types · Null safety · Packages</span>
+          <span class="q-count">11 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--mobile)">
+          <div class="ex" onclick="openSubject('mobile-dev/intro')"><span class="ex-n">intro</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/variables')"><span class="ex-n">variables</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/person')"><span class="ex-n">person</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/plain-sum')"><span class="ex-n">plain-sum</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/optional-sum')"><span class="ex-n">optional-sum</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/named-optional-sum')"><span class="ex-n">named-optional-sum</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/named-required-sum')"><span class="ex-n">named-required-sum</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/package')"><span class="ex-n">package</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/student')"><span class="ex-n">student</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/university')"><span class="ex-n">university</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/data-structures')"><span class="ex-n">data-structures</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--mobile);">Apps</span>
+          <span class="q-title">Applications Flutter — UI, REST &amp; Fonctionnalités</span>
+          <span class="q-notion">Widgets · State · BLoC · REST · Maps · Chat</span>
+          <span class="q-count">16 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--mobile)">
+          <div class="ex" onclick="openSubject('mobile-dev/bizz-card')"><span class="ex-n">bizz-card</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/bouncer')"><span class="ex-n">bouncer</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/bloc-counter')"><span class="ex-n">bloc-counter</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/chess')"><span class="ex-n">chess</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/circle')"><span class="ex-n">circle</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/favorite-images')"><span class="ex-n">favorite-images</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/hacker-news')"><span class="ex-n">hacker-news</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/kaquiz')"><span class="ex-n">kaquiz</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/map-markers')"><span class="ex-n">map-markers</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/max-num')"><span class="ex-n">max-num</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/movie-list')"><span class="ex-n">movie-list</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/quizz-app')"><span class="ex-n">quizz-app</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/secure-messenger')"><span class="ex-n">secure-messenger</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/secure-notes')"><span class="ex-n">secure-notes</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/sky-map')"><span class="ex-n">sky-map</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('mobile-dev/stock-market')"><span class="ex-n">stock-market</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GAMING BRANCH ── -->
+<section class="sec" id="gaming-subjects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag" style="color:var(--games);border-color:rgba(255,212,59,.3);">Games</span>
+      <h2 class="sec-title">Branch Video Games — Unreal Engine 5</h2>
+      <span class="sec-sub">11 sujets · public/subjects/gaming/</span>
+    </div>
+    <div class="quests rev">
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--games);">UE5</span>
+          <span class="q-title">Projets Unreal Engine 5 — C++ &amp; Blueprints</span>
+          <span class="q-notion">UE5 · C++ · Physics · VR · Multiplayer · AI</span>
+          <span class="q-count">11 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--games)">
+          <div class="ex" onclick="openSubject('gaming/widget-factory')"><span class="ex-n">widget-factory</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/the-pages')"><span class="ex-n">the-pages</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/vehicle-physics')"><span class="ex-n">vehicle-physics</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/firing-range')"><span class="ex-n">firing-range</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/army-of-one')"><span class="ex-n">army-of-one</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/jumpo')"><span class="ex-n">jumpo</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/stealth-boom')"><span class="ex-n">stealth-boom</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/nascar-online-alpha')"><span class="ex-n">nascar-online-alpha</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/zombie-ai')"><span class="ex-n">zombie-ai</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/mouse-vr')"><span class="ex-n">mouse-vr</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('gaming/2-5-d-adventure')"><span class="ex-n">2-5-d-adventure</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── UX-UI BRANCH ── -->
+<section class="sec" id="uxui-subjects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag" style="color:var(--ux);border-color:rgba(255,110,180,.3);">UX/UI</span>
+      <h2 class="sec-title">Branch User Experience — UX &amp; UI Design</h2>
+      <span class="sec-sub">49 exercices + 4 projets · UX-UI/subjects/</span>
+    </div>
+    <div class="quests rev">
+
+      <!-- UX subjects -->
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UX</span>
+          <span class="q-title">The Olympics — Idéation, Prototype &amp; Test</span>
+          <span class="q-notion">Ideation · Prototyping · User-flow · Animation</span>
+          <span class="q-count">7 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ux/the-olympics/ideation-a')"><span class="ex-n">ideation-a</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/the-olympics/ideation-b')"><span class="ex-n">ideation-b</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/the-olympics/ideation-c')"><span class="ex-n">ideation-c</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/the-olympics/animation')"><span class="ex-n">animation</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/the-olympics/prototyping')"><span class="ex-n">prototyping</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/the-olympics/test')"><span class="ex-n">test</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/the-olympics/user-flow')"><span class="ex-n">user-flow</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UX</span>
+          <span class="q-title">Music On — JTBD, Card Sorting &amp; Wireframes</span>
+          <span class="q-notion">Card-sorting · JTBD · Site-map · Wireframes</span>
+          <span class="q-count">7 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ux/music-on/jtbd')"><span class="ex-n">jtbd</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/music-on/card-sorting')"><span class="ex-n">card-sorting</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/music-on/heuristics')"><span class="ex-n">heuristics</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/music-on/site-map')"><span class="ex-n">site-map</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/music-on/test-protocol')"><span class="ex-n">test-protocol</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/music-on/run-5-tests')"><span class="ex-n">run-5-tests</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/music-on/wireframes')"><span class="ex-n">wireframes</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UX</span>
+          <span class="q-title">Seamstress — Empathy, Définir &amp; Prototype</span>
+          <span class="q-notion">Empathy map · Problem statement · Prototype</span>
+          <span class="q-count">7 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ux/seamstress/ux-strategy')"><span class="ex-n">ux-strategy</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/seamstress/empathy')"><span class="ex-n">empathy</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/seamstress/define')"><span class="ex-n">define</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/seamstress/ideation')"><span class="ex-n">ideation</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/seamstress/problem-statement')"><span class="ex-n">problem-statement</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/seamstress/prototype')"><span class="ex-n">prototype</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/seamstress/test')"><span class="ex-n">test</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UX</span>
+          <span class="q-title">Sunday Night Movie — Wireframes &amp; Tests</span>
+          <span class="q-notion">User-flow · Wireframes · Feature testing · Iteration</span>
+          <span class="q-count">7 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ux/sunday-night-movie/user-flow')"><span class="ex-n">user-flow</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/sunday-night-movie/wireframes')"><span class="ex-n">wireframes</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/sunday-night-movie/test-feature-1')"><span class="ex-n">test-feature-1</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/sunday-night-movie/test-feature-2')"><span class="ex-n">test-feature-2</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/sunday-night-movie/test-feature-3')"><span class="ex-n">test-feature-3</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/sunday-night-movie/iteration')"><span class="ex-n">iteration</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/sunday-night-movie/wireframes-animation')"><span class="ex-n">wireframes-animation</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UX</span>
+          <span class="q-title">Athele Keep Hydrated — Recherche &amp; Personas</span>
+          <span class="q-notion">User-interviews · Personas · Analytics · Journey</span>
+          <span class="q-count">7 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ux/athele-keep-hydrated/user-interviews')"><span class="ex-n">user-interviews</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/athele-keep-hydrated/analytics')"><span class="ex-n">analytics</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/athele-keep-hydrated/personas')"><span class="ex-n">personas</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/athele-keep-hydrated/problem-statement')"><span class="ex-n">problem-statement</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/athele-keep-hydrated/ideation')"><span class="ex-n">ideation</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/athele-keep-hydrated/user-journey')"><span class="ex-n">user-journey</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/athele-keep-hydrated/prototyping')"><span class="ex-n">prototyping</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UX</span>
+          <span class="q-title">Going on Holidays — Interviews &amp; Affinity</span>
+          <span class="q-notion">Interview guide · Affinity diagram · Prototyping</span>
+          <span class="q-count">7 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ux/going-on-holidays-with-friends/interview-guide')"><span class="ex-n">interview-guide</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/going-on-holidays-with-friends/run-interviews')"><span class="ex-n">run-interviews</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/going-on-holidays-with-friends/affinity-diagram')"><span class="ex-n">affinity-diagram</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/going-on-holidays-with-friends/problem-statement')"><span class="ex-n">problem-statement</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/going-on-holidays-with-friends/ideation')"><span class="ex-n">ideation</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/going-on-holidays-with-friends/user-flow')"><span class="ex-n">user-flow</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/going-on-holidays-with-friends/prototyping')"><span class="ex-n">prototyping</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UX</span>
+          <span class="q-title">Let's Fight Harassment — Recherche &amp; Stratégie</span>
+          <span class="q-notion">Surveys · Interviews · Personas · Broadcast strategy</span>
+          <span class="q-count">7 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ux/lets-fight-harassment/competitive-analyss')"><span class="ex-n">competitive-analyss</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/lets-fight-harassment/surveys')"><span class="ex-n">surveys</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/lets-fight-harassment/interviews')"><span class="ex-n">interviews</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/lets-fight-harassment/personas')"><span class="ex-n">personas</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/lets-fight-harassment/problem-statement')"><span class="ex-n">problem-statement</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/lets-fight-harassment/user-journey')"><span class="ex-n">user-journey</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ux/lets-fight-harassment/broadcast-stategy')"><span class="ex-n">broadcast-stategy</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <!-- UI subjects -->
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UI</span>
+          <span class="q-title">Colors &amp; Moodboard — Couleurs, Typo &amp; UI Challenges</span>
+          <span class="q-notion">Color theory · Typography · Moodboard · UI challenge</span>
+          <span class="q-count">11 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/color-codes')"><span class="ex-n">color-codes</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/color-combinations')"><span class="ex-n">color-combinations</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/find-the-colors')"><span class="ex-n">find-the-colors</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/typography')"><span class="ex-n">typography</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/typography-moodboard')"><span class="ex-n">typography-moodboard</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/moodboard')"><span class="ex-n">moodboard</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/ui-challenge-timer')"><span class="ex-n">ui-challenge-timer</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/ui-challenge-spotify')"><span class="ex-n">ui-challenge-spotify</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/ui-challenge-flight')"><span class="ex-n">ui-challenge-flight</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/ui-challenge-bitcoin-dashboard')"><span class="ex-n">ui-challenge-bitcoin-dashboard</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/colors-and-moodboard/ui-challenge-watches')"><span class="ex-n">ui-challenge-watches</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UI</span>
+          <span class="q-title">Rules — Accessibilité, Grilles &amp; Micro-interactions</span>
+          <span class="q-notion">Grids · Consistency · A11y · Toggle · Time-pickers</span>
+          <span class="q-count">11 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ui/rules/grids')"><span class="ex-n">grids</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/consistency')"><span class="ex-n">consistency</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/breadcrumbs')"><span class="ex-n">breadcrumbs</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/radio-buttons')"><span class="ex-n">radio-buttons</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/toggle-buttons')"><span class="ex-n">toggle-buttons</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/time-pickers')"><span class="ex-n">time-pickers</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/calendars')"><span class="ex-n">calendars</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/micro-interactions')"><span class="ex-n">micro-interactions</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/multi-state')"><span class="ex-n">multi-state</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/accessbility-website')"><span class="ex-n">accessbility-website</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/rules/accessbility-app')"><span class="ex-n">accessbility-app</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UI</span>
+          <span class="q-title">Heuristics — Évaluation &amp; Recommandations</span>
+          <span class="q-notion">Nielsen heuristics · Recommendations · Audit</span>
+          <span class="q-count">2 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ui/heuristics/audit')"><span class="ex-n">audit</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/heuristics/recommendations')"><span class="ex-n">recommendations</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UI</span>
+          <span class="q-title">Atomic Design — Design System &amp; Composants</span>
+          <span class="q-notion">Atoms · Molecules · Organisms · Design system</span>
+          <span class="q-count">5 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ui/atomic-design/browsing')"><span class="ex-n">browsing</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/atomic-design/material-design')"><span class="ex-n">material-design</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/atomic-design/design-system-library')"><span class="ex-n">design-system-library</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/atomic-design/library-for-a-dating-app')"><span class="ex-n">library-for-a-dating-app</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/atomic-design/library-for-climbing-addicts')"><span class="ex-n">library-for-climbing-addicts</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">UI</span>
+          <span class="q-title">Building an Interface — Styleguide &amp; Screens</span>
+          <span class="q-notion">Styleguide · Design screens · Animation · Desirability</span>
+          <span class="q-count">5 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('ui/building-an-interface/styleguide')"><span class="ex-n">styleguide</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/building-an-interface/design-screens')"><span class="ex-n">design-screens</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/building-an-interface/desirability-testing')"><span class="ex-n">desirability-testing</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/building-an-interface/animation')"><span class="ex-n">animation</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('ui/building-an-interface/design-system-library')"><span class="ex-n">design-system-library</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--ux);">Projets</span>
+          <span class="q-title">Projets UX/UI — Prototypes haute fidélité</span>
+          <span class="q-notion">Figma · User testing · Pitch deck · Full UX+UI cycle</span>
+          <span class="q-count">4×2 parties</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--ux)">
+          <div class="ex" onclick="openUxSubject('project-a-table/ux')"><span class="ex-n">a-table — UX</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('project-a-table/ui')"><span class="ex-n">a-table — UI</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('project-get-a-room/ux')"><span class="ex-n">get-a-room — UX</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('project-get-a-room/ui')"><span class="ex-n">get-a-room — UI</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('project-lets-do-some-sports/ux')"><span class="ex-n">lets-do-sports — UX</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('project-lets-do-some-sports/ui')"><span class="ex-n">lets-do-sports — UI</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('project-lets-fair-trade/ux')"><span class="ex-n">lets-fair-trade — UX</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openUxSubject('project-lets-fair-trade/ui')"><span class="ex-n">lets-fair-trade — UI</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── BLOCKCHAIN BRANCH ── -->
+<section class="sec" id="blockchain-subjects">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag" style="color:var(--blockchain);border-color:rgba(255,140,66,.3);">Blockchain</span>
+      <h2 class="sec-title">Branch Blockchain &amp; Crypto — 49 Sujets</h2>
+      <span class="sec-sub">Wallets · Smart Contracts · DeFi · NFTs · public/subjects/blockchain/</span>
+    </div>
+    <div class="quests rev">
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--blockchain);">Wallets</span>
+          <span class="q-title">Wallets, Cryptographie &amp; Hashing</span>
+          <span class="q-notion">Addresses · Keys · Signatures · SHA256 · BTC</span>
+          <span class="q-count">9 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--blockchain)">
+          <div class="ex" onclick="openSubject('blockchain/generate-address')"><span class="ex-n">generate-address</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/random-wallet')"><span class="ex-n">random-wallet</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/get-account')"><span class="ex-n">get-account</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/hash-160')"><span class="ex-n">hash-160</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/hash-file')"><span class="ex-n">hash-file</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/send-hash')"><span class="ex-n">send-hash</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/semi-brute')"><span class="ex-n">semi-brute</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/sign-service')"><span class="ex-n">sign-service</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/signer')"><span class="ex-n">signer</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--blockchain);">Tx</span>
+          <span class="q-title">Transactions &amp; Nodes Ethereum</span>
+          <span class="q-notion">ETH · gas · RPC · Infura · tx history</span>
+          <span class="q-count">13 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--blockchain)">
+          <div class="ex" onclick="openSubject('blockchain/local-node')"><span class="ex-n">local-node</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/local-node-info')"><span class="ex-n">local-node-info</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/node-dashboard')"><span class="ex-n">node-dashboard</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/send-eth-transaction')"><span class="ex-n">send-eth-transaction</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/send-ether')"><span class="ex-n">send-ether</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/send-transaction')"><span class="ex-n">send-transaction</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/send-transaction-to-peer')"><span class="ex-n">send-transaction-to-peer</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/retrieve-transaction-value')"><span class="ex-n">retrieve-transaction-value</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/retrieve-transaction-in-out')"><span class="ex-n">retrieve-transaction-in-out</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/retrieve-block-date')"><span class="ex-n">retrieve-block-date</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/tracking-network')"><span class="ex-n">tracking-network</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/transfers-history')"><span class="ex-n">transfers-history</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/exploring-blockchains')"><span class="ex-n">exploring-blockchains</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--blockchain);">Solidity</span>
+          <span class="q-title">Smart Contracts Solidity — Bases &amp; Events</span>
+          <span class="q-notion">EVM · Hardhat · Remix · ABI · Structs</span>
+          <span class="q-count">11 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--blockchain)">
+          <div class="ex" onclick="openSubject('blockchain/increment')"><span class="ex-n">increment</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/basic-swap')"><span class="ex-n">basic-swap</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/basic-wallet')"><span class="ex-n">basic-wallet</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/connect-to-metamask')"><span class="ex-n">connect-to-metamask</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/check-document')"><span class="ex-n">check-document</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/register')"><span class="ex-n">register</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/register-with-events')"><span class="ex-n">register-with-events</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/time-and-place')"><span class="ex-n">time-and-place</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/time-is-money')"><span class="ex-n">time-is-money</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/payment-channel')"><span class="ex-n">payment-channel</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/donation')"><span class="ex-n">donation</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--blockchain);">Tokens</span>
+          <span class="q-title">Tokens &amp; NFTs — ERC-20 / ERC-721</span>
+          <span class="q-notion">ERC-20 · NFT · Events · Token sale · Marketplace</span>
+          <span class="q-count">9 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--blockchain)">
+          <div class="ex" onclick="openSubject('blockchain/minimal-token')"><span class="ex-n">minimal-token</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/usable-token')"><span class="ex-n">usable-token</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/token-sale')"><span class="ex-n">token-sale</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/eventful-token')"><span class="ex-n">eventful-token</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/non-fungible-cats')"><span class="ex-n">non-fungible-cats</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/nft-marketplace')"><span class="ex-n">nft-marketplace</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/named-festival')"><span class="ex-n">named-festival</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/organized-festival')"><span class="ex-n">organized-festival</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/lineup')"><span class="ex-n">lineup</span><span class="ex-view-icon">⊞</span></div>
+        </div>
+      </div>
+      <div class="quest">
+        <div class="q-head" onclick="tog(this)">
+          <span class="q-num" style="color:var(--blockchain);">DeFi</span>
+          <span class="q-title">DeFi &amp; Protocoles avancés</span>
+          <span class="q-notion">AMM · Liquidity · Yield · Financial instruments</span>
+          <span class="q-count">7 ex</span>
+          <span class="q-tog">▾</span>
+        </div>
+        <div class="q-body" style="--ex-c:var(--blockchain)">
+          <div class="ex" onclick="openSubject('blockchain/buy-tickets')"><span class="ex-n">buy-tickets</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/fun-and-profit')"><span class="ex-n">fun-and-profit</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/artists-do-work')"><span class="ex-n">artists-do-work</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/decentralized-finance')"><span class="ex-n">decentralized-finance</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/financial-instruments')"><span class="ex-n">financial-instruments</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/read-secret')"><span class="ex-n">read-secret</span><span class="ex-view-icon">⊞</span></div>
+          <div class="ex" onclick="openSubject('blockchain/connect-to-metamask')"><span class="ex-n">connect-to-metamask</span><span class="ex-view-icon">⊞</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1049,7 +1956,7 @@
 <!-- ── TOOLS / MOULINETTE ── -->
 <section class="sec" id="tools">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-tag">04</span><h2 class="sec-title">Outils de test — La moulinette Zone01</h2><span class="sec-sub">Pas de norminette, mais un système complet</span></div>
+    <div class="sec-head"><span class="sec-tag">05</span><h2 class="sec-title">Outils de test — La moulinette Zone01</h2><span class="sec-sub">Pas de norminette, mais un système complet</span></div>
 
     <div class="tools-grid rev">
 
@@ -1064,8 +1971,15 @@
           <span class="tool-badge" style="color:var(--go);border-color:rgba(0,172,215,.3);">★ 47</span>
         </div>
         <p class="tool-desc">La moulinette principale de la <strong>piscine Go</strong>. Image Docker contenant tous les tests unitaires pour chaque exercice. Le test passe silencieusement si correct, affiche des erreurs sinon — exactement comme la Norminette de 42.</p>
+        <div class="tool-get" onclick="event.stopPropagation()">
+          <div class="tool-get-title">⬇ Télécharger &amp; Installer</div>
+          <div class="tool-cmd">git clone https://github.com/Tednoob17/zone-01</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">cd zone-01/01-edu-repos/go-tests</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">docker build -t go_tests .</div>
+          <a class="tool-dl-btn" href="https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/go-tests" target="_blank" onclick="event.stopPropagation()">↗ Voir dans ce dépôt</a>
+        </div>
         <div class="tool-usage">
-          <div class="tool-usage-title">Commandes locales</div>
+          <div class="tool-usage-title">Utilisation</div>
           <div class="tool-cmd">./test_one.sh isnegative</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_all.sh</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_with_docker.sh [EX] [PATH] [ALLOWED_FN]*</div>
@@ -1083,10 +1997,17 @@
           <span class="tool-badge" style="color:var(--rust);border-color:rgba(247,76,0,.3);">★ 5</span>
         </div>
         <p class="tool-desc">Equivalent du go-tests pour la <strong>piscine Rust</strong>. Image Docker hébergeant les tests de chaque exercice Rust. Même fonctionnement : silence = succès, output = échec.</p>
+        <div class="tool-get" onclick="event.stopPropagation()">
+          <div class="tool-get-title">⬇ Télécharger &amp; Installer</div>
+          <div class="tool-cmd">git clone https://github.com/Tednoob17/zone-01</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">cd zone-01/01-edu-repos/rust-tests</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">docker build -t rust_tests .</div>
+          <a class="tool-dl-btn" href="https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/rust-tests" target="_blank" onclick="event.stopPropagation()">↗ Voir dans ce dépôt</a>
+        </div>
         <div class="tool-usage">
-          <div class="tool-usage-title">Même interface que go-tests</div>
-          <div class="tool-cmd">./test_one.sh ownership</div>
-          <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_all.sh</div>
+          <div class="tool-usage-title">Utilisation</div>
+          <div class="tool-cmd">./tests/test_exercises.sh</div>
+          <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./tests/test_exercises.sh -real &nbsp;# env production</div>
         </div>
       </div>
 
@@ -1101,8 +2022,17 @@
           <span class="tool-badge" style="color:var(--accent);border-color:rgba(57,255,143,.3);">Interne</span>
         </div>
         <p class="tool-desc">L'équivalent de la <strong>Norminette côté sécurité</strong> de 42. Analyse les fichiers source Go pour vérifier que seules les fonctions autorisées sont utilisées. Chaque exercice a sa liste de fonctions permises (<code>--allow-builtin</code>).</p>
+        <div class="tool-get" onclick="event.stopPropagation()">
+          <div class="tool-get-title">⬇ Télécharger &amp; Installer</div>
+          <div class="tool-cmd"># Option 1 — build depuis ce dépôt</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">git clone https://github.com/Tednoob17/zone-01</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">cd zone-01/01-edu-repos/rc &amp;&amp; go build -o rc .</div>
+          <div class="tool-cmd" style="margin-top:.6rem;opacity:.7;"># Option 2 — installer avec go</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">go install github.com/01-edu/rc@latest</div>
+          <a class="tool-dl-btn" href="https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/rc" target="_blank" onclick="event.stopPropagation()">↗ Voir dans ce dépôt</a>
+        </div>
         <div class="tool-usage">
-          <div class="tool-usage-title">Utilisé dans test_with_docker.sh</div>
+          <div class="tool-usage-title">Utilisation dans test_with_docker.sh</div>
           <div class="tool-cmd">--allow-builtin github.com/01-edu/z01.PrintRune</div>
           <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">strconv.Atoi os.Args fmt.Println</div>
         </div>
@@ -1119,10 +2049,17 @@
           <span class="tool-badge" style="color:var(--ai);border-color:rgba(162,89,255,.3);">Training</span>
         </div>
         <p class="tool-desc">Version d'entraînement du système de test pour l'équipe pédagogique. Permet d'écrire et tester de nouveaux exercices localement avant de les intégrer sur la plateforme. Même structure que go-tests mais vide de tests.</p>
+        <div class="tool-get" onclick="event.stopPropagation()">
+          <div class="tool-get-title">⬇ Télécharger &amp; Installer</div>
+          <div class="tool-cmd">git clone https://github.com/Tednoob17/zone-01</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">cd zone-01/01-edu-repos/go-tests-training</div>
+          <div class="tool-cmd" style="margin-top:.3rem;">docker build -t go_tests_training .</div>
+          <a class="tool-dl-btn" href="https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/go-tests-training" target="_blank" onclick="event.stopPropagation()">↗ Voir dans ce dépôt</a>
+        </div>
         <div class="tool-usage">
-          <div class="tool-usage-title">Dépôts nécessaires côte à côte</div>
-          <div class="tool-cmd">~/Desktop/piscine-go/</div>
-          <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">~/Desktop/go-tests-training/</div>
+          <div class="tool-usage-title">Utilisation</div>
+          <div class="tool-cmd">./test_one.sh [nom_exercice]</div>
+          <div class="tool-cmd" style="margin-top:.3rem;opacity:.6;">./test_all.sh</div>
         </div>
       </div>
 
@@ -1168,6 +2105,7 @@
   <div class="wrap">
     <div class="foot-inner">
       <span class="foot-txt">Zone01 · Curriculum Map</span>
+      <div class="foot-author">Made by <a href="https://tednoob17.github.io" target="_blank">tednoob17.github.io</a> · <a href="https://github.com/Tednoob17" target="_blank">github.com/Tednoob17</a></div>
       <div class="foot-links">
         <a href="https://01edu.org" target="_blank">01edu.org</a>
         <a href="https://www.youtube.com/channel/UCDmJ2SyrBNWEekOCmheEocQ/playlists" target="_blank">YouTube</a>
@@ -1200,6 +2138,35 @@
     html.setAttribute('data-theme', next);
     localStorage.setItem('z01-theme', next);
     window._reflectThemeUI && window._reflectThemeUI();
+  }
+
+  /* ── SEARCH ── */
+  function doSearch(q) {
+    const term = q.trim().toLowerCase();
+    const countEl = document.getElementById('search-count');
+    if (!term) {
+      document.querySelectorAll('.ex').forEach(el => el.classList.remove('search-hidden'));
+      document.querySelectorAll('.quest').forEach(el => el.classList.remove('search-collapsed'));
+      if (countEl) countEl.textContent = '';
+      return;
+    }
+    let matches = 0;
+    document.querySelectorAll('.quest').forEach(quest => {
+      const exs = quest.querySelectorAll('.ex');
+      let visible = 0;
+      exs.forEach(ex => {
+        const name = (ex.querySelector('.ex-n') || ex).textContent.toLowerCase();
+        if (name.includes(term)) { ex.classList.remove('search-hidden'); visible++; matches++; }
+        else { ex.classList.add('search-hidden'); }
+      });
+      if (visible > 0) {
+        quest.classList.remove('search-collapsed');
+        quest.classList.add('open');
+      } else {
+        quest.classList.add('search-collapsed');
+      }
+    });
+    if (countEl) countEl.textContent = matches ? `${matches} résultat${matches > 1 ? 's' : ''}` : 'aucun résultat';
   }
 
   /* ── QUEST TOGGLE ── */
@@ -1256,16 +2223,18 @@
 
     try {
       let md;
-      try {
-        md = await tryFetch(f.url);
-      } catch(_) {
-        if (f.fallback) {
-          md = await tryFetch(f.fallback);
-        } else {
-          throw _;
-        }
+      const urls = [f.url, ...(Array.isArray(f.fallback) ? f.fallback : f.fallback ? [f.fallback] : [])];
+      let loaded = false;
+      for (const url of urls) {
+        try { md = await tryFetch(url); loaded = true; break; } catch(_) {}
       }
-      if (f.base) md = md.replace(/!\[([^\]]*)\]\((?!http)([^)]+)\)/g, `![$1](${f.base}$2)`);
+      if (!loaded) throw new Error('not found');
+      if (f.base) {
+        md = md.replace(/\?raw=true/g, '');
+        md = md.replace(/!\[([^\]]*)\]\((?!https?:)([^)]+)\)/g, `![$1](${f.base}$2)`);
+        md = md.replace(/<img([^>]*?)\ssrc="(?!https?:)([^"]+)"([^>]*?)>/g, `<img$1 src="${f.base}$2"$3>`);
+        md = md.replace(/<img([^>]*?)\ssrc='(?!https?:)([^']+)'([^>]*?)>/g, `<img$1 src='${f.base}$2'$3>`);
+      }
       panelBody.innerHTML = `<div class="md-content">${marked.parse(md)}</div>`;
     } catch(e) {
       panelBody.innerHTML = `<div class="panel-error">
@@ -1294,17 +2263,14 @@
   /* ── Exercise subject ── */
   const GH_RAW = 'https://raw.githubusercontent.com/01-edu/public/master/subjects';
   function openSubject(name) {
+    const base = `./01-edu-repos/public/subjects/${name}/`;
     _openPanel({
-      title:   name,
+      title:   name.split('/').pop(),
       linkPub: `https://github.com/01-edu/public/tree/master/subjects/${name}`,
-      linkGh:  `./01-edu-repos/public/subjects/${name}/`,
+      linkGh:  base,
       files: [
-        {
-          label:    'README.md',
-          url:      `./01-edu-repos/public/subjects/${name}/README.md`,
-          fallback: `${GH_RAW}/${name}/README.md`,
-          base:     `./01-edu-repos/public/subjects/${name}/`
-        },
+        { label: 'README.md', url: `${base}README.md`, fallback: `${GH_RAW}/${name}/README.md`, base },
+        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${GH_RAW}/${name}/audit/README.md`, `${GH_RAW}/${name}/audit.md`], base: `${base}audit/` },
       ]
     });
   }
@@ -1327,6 +2293,35 @@
     });
   }
 
+  /* ── AI subject (public/subjects/ai/) ── */
+  const AI_GH = 'https://raw.githubusercontent.com/01-edu/public/master/subjects/ai';
+  function openAiSubject(name) {
+    const base = `./01-edu-repos/public/subjects/ai/${name}/`;
+    _openPanel({
+      title:   name,
+      linkPub: `https://github.com/01-edu/public/tree/master/subjects/ai/${name}`,
+      linkGh:  base,
+      files: [
+        { label: 'README.md', url: `${base}README.md`, fallback: `${AI_GH}/${name}/README.md`, base },
+        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${AI_GH}/${name}/audit/README.md`, `${AI_GH}/${name}/audit.md`], base: `${base}audit/` },
+      ]
+    });
+  }
+
+  const UXUI_GH = 'https://raw.githubusercontent.com/01-edu/UX-UI/master/subjects';
+  function openUxSubject(subpath) {
+    const base = `./01-edu-repos/UX-UI/subjects/${subpath}/`;
+    _openPanel({
+      title:   subpath.split('/').pop(),
+      linkPub: `https://github.com/01-edu/UX-UI/tree/master/subjects/${subpath}`,
+      linkGh:  base,
+      files: [
+        { label: 'README.md', url: `${base}README.md`, fallback: `${UXUI_GH}/${subpath}/README.md`, base },
+        { label: '📋 Audit',  url: `${base}audit/README.md`, fallback: [`${base}audit.md`, `${UXUI_GH}/${subpath}/audit/README.md`, `${UXUI_GH}/${subpath}/audit.md`], base: `${base}audit/` },
+      ]
+    });
+  }
+
   /* ── Branch specialisation ── */
   const BRANCH_MAP = {
     'Branch-AI':         { path: './01-edu-repos/Branch-AI/',         gh: 'https://raw.githubusercontent.com/01-edu/Branch-AI/master' },
@@ -1343,7 +2338,7 @@
     const b = BRANCH_MAP[key] || { path: './', gh: 'https://raw.githubusercontent.com/01-edu/public/master' };
     _openPanel({
       title:   displayName,
-      linkPub: `https://github.com/01-edu/${key}`,
+      linkPub: `https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/${key}`,
       linkGh:  b.path,
       files: [
         { label: 'README.md', url: `${b.path}README.md`, fallback: `${b.gh}/README.md`, base: b.path },
@@ -1363,7 +2358,7 @@
     const t = TOOL_MAP[key] || { path: './', gh: 'https://raw.githubusercontent.com/01-edu/public/master' };
     _openPanel({
       title:   displayName,
-      linkPub: `https://github.com/01-edu/${key}`,
+      linkPub: `https://github.com/Tednoob17/zone-01/tree/main/01-edu-repos/${key}`,
       linkGh:  t.path,
       files: [
         { label: 'README.md', url: `${t.path}README.md`, fallback: `${t.gh}/README.md`, base: t.path },

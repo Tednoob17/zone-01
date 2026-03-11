@@ -1,7 +1,0 @@
-query newUsers($latest: timestamptz!) {
-  newUsers: user(where: { createdAt: { _gt: $latest } }) {
-    createdAt
-    login
-    attrs
-  }
-}
