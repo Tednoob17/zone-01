@@ -1,0 +1,9 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: redis-server --maxmemory 512M --maxmemory-policy allkeys-lru --save "" --appendonly no
+  web:
+    build: .
+    init: true
+    ports:
+      - 8443:443
