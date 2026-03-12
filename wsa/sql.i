@@ -19,3 +19,8 @@ Switch between  `'abc' NULL` to `NULL, 'def'` is not important if two work test 
 `' UNION SELECT @@version, 'def'--+`
 
 ### Non Oracle
+
+Check a number of columns used, 1, 2 ? It a strings / text column ?
+- `' ... table_name, column_name FROM information.schema.columns`
+
+### Oracle Again ?
