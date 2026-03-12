@@ -24,3 +24,11 @@ Check a number of columns used, 1, 2 ? It a strings / text column ?
 - `' ... table_name, column_name FROM information.schema.columns`
 
 ### Oracle Again ?
+2 Columns work with `dual` table
+List table with : `SELECT table_name`, or Select columns of table with `column_name FROM all_column WHERE table =..` `..` is table of users found after previous request
+
+### Number of columns ?
+`NULL, NULL, NULL` ? with table name just `UNION SELECT username, password`
+
+### Multiple data in one column
+`' UNION SELECT NULL, username`
