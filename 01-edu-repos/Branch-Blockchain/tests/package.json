@@ -14,7 +14,7 @@
   "dependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^3.0.0",
     "@nomicfoundation/hardhat-ethers": "^4.0.6",
-    "bitcoin-core": "^4.1.0",
+    "bitcoin-core": "^5.0.0",
     "chai": "^6.2.2",
     "express": "^4.21.2",
     "hardhat": "^3.1.12",
