@@ -132,7 +132,11 @@
   .ex::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; opacity: 0; transition: opacity .13s; background: var(--ex-c, var(--accent)); }
   .ex:hover { border-color: var(--border2); transform: translateY(-1px); background: var(--surface3); }
   .ex:hover::before { opacity: 1; }
+  .ex.completed { background: rgba(57,255,143,.08); border-color: rgba(57,255,143,.2); }
+  .ex.completed::before { opacity: 1; }
+  .ex.completed::after { content: '✓'; position: absolute; right: .5rem; top: 50%; transform: translateY(-50%); font-size: .65rem; color: var(--accent); font-weight: 700; }
   .ex-n { font-family: 'JetBrains Mono', monospace; font-size: .67rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ex.completed .ex-n { color: var(--accent); opacity: .8; }
   .ex-view-icon { font-size: .6rem; opacity: 0; transition: opacity .15s; margin-left: auto; flex-shrink: 0; color: var(--accent); }
   .ex:hover .ex-view-icon { opacity: 1; }
   .ex-special { grid-column: 1 / -1; cursor: default; }
@@ -151,6 +155,9 @@
 
   .panel-bar { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface2); flex-shrink: 0; }
   .panel-name { font-family: 'JetBrains Mono', monospace; font-size: .85rem; font-weight: 700; color: var(--accent); flex: 1; }
+  .panel-mark-btn { font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--accent); background: rgba(57,255,143,.12); border: 1px solid rgba(57,255,143,.3); padding: .3rem .65rem; border-radius: 5px; cursor: pointer; transition: all .15s; }
+  .panel-mark-btn:hover { background: rgba(57,255,143,.22); border-color: var(--accent); }
+  .panel-mark-btn.marked { background: rgba(57,255,143,.25); border-color: var(--accent); }
   .panel-links { display: flex; gap: .5rem; }
   .panel-link { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: .3rem .65rem; border-radius: 5px; transition: all .15s; }
   .panel-link:hover { border-color: var(--accent); color: var(--accent); }
@@ -257,7 +264,52 @@
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
   .theme-toggle-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; transition: background .35s; }
 
-  /* ── TRUFFLE LIGHT THEME ── */
+  /* ── TRACKER BUTTON IN HEADER ── */
+  .tracker-btn-header { display: flex; align-items: center; gap: .45rem; font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--muted); border: 1px solid var(--border); padding: .35rem .8rem; border-radius: 20px; background: transparent; cursor: pointer; transition: all .15s; flex-shrink: 0; }
+  .tracker-btn-header:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── TRACKER MODAL ── */
+  .tracker-overlay { position: fixed; inset: 0; background: var(--panel-overlay-bg); backdrop-filter: blur(6px); z-index: 300; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .tracker-overlay.open { opacity: 1; pointer-events: all; }
+
+  .tracker-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: min(720px, 90vw); max-height: 80vh; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; z-index: 301; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: all .25s cubic-bezier(.22,.68,0,1.1); box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+  .tracker-modal.open { opacity: 1; pointer-events: all; transform: translate(-50%, -50%) scale(1); }
+
+  .tracker-header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface2); border-radius: 12px 12px 0 0; }
+  .tracker-header h2 { font-size: 1.2rem; font-weight: 700; margin: 0; }
+  .tracker-close { width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--muted); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; }
+  .tracker-close:hover { border-color: var(--rust); color: var(--rust); }
+
+  .tracker-content { flex: 1; overflow-y: auto; padding: 1.5rem; }
+  .tracker-section { margin-bottom: 2rem; }
+  .tracker-section h3 { font-size: .95rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent); }
+
+  .user-id-card { display: flex; align-items: center; justify-content: space-between; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
+  .user-id-label { font-family: 'JetBrains Mono', monospace; font-size: .6rem; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+  .user-id-value { font-family: 'JetBrains Mono', monospace; font-size: .9rem; font-weight: 600; color: var(--accent); word-break: break-all; }
+  .tracker-copy-btn { font-family: 'JetBrains Mono', monospace; font-size: .65rem; padding: .4rem .8rem; background: rgba(57,255,143,.12); color: var(--accent); border: 1px solid rgba(57,255,143,.3); border-radius: 5px; cursor: pointer; transition: all .15s; flex-shrink: 0; margin-left: 1rem; }
+  .tracker-copy-btn:hover { background: rgba(57,255,143,.22); }
+
+  .tracker-stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 1rem; }
+  .tracker-stat-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+  .tracker-stat-num { display: block; font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: .3rem; }
+  .tracker-stat-label { display: block; font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--muted); text-transform: uppercase; }
+
+  .tracker-actions { display: flex; flex-direction: column; gap: .7rem; }
+  .tracker-btn { font-family: 'JetBrains Mono', monospace; font-size: .7rem; padding: .6rem 1rem; border-radius: 6px; border: 1px solid; cursor: pointer; transition: all .15s; font-weight: 600; }
+  .tracker-btn-primary { background: rgba(57,255,143,.15); color: var(--accent); border-color: rgba(57,255,143,.3); }
+  .tracker-btn-primary:hover { background: rgba(57,255,143,.25); border-color: var(--accent); }
+  .tracker-btn-secondary { background: transparent; color: var(--muted); border-color: var(--border); }
+  .tracker-btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  #trackerProgressList { display: flex; flex-direction: column; gap: .7rem; }
+  .tracker-progress-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .9rem; }
+  .tracker-progress-title { font-size: .8rem; font-weight: 600; margin-bottom: .4rem; }
+  .tracker-progress-bar { width: 100%; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .tracker-progress-fill { height: 100%; background: var(--accent); transition: width .3s; }
+  .tracker-progress-text { font-family: 'JetBrains Mono', monospace; font-size: .55rem; color: var(--muted); margin-top: .3rem; }
+
+  /* ── THEME TOGGLE BUTTON ── */
   [data-theme="truffle"] {
     --bg: #f7f5f0;
     --surface: #ffffff;
@@ -309,6 +361,7 @@
 <div class="panel" id="panel">
   <div class="panel-bar">
     <span class="panel-name" id="panel-name">—</span>
+    <button class="panel-mark-btn" id="panel-mark-btn" onclick="togglePanelMark()">✓ Marquer comme fait</button>
     <div class="panel-links">
       <a class="panel-link" id="panel-link-pub" href="#" target="_blank">↗ Sujet</a>
       <a class="panel-link" id="panel-link-gh" href="#" target="_blank">↗ Repo</a>
@@ -323,6 +376,58 @@
         <div class="panel-loading-dot"></div>
         <div class="panel-loading-dot"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── USER TRACKER MODAL ── -->
+<div class="tracker-overlay" id="trackerOverlay"></div>
+<div class="tracker-modal" id="trackerModal">
+  <div class="tracker-header">
+    <h2>📊 Ma Progression</h2>
+    <button class="tracker-close" onclick="closeTracker()">✕</button>
+  </div>
+  <div class="tracker-content">
+    <div class="tracker-section">
+      <div class="user-id-card">
+        <div>
+          <div class="user-id-label">Mon Identifiant</div>
+          <div class="user-id-value" id="userIdDisplay">—</div>
+        </div>
+        <button class="tracker-copy-btn" onclick="copyUserId()">📋 Copier</button>
+      </div>
+    </div>
+    
+    <div class="tracker-section">
+      <h3>Statistiques globales</h3>
+      <div class="tracker-stats">
+        <div class="tracker-stat-box">
+          <span class="tracker-stat-num" id="totalCompleted">0</span>
+          <span class="tracker-stat-label">Exercices complètés</span>
+        </div>
+        <div class="tracker-stat-box">
+          <span class="tracker-stat-num" id="totalProgress">0%</span>
+          <span class="tracker-stat-label">Avancement total</span>
+        </div>
+        <div class="tracker-stat-box">
+          <span class="tracker-stat-num" id="questsStarted">0</span>
+          <span class="tracker-stat-label">Quests commencées</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tracker-section">
+      <h3>Actions</h3>
+      <div class="tracker-actions">
+        <button class="tracker-btn tracker-btn-primary" onclick="exportProgress()">⬇ Exporter ma progression</button>
+        <button class="tracker-btn tracker-btn-secondary" onclick="importProgress()">📤 Importer une progression</button>
+        <button class="tracker-btn tracker-btn-secondary" onclick="resetProgress()">🔄 Réinitialiser tout</button>
+      </div>
+    </div>
+
+    <div class="tracker-section">
+      <h3>Progression par piscine</h3>
+      <div id="trackerProgressList"></div>
     </div>
   </div>
 </div>
@@ -353,6 +458,7 @@
         <a href="#tools">Outils</a>
       </nav>
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn"><span class="theme-toggle-dot" id="theme-dot"></span><span id="theme-label">Truffle</span></button>
+      <button class="tracker-btn-header" onclick="openTracker()"><span>📊</span> <span id="progressBadge">0%</span></button>
       <a class="gh-link" href="./01-edu-repos/public/" target="_blank">↗ 01-edu/public</a>
     </div>
   </div>
@@ -2115,6 +2221,218 @@
 </footer>
 
 <script>
+  /* ── USER TRACKING SYSTEM ── */
+  const TRACKER_KEY = 'z01-user-progress';
+  const USER_ID_KEY = 'z01-user-id';
+
+  // Generate or get user ID
+  function getUserId() {
+    let id = localStorage.getItem(USER_ID_KEY);
+    if (!id) {
+      id = 'Z01-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+      localStorage.setItem(USER_ID_KEY, id);
+    }
+    return id;
+  }
+
+  // Get all user progress data
+  function getProgress() {
+    const data = localStorage.getItem(TRACKER_KEY);
+    return data ? JSON.parse(data) : {};
+  }
+
+  // Save progress
+  function saveProgress(progress) {
+    localStorage.setItem(TRACKER_KEY, JSON.stringify(progress));
+    updateTrackerUI();
+  }
+
+  // Mark exercise as completed
+  function completeExercise(exerciseName) {
+    const progress = getProgress();
+    if (!progress.exercises) progress.exercises = {};
+    progress.exercises[exerciseName] = { completed: true, date: new Date().toISOString() };
+    if (!progress.lastUpdated) progress.lastUpdated = new Date().toISOString();
+    progress.lastUpdated = new Date().toISOString();
+    saveProgress(progress);
+  }
+
+  // Toggle exercise status from UI
+  function toggleExerciseStatus(exerciseName, element) {
+    const progress = getProgress();
+    if (!progress.exercises) progress.exercises = {};
+    
+    if (progress.exercises[exerciseName]?.completed) {
+      delete progress.exercises[exerciseName];
+    } else {
+      progress.exercises[exerciseName] = { completed: true, date: new Date().toISOString() };
+    }
+    saveProgress(progress);
+    
+    if (element) {
+      element.classList.toggle('completed');
+    }
+  }
+
+  // Calculate stats
+  function calculateStats() {
+    const progress = getProgress();
+    const exercisesCompleted = progress.exercises ? Object.keys(progress.exercises).length : 0;
+    const totalExercises = document.querySelectorAll('.ex').length;
+    const percentage = totalExercises > 0 ? Math.round((exercisesCompleted / totalExercises) * 100) : 0;
+    return { exercisesCompleted, totalExercises, percentage };
+  }
+
+  // Update tracker UI
+  function updateTrackerUI() {
+    const stats = calculateStats();
+    document.getElementById('totalCompleted').textContent = stats.exercisesCompleted;
+    document.getElementById('totalProgress').textContent = stats.percentage + '%';
+    document.getElementById('progressBadge').textContent = stats.percentage + '%';
+
+    // Count quests started
+    const progress = getProgress();
+    const exercisesCompleted = progress.exercises ? Object.keys(progress.exercises) : [];
+    
+    // Update progress list
+    const pools = document.querySelectorAll('.pool');
+    let poolCount = 0;
+    let html = '';
+    
+    pools.forEach(pool => {
+      const poolName = pool.querySelector('.pool-name')?.textContent || 'Piscine ' + (poolCount + 1);
+      const quests = pool.querySelectorAll('.quest');
+      const exs = pool.querySelectorAll('.ex');
+      
+      let completed = 0;
+      exs.forEach(ex => {
+        const exName = ex.textContent.toLowerCase().trim();
+        if (exercisesCompleted.some(e => e.toLowerCase().includes(exName) || exName.includes(e.toLowerCase()))) {
+          completed++;
+        }
+      });
+      
+      const total = exs.length;
+      const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+      
+      html += `<div class="tracker-progress-item">
+        <div class="tracker-progress-title">${poolName}</div>
+        <div class="tracker-progress-bar">
+          <div class="tracker-progress-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="tracker-progress-text">${completed} / ${total} exercices</div>
+      </div>`;
+    });
+    
+    document.getElementById('trackerProgressList').innerHTML = html;
+    document.getElementById('userIdDisplay').textContent = getUserId();
+  }
+
+  // Tracker modal functions
+  function openTracker() {
+    document.getElementById('trackerModal').classList.add('open');
+    document.getElementById('trackerOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    updateTrackerUI();
+  }
+
+  function closeTracker() {
+    document.getElementById('trackerModal').classList.remove('open');
+    document.getElementById('trackerOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function copyUserId() {
+    const userId = getUserId();
+    navigator.clipboard.writeText(userId).then(() => {
+      alert('ID copié: ' + userId);
+    });
+  }
+
+  function exportProgress() {
+    const progress = getProgress();
+    const userId = getUserId();
+    const data = {
+      userId,
+      progress,
+      exportDate: new Date().toISOString(),
+      stats: calculateStats()
+    };
+    
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `zone01-progression-${userId}-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importProgress() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = e => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = event => {
+        try {
+          const data = JSON.parse(event.target.result);
+          if (data.progress) {
+            localStorage.setItem(TRACKER_KEY, JSON.stringify(data.progress));
+            if (data.userId) {
+              localStorage.setItem(USER_ID_KEY, data.userId);
+            }
+            updateTrackerUI();
+            alert('Progression importée avec succès!');
+          }
+        } catch (err) {
+          alert('Erreur lors de l\'import: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  }
+
+  function resetProgress() {
+    if (confirm('Êtes-vous sûr? Cela effacera toute votre progression.')) {
+      localStorage.removeItem(TRACKER_KEY);
+      updateTrackerUI();
+      alert('Progression réinitialisée');
+    }
+  }
+
+  // Add completion markers to exercises
+  function markerExercises() {
+    const progress = getProgress();
+    const completed = progress.exercises ? Object.keys(progress.exercises) : [];
+    
+    document.querySelectorAll('.ex').forEach(ex => {
+      const name = ex.textContent.toLowerCase().trim();
+      if (completed.some(c => c.toLowerCase().includes(name) || name.includes(c.toLowerCase()))) {
+        ex.classList.add('completed');
+      }
+    });
+  }
+
+  // Close tracker on escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('trackerModal').classList.contains('open')) {
+      closeTracker();
+    }
+  });
+
+  // Close tracker on overlay click
+  document.getElementById('trackerOverlay')?.addEventListener('click', closeTracker);
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    markerExercises();
+    updateTrackerUI();
+  });
+
   /* ── THEME TOGGLE ── */
   (function() {
     const saved = localStorage.getItem('z01-theme') || 'dark';
