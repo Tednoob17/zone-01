@@ -81,7 +81,7 @@ Parfait, j'ai tout ce qu'il me faut. Maintenant je construis la version amélior
     Panel latéral / modal qui fetch le README depuis raw.githubusercontent.com et le render en markdown
     Infos sur les outils de test (go-tests, rust-tests, rc, Restrictions Checker)
 
-Viewed a file, ran a command, created a file
+Viewed a file, ran a command, created a file :
 
 Je vois que le fichier a déjà été créé avec exactement ces deux features ! La page actuelle a déjà :
 

