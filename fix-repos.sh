@@ -26,9 +26,3 @@ git add 01-edu-repos/
 STAGED=$(git status --short | grep "^A" | wc -l)
 echo "  ✓ $STAGED fichiers ajoutés au staging"
 
-echo ""
-echo "=== [5/5] Commit + Push ==="
-git commit -m "fix: inclure contenu repos 01-edu (correction gitlinks)"
-git push
-echo ""
-echo "✅ Terminé ! Les repos devraient être visibles sur GitHub."
