@@ -20,9 +20,4 @@ echo "=== [3/5] Suppression des entrées de l'index Git ==="
 git rm --cached -r 01-edu-repos/ 2>/dev/null || true
 echo "  ✓ Index vidé pour 01-edu-repos/"
 
-echo ""
-echo "=== [4/5] Ré-indexation du contenu réel ==="
-git add 01-edu-repos/
-STAGED=$(git status --short | grep "^A" | wc -l)
-echo "  ✓ $STAGED fichiers ajoutés au staging"
 
