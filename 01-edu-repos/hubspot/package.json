@@ -5,6 +5,6 @@
     "@01-edu/api": "^1.1.1",
     "@hubspot/api-client": "^13.4.0",
     "better-sqlite3": "^12.6.2",
-    "nodemailer": "^8.0.1"
+    "nodemailer": "^8.0.4"
   }
 }
