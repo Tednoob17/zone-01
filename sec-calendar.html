@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SECU//PROG — Calendrier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0c;
+  --bg2: #131313;
+  --bg3: #191919;
+  --border: #1f1f1f;
+  --border2: #2a2a2a;
+  --text: #e2e2e2;
+  --text2: #7a7a7a;
+  --text3: #444;
+  --accent: #b8f050;
+  --accent2: #50c8f0;
+  --accent3: #f05050;
+  --accent4: #f0a040;
+  --phase0: #b8f050;
+  --phase1: #50c8f0;
+  --phase2: #f0a040;
+  --phase3: #c050f0;
+  --fmono: 'Space Mono', monospace;
+  --fhead: 'Syne', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fmono);font-size:12px;line-height:1.6;min-height:100vh}
+
+/* noise */
+body::before{content:'';position:fixed;inset:0;opacity:.03;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ── STICKY HEADER ── */
+.topbar{
+  position:sticky;top:0;z-index:200;
+  background:rgba(12,12,12,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;gap:0;
+  padding:0 32px;
+  height:52px;
+}
+.topbar-logo{
+  font-family:var(--fhead);font-weight:800;font-size:15px;
+  color:var(--text);letter-spacing:-.02em;margin-right:24px;
+  white-space:nowrap;
+}
+.topbar-logo span{color:var(--accent)}
+
+/* Global counter */
+.global-counter{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg3);border:1px solid var(--border2);
+  padding:6px 14px;border-radius:2px;margin-right:auto;
+}
+.gc-label{font-size:10px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase}
+.gc-number{font-family:var(--fhead);font-weight:800;font-size:18px;color:var(--accent);line-height:1}
+.gc-total{font-size:11px;color:var(--text3)}
+.gc-bar{width:120px;height:3px;background:var(--border2);border-radius:2px;overflow:hidden;margin-left:8px}
+.gc-bar-fill{height:100%;background:var(--accent);transition:width .4s ease;border-radius:2px}
+
+/* phase pills in topbar */
+.phase-pills{display:flex;gap:6px;margin-left:16px}
+.pp{
+  font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:2px;cursor:pointer;
+  border:1px solid transparent;transition:all .15s;
+  font-family:var(--fmono);
+}
+.pp[data-p="0"]{background:rgba(184,240,80,.08);color:var(--phase0);border-color:rgba(184,240,80,.2)}
+.pp[data-p="1"]{background:rgba(80,200,240,.08);color:var(--phase1);border-color:rgba(80,200,240,.2)}
+.pp[data-p="2"]{background:rgba(240,160,64,.08);color:var(--phase2);border-color:rgba(240,160,64,.2)}
+.pp[data-p="3"]{background:rgba(192,80,240,.08);color:var(--phase3);border-color:rgba(192,80,240,.2)}
+.pp:hover{opacity:.8}
+.pp.active{opacity:1;filter:brightness(1.3)}
+
+/* today btn */
+.today-btn{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 12px;background:transparent;border:1px solid var(--border2);
+  color:var(--text2);cursor:pointer;border-radius:2px;transition:all .15s;
+  font-family:var(--fmono);margin-left:8px;
+}
+.today-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1000px;margin:0 auto;padding:40px 32px 80px;position:relative;z-index:1}
+
+/* ── PHASE HEADER ── */
+.phase-header{
+  margin-bottom:48px;padding:32px;
+  border:1px solid var(--border2);background:var(--bg2);
+  position:relative;overflow:hidden;
+}
+.phase-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+}
+.ph0::before{background:var(--phase0)}
+.ph1::before{background:var(--phase1)}
+.ph2::before{background:var(--phase2)}
+.ph3::before{background:var(--phase3)}
+
+.phase-header::after{
+  position:absolute;right:-10px;top:-20px;
+  font-family:var(--fhead);font-weight:800;font-size:140px;
+  color:transparent;line-height:1;pointer-events:none;
+  opacity:.07;
+}
+.ph0::after{content:'P0';-webkit-text-stroke:1px var(--phase0)}
+.ph1::after{content:'P1';-webkit-text-stroke:1px var(--phase1)}
+
+.phase-tag{font-size:10px;letter-spacing:.2em;color:var(--text3);text-transform:uppercase;margin-bottom:8px}
+.phase-title{font-family:var(--fhead);font-weight:800;font-size:28px;letter-spacing:-.02em;margin-bottom:4px}
+.ph0 .phase-title{color:var(--phase0)}
+.ph1 .phase-title{color:var(--phase1)}
+.phase-period{font-size:11px;color:var(--text3);margin-bottom:20px}
+
+.phase-progress-wrap{display:flex;align-items:center;gap:12px;margin-top:16px}
+.phase-prog-bar{flex:1;height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
+.phase-prog-fill{height:100%;border-radius:2px;transition:width .5s ease}
+.ph0 .phase-prog-fill{background:var(--phase0)}
+.ph1 .phase-prog-fill{background:var(--phase1)}
+.phase-prog-label{font-size:11px;color:var(--text3);white-space:nowrap}
+.phase-done-count{font-family:var(--fhead);font-weight:700;font-size:13px}
+.ph0 .phase-done-count{color:var(--phase0)}
+.ph1 .phase-done-count{color:var(--phase1)}
+
+/* ── MONTH ── */
+.month-block{margin-bottom:56px}
+.month-label{
+  font-family:var(--fhead);font-weight:800;font-size:22px;
+  letter-spacing:-.02em;color:var(--text);
+  margin-bottom:4px;display:flex;align-items:baseline;gap:12px;
+}
+.month-label .month-year{font-size:13px;color:var(--text3);font-weight:400;font-family:var(--fmono)}
+.month-sep{height:1px;background:var(--border);margin-bottom:28px}
+
+/* ── WEEK ── */
+.week-block{
+  margin-bottom:32px;border:1px solid var(--border);
+  background:var(--bg2);
+}
+.week-head{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;border-bottom:1px solid var(--border);
+  cursor:pointer;user-select:none;
+  transition:background .15s;
+}
+.week-head:hover{background:var(--bg3)}
+.week-num{
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--text3);white-space:nowrap;min-width:48px;
+}
+.week-title{font-family:var(--fhead);font-size:14px;font-weight:700;color:var(--text);flex:1}
+.week-dates{font-size:10px;color:var(--text3);white-space:nowrap}
+.week-progress{display:flex;align-items:center;gap:8px;margin-left:8px}
+.week-prog-bar{width:60px;height:2px;background:var(--border2);border-radius:1px;overflow:hidden}
+.week-prog-fill{height:100%;background:var(--accent);border-radius:1px;transition:width .3s}
+.week-prog-text{font-size:10px;color:var(--text3);white-space:nowrap;min-width:40px;text-align:right}
+.week-chevron{font-size:10px;color:var(--text3);transition:transform .2s;margin-left:4px}
+.week-head.open .week-chevron{transform:rotate(180deg)}
+
+/* topic pill on week */
+.week-topic{
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;flex-shrink:0;
+}
+.wt-ps{background:rgba(184,240,80,.1);color:var(--phase0);border:1px solid rgba(184,240,80,.2)}
+.wt-binary{background:rgba(80,200,240,.1);color:var(--phase1);border:1px solid rgba(80,200,240,.2)}
+.wt-fw{background:rgba(240,160,64,.1);color:var(--phase2);border:1px solid rgba(240,160,64,.2)}
+
+.week-body{display:none;padding:0}
+.week-body.open{display:block}
+
+/* ── DAY ── */
+.day-row{
+  display:grid;
+  grid-template-columns:90px 1fr;
+  border-bottom:1px solid var(--border);
+  min-height:64px;
+}
+.day-row:last-child{border-bottom:none}
+.day-row.today .day-meta{border-left:2px solid var(--accent)}
+.day-row.today{background:rgba(184,240,80,.02)}
+.day-row.weekend .day-meta{background:rgba(255,255,255,.01)}
+
+.day-meta{
+  padding:14px 16px;border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:flex-start;gap:2px;
+  background:var(--bg3);
+}
+.day-name{
+  font-family:var(--fhead);font-weight:700;font-size:12px;
+  color:var(--text2);text-transform:uppercase;letter-spacing:.05em;
+}
+.day-row.today .day-name{color:var(--accent)}
+.day-date{font-size:10px;color:var(--text3)}
+.day-today-tag{
+  font-size:8px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent);margin-top:2px;
+}
+
+.day-tasks{padding:12px 20px;display:flex;flex-direction:column;gap:6px}
+
+/* ── TASK ── */
+.task{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:7px 10px;border-radius:2px;
+  border:1px solid transparent;
+  transition:background .1s,border-color .1s;
+  cursor:pointer;
+}
+.task:hover{background:var(--bg3);border-color:var(--border2)}
+.task.done{opacity:.45}
+.task.done .task-text{text-decoration:line-through;color:var(--text3)}
+
+.task-cb{
+  width:14px;height:14px;border:1px solid var(--border2);
+  flex-shrink:0;margin-top:1px;border-radius:1px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;background:var(--bg);
+}
+.task.done .task-cb{
+  background:var(--accent);border-color:var(--accent);
+}
+.task.done .task-cb::after{
+  content:'✓';font-size:9px;color:var(--bg);font-weight:700;
+}
+
+.task-content{flex:1;min-width:0}
+.task-tag{
+  display:inline-block;font-size:8px;letter-spacing:.12em;text-transform:uppercase;
+  padding:1px 6px;border-radius:1px;margin-bottom:3px;
+  font-family:var(--fmono);
+}
+.tt-bb{background:rgba(240,80,80,.12);color:var(--accent3);border:1px solid rgba(240,80,80,.2)}
+.tt-ps{background:rgba(184,240,80,.1);color:var(--phase0);border:1px solid rgba(184,240,80,.2)}
+.tt-c{background:rgba(80,200,240,.1);color:var(--phase1);border:1px solid rgba(80,200,240,.2)}
+.tt-asm{background:rgba(192,80,240,.1);color:var(--phase3);border:1px solid rgba(192,80,240,.15)}
+.tt-fw{background:rgba(240,160,64,.1);color:var(--phase2);border:1px solid rgba(240,160,64,.2)}
+.tt-draw{background:rgba(120,120,120,.1);color:var(--text2);border:1px solid var(--border2)}
+.tt-rev{background:rgba(240,160,64,.18);color:var(--accent4);border:1px solid rgba(240,160,64,.35)}
+.tt-veille{background:rgba(80,200,240,.07);color:var(--text2);border:1px solid var(--border)}
+.tt-expert{background:rgba(240,80,80,.07);color:var(--accent3);border:1px solid rgba(240,80,80,.15)}
+
+.task-text{font-size:12px;color:var(--text);line-height:1.5}
+.task-note{font-size:10px;color:var(--text3);margin-top:2px;font-style:italic;line-height:1.4}
+
+/* no-cb tasks (info only) */
+.task-info{
+  padding:6px 10px;border-left:2px solid var(--border2);
+  margin:2px 0;
+}
+.task-info .task-text{font-size:11px;color:var(--text2)}
+
+/* ── REVIEW FLAG ── */
+.review-flag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent4);padding:2px 8px;
+  border:1px solid rgba(240,160,64,.3);background:rgba(240,160,64,.06);
+  border-radius:1px;margin-top:4px;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.phase-header,.month-block{animation:fadeUp .35s ease both}
+
+/* ── RESET BTN ── */
+.reset-btn{
+  font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;background:transparent;border:1px solid var(--border);
+  color:var(--text3);cursor:pointer;border-radius:2px;
+  font-family:var(--fmono);transition:all .15s;margin-left:8px;
+}
+.reset-btn:hover{border-color:var(--accent3);color:var(--accent3)}
+
+/* ── HIDDEN PHASE ── */
+.phase-section{display:none}
+.phase-section.visible{display:block}
+
+/* ── EMPTY STATE ── */
+.empty-phase{
+  padding:48px;text-align:center;color:var(--text3);
+  border:1px dashed var(--border);margin-bottom:32px;
+}
+.empty-phase span{font-size:24px;display:block;margin-bottom:12px}
+
+/* mobile */
+@media(max-width:640px){
+  .topbar{padding:0 16px;flex-wrap:wrap;height:auto;padding:10px 16px;gap:8px}
+  .phase-pills{display:none}
+  .wrap{padding:24px 16px 60px}
+  .day-row{grid-template-columns:72px 1fr}
+  .day-meta{padding:10px 12px}
+  .day-tasks{padding:10px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <div class="topbar-logo">SECU<span>//</span>PROG</div>
+
+  <div class="global-counter">
+    <div>
+      <div class="gc-label">Tâches restantes</div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <div class="gc-number" id="gc-remaining">—</div>
+        <div class="gc-total" id="gc-total-display">/ —</div>
+      </div>
+    </div>
+    <div class="gc-bar"><div class="gc-bar-fill" id="gc-bar-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="phase-pills">
+    <div class="pp active" data-p="0" onclick="showPhase(0)">Phase 0</div>
+    <div class="pp" data-p="1" onclick="showPhase(1)">Phase 1</div>
+    <div class="pp" data-p="2" onclick="showPhase(2)">Phase 2</div>
+    <div class="pp" data-p="3" onclick="showPhase(3)">Phase 3</div>
+  </div>
+
+  <button class="today-btn" onclick="goToday()">Aujourd'hui</button>
+  <button class="reset-btn" onclick="confirmReset()">Reset</button>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="wrap" id="main-wrap"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA — Programme complet
+// ═══════════════════════════════════════════════
+
+// Task types: bb, ps, c, asm, fw, draw, rev, veille, expert
+// Checkbox types (from user): bb, c, asm, fw, draw, veille, expert (ps labs are info only unless expert)
+
+const TOPICS_PS = [
+  'SQL Injection','Authentication','Path Traversal','Command Injection',
+  'Business Logic','Access Control & IDOR','SSRF','XXE',
+  'XSS Reflected','XSS Stored + DOM','HTTP Smuggling','Insecure Deserialization',
+  'WebSockets','GraphQL','OAuth','JWT','Prototype Pollution','CORS',
+  'Clickjacking','File Upload','Race Conditions','Server-side Template Injection',
+  'Web Cache Poisoning','Request Smuggling avancé','XXE avancé',
+  'DOM-based vulns','Cross-site WebSocket','Web LLM attacks','NoSQL Injection',
+  'API Testing','Expert labs libres'
+];
+
+const KR_CHAPTERS = ['Ch.1 Introduction','Ch.2 Types & Operators','Ch.3 Control Flow','Ch.4 Functions','Ch.5 Pointers','Ch.6 Structures'];
+const JORGENSEN_CHAPTERS = ['Ch.1–2 Intro + Architecture','Ch.3–4 Data Representation','Ch.5–6 Instructions + Addressing','Ch.7–8 Stack + Functions (cœur)'];
+const FD0_CHAPTERS = ['Ch.3 Fuzzing','Ch.4 Firmware Analysis','Ch.5 Vuln Discovery','Ch.6 Exploitation','Ch.7 Advanced Topics','Ch.8 Case Studies','Ch.9 Final'];
+
+// Build weeks: Phase 0 = S01 (7 apr) → S26 (end sept 2026) = ~26 weeks
+// Phase 1 = oct 2026 → fév 2027
+
+function addDays(date, n) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + n);
+  return d;
+}
+
+function fmtDate(d) {
+  return d.toISOString().slice(0,10);
+}
+
+function fmtDisplay(d) {
+  return d.toLocaleDateString('fr-FR', {day:'numeric', month:'short'});
+}
+
+function fmtFull(d) {
+  return d.toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long'});
+}
+
+const DAY_NAMES = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+const DAY_NAMES_FULL = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+// ─ Week generator ─
+function buildWeeks() {
+  const weeks = [];
+  const start = new Date('2026-04-07'); // Monday
+  let psTopicIdx = 0;
+  let krIdx = 0;
+  let jorgensenIdx = 0;
+  let fd0Idx = 0;
+
+  // PHASE 0: 26 weeks (apr 7 → oct 4 2026)
+  for (let w = 0; w < 26; w++) {
+    const weekStart = addDays(start, w * 7);
+    const weekEnd = addDays(weekStart, 6);
+    const psTopic = TOPICS_PS[psTopicIdx % TOPICS_PS.length];
+    const isReviewWeek = true; // every week has a review
+
+    const days = [];
+    for (let d = 0; d < 7; d++) {
+      const date = addDays(weekStart, d);
+      const dow = date.getDay(); // 0=Sun,1=Mon,...,6=Sat
+      const tasks = buildDayTasks(dow, w, psTopic, krIdx, jorgensenIdx, fd0Idx);
+      days.push({ date, dow, tasks });
+    }
+
+    // Advance counters
+    if (w > 0 && w % 2 === 0) fd0Idx = Math.min(fd0Idx + 1, FD0_CHAPTERS.length - 1);
+    if ((w + 1) % 3 === 0) jorgensenIdx = Math.min(jorgensenIdx + 1, JORGENSEN_CHAPTERS.length - 1);
+
+    weeks.push({
+      phase: 0,
+      num: w + 1,
+      weekStart, weekEnd,
+      psTopic,
+      krChapter: KR_CHAPTERS[krIdx] || null,
+      days,
+    });
+
+    psTopicIdx++;
+    if (w % 4 === 3) krIdx = Math.min(krIdx + 1, KR_CHAPTERS.length - 1);
+  }
+
+  // PHASE 1: 22 weeks (oct 5 2026 → fév 28 2027)
+  const p1Start = new Date('2026-10-05');
+  const PHRACK_WEEKS = [
+    {title:'Phrack #49/14 — Smashing the Stack', tag:'binary'},
+    {title:'Smashing the Stack — exploit fonctionnel GDB', tag:'binary'},
+    {title:'Phrack #57/9 — Heap exploitation', tag:'binary'},
+    {title:'Heap — write primitive fonctionnelle', tag:'binary'},
+    {title:'Phrack #59/7 — Format Strings', tag:'binary'},
+    {title:'Format Strings — exploit fonctionnel', tag:'binary'},
+    {title:'Phrack #60/10 — Integer Overflows', tag:'binary'},
+    {title:'Integer Overflows — pratique', tag:'binary'},
+    {title:'Phrack #58/4 — Frame Pointer Overwrite', tag:'binary'},
+    {title:'ret2libc + pwntools', tag:'binary'},
+    {title:'Phrack #59/9 — Bypassing NX Stack', tag:'binary'},
+    {title:'ASLR bypass — pratique', tag:'binary'},
+    {title:'Shacham 2007 — ROP theory', tag:'binary'},
+    {title:'ROP chain 64-bit — ASLR+NX fonctionnelle', tag:'binary'},
+    {title:'Audit Wireshark dissector #1', tag:'binary'},
+    {title:'matteomalvica — Intro V8 debug env', tag:'binary'},
+    {title:'V8 debug env + reproduire CVE', tag:'binary'},
+    {title:'Review V8 + blog post', tag:'binary'},
+    {title:'Phrack #64 — exploration', tag:'binary'},
+    {title:'Phrack #65 — exploration', tag:'binary'},
+    {title:'Audit Wireshark dissector #2', tag:'binary'},
+    {title:'In-the-Wild Series — Project Zero (4 articles)', tag:'binary'},
+  ];
+
+  for (let w = 0; w < 22; w++) {
+    const weekStart = addDays(p1Start, w * 7);
+    const weekEnd = addDays(weekStart, 6);
+    const topic = PHRACK_WEEKS[w] || {title:`Phase 1 — Semaine ${w+1}`, tag:'binary'};
+
+    const days = [];
+    for (let d = 0; d < 7; d++) {
+      const date = addDays(weekStart, d);
+      const dow = date.getDay();
+      const tasks = buildDayTasksP1(dow, w, topic.title);
+      days.push({ date, dow, tasks });
+    }
+
+    weeks.push({
+      phase: 1,
+      num: w + 1,
+      weekStart, weekEnd,
+      psTopic: topic.title,
+      days,
+    });
+  }
+
+  return weeks;
+}
+
+function buildDayTasks(dow, weekIdx, psTopic, krIdx, jorIdx, fd0Idx) {
+  const tasks = [];
+  const kr = KR_CHAPTERS[krIdx] || KR_CHAPTERS[KR_CHAPTERS.length-1];
+  const jor = JORGENSEN_CHAPTERS[jorIdx] || JORGENSEN_CHAPTERS[JORGENSEN_CHAPTERS.length-1];
+  const fd0 = FD0_CHAPTERS[fd0Idx] || FD0_CHAPTERS[FD0_CHAPTERS.length-1];
+
+  if (dow === 1) { // Lundi
+    tasks.push({tag:'bb', label:'Bug Bounty', text:'2h minimum — HackerOne ou Intigriti. Même cible que semaine précédente.', note:'Matin — cerveau frais', cb:true});
+    tasks.push({tag:'ps', label:'PortSwigger', text:`Labs Apprentice : ${psTopic}`, note:'Après-midi — Burp ouvert, notes carnet', cb:false});
+    tasks.push({tag:'c', label:'K&R C', text:`Lecture ${kr} — max 20 pages`, note:'Soir', cb:true});
+    tasks.push({tag:'draw', label:'Dessin', text:'Mot du jour → 5 formes dans le carnet', note:'Soir optionnel', cb:true});
+  }
+  else if (dow === 2) { // Mardi
+    tasks.push({tag:'ps', label:'PortSwigger', text:`Cours complet : ${psTopic} — lire sans ouvrir Burp`, note:'Matin — théorie pure', cb:false});
+    tasks.push({tag:'c', label:'K&R C', text:`Exercices ${kr} — compiler, tester, GDB`, note:'Après-midi', cb:true});
+    tasks.push({tag:'draw', label:'Dessin', text:'Carnet libre ou exercice du livre', note:'Soir', cb:true});
+  }
+  else if (dow === 3) { // Mercredi
+    tasks.push({tag:'bb', label:'Bug Bounty', text:'2h — même cible. Poursuite recon ou exploitation.', note:'Matin', cb:true});
+    tasks.push({tag:'ps', label:'PortSwigger', text:`Labs Practitioner : ${psTopic}`, note:'Après-midi', cb:false});
+    tasks.push({tag:'asm', label:'Assembly', text:`Jorgensen — ${jor}`, note:'Soir', cb:true});
+  }
+  else if (dow === 4) { // Jeudi
+    tasks.push({tag:'ps', label:'PortSwigger', text:`Labs restants ${psTopic} ou article veille`, note:'Matin', cb:false});
+    tasks.push({tag:'veille', label:'Veille', text:'1 article de ta liste lu + noté', note:'Si labs PS terminés', cb:true});
+    tasks.push({tag:'asm', label:'Assembly', text:`Jorgensen — ${jor} (suite)`, note:'Après-midi', cb:true});
+    tasks.push({tag:'draw', label:'Dessin', text:'Carnet — exercice ou libre', note:'Soir', cb:true});
+  }
+  else if (dow === 5) { // Vendredi
+    tasks.push({tag:'bb', label:'Bug Bounty', text:'2h — documenter ce que tu as trouvé / tenté cette semaine', note:'Matin', cb:true});
+    tasks.push({tag:'rev', label:'Review ✦', text:`Rédiger + publier review sur tednoob17.github.io`, note:'Après-midi OBLIGATOIRE — 400–600 mots. Rien d\'autre.', cb:true});
+    tasks.push({tag:'expert', label:'Lab Expert', text:`Tenter 1 lab Expert PortSwigger : ${psTopic}`, note:'Si énergie après review', cb:true});
+  }
+  else if (dow === 6) { // Samedi
+    tasks.push({tag:'asm', label:'Assembly', text:`Jorgensen — session longue : ${jor}`, note:'Matin', cb:true});
+    tasks.push({tag:'ps', label:'PortSwigger', text:'Labs bonus ou révision semaine', note:'Après-midi si énergie', cb:false});
+    tasks.push({tag:'draw', label:'Dessin', text:'Session longue 2h — carnet ou livre dessin', note:'Soir', cb:true});
+  }
+  else if (dow === 0) { // Dimanche
+    tasks.push({tag:'fw', label:'From Day 0', text:`Lecture ${fd0} — rythme lent`, note:'Matin', cb:true});
+    tasks.push({tag:'draw', label:'Dessin', text:'Sketchbook libre — pas de contrainte', note:'Après-midi', cb:true});
+  }
+
+  return tasks;
+}
+
+function buildDayTasksP1(dow, weekIdx, topic) {
+  const tasks = [];
+  if (dow === 1) {
+    tasks.push({tag:'bb', label:'Bug Bounty', text:'2h — cible choisie Phase 1', note:'Matin', cb:true});
+    tasks.push({tag:'ps', label:'Binary', text:`${topic} — lecture`, note:'Après-midi', cb:false});
+    tasks.push({tag:'c', label:'K&R', text:'Révision / exercices avancés', note:'Soir', cb:true});
+    tasks.push({tag:'draw', label:'Dessin', text:'Carnet quotidien', note:'', cb:true});
+  }
+  else if (dow === 2) {
+    tasks.push({tag:'ps', label:'Binary', text:`${topic} — pratique GDB/pwntools`, note:'Matin + après-midi', cb:false});
+    tasks.push({tag:'draw', label:'Dessin', text:'Carnet', note:'Soir', cb:true});
+  }
+  else if (dow === 3) {
+    tasks.push({tag:'bb', label:'Bug Bounty', text:'2h — même cible', note:'Matin', cb:true});
+    tasks.push({tag:'asm', label:'Binary', text:'Exploit fonctionnel ou audit Wireshark', note:'Après-midi', cb:true});
+    tasks.push({tag:'expert', label:'Lab Expert', text:'1 lab Expert PortSwigger ou pwn.college', note:'Soir', cb:true});
+  }
+  else if (dow === 4) {
+    tasks.push({tag:'veille', label:'Veille', text:'Article technique lu + noté', note:'Matin', cb:true});
+    tasks.push({tag:'asm', label:'Binary', text:`${topic} — approfondissement`, note:'Après-midi', cb:true});
+    tasks.push({tag:'draw', label:'Dessin', text:'Carnet', note:'Soir', cb:true});
+  }
+  else if (dow === 5) {
+    tasks.push({tag:'bb', label:'Bug Bounty', text:'2h — documentation semaine', note:'Matin', cb:true});
+    tasks.push({tag:'rev', label:'Review / Blog Post ✦', text:'Rédiger + publier blog post technique sur tednoob17.github.io', note:'Après-midi OBLIGATOIRE', cb:true});
+  }
+  else if (dow === 6) {
+    tasks.push({tag:'asm', label:'Binary', text:'Session longue — exploit complet', note:'Matin', cb:true});
+    tasks.push({tag:'draw', label:'Dessin', text:'Session 2h', note:'Après-midi', cb:true});
+  }
+  else if (dow === 0) {
+    tasks.push({tag:'fw', label:'From Day 0', text:'Chapitre + rédaction review', note:'Matin', cb:true});
+    tasks.push({tag:'draw', label:'Dessin', text:'Libre', note:'', cb:true});
+  }
+  return tasks;
+}
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+const STORAGE_KEY = 'secu_prog_v2';
+let state = {};
+let totalTasks = 0;
+let allWeeks = [];
+
+function loadState() {
+  try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { state = {}; }
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function taskId(weekIdx, dayIdx, taskIdx) {
+  return `w${weekIdx}_d${dayIdx}_t${taskIdx}`;
+}
+
+function isDone(id) { return !!state[id]; }
+
+function toggleTask(id) {
+  state[id] = !state[id];
+  if (!state[id]) delete state[id];
+  saveState();
+  updateCounters();
+  // update individual task UI
+  const el = document.getElementById('task-' + id);
+  if (el) {
+    el.classList.toggle('done', !!state[id]);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// COUNTERS
+// ═══════════════════════════════════════════════
+function countCheckboxTasks() {
+  let total = 0;
+  allWeeks.forEach((week, wi) => {
+    week.days.forEach((day, di) => {
+      day.tasks.forEach((task, ti) => {
+        if (task.cb) total++;
+      });
+    });
+  });
+  return total;
+}
+
+function countDoneTasks() {
+  return Object.values(state).filter(Boolean).length;
+}
+
+function updateCounters() {
+  const done = countDoneTasks();
+  const total = totalTasks;
+  const remaining = total - done;
+  const pct = total > 0 ? (done / total) * 100 : 0;
+
+  document.getElementById('gc-remaining').textContent = remaining;
+  document.getElementById('gc-total-display').textContent = `/ ${total}`;
+  document.getElementById('gc-bar-fill').style.width = pct + '%';
+
+  // Update week progress bars
+  allWeeks.forEach((week, wi) => {
+    let wTotal = 0, wDone = 0;
+    week.days.forEach((day, di) => {
+      day.tasks.forEach((task, ti) => {
+        if (!task.cb) return;
+        wTotal++;
+        if (isDone(taskId(wi, di, ti))) wDone++;
+      });
+    });
+    const el = document.getElementById(`wp-fill-${wi}`);
+    const et = document.getElementById(`wp-text-${wi}`);
+    if (el) el.style.width = wTotal > 0 ? (wDone/wTotal*100)+'%' : '0%';
+    if (et) et.textContent = `${wDone}/${wTotal}`;
+
+    // Phase progress
+    updatePhaseProgress();
+  });
+}
+
+function updatePhaseProgress() {
+  [0,1,2,3].forEach(p => {
+    let total = 0, done = 0;
+    allWeeks.forEach((week, wi) => {
+      if (week.phase !== p) return;
+      week.days.forEach((day, di) => {
+        day.tasks.forEach((task, ti) => {
+          if (!task.cb) return;
+          total++;
+          if (isDone(taskId(wi, di, ti))) done++;
+        });
+      });
+    });
+    const fill = document.getElementById(`phase-prog-${p}`);
+    const lbl = document.getElementById(`phase-done-${p}`);
+    if (fill) fill.style.width = total > 0 ? (done/total*100)+'%' : '0%';
+    if (lbl) lbl.textContent = `${done}/${total}`;
+  });
+}
+
+// ═══════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════
+const MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+function groupByMonth(weeks) {
+  const months = {};
+  weeks.forEach((week, wi) => {
+    const m = week.weekStart.getMonth();
+    const y = week.weekStart.getFullYear();
+    const key = `${y}-${m}`;
+    if (!months[key]) months[key] = {month:m, year:y, weeks:[], weekIndices:[]};
+    months[key].weeks.push(week);
+    months[key].weekIndices.push(wi);
+  });
+  return Object.values(months);
+}
+
+function renderPhase(phaseNum, globalWeekOffset) {
+  const phaseWeeks = allWeeks.filter(w => w.phase === phaseNum);
+  const globalIndices = allWeeks.map((w,i) => w.phase === phaseNum ? i : -1).filter(i => i >= 0);
+
+  const phaseNames = ['Web + Fondations C','Binary Exploitation','Audit + Fuzzing + V8','Kernel + Firmware'];
+  const phasePeriods = ['Avril → Septembre 2026','Octobre 2026 → Février 2027','Mars → Août 2027','Mi-2027 →'];
+  const phaseColors = ['phase0','phase1','phase2','phase3'];
+
+  // Count totals for this phase
+  let phTotal = 0;
+  globalIndices.forEach(wi => {
+    allWeeks[wi].days.forEach((day, di) => {
+      day.tasks.forEach(t => { if (t.cb) phTotal++; });
+    });
+  });
+
+  let html = `
+  <div class="phase-section${phaseNum === 0 ? ' visible' : ''}" id="phase-section-${phaseNum}">
+  <div class="phase-header ph${phaseNum}">
+    <div class="phase-tag">Phase 0${phaseNum}</div>
+    <div class="phase-title">${phaseNames[phaseNum]}</div>
+    <div class="phase-period">${phasePeriods[phaseNum]} · ${phaseWeeks.length} semaines</div>
+    <div class="phase-progress-wrap">
+      <div class="phase-prog-bar">
+        <div class="phase-prog-fill" id="phase-prog-${phaseNum}" style="width:0%"></div>
+      </div>
+      <div class="phase-prog-label">
+        <span class="phase-done-count" id="phase-done-${phaseNum}">0/${phTotal}</span> tâches
+      </div>
+    </div>
+  </div>
+  `;
+
+  if (phaseNum >= 2) {
+    html += `<div class="empty-phase"><span>🔒</span>Phase ${phaseNum} — débloquée après Phase ${phaseNum-1}<br><small style="color:var(--text3)">Le contenu sera détaillé semaine par semaine quand tu y arriveras.</small></div>`;
+    html += `</div>`;
+    return html;
+  }
+
+  // Group by month
+  const monthGroups = groupByMonth(phaseWeeks);
+
+  monthGroups.forEach(mg => {
+    const monthName = MONTHS_FR[mg.month];
+    html += `
+    <div class="month-block">
+      <div class="month-label">${monthName} <span class="month-year">${mg.year}</span></div>
+      <div class="month-sep"></div>
+    `;
+
+    mg.weeks.forEach((week, localWi) => {
+      const wi = globalIndices[phaseWeeks.indexOf(week)];
+      const tag = week.phase === 0 ? 'wt-ps' : 'wt-binary';
+      const tagLabel = week.phase === 0 ? 'PS' : 'BINARY';
+
+      html += `
+      <div class="week-block" id="week-${wi}">
+        <div class="week-head" onclick="toggleWeek(${wi})" id="week-head-${wi}">
+          <span class="week-num">S${String(week.num).padStart(2,'0')}</span>
+          <span class="week-title">${week.psTopic}</span>
+          <span class="week-dates">${fmtDisplay(week.weekStart)} – ${fmtDisplay(week.weekEnd)}</span>
+          <span class="week-topic ${tag}">${tagLabel}</span>
+          <div class="week-progress">
+            <div class="week-prog-bar"><div class="week-prog-fill" id="wp-fill-${wi}" style="width:0%"></div></div>
+            <span class="week-prog-text" id="wp-text-${wi}">0/0</span>
+          </div>
+          <span class="week-chevron" id="chev-${wi}">▼</span>
+        </div>
+        <div class="week-body" id="week-body-${wi}">
+      `;
+
+      week.days.forEach((day, di) => {
+        if (day.tasks.length === 0) return;
+        const dateStr = fmtDate(day.date);
+        const todayStr = fmtDate(new Date());
+        const isToday = dateStr === todayStr;
+        const isWeekend = day.dow === 0 || day.dow === 6;
+        const dowName = DAY_NAMES_FULL[day.dow];
+
+        html += `
+        <div class="day-row${isToday ? ' today' : ''}${isWeekend ? ' weekend' : ''}" id="day-${dateStr}">
+          <div class="day-meta">
+            <div class="day-name">${dowName}</div>
+            <div class="day-date">${fmtDisplay(day.date)}</div>
+            ${isToday ? `<div class="day-today-tag">◉ aujourd'hui</div>` : ''}
+          </div>
+          <div class="day-tasks">
+        `;
+
+        day.tasks.forEach((task, ti) => {
+          const tid = taskId(wi, di, ti);
+          const done = isDone(tid);
+          if (task.cb) {
+            html += `
+            <div class="task${done ? ' done' : ''}" id="task-${tid}" onclick="toggleTask('${tid}')">
+              <div class="task-cb"></div>
+              <div class="task-content">
+                <span class="task-tag tt-${task.tag}">${task.label}</span>
+                <div class="task-text">${task.text}</div>
+                ${task.note ? `<div class="task-note">${task.note}</div>` : ''}
+              </div>
+            </div>`;
+          } else {
+            html += `
+            <div class="task-info">
+              <span class="task-tag tt-${task.tag}">${task.label}</span>
+              <div class="task-text" style="display:inline;margin-left:6px">${task.text}</div>
+              ${task.note ? `<div class="task-note">${task.note}</div>` : ''}
+            </div>`;
+          }
+        });
+
+        html += `</div></div>`;
+      });
+
+      html += `</div></div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  html += `</div>`;
+  return html;
+}
+
+function toggleWeek(wi) {
+  const body = document.getElementById(`week-body-${wi}`);
+  const head = document.getElementById(`week-head-${wi}`);
+  const chev = document.getElementById(`chev-${wi}`);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  head.classList.toggle('open', !isOpen);
+}
+
+function showPhase(p) {
+  document.querySelectorAll('.phase-section').forEach(el => el.classList.remove('visible'));
+  const target = document.getElementById(`phase-section-${p}`);
+  if (target) target.classList.add('visible');
+  document.querySelectorAll('.pp').forEach(el => el.classList.toggle('active', parseInt(el.dataset.p) === p));
+}
+
+function goToday() {
+  const todayStr = fmtDate(new Date());
+  const el = document.getElementById('day-' + todayStr);
+  if (el) {
+    // Find which phase/week this belongs to, open it
+    let found = false;
+    allWeeks.forEach((week, wi) => {
+      if (found) return;
+      week.days.forEach(day => {
+        if (fmtDate(day.date) === todayStr) {
+          showPhase(week.phase);
+          // open the week
+          const body = document.getElementById(`week-body-${wi}`);
+          const head = document.getElementById(`week-head-${wi}`);
+          if (body && !body.classList.contains('open')) {
+            body.classList.add('open');
+            head.classList.add('open');
+          }
+          found = true;
+        }
+      });
+    });
+    setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'center'}), 100);
+  }
+}
+
+function confirmReset() {
+  if (confirm('Remettre toutes les cases à zéro ? Cette action est irréversible.')) {
+    state = {};
+    saveState();
+    // Re-render
+    init();
+  }
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+function init() {
+  loadState();
+  allWeeks = buildWeeks();
+  totalTasks = countCheckboxTasks();
+
+  let html = '';
+  for (let p = 0; p < 4; p++) {
+    html += renderPhase(p, 0);
+  }
+  document.getElementById('main-wrap').innerHTML = html;
+
+  updateCounters();
+
+  // Auto-open current week
+  const todayStr = fmtDate(new Date());
+  allWeeks.forEach((week, wi) => {
+    week.days.forEach(day => {
+      if (fmtDate(day.date) === todayStr) {
+        const body = document.getElementById(`week-body-${wi}`);
+        const head = document.getElementById(`week-head-${wi}`);
+        if (body) { body.classList.add('open'); head.classList.add('open'); }
+      }
+    });
+  });
+}
+
+init();
+</script>
+</body>
+</html>
