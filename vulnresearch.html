@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VULNLAB — Kernel & Browser Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@300;400;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a09;
+  --bg2: #111110;
+  --bg3: #1a1a18;
+  --border: #2a2a27;
+  --text: #e8e6df;
+  --muted: #6b6960;
+  --accent: #c8f542;
+  --accent2: #f54242;
+  --accent3: #4299f5;
+  --mono: 'Space Mono', monospace;
+  --display: 'Unbounded', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: .4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,10,9,.85);
+  backdrop-filter: blur(12px);
+}
+
+.nav-logo {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: .15em;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-voronoi {
+  position: absolute;
+  inset: 0;
+  opacity: .07;
+  pointer-events: none;
+}
+
+.hero-left {
+  padding: 80px 60px 80px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  border-right: 1px solid var(--border);
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+h1 {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: .95;
+  letter-spacing: -.02em;
+  margin-bottom: 32px;
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--accent);
+  display: block;
+}
+
+.hero-desc {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  padding: 14px 28px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .15s, box-shadow .15s;
+  display: inline-block;
+  font-weight: 700;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(200,245,66,.25);
+}
+
+.btn-ghost {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  padding: 13px 28px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color .15s, color .15s;
+  display: inline-block;
+}
+
+.btn-ghost:hover { border-color: var(--text); }
+
+.hero-right {
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-stat {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  transition: background .2s;
+  cursor: default;
+}
+
+.hero-stat:hover { background: var(--bg2); }
+
+.stat-num {
+  font-family: var(--display);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -.03em;
+}
+
+.stat-num span {
+  font-size: 18px;
+  color: var(--accent);
+  margin-left: 4px;
+}
+
+.stat-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--muted);
+  text-align: right;
+  max-width: 140px;
+  line-height: 1.5;
+}
+
+/* ── MARQUEE ── */
+.marquee-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 12px 0;
+}
+
+.marquee-inner {
+  display: inline-flex;
+  gap: 0;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-inner:hover { animation-play-state: paused; }
+
+.marquee-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .15em;
+  color: var(--muted);
+  padding: 0 40px;
+  border-right: 1px solid var(--border);
+}
+
+.marquee-item.accent { color: var(--accent); }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── SECTION ── */
+section {
+  padding: 120px 80px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  margin-bottom: 80px;
+  align-items: start;
+}
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: var(--muted);
+  padding-top: 6px;
+}
+
+h2 {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+h2 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* ── CLASS GRID ── */
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+}
+
+.class-card {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 28px;
+  cursor: pointer;
+  transition: background .2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.class-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform .25s;
+}
+
+.class-card:hover { background: var(--bg2); }
+.class-card:hover::after { transform: scaleX(1); }
+
+.class-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.class-name {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.class-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── BUG TABLE ── */
+#bugs { padding: 0 80px 120px; }
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.filter-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.bug-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bug-table thead th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--muted);
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bug-row {
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.bug-row:hover { background: var(--bg2); }
+.bug-row.open { background: var(--bg3); }
+
+.bug-row td {
+  padding: 20px 16px;
+  vertical-align: top;
+}
+
+.bug-cve {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent3);
+  white-space: nowrap;
+}
+
+.bug-name {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.bug-year {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.bug-type {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  padding: 4px 10px;
+  display: inline-block;
+}
+
+.type-kernel { background: rgba(66,153,245,.12); color: var(--accent3); }
+.type-browser { background: rgba(200,245,66,.1); color: var(--accent); }
+
+.level-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  padding: 4px 10px;
+  display: inline-block;
+}
+
+.level-1 { background: rgba(200,245,66,.08); color: #a0c83a; }
+.level-2 { background: rgba(245,185,66,.08); color: #d4a84b; }
+.level-3 { background: rgba(245,130,66,.1); color: #e0834a; }
+.level-4 { background: rgba(245,66,66,.12); color: var(--accent2); }
+
+.bug-expand {
+  padding: 0 16px 28px 16px;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.bug-expand.open { display: grid; }
+
+.expand-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+}
+
+.expand-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.expand-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #c8c6be;
+}
+
+.expand-tip {
+  grid-column: 1 / -1;
+  background: rgba(200,245,66,.04);
+  border: 1px solid rgba(200,245,66,.2);
+  padding: 20px 24px;
+}
+
+.expand-tip .expand-label { color: var(--accent); }
+
+/* ── QEMU SECTION ── */
+#qemu {
+  padding: 120px 80px;
+  border-bottom: 1px solid var(--border);
+}
+
+.qemu-intro {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  margin-bottom: 80px;
+  align-items: start;
+}
+
+.qemu-steps {
+  display: grid;
+  gap: 2px;
+}
+
+.qemu-step {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  overflow: hidden;
+  transition: border-color .2s;
+}
+
+.qemu-step:hover { border-color: rgba(200,245,66,.3); }
+
+.step-num {
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 32px;
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: .05em;
+  flex-shrink: 0;
+}
+
+.step-content {
+  padding: 28px 32px;
+}
+
+.step-title {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.code-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+  color: #b8d496;
+  overflow-x: auto;
+  white-space: pre;
+  margin-top: 12px;
+}
+
+.code-comment { color: var(--muted); font-style: italic; }
+.code-cmd { color: var(--accent); }
+.code-flag { color: var(--accent3); }
+.code-val { color: #f5a742; }
+
+.step-note {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-left: 2px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── SETUP MATRIX ── */
+.setup-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 60px;
+  border-top: 1px solid var(--border);
+  padding-top: 60px;
+}
+
+.setup-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 32px 28px;
+}
+
+.setup-target {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.setup-kernel {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.setup-distro {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.setup-bugs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.setup-bug-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setup-bug-item .cve { color: var(--accent3); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 60px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+
+.footer-logo {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .2em;
+  color: var(--accent);
+}
+
+.footer-note {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .08em;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  section, #bugs, #qemu { padding: 60px 24px; }
+  nav { padding: 16px 24px; }
+  .class-grid { grid-template-columns: 1fr 1fr; }
+  .setup-grid { grid-template-columns: 1fr; }
+  .section-header { grid-template-columns: 1fr; }
+  .qemu-intro { grid-template-columns: 1fr; }
+  .bug-expand.open { grid-template-columns: 1fr; }
+  .bug-table { font-size: 13px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">VULNLAB</a>
+  <ul class="nav-links">
+    <li><a href="#classes">CLASSES</a></li>
+    <li><a href="#bugs">BUGS</a></li>
+    <li><a href="#qemu">QEMU SETUP</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding: 0; border: none;">
+  <!-- Voronoi SVG background -->
+  <svg class="hero-voronoi" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+    <polygon points="0,0 280,120 180,380 0,450" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="280,120 680,0 520,280 180,380" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="680,0 1200,80 980,320 520,280" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="0,450 180,380 220,700 0,900" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="180,380 520,280 460,640 220,700" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="520,280 980,320 820,680 460,640" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="980,320 1200,80 1200,600 820,680" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="0,900 220,700 400,900" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="220,700 460,640 560,900 400,900" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="460,640 820,680 900,900 560,900" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <polygon points="820,680 1200,600 1200,900 900,900" fill="none" stroke="#c8f542" stroke-width=".5"/>
+    <circle cx="280" cy="120" r="3" fill="#c8f542" opacity=".6"/>
+    <circle cx="680" cy="0" r="3" fill="#c8f542" opacity=".4"/>
+    <circle cx="520" cy="280" r="3" fill="#c8f542" opacity=".6"/>
+    <circle cx="180" cy="380" r="3" fill="#c8f542" opacity=".5"/>
+    <circle cx="980" cy="320" r="3" fill="#c8f542" opacity=".4"/>
+    <circle cx="460" cy="640" r="3" fill="#c8f542" opacity=".6"/>
+    <circle cx="820" cy="680" r="3" fill="#c8f542" opacity=".5"/>
+    <circle cx="220" cy="700" r="3" fill="#c8f542" opacity=".4"/>
+  </svg>
+
+  <div class="hero-left">
+    <span class="hero-eyebrow">KERNEL &amp; BROWSER RESEARCH</span>
+    <h1>Learn vulns<em>from scratch.</em></h1>
+    <p class="hero-desc">
+      Un référentiel de bugs existants classifiés par type, du plus simple au plus complexe. Reproduis sans PoC, comprends le mécanisme, développe tes primitives.
+    </p>
+    <div class="hero-ctas">
+      <a href="#bugs" class="btn-primary">EXPLORER LES BUGS →</a>
+      <a href="#qemu" class="btn-ghost">SETUP QEMU</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stat">
+      <div class="stat-num">14<span>CVE</span></div>
+      <div class="stat-label">BUGS SÉLECTIONNÉS</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">6<span>cls</span></div>
+      <div class="stat-label">CLASSES DE VULNÉRABILITÉ</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">25<span>ans</span></div>
+      <div class="stat-label">2000 → 2025 COUVERTS</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">4<span>lvl</span></div>
+      <div class="stat-label">DU DÉBUTANT À L'EXPERT</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span class="marquee-item accent">KERNEL RESEARCH</span>
+    <span class="marquee-item">USE-AFTER-FREE</span>
+    <span class="marquee-item">RACE CONDITION</span>
+    <span class="marquee-item">BUFFER OVERFLOW</span>
+    <span class="marquee-item accent">BROWSER EXPLOITATION</span>
+    <span class="marquee-item">TYPE CONFUSION</span>
+    <span class="marquee-item">JIT COMPILER BUGS</span>
+    <span class="marquee-item">INTEGER OVERFLOW</span>
+    <span class="marquee-item accent">QEMU LAB</span>
+    <span class="marquee-item">HEAP SPRAY</span>
+    <span class="marquee-item">OUT-OF-BOUNDS</span>
+    <span class="marquee-item">LOCAL PRIVILEGE ESC.</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item accent">KERNEL RESEARCH</span>
+    <span class="marquee-item">USE-AFTER-FREE</span>
+    <span class="marquee-item">RACE CONDITION</span>
+    <span class="marquee-item">BUFFER OVERFLOW</span>
+    <span class="marquee-item accent">BROWSER EXPLOITATION</span>
+    <span class="marquee-item">TYPE CONFUSION</span>
+    <span class="marquee-item">JIT COMPILER BUGS</span>
+    <span class="marquee-item">INTEGER OVERFLOW</span>
+    <span class="marquee-item accent">QEMU LAB</span>
+    <span class="marquee-item">HEAP SPRAY</span>
+    <span class="marquee-item">OUT-OF-BOUNDS</span>
+    <span class="marquee-item">LOCAL PRIVILEGE ESC.</span>
+  </div>
+</div>
+
+<!-- CLASSES -->
+<section id="classes">
+  <div class="section-header">
+    <div class="section-num">01 / CLASSES</div>
+    <div>
+      <h2>Six classes.<br><em>Infiniment</em> de bugs.</h2>
+    </div>
+  </div>
+
+  <div class="class-grid">
+    <div class="class-card">
+      <span class="class-tag">CLASS 01 · DÉBUTANT</span>
+      <div class="class-name">Buffer Overflow</div>
+      <div class="class-desc">Écriture au-delà des limites d'un buffer alloué. Stack (ret addr) ou heap (metadata). Classe fondatrice de l'exploitation moderne.</div>
+    </div>
+    <div class="class-card">
+      <span class="class-tag">CLASS 02 · DÉBUTANT</span>
+      <div class="class-name">Integer Overflow</div>
+      <div class="class-desc">Débordement d'un entier qui tronque une valeur critique — souvent la taille d'une allocation. Mène typiquement à un heap overflow.</div>
+    </div>
+    <div class="class-card">
+      <span class="class-tag">CLASS 03 · INTERMÉDIAIRE</span>
+      <div class="class-name">Race Condition / TOCTOU</div>
+      <div class="class-desc">Fenêtre temporelle entre une vérification et une action. Exploitable via deux threads en concurrence sur une ressource partagée.</div>
+    </div>
+    <div class="class-card">
+      <span class="class-tag">CLASS 04 · INTERMÉDIAIRE</span>
+      <div class="class-name">Out-of-Bounds R/W</div>
+      <div class="class-desc">Accès à un indice hors des bornes allouées. En lecture : info leak. En écriture : corruption de données adjacentes.</div>
+    </div>
+    <div class="class-card">
+      <span class="class-tag">CLASS 05 · AVANCÉ</span>
+      <div class="class-name">Use-After-Free</div>
+      <div class="class-desc">Utilisation d'un pointeur vers de la mémoire déjà libérée. Nécessite de comprendre les allocateurs (slab, PartitionAlloc) pour être exploité.</div>
+    </div>
+    <div class="class-card">
+      <span class="class-tag">CLASS 06 · EXPERT</span>
+      <div class="class-name">Type Confusion / JIT</div>
+      <div class="class-desc">Le moteur JS utilise un mauvais type pour accéder à un objet. Les bugs JIT impliquent des élisions incorrectes de bounds checks par le compilateur.</div>
+    </div>
+    <div class="class-card">
+      <span class="class-tag">CLASS 07 · INTERMÉDIAIRE</span>
+      <div class="class-name">Logic Bug</div>
+      <div class="class-desc">Erreur de logique sans memory corruption. Ex : mauvaise initialisation de flags (Dirty Pipe). Impact souvent aussi critique que les bugs mémoire.</div>
+    </div>
+    <div class="class-card">
+      <span class="class-tag">CLASS 08 · AVANCÉ</span>
+      <div class="class-name">Parsing Bug</div>
+      <div class="class-desc">Vulnérabilité dans le traitement d'un format (image, archive, protocole). libwebp 2023 en est l'exemple moderne le plus étudié.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BUG TABLE -->
+<section id="bugs" style="padding: 0 80px 0; border: none;">
+  <div class="section-header" style="border-top: 1px solid var(--border); padding-top: 80px;">
+    <div class="section-num">02 / BUGS</div>
+    <div>
+      <h2>Référentiel<br><em>2006 → 2024</em></h2>
+    </div>
+  </div>
+</section>
+
+<div id="bugs">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterBugs('all', this)">TOUS</button>
+    <button class="filter-btn" onclick="filterBugs('kernel', this)">KERNEL</button>
+    <button class="filter-btn" onclick="filterBugs('browser', this)">BROWSER</button>
+    <button class="filter-btn" onclick="filterBugs('1', this)">DÉBUTANT</button>
+    <button class="filter-btn" onclick="filterBugs('2', this)">INTERMÉDIAIRE</button>
+    <button class="filter-btn" onclick="filterBugs('3', this)">AVANCÉ</button>
+    <button class="filter-btn" onclick="filterBugs('4', this)">EXPERT</button>
+  </div>
+
+  <table class="bug-table" id="bugTable">
+    <thead>
+      <tr>
+        <th>CVE</th>
+        <th>NOM</th>
+        <th>ANNÉE</th>
+        <th>TYPE</th>
+        <th>CLASSE</th>
+        <th>NIVEAU</th>
+      </tr>
+    </thead>
+    <tbody id="bugBody"></tbody>
+  </table>
+</div>
+
+<!-- QEMU -->
+<section id="qemu">
+  <div class="qemu-intro">
+    <div class="section-num">03 / QEMU LAB</div>
+    <div>
+      <h2>Setup<br><em>QEMU</em><br>complet.</h2>
+      <p style="color:var(--muted);font-size:15px;margin-top:20px;max-width:520px;line-height:1.7;">
+        Tout le process pour créer et gérer des VMs vulnérables avec QEMU sur Linux Mint 4GB RAM. Chaque étape est testée et correspond aux bugs du référentiel.
+      </p>
+    </div>
+  </div>
+
+  <div class="qemu-steps">
+
+    <div class="qemu-step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">INSTALLATION DE QEMU + OUTILS</div>
+        <div class="step-desc">Installe QEMU KVM avec les outils essentiels. Sur Mint la virtualisation KVM est disponible si ton CPU supporte VT-x/AMD-V (vérifie avec egrep).</div>
+        <div class="code-block"><span class="code-comment"># Vérifier le support matériel</span>
+<span class="code-cmd">egrep</span> <span class="code-flag">-c</span> <span class="code-val">'(vmx|svm)'</span> /proc/cpuinfo
+<span class="code-comment"># Résultat > 0 = KVM disponible</span>
+
+<span class="code-cmd">sudo apt install</span> <span class="code-flag">-y</span> <span class="code-val">qemu-kvm qemu-utils \
+  virtinst virt-manager libvirt-daemon-system \
+  cloud-image-utils gdb</span>
+
+<span class="code-cmd">sudo usermod</span> <span class="code-flag">-aG</span> kvm,libvirt $USER
+<span class="code-comment"># Re-login nécessaire après</span></div>
+        <div class="step-note">⚠ Avec 4GB RAM, alloue 1.5–2GB max par VM. Ne lance jamais deux VMs simultanément.</div>
+      </div>
+    </div>
+
+    <div class="qemu-step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">CRÉER UNE VM KERNEL VULNÉRABLE (ex: Ubuntu 16.04)</div>
+        <div class="step-desc">Télécharge une image cloud ou ISO minimal. Ubuntu 16.04 couvre Dirty COW, Baron Samedit et les bugs kernel 2016–2021.</div>
+        <div class="code-block"><span class="code-comment"># Télécharger une image cloud légère</span>
+<span class="code-cmd">wget</span> <span class="code-val">https://cloud-images.ubuntu.com/xenial/current/\
+xenial-server-cloudimg-amd64.img</span>
+
+<span class="code-comment"># Redimensionner le disque (10GB suffisent)</span>
+<span class="code-cmd">qemu-img</span> create <span class="code-flag">-f</span> qcow2 <span class="code-flag">-F</span> qcow2 <span class="code-flag">-b</span> \
+  xenial-server-cloudimg-amd64.img ubuntu1604.qcow2 <span class="code-val">10G</span>
+
+<span class="code-comment"># Créer le fichier cloud-init (user: vuln / pass: vuln)</span>
+<span class="code-cmd">cat</span> &gt; user-data.yaml &lt;&lt;EOF
+<span class="code-val">#cloud-config
+users:
+  - name: vuln
+    passwd: \$6\$rounds=4096\$salt\$hash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash</span>
+EOF
+<span class="code-cmd">cloud-localds</span> seed.iso user-data.yaml</div>
+      </div>
+    </div>
+
+    <div class="qemu-step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">LANCER LA VM (commande de base)</div>
+        <div class="step-desc">Lance la VM avec KVM activé, 1.5GB RAM, et SSH forward sur le port 2222. Adapte -smp selon ton nombre de cores.</div>
+        <div class="code-block"><span class="code-cmd">qemu-system-x86_64</span> \
+  <span class="code-flag">-enable-kvm</span> \
+  <span class="code-flag">-m</span> <span class="code-val">1536</span> \
+  <span class="code-flag">-smp</span> <span class="code-val">2</span> \
+  <span class="code-flag">-hda</span> ubuntu1604.qcow2 \
+  <span class="code-flag">-cdrom</span> seed.iso \
+  <span class="code-flag">-net</span> <span class="code-val">nic</span> \
+  <span class="code-flag">-net</span> <span class="code-val">user,hostfwd=tcp::2222-:22</span> \
+  <span class="code-flag">-nographic</span>
+
+<span class="code-comment"># Connexion SSH depuis l'hôte :</span>
+<span class="code-cmd">ssh</span> <span class="code-flag">-p</span> <span class="code-val">2222</span> vuln@localhost</div>
+        <div class="step-note">💡 <code>-nographic</code> = sortie console dans le terminal, pas de fenêtre GUI. Idéal pour économiser la RAM. Ctrl+A puis X pour quitter.</div>
+      </div>
+    </div>
+
+    <div class="qemu-step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title">KERNEL DEBUGGING AVEC GDB (mode kernel)</div>
+        <div class="step-desc">Pour les bugs kernel, ajoute les flags de debug à QEMU et attache gdb depuis l'hôte via le stub intégré. Indispensable pour observer le comportement réel.</div>
+        <div class="code-block"><span class="code-comment"># Lancer QEMU avec le stub gdb activé</span>
+<span class="code-cmd">qemu-system-x86_64</span> \
+  <span class="code-flag">-enable-kvm</span> \
+  <span class="code-flag">-m</span> <span class="code-val">1536</span> \
+  <span class="code-flag">-smp</span> <span class="code-val">2</span> \
+  <span class="code-flag">-hda</span> ubuntu1604.qcow2 \
+  <span class="code-flag">-net</span> <span class="code-val">nic -net user,hostfwd=tcp::2222-:22</span> \
+  <span class="code-flag">-s</span> \         <span class="code-comment"># ouvre gdbserver sur :1234</span>
+  <span class="code-flag">-S</span> \         <span class="code-comment"># pause au démarrage</span>
+  <span class="code-flag">-nographic</span>
+
+<span class="code-comment"># Dans un autre terminal, attacher gdb :</span>
+<span class="code-cmd">gdb</span> vmlinux       <span class="code-comment"># le binaire kernel avec symboles</span>
+(gdb) <span class="code-val">target remote :1234</span>
+(gdb) <span class="code-val">continue</span></div>
+        <div class="step-note">📦 Pour obtenir vmlinux avec symboles : installe <code>linux-image-$(uname -r)-dbgsym</code> dans la VM, puis copie via scp.</div>
+      </div>
+    </div>
+
+    <div class="qemu-step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <div class="step-title">ACTIVER KASAN (détection UAF/OOB en kernel)</div>
+        <div class="step-desc">Kernel Address Sanitizer est le meilleur outil pour observer des bugs UAF et OOB dans le kernel. Il faut recompiler le kernel avec KASAN activé.</div>
+        <div class="code-block"><span class="code-comment"># Dans la VM, récupérer les sources du kernel</span>
+<span class="code-cmd">apt-get source</span> linux-image-$(uname <span class="code-flag">-r</span>)
+<span class="code-cmd">cd</span> linux-*/
+
+<span class="code-comment"># Activer KASAN dans la config</span>
+<span class="code-cmd">scripts/config</span> <span class="code-flag">--enable</span> CONFIG_KASAN
+<span class="code-cmd">scripts/config</span> <span class="code-flag">--enable</span> CONFIG_KASAN_INLINE
+<span class="code-cmd">scripts/config</span> <span class="code-flag">--set-val</span> CONFIG_KASAN_SHADOW_OFFSET <span class="code-val">0xdffffc0000000000</span>
+
+<span class="code-comment"># Compiler (long, ~30min)</span>
+<span class="code-cmd">make</span> <span class="code-flag">-j$(nproc)</span> bzImage
+<span class="code-cmd">make</span> <span class="code-flag">-j$(nproc)</span> modules
+
+<span class="code-comment"># Boot sur le nouveau kernel dans QEMU</span>
+<span class="code-cmd">qemu-system-x86_64</span> <span class="code-flag">-kernel</span> arch/x86/boot/bzImage \
+  <span class="code-flag">-append</span> <span class="code-val">"root=/dev/sda console=ttyS0 kasan=1"</span> ...</div>
+      </div>
+    </div>
+
+    <div class="qemu-step">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <div class="step-title">TRANSFERT DE FICHIERS HÔTE ↔ VM</div>
+        <div class="step-desc">Pour copier tes scripts de reproduction dans la VM et récupérer les crashlogs.</div>
+        <div class="code-block"><span class="code-comment"># Copier un fichier vers la VM</span>
+<span class="code-cmd">scp</span> <span class="code-flag">-P</span> <span class="code-val">2222</span> repro.c vuln@localhost:~/
+
+<span class="code-comment"># Récupérer un fichier depuis la VM</span>
+<span class="code-cmd">scp</span> <span class="code-flag">-P</span> <span class="code-val">2222</span> vuln@localhost:~/crash.log ./
+
+<span class="code-comment"># Monter un dossier partagé via virtfs (plus rapide)</span>
+<span class="code-cmd">qemu-system-x86_64</span> ... \
+  <span class="code-flag">-virtfs</span> <span class="code-val">local,path=/home/toi/share,\
+mount_tag=host0,security_model=mapped,id=share</span>
+
+<span class="code-comment"># Dans la VM :</span>
+<span class="code-cmd">mount</span> <span class="code-flag">-t 9p -o trans=virtio</span> host0 /mnt/share</div>
+      </div>
+    </div>
+
+    <div class="qemu-step">
+      <div class="step-num">07</div>
+      <div class="step-content">
+        <div class="step-title">SNAPSHOTS — REVENIR À UN ÉTAT PROPRE</div>
+        <div class="step-desc">Les snapshots QEMU te permettent de sauvegarder l'état d'une VM et d'y revenir après un crash, sans refaire l'installation.</div>
+        <div class="code-block"><span class="code-comment"># Créer un snapshot (VM éteinte)</span>
+<span class="code-cmd">qemu-img</span> snapshot <span class="code-flag">-c</span> <span class="code-val">clean_state</span> ubuntu1604.qcow2
+
+<span class="code-comment"># Lister les snapshots</span>
+<span class="code-cmd">qemu-img</span> snapshot <span class="code-flag">-l</span> ubuntu1604.qcow2
+
+<span class="code-comment"># Restaurer un snapshot</span>
+<span class="code-cmd">qemu-img</span> snapshot <span class="code-flag">-a</span> <span class="code-val">clean_state</span> ubuntu1604.qcow2
+
+<span class="code-comment"># Snapshot "live" (VM allumée, via monitor)</span>
+<span class="code-comment"># Ajoute -monitor stdio au lancement puis :</span>
+(qemu) <span class="code-val">savevm before_test</span>
+(qemu) <span class="code-val">loadvm before_test</span></div>
+        <div class="step-note">💡 Workflow recommandé : installe la VM → snapshot "base" → installe les outils → snapshot "ready" → teste un bug → loadvm ready → teste suivant.</div>
+      </div>
+    </div>
+
+    <div class="qemu-step">
+      <div class="step-num">08</div>
+      <div class="step-content">
+        <div class="step-title">VM BROWSER (Firefox ancien)</div>
+        <div class="step-desc">Pour les bugs Firefox/Chromium anciens, une VM légère suffit. Utilise une image Debian minimal avec Xvfb pour le rendu sans GUI complète.</div>
+        <div class="code-block"><span class="code-comment"># Télécharger Firefox ancien via archive Mozilla</span>
+<span class="code-cmd">wget</span> <span class="code-val">"https://ftp.mozilla.org/pub/firefox/releases/\
+50.0/linux-x86_64/en-US/firefox-50.0.tar.bz2"</span>
+<span class="code-cmd">tar xf</span> firefox-50.0.tar.bz2
+
+<span class="code-comment"># Lancer avec affichage virtuel (économise RAM)</span>
+<span class="code-cmd">apt install</span> xvfb x11vnc
+<span class="code-cmd">Xvfb</span> :99 <span class="code-flag">-screen</span> 0 <span class="code-val">1024x768x24</span> &
+<span class="code-cmd">export</span> DISPLAY=:99
+<span class="code-cmd">./firefox/firefox</span> &
+
+<span class="code-comment"># Accès depuis l'hôte via VNC forwarded</span>
+<span class="code-cmd">qemu-system-x86_64</span> ... \
+  <span class="code-flag">-net</span> <span class="code-val">user,hostfwd=tcp::5900-:5900</span>
+<span class="code-comment"># Connecte un client VNC sur localhost:5900</span></div>
+        <div class="step-note">🔒 Ne jamais exposer ces VMs sur le réseau. Le forward localhost uniquement est suffisant et safe.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SETUP MATRIX -->
+  <div class="setup-grid">
+    <div class="setup-card">
+      <span class="setup-target">CIBLE RECOMMANDÉE 01</span>
+      <div class="setup-kernel">Ubuntu 16.04 LTS</div>
+      <div class="setup-distro">Linux kernel 4.4.x — xenial</div>
+      <div class="step-desc" style="font-size:13px;color:var(--muted);">Image cloud disponible. Couvre les bugs 2009–2021. Point d'entrée idéal pour commencer.</div>
+      <div class="setup-bugs">
+        <div class="setup-bug-item"><span>Dirty COW</span><span class="cve">CVE-2016-5195</span></div>
+        <div class="setup-bug-item"><span>Baron Samedit</span><span class="cve">CVE-2021-3156</span></div>
+        <div class="setup-bug-item"><span>AF_PACKET</span><span class="cve">CVE-2017-7308</span></div>
+      </div>
+    </div>
+    <div class="setup-card">
+      <span class="setup-target">CIBLE RECOMMANDÉE 02</span>
+      <div class="setup-kernel">Ubuntu 22.04 LTS</div>
+      <div class="setup-distro">Linux kernel 5.15.x — jammy</div>
+      <div class="step-desc" style="font-size:13px;color:var(--muted);">Pour les bugs modernes. Supporte KASAN nativement. Nécessite de downgrader manuellement le kernel.</div>
+      <div class="setup-bugs">
+        <div class="setup-bug-item"><span>Dirty Pipe</span><span class="cve">CVE-2022-0847</span></div>
+        <div class="setup-bug-item"><span>net/tls UAF</span><span class="cve">CVE-2023-0461</span></div>
+        <div class="setup-bug-item"><span>nf_tables UAF</span><span class="cve">CVE-2024-1086</span></div>
+      </div>
+    </div>
+    <div class="setup-card">
+      <span class="setup-target">CIBLE RECOMMANDÉE 03</span>
+      <div class="setup-kernel">Debian 8 (Jessie)</div>
+      <div class="setup-distro">Firefox ESR 45.x + Chromium 49</div>
+      <div class="step-desc" style="font-size:13px;color:var(--muted);">Image minimale pour les bugs browser 2014–2016. Xvfb pour le rendu. 512MB RAM suffisent.</div>
+      <div class="setup-bugs">
+        <div class="setup-bug-item"><span>V8 TypedArray OOB</span><span class="cve">CVE-2014-1705</span></div>
+        <div class="setup-bug-item"><span>V8 array.concat</span><span class="cve">CVE-2016-1646</span></div>
+        <div class="setup-bug-item"><span>Aurora (IE)</span><span class="cve">CVE-2010-0249</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">VULNLAB</span>
+  <span class="footer-note">USAGE ÉDUCATIF — ENVIRONNEMENTS ISOLÉS UNIQUEMENT</span>
+</footer>
+
+<script>
+const bugs = [
+  { cve:"CVE-2009-1185", name:"udev local privilege escalation", year:2009, type:"kernel", level:"1", levelLabel:"DÉBUTANT", class:"Race condition",
+    desc:"udev ne vérifiait pas que les messages Netlink venaient bien du kernel. Un process local pouvait envoyer des messages falsifiés et déclencher l'exécution de code en tant que root.",
+    impact:"LPE (Local Privilege Escalation)", env:"Ubuntu 8.10 / Debian Lenny",
+    why:"Bug simple conceptuellement : un problème d'authentification de source. Bon point d'entrée pour comprendre les race conditions sans toucher à la gestion mémoire.",
+    tip:"Lis le patch sur le dépôt udev, repère la ligne ajoutée (vérification uid=0), puis essaie de reproduire sans le patch dans une VM Ubuntu 8.10." },
+  { cve:"CVE-2010-3081", name:"compat_alloc_user_space() overflow", year:2010, type:"kernel", level:"1", levelLabel:"DÉBUTANT", class:"Integer overflow",
+    desc:"Sur les systèmes 64-bit avec support 32-bit (compat), compat_alloc_user_space() ne validait pas la taille passée, permettant un overflow d'entier suivi d'une corruption mémoire.",
+    impact:"LPE", env:"Linux kernel < 2.6.36, Fedora 13",
+    why:"Bon exemple de bug compat 32/64 bit — une catégorie fréquente. Le bug est localisé dans un seul fichier (arch/x86/ia32/ia32entry.S).",
+    tip:"Identifie la fonction, calcule à la main comment la valeur overflow, puis trace ce que ça écrase en mémoire avec gdb." },
+  { cve:"CVE-2016-5195", name:"Dirty COW", year:2016, type:"kernel", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Race condition (TOCTOU)",
+    desc:"La gestion de Copy-On-Write permettait d'écrire dans un mapping mémoire en lecture seule via une race condition entre deux threads manipulant /proc/self/mem et madvise().",
+    impact:"LPE + write arbitraire fichiers root", env:"Linux kernel < 4.8.3",
+    why:"CVE le plus célèbre de la décennie kernel. La race condition est subtile mais bien documentée. Énorme quantité de ressources.",
+    tip:"Commence par le write-up de Phil Oester. Reproduis la condition de course avec deux threads, un appelant write() et l'autre madvise(MADV_DONTNEED)." },
+  { cve:"CVE-2017-7308", name:"AF_PACKET packet_set_ring overflow", year:2017, type:"kernel", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Integer overflow → Heap overflow",
+    desc:"Dans le code des sockets AF_PACKET, packet_set_ring() ne validait pas correctement les paramètres de ring buffer, permettant un overflow d'entier suivi d'un heap overflow.",
+    impact:"LPE", env:"Linux kernel < 4.10.6",
+    why:"Illustre la chaîne classique integer overflow → heap corruption. L'exploitation passe par la structure de slab allocator, un concept fondamental.",
+    tip:"Lis le write-up d'Andrey Konovalov (Google). Concentre-toi sur comment l'overflow d'entier se propage dans kmalloc() et ce que ça permet d'écraser." },
+  { cve:"CVE-2021-3156", name:"Sudo Baron Samedit", year:2021, type:"kernel", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Heap buffer overflow",
+    desc:"Un heap overflow dans sudo lors du parsing des arguments (backslash en fin) permettait d'écraser des structures heap adjacentes et d'obtenir root sans avoir les droits sudo.",
+    impact:"LPE via sudo", env:"Toutes distros sudo < 1.9.5p2",
+    why:"Bug en espace utilisateur mais impact système total. Parfait pour étudier les heap overflows et la technique de heap shaping.",
+    tip:"Lance sudo avec '\\' en argument et observe le crash dans gdb. Analyse les structures heap avant/après avec pwndbg ou GEF." },
+  { cve:"CVE-2022-0847", name:"Dirty Pipe", year:2022, type:"kernel", level:"3", levelLabel:"AVANCÉ", class:"Logic bug (flags non initialisés)",
+    desc:"Un nouveau pipe_buffer pouvait hériter du flag PIPE_BUF_FLAG_CAN_MERGE d'un buffer précédent, permettant d'écrire dans des pages de cache en lecture seule.",
+    impact:"LPE via écrasement fichiers SUID", env:"Linux kernel 5.8 à 5.16.11",
+    why:"Découvert en cherchant une corruption de fichier. Illustre comment un bug de logique (pas de memory corruption) mène à un impact critique.",
+    tip:"Lis le write-up original de Max Kellermann sur son blog. Reproduis l'écriture dans un fichier read-only via splice() + write() sur un pipe." },
+  { cve:"CVE-2023-0461", name:"net/tls use-after-free", year:2023, type:"kernel", level:"4", levelLabel:"EXPERT", class:"Use-After-Free",
+    desc:"Dans kTLS, une mauvaise gestion du cycle de vie des sockets permettait un use-after-free sur les structures tls_context.",
+    impact:"LPE", env:"Linux kernel < 6.2",
+    why:"UAF kernel modernes sont la classe reine de l'exploitation kernel actuelle. Illustre les subtilités de lifetime management dans les sous-systèmes réseau.",
+    tip:"Commence par comprendre kTLS et le cycle de vie des socket structures. Utilise KASAN sur une VM pour voir le UAF se déclencher avant de lire le patch." },
+  { cve:"CVE-2024-1086", name:"nf_tables use-after-free", year:2024, type:"kernel", level:"4", levelLabel:"EXPERT", class:"Use-After-Free",
+    desc:"Dans Netfilter (nf_tables), nft_verdict_init() permettait de libérer et réutiliser un objet, menant à un UAF exploitable pour obtenir root via namespaces.",
+    impact:"LPE full-chain", env:"Linux kernel 3.15–6.8",
+    why:"Un des bugs kernel les plus exploités en 2024. Le write-up de Notselwyn est un chef-d'œuvre de documentation d'exploitation kernel moderne.",
+    tip:"Lis absolument le write-up de notselwyn sur GitHub avant tout. Comprends d'abord nf_tables (règles, sets, expressions) avant de regarder le bug." },
+  { cve:"CVE-2006-4655", name:"Firefox crypto.generateCRMFRequest overflow", year:2006, type:"browser", level:"1", levelLabel:"DÉBUTANT", class:"Buffer overflow (stack)",
+    desc:"La fonction JavaScript crypto.generateCRMFRequest() ne validait pas la longueur de ses paramètres, permettant un stack overflow contrôlé depuis JavaScript.",
+    impact:"RCE via page web", env:"Firefox 1.5 / SeaMonkey",
+    why:"Bug très simple : une API JS non bornée. Bon point d'entrée pour comprendre comment le JS interagit avec le C++ du moteur.",
+    tip:"Installe Firefox 1.5 dans ta VM QEMU. Appelle la fonction avec une string très longue et observe le crash dans un debugger." },
+  { cve:"CVE-2010-0249", name:"IE Aurora (Operation Aurora)", year:2010, type:"browser", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Use-After-Free (DOM)",
+    desc:"Un UAF dans la gestion des événements onmouseover d'IE permettait d'accéder à un objet DOM libéré. Exploité dans des attaques ciblées contre Google.",
+    impact:"RCE", env:"IE 6/7/8",
+    why:"Un des premiers UAF DOM médiatisés. La logique de libération des objets event handler est bien documentée dans des dizaines de write-ups.",
+    tip:"Le PoC original est public. Lis-le pour comprendre comment le DOM libère les objets avant de les référencer via les handlers d'événements." },
+  { cve:"CVE-2014-1705", name:"V8 out-of-bounds typed arrays", year:2014, type:"browser", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Out-of-Bounds R/W",
+    desc:"Le moteur V8 de Chrome ne vérifiait pas correctement les bornes lors d'opérations sur les TypedArrays, permettant une lecture/écriture hors des limites du buffer alloué.",
+    impact:"RCE renderer", env:"Chrome < 33.0.1750.152",
+    why:"Les bugs TypedArray sont une classe fondamentale de bugs JS engine. Ce bug est simple dans son principe : un index non borné.",
+    tip:"Lis le rapport Chromium. Essaie de déclencher l'OOB avec arr[arr.length + n] et compare avec les bounds checks des versions modernes." },
+  { cve:"CVE-2016-1646", name:"V8 array.concat type confusion", year:2016, type:"browser", level:"3", levelLabel:"AVANCÉ", class:"Type confusion",
+    desc:"Une type confusion dans Array.prototype.concat de V8 permettait de créer un tableau avec un type interne incorrect, ouvrant la voie à une lecture/écriture arbitraire.",
+    impact:"RCE renderer Chrome", env:"Chrome < 49.0.2623.108",
+    why:"La type confusion V8 est la classe dominante des bugs navigateurs modernes. Illustre comment une confusion de représentation interne se transforme en primitives.",
+    tip:"Lis le write-up de Choongwoo Han. Comprends d'abord la représentation interne V8 des tableaux (JSArray, FixedArray, Smi vs HeapObject) avant le bug." },
+  { cve:"CVE-2021-21220", name:"Chrome V8 TurboFan bounds check elision", year:2021, type:"browser", level:"4", levelLabel:"EXPERT", class:"JIT compiler bug",
+    desc:"Le compilateur JIT TurboFan élisait incorrectement des bounds checks sur les tableaux après certaines transformations d'optimisation. 0-day exploité in-the-wild.",
+    impact:"RCE renderer (0-day in-the-wild)", env:"Chrome < 89.0.4389.128",
+    why:"Les bugs JIT sont le sommet de la difficulté browser. L'élision de bounds checks par le compilateur d'optimisation demande de comprendre TurboFan en profondeur.",
+    tip:"Commence par le blog d'Exodus Intelligence sur TurboFan. Installe une version ancienne de Chrome dans une VM QEMU isolée — jamais sur ta machine principale." },
+  { cve:"CVE-2023-4863", name:"libwebp heap buffer overflow", year:2023, type:"browser", level:"4", levelLabel:"EXPERT", class:"Heap buffer overflow (parsing)",
+    desc:"Un heap overflow dans le décodage des images WebP (algorithme Huffman) affectait Chrome, Firefox, Safari et des dizaines d'autres apps. Exploité in-the-wild.",
+    impact:"RCE cross-platform", env:"Chrome < 116.0.5845.187, Firefox < 117.0.1",
+    why:"Cas d'étude sur comment un bug dans une lib tierce (libwebp) se propage à tout l'écosystème. Exemple de parsing bug complexe avec impact réel.",
+    tip:"Lis le write-up de Google Project Zero. Comprends le format WebP et le décodage Huffman avant de regarder le bug spécifique dans les sources libwebp." }
+];
+
+function renderTable(data) {
+  const tbody = document.getElementById('bugBody');
+  tbody.innerHTML = '';
+  data.forEach((b, i) => {
+    const tr = document.createElement('tr');
+    tr.className = 'bug-row';
+    tr.dataset.idx = i;
+    tr.innerHTML = `
+      <td class="bug-cve">${b.cve}</td>
+      <td class="bug-name">${b.name}</td>
+      <td class="bug-year">${b.year}</td>
+      <td><span class="bug-type type-${b.type}">${b.type.toUpperCase()}</span></td>
+      <td style="font-size:13px;color:var(--muted)">${b.class}</td>
+      <td><span class="level-badge level-${b.level}">${b.levelLabel}</span></td>`;
+    tr.addEventListener('click', () => toggleExpand(i, b, tr));
+    tbody.appendChild(tr);
+  });
+}
+
+let openIdx = null;
+let expandRow = null;
+
+function toggleExpand(i, b, tr) {
+  if (expandRow) { expandRow.remove(); expandRow = null; }
+  if (openIdx === i) { openIdx = null; document.querySelectorAll('.bug-row').forEach(r => r.classList.remove('open')); return; }
+  openIdx = i;
+  document.querySelectorAll('.bug-row').forEach(r => r.classList.remove('open'));
+  tr.classList.add('open');
+  const exp = document.createElement('tr');
+  exp.innerHTML = `<td colspan="6" style="padding:0">
+    <div class="bug-expand open">
+      <div class="expand-block">
+        <div class="expand-label">DESCRIPTION</div>
+        <div class="expand-text">${b.desc}</div>
+        <div style="margin-top:12px"><span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)">IMPACT — </span><span style="font-size:13px;color:#e0834a">${b.impact}</span></div>
+      </div>
+      <div class="expand-block">
+        <div class="expand-label">POURQUOI CE BUG ?</div>
+        <div class="expand-text">${b.why}</div>
+        <div style="margin-top:12px"><span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)">ENV — </span><span style="font-size:13px;color:var(--muted)">${b.env}</span></div>
+      </div>
+      <div class="expand-block expand-tip">
+        <div class="expand-label">CONSEIL DE REPRODUCTION</div>
+        <div class="expand-text">${b.tip}</div>
+      </div>
+    </div></td>`;
+  tr.after(exp);
+  expandRow = exp;
+}
+
+let filtered = [...bugs];
+function filterBugs(f, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  openIdx = null; if(expandRow){expandRow.remove();expandRow=null;}
+  if (f === 'all') filtered = [...bugs];
+  else if (f === 'kernel' || f === 'browser') filtered = bugs.filter(b => b.type === f);
+  else filtered = bugs.filter(b => b.level === f);
+  renderTable(filtered);
+}
+
+renderTable(bugs);
+</script>
+</body>
+</html>
