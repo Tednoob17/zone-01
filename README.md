@@ -1,6 +1,6 @@
 # zone-01
 
-Documentation et outils de la pédagogie Zone01 / 01-edu — tout est centralisé **dans ce dépôt**, pas besoin de cloner des repos externes.
+Documentation et outils de la pédagogie Zone01 / 01-edu tout est centralisé **dans ce dépôt**.
 
 ---
 
