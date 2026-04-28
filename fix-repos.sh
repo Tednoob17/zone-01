@@ -4,20 +4,6 @@ set -e
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$REPO_ROOT"
 
-echo "=== [1/5] Nettoyage des .git résiduels dans 01-edu-repos/ ==="
-find 01-edu-repos -mindepth 2 -maxdepth 2 -name ".git" -exec rm -rf {} + 2>/dev/null || true
-find 01-edu-repos -mindepth 2 -maxdepth 2 -name ".gitignore" -delete 2>/dev/null || true
-find 01-edu-repos -mindepth 2 -maxdepth 2 -name ".github" -exec rm -rf {} + 2>/dev/null || true
-echo "  ✓ .git / .gitignore / .github supprimés"
 
-echo ""
-echo "=== [2/5] Vérification des gitlinks dans l'index Git ==="
-GITLINKS=$(git ls-files --stage 01-edu-repos/ | grep "^160000" | wc -l)
-echo "  Gitlinks trouvés : $GITLINKS"
-
-echo ""
-echo "=== [3/5] Suppression des entrées de l'index Git ==="
-git rm --cached -r 01-edu-repos/ 2>/dev/null || true
-echo "  ✓ Index vidé pour 01-edu-repos/"
 
 
