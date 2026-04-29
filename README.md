@@ -1,6 +1,6 @@
 # zone-01
 
-Documentation et outils de la pédagogie Zone01 / 01-edu tout est centralisé **dans ce dépôt**.
+Documentation et outils de la pédagogie Zone01 / 01-edu 
 
 ---
 
@@ -118,6 +118,6 @@ docker build -t go_tests_training .
   Branch-AI/           # Branche spécialisation IA
   Branch-Blockchain/   # Branche Blockchain & Crypto
   UX-UI/               # Branche UX/UI
-  ...
+
 ```
 
