@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>#WebSec Level Eight</title>
+	<link rel="stylesheet" href="https://websec.fr/static/bootstrap.min.css" />
+</head>
+	<body>
+		<div id="main">
+			<div class="container">
+				<div class="row">
+					<h1>Level Eight <small> - Bypass Security Features </small></h1>
+				</div>
+				<div class="row">
+					<p class="lead">
+						This is our neat image-dumper service, that only allows <a href='https://en.wikipedia.org/wiki/GIF'>GIF</a>.<br>
+						You can check its source code <a href='source.php.html'>here</a> if you don't believe us.
+					</p>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<form action="../scoreboard/level08/index.html" method="post" enctype="multipart/form-data" class='form-inline'>
+						<div class='form-group'>
+							<input type="file" name="fileToUpload" id="fileToUpload">
+							<p class="help-block">Select image (.gif only) to upload</p>
+						</div>
+					    	<div class='form-group'>
+						    <input class='btn btn-default' type="submit" value="Upload Image" name="submit">
+						</div>
+					</form>
+				</div>	
+							</div>
+		</div>
+	</body>
+</html>

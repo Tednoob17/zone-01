@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="description" content="Web security challenges from the people of websec.">
+
+    <title>Websec </title>
+
+    <link href="https://websec.fr/static/bootstrap.min.css" rel="stylesheet"/>
+    <link href="static/websec.css" rel="stylesheet"/>
+
+    <script src="static/jquery.js" defer type="text/javascript"></script>
+    <script src="static/bootstrap.min.js" defer type="text/javascript"></script>
+    <script src="static/websec.js" defer type="text/javascript"></script>
+    
+    <link rel="icon" href="static/img/favicon.png" type="image/png">
+</head>
+
+<body>
+<header>
+<a href="index.html" class="no-over">
+<pre id="banner">
+                    '||
+... ... ...   ....   || ...   ....    ....    ....
+ ||  ||  |  .|...||  ||'  || ||. '  .|...|| .|   ''
+  ||| |||   ||       ||    | . '|.. ||      ||		-- because you can't resist a good: .php?id=
+   |   |     '|...'  '|...'  |'..|'  '|...'  '|...'
+</pre>
+</a>
+</header>
+    <noscript>
+        <!-- You're not trusting us to run arbitrary code in your browser, aren't you? -->
+        <form class="form-inline text-center" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                    <select title="chall_id" class="form-control" name="chall_id">
+                        <option value="14">level06</option>
+                            <option value="20">level16</option>
+                            <option value="26">level26</option>
+                            <option value="27">level27</option>
+                            <option value="1">level01</option>
+                            <option value="8">level04</option>
+                            <option value="18">level17</option>
+                            <option value="30">level25</option>
+                            <option value="31">level28</option>
+                            <option value="2">level02</option>
+                            <option value="9">level08</option>
+                            <option value="11">level11</option>
+                            <option value="15">level10</option>
+                            <option value="21">level20</option>
+                            <option value="22">level19</option>
+                            <option value="25">level24</option>
+                            <option value="28">level15</option>
+                            <option value="29">level22</option>
+                            <option value="32">level13</option>
+                            <option value="3">level03</option>
+                            <option value="10">level09</option>
+                            <option value="12">level12</option>
+                            <option value="16">level05</option>
+                            <option value="19">level18</option>
+                            <option value="23">level21</option>
+                            <option value="33">level30</option>
+                            <option value="34">level31</option>
+                            <option value="35">level33</option>
+                            <option value="5">level07</option>
+                            <option value="17">level14</option>
+                            <option value="24">level23</option>
+                            </select>
+                </div>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                    </div>
+                    <label class="sr-only" for="flag_noscript">flag</label>
+                    <input type="text" class="form-control" id="flag_noscript" name="flag" placeholder="flag" autofocus>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default">validate</button>
+        </form>
+    <br>
+    </noscript>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">websec</a>
+      </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+          
+            <li><a href="login.html">login/register</a></li>
+            <li><a href="scoreboard/index.html">scoreboard</a></li>
+          
+        <li><a href="faq.html">faq</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main><div class="modal" id="14" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level06/index.html" target="_blank">
+                                    <strong>level06</strong>
+                                </a>
+                                - 0 point- 128 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>URL Grabber to fetch remote files.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level06/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="14">
+                                                    <label class="sr-only" for="flag14">flag</label>
+                                                    <input type="text" class="form-control" id="flag14" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="20" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level16/index.html" target="_blank">
+                                    <strong>level16</strong>
+                                </a>
+                                - 0 point- 16 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Cryptography is hard, I hope I got this one right</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level16/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="20">
+                                                    <label class="sr-only" for="flag20">flag</label>
+                                                    <input type="text" class="form-control" id="flag20" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="26" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level26/index.html" target="_blank">
+                                    <strong>level26</strong>
+                                </a>
+                                - 0 point- 19 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Because php isn&#39;t the only language with an &#34;interesting&#34; design.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level26/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="26">
+                                                    <label class="sr-only" for="flag26">flag</label>
+                                                    <input type="text" class="form-control" id="flag26" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="27" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level27/index.html" target="_blank">
+                                    <strong>level27</strong>
+                                </a>
+                                - 0 point- 19 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Acunetix AcuSensor Technology is a new security technology that allows you to identify more vulnerabilities than a traditional Web Application Scanner, whilst generating less false positives. In addition it indicates exactly where in your code the vulnerability is and reports also debug information.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level27/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="27">
+                                                    <label class="sr-only" for="flag27">flag</label>
+                                                    <input type="text" class="form-control" id="flag27" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        
+    <div class="modal" id="1" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level01/index.html" target="_blank">
+                                    <strong>level01</strong>
+                                </a>
+                                - 1 point- 2661 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Nothing fancy</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level01/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="1">
+                                                    <label class="sr-only" for="flag1">flag</label>
+                                                    <input type="text" class="form-control" id="flag1" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="8" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level04/index.html" target="_blank">
+                                    <strong>level04</strong>
+                                </a>
+                                - 1 point- 1314 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Serialization is a pain!</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level04/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="8">
+                                                    <label class="sr-only" for="flag8">flag</label>
+                                                    <input type="text" class="form-control" id="flag8" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="18" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level17/index.html" target="_blank">
+                                    <strong>level17</strong>
+                                </a>
+                                - 1 point- 1206 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>I was told that guessing is fun.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level17/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="18">
+                                                    <label class="sr-only" for="flag18">flag</label>
+                                                    <input type="text" class="form-control" id="flag18" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="30" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level25/index.html" target="_blank">
+                                    <strong>level25</strong>
+                                </a>
+                                - 1 point- 883 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Nobody listen to techno, nor to wrap music.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level25/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="30">
+                                                    <label class="sr-only" for="flag30">flag</label>
+                                                    <input type="text" class="form-control" id="flag30" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="31" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level28/index.html" target="_blank">
+                                    <strong>level28</strong>
+                                </a>
+                                - 1 point- 475 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Guessing is fun!</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level28/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="31">
+                                                    <label class="sr-only" for="flag31">flag</label>
+                                                    <input type="text" class="form-control" id="flag31" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        
+    <div class="modal" id="2" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level02/index.html" target="_blank">
+                                    <strong>level02</strong>
+                                </a>
+                                - 2 points- 1571 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Nothing fancy, with a twist</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level02/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="2">
+                                                    <label class="sr-only" for="flag2">flag</label>
+                                                    <input type="text" class="form-control" id="flag2" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="9" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level08/index.html" target="_blank">
+                                    <strong>level08</strong>
+                                </a>
+                                - 2 points- 831 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Bypassing Security Checks</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level08/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="9">
+                                                    <label class="sr-only" for="flag9">flag</label>
+                                                    <input type="text" class="form-control" id="flag9" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="11" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level11/index.html" target="_blank">
+                                    <strong>level11</strong>
+                                </a>
+                                - 2 points- 521 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>It&#39;s not AS simple AS it looks</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level11/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="11">
+                                                    <label class="sr-only" for="flag11">flag</label>
+                                                    <input type="text" class="form-control" id="flag11" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="15" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level10/index.html" target="_blank">
+                                    <strong>level10</strong>
+                                </a>
+                                - 2 points- 577 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Integrity without knowledge is weak and useless, and knowledge without integrity is dangerous and dreadful.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level10/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="15">
+                                                    <label class="sr-only" for="flag15">flag</label>
+                                                    <input type="text" class="form-control" id="flag15" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="21" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level20/index.html" target="_blank">
+                                    <strong>level20</strong>
+                                </a>
+                                - 2 points- 331 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Call me maybe</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level20/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="21">
+                                                    <label class="sr-only" for="flag21">flag</label>
+                                                    <input type="text" class="form-control" id="flag21" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="22" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level19/index.html" target="_blank">
+                                    <strong>level19</strong>
+                                </a>
+                                - 2 points- 120 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Completely Automated Public Turing test to please Computers and break Humans Apart</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level19/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="22">
+                                                    <label class="sr-only" for="flag22">flag</label>
+                                                    <input type="text" class="form-control" id="flag22" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="25" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level24/index.html" target="_blank">
+                                    <strong>level24</strong>
+                                </a>
+                                - 2 points- 245 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Secure text storage</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level24/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="25">
+                                                    <label class="sr-only" for="flag25">flag</label>
+                                                    <input type="text" class="form-control" id="flag25" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="28" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level15/index.html" target="_blank">
+                                    <strong>level15</strong>
+                                </a>
+                                - 2 points- 557 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Declaration, instantiation, evaluation, creation, execution, … can&#39;t I just get a RCE?</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level15/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="28">
+                                                    <label class="sr-only" for="flag28">flag</label>
+                                                    <input type="text" class="form-control" id="flag28" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="29" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level22/index.html" target="_blank">
+                                    <strong>level22</strong>
+                                </a>
+                                - 2 points- 283 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>This is level to reflect on.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level22/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="29">
+                                                    <label class="sr-only" for="flag29">flag</label>
+                                                    <input type="text" class="form-control" id="flag29" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="32" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level13/index.html" target="_blank">
+                                    <strong>level13</strong>
+                                </a>
+                                - 2 points- 396 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Yet an other sqli challenge, or is it? Yes it is. Or… is it?</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level13/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="32">
+                                                    <label class="sr-only" for="flag32">flag</label>
+                                                    <input type="text" class="form-control" id="flag32" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        
+    <div class="modal" id="3" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level03/index.html" target="_blank">
+                                    <strong>level03</strong>
+                                </a>
+                                - 3 points- 585 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>ChaChaCha!</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level03/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="3">
+                                                    <label class="sr-only" for="flag3">flag</label>
+                                                    <input type="text" class="form-control" id="flag3" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="10" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level09/index.html" target="_blank">
+                                    <strong>level09</strong>
+                                </a>
+                                - 3 points- 315 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Remote Code Execution </p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level09/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="10">
+                                                    <label class="sr-only" for="flag10">flag</label>
+                                                    <input type="text" class="form-control" id="flag10" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="12" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level12/index.html" target="_blank">
+                                    <strong>level12</strong>
+                                </a>
+                                - 3 points- 220 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>This time, it&#39;s different.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level12/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="12">
+                                                    <label class="sr-only" for="flag12">flag</label>
+                                                    <input type="text" class="form-control" id="flag12" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="16" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level05/index.html" target="_blank">
+                                    <strong>level05</strong>
+                                </a>
+                                - 3 points- 385 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>The magical Shellpecker!</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level05/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="16">
+                                                    <label class="sr-only" for="flag16">flag</label>
+                                                    <input type="text" class="form-control" id="flag16" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="19" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level18/index.html" target="_blank">
+                                    <strong>level18</strong>
+                                </a>
+                                - 3 points- 243 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Can you please give it back? Thanks.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level18/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="19">
+                                                    <label class="sr-only" for="flag19">flag</label>
+                                                    <input type="text" class="form-control" id="flag19" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="23" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="https://websec.fr/level21/" target="_blank">
+                                    <strong>level21</strong>
+                                </a>
+                                - 3 points- 85 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>It&#39;s alwasy easier when you&#39;re admin.</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="https://websec.fr/level21/" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="23">
+                                                    <label class="sr-only" for="flag23">flag</label>
+                                                    <input type="text" class="form-control" id="flag23" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="33" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level30/index.html" target="_blank">
+                                    <strong>level30</strong>
+                                </a>
+                                - 3 points- 132 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Something tragic is about to happen…</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level30/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="33">
+                                                    <label class="sr-only" for="flag33">flag</label>
+                                                    <input type="text" class="form-control" id="flag33" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="34" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level31/index.html" target="_blank">
+                                    <strong>level31</strong>
+                                </a>
+                                - 3 points- 151 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Think outside the (sand)box</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level31/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="34">
+                                                    <label class="sr-only" for="flag34">flag</label>
+                                                    <input type="text" class="form-control" id="flag34" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="35" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level33/index.html" target="_blank">
+                                    <strong>level33</strong>
+                                </a>
+                                - 3 points- 98 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Yet another fine serialization-based challenge! </p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level33/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="35">
+                                                    <label class="sr-only" for="flag35">flag</label>
+                                                    <input type="text" class="form-control" id="flag35" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        
+    <div class="modal" id="5" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level07/index.html" target="_blank">
+                                    <strong>level07</strong>
+                                </a>
+                                - 4 points- 262 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Blacklist vs. SQLi</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level07/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="5">
+                                                    <label class="sr-only" for="flag5">flag</label>
+                                                    <input type="text" class="form-control" id="flag5" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="17" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level14/index.html" target="_blank">
+                                    <strong>level14</strong>
+                                </a>
+                                - 4 points- 204 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Because sometimes using eval is secure</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level14/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="17">
+                                                    <label class="sr-only" for="flag17">flag</label>
+                                                    <input type="text" class="form-control" id="flag17" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        <div class="modal" id="24" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">
+                                <a class="no-over" href="level23/index.html" target="_blank">
+                                    <strong>level23</strong>
+                                </a>
+                                - 4 points- 44 solves
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>shall we play a game?</p>
+                        </div>
+                        <nav class="modal-footer">
+                            <div  class="container-fluid">
+                                <div class="row">
+                                    <a class="btn btn-default col-md-2" role="button" href="level23/index.html" target="_blank">
+                                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                                        url
+                                    </a>
+                                    <div class="col-md-10">
+                                        <form class="form-inline" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                                                    </div>
+                                                    <input type="hidden" name="chall_id" value="24">
+                                                    <label class="sr-only" for="flag24">flag</label>
+                                                    <input type="text" class="form-control" id="flag24" name="flag" placeholder="flag">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">validate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        
+    <div class="container">
+            <h2 class="text-center category_title">
+                <a href="index.html#bonus"data-toggle="collapse" aria-expanded="false" aria-controls="bonus" id="bonus_">bonus</a>
+            </h2>
+            <div class="row" id="bonus">
+                    <div class="col-md-2" data-toggle="modal" data-target="#14">
+                        <a href="level06/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level06</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#20">
+                        <a href="level16/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level16</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#26">
+                        <a href="level26/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level26</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#27">
+                        <a href="level27/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level27</h3>
+                            </div>
+                        </a>
+                    </div>
+            </div>
+            <hr/>
+            <h2 class="text-center category_title">
+                <a href="index.html#babysteps"id="babysteps">babysteps</a>
+            </h2>
+            <div class="row">
+                    <div class="col-md-2" data-toggle="modal" data-target="#1">
+                        <a href="level01/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level01</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#8">
+                        <a href="level04/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level04</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#18">
+                        <a href="level17/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level17</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#30">
+                        <a href="level25/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level25</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#31">
+                        <a href="level28/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level28</h3>
+                            </div>
+                        </a>
+                    </div>
+            </div>
+            <hr/>
+            <h2 class="text-center category_title">
+                <a href="index.html#easy"id="easy">easy</a>
+            </h2>
+            <div class="row">
+                    <div class="col-md-2" data-toggle="modal" data-target="#2">
+                        <a href="level02/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level02</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#9">
+                        <a href="level08/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level08</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#15">
+                        <a href="level10/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level10</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#11">
+                        <a href="level11/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level11</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#32">
+                        <a href="level13/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level13</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#28">
+                        <a href="level15/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level15</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#22">
+                        <a href="level19/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level19</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#21">
+                        <a href="level20/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level20</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#29">
+                        <a href="level22/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level22</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#25">
+                        <a href="level24/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level24</h3>
+                            </div>
+                        </a>
+                    </div>
+            </div>
+            <hr/>
+            <h2 class="text-center category_title">
+                <a href="index.html#medium"id="medium">medium</a>
+            </h2>
+            <div class="row">
+                    <div class="col-md-2" data-toggle="modal" data-target="#3">
+                        <a href="level03/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level03</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#16">
+                        <a href="level05/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level05</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#10">
+                        <a href="level09/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level09</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#12">
+                        <a href="level12/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level12</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#19">
+                        <a href="level18/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level18</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#23">
+                        <a href="https://websec.fr/level21/" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level21</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#33">
+                        <a href="level30/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level30</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#34">
+                        <a href="level31/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level31</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#35">
+                        <a href="level33/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level33</h3>
+                            </div>
+                        </a>
+                    </div>
+            </div>
+            <hr/>
+            <h2 class="text-center category_title">
+                <a href="index.html#hard"id="hard">hard</a>
+            </h2>
+            <div class="row">
+                    <div class="col-md-2" data-toggle="modal" data-target="#5">
+                        <a href="level07/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level07</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#17">
+                        <a href="level14/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level14</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2" data-toggle="modal" data-target="#24">
+                        <a href="level23/index.html" class="thumbnail no-over chall-url-with-js">
+                            <div class="caption text-center">
+                                <h3>level23</h3>
+                            </div>
+                        </a>
+                    </div>
+            </div>
+            
+    </div>
+</main>
+
+<hr/>
+
+<footer class="text-center" id="footer">
+    © the people of <a href="irc://irc.overthewire.org/websec">websec</a> - ♥
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>#WebSec Level Ten</title>
+    <link rel="stylesheet" href="https://websec.fr/static/bootstrap.min.css"/>
+</head>
+<body>
+<div id="main">
+    <div class="container">
+        <div class="row">
+            <h1>LevelTen<small> - Awesome File Downloader.</small></h1>
+        </div>
+        <div class="row">
+            <p class="lead">
+		Here we have a <a href="../../level10/source.php.html">cool file downloader</a>. It allows you to download arbitrary files, even <mark>flag.php</mark>,
+		as long as it's a legit request!<br>
+                Thanks to an <mark>anonymous contributor</mark> for this challenge.
+            </p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <form name="username" method="post" class="form-inline">
+                    <div class="form-group">
+                        <label for="f">File</label>
+                        <span class='text-success'></span>
+                        <input type="text" class="form-control" required id="f" value="index.php" name="f">
+                    </div>
+                    <div class="form-group">
+                        <label for="hash">Secret hash</label>
+			<input type="text" class="form-control" required id="hash" value="b4382d64" name="hash" >
+                    </div>
+                <button type="submit" class="btn btn-default">Get!</button>
+            </form>
+        </div>
+            </div>
+</div>
+<link rel="stylesheet" href="../../static/bootstrap.min.js"/>
+</body>
+</html>

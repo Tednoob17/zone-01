@@ -1,0 +1,38 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>#WebSec Level Six</title>
+	<link rel="stylesheet" href="https://websec.fr/static/bootstrap.min.css" />
+	<!-- 23:10:41 <Mantis> I have locked down flag.php - It can only be accessed locally. -->
+</head>
+<body>	
+	<div id="main">
+		<div class="container">
+			<div class="row">
+				<h1>Level Six <small>- URL Grabber</small></h1>
+			</div>
+			<div class="row">
+				<p class="lead">
+					So we created a URL grabber which fetches remote URLs.<br />
+					Of course you can view the source code <a href="../../level06/source.php.html">here</a>
+				</p>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<label for="url">Enter the URL you wish to fetch:</label>
+				<form class="form-inline" action="index.html" method="post">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></div>
+							<input type="text" name="url" id="url" placeholder="http://example.com/file_to_get" class="form-control" required/>
+						</div>
+						<input type="submit" name="submit" value="Submit" class="form-control btn btn-default" />
+					</div>
+				</form>
+			</div>
+		</div>
+			</div>
+</body>
+</html>

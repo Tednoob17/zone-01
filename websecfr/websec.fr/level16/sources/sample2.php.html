@@ -1,0 +1,13 @@
+function fib($m)
+{
+    //$m = 11599;
+    $j = 0;
+    $k = 1;
+
+    for ($i=2; $i<=$m; $i++) {
+          $l = $k;
+          $k = $j + $k;
+          $j = $l;
+      }
+   return $k;
+}

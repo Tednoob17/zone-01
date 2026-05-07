@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>#WebSec Level One</title>
+	<link rel="stylesheet" href="https://websec.fr/static/bootstrap.min.css" />
+</head>
+	<body>
+		<div id="main">
+			<div class="container">
+				<div class="row">
+					<h1>LevelOne <small> - Select the user by ID you wish to view</small></h1>
+				</div>
+				<div class="row">
+					<p class="lead">
+						<a href="source.php.html">This application</a> is used to view the username by the given user ID,
+						it will return the corresponding username from the database.<br>
+					</p>
+				</div>
+			</div>
+			<div class="container">
+				
+				<div class="row">
+					<label for="user_id">Enter the user ID:</label>
+					<form name="username" method="post">
+						<div class="form-group col-md-2">
+							<input type="text" class="form-control" id="user_id" name="user_id" value="1" required>
+						</div>
+						<div class="col-md-2">
+							<input type="submit" class="form-control btn btn-default" placeholder="Submit!" name="submit">
+						</div>
+                        <input type="hidden" id="token" name="token" value="3b9edb81b198356d5ded0f88cb30fb28748a7d69">
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../static/bootstrap.min.js"></script>
+	</body>
+</html>

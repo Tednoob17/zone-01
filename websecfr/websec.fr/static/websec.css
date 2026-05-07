@@ -1,0 +1,86 @@
+.caption h3 {
+    margin: 10px;
+}
+
+.no-overflow {
+    overflow: hidden;
+}
+
+.no-over:hover {
+    text-decoration: none;
+}
+
+.inline {
+    display: inline;
+}
+
+/* Because Boostrap's blue glow is ugly as fuck */
+.form-control:focus {
+  box-shadow: none;
+}
+
+a, h3 {
+    color: #777;
+}
+
+a:hover {
+    color: #555;
+    text-decoration: none;
+}
+
+.category_title {
+    padding-bottom: 1%;
+}
+
+/* Completed challenges */
+.completed {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    height: 65px;
+}
+
+.completed span {
+    font-size: 0;
+    border: 1px solid #e7e7e7;
+    line-height: 16px;
+    transform: rotate(45deg);
+    width: 100px;
+    background: #777;
+    position: absolute;
+    top: 10px; right: -21px;
+}
+
+#banner{
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.navbar {
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 0;
+}
+
+footer {
+    padding-bottom:1em;
+}
+
+dt a{
+    color: #333;
+}
+
+.no_b_margin {
+    margin-bottom: 0;
+}
+
+/* level23 */
+.line_height_one {
+	line-height: 1;
+}

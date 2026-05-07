@@ -1,0 +1,59 @@
+   
+<!DOCTYPE html>
+<html>
+<head>
+        <title>#WebSec Level 16</title>
+        <link rel="stylesheet" href="https://websec.fr/static/bootstrap.min.css" />
+</head>
+        <body>
+                <div id="main">
+                        <div class="container">
+                                <div class="row">
+                                        <h1>Level Sixteen <small> - It's just a <a href="http://infosuck.org/0x007a.png">Fibonacci copy/paste</a></small></h1>
+                                </div>
+                                <div class="row">
+                                        <p class="lead">
+                                        Welcome to our fancy <a href="index.html">Fibonacci</a> number calculator.<br>
+                                        You can either use our samples, or write your own, but keep in mind
+					                    that we only run trusted code.<br>
+					                    You can of course check the source <a href="../../level16/source.php.html">here</a> and <a href="../../level16/sources/index.html">here</a>.
+                                        </p>
+                                </div>
+                        </div>
+                        <div class="container">
+                            <form method='post' class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <select name='sample' id="sample" class="form-control">
+                                            <option value=''>--</option>
+                                            <option value='1' selected>sample1.php</option>
+                                            <option value='2'>sample2.php</option>
+                                            <option value='3'>sample3.php</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="textpad" name="textpad" rows="16">
+function fib($n){
+    return (int)round(pow((sqrt(5)+1)/2, $n) / sqrt(5));
+}
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-5 col-sm-3">
+                                        <label for="n">N<sup>th</sup> Fibonacci number to compute:</label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input class="form-control" id="n" name="n" type='number' value="8">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input class="form-control btn btn-default" name="submit" value='Go' type='submit'>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                                        </div>
+        <script src="../../level16/javascript.js"></script>
+        </body>
+</html>

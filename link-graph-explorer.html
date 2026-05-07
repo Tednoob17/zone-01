@@ -7,170 +7,63 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0a0a0c;
-    --bg2: #121217;
-    --bg3: #1a1a23;
-    --border: rgba(0, 255, 65, 0.15);
-    --text: #e0e0e0;
-    --muted: #8892b0;
-    --accent: #00ff41;
-    --accent-glow: rgba(0, 255, 65, 0.3);
-    --green: #00ff41;
-    --blue: #008f11;
-    --orange: #f5a623;
-    --gray: #333333;
-    --radius: 4px;
+    --bg: #0f0f13; --bg2: #16161d; --bg3: #1e1e28;
+    --border: rgba(255,255,255,0.08); --text: #e8e8f0; --muted: #888899;
+    --accent: #7c5cbf; --green: #4caf7d; --blue: #4a90d9;
+    --orange: #f5a623; --gray: #555566; --radius: 12px;
   }
-  body { 
-    background: var(--bg); 
-    color: var(--text); 
-    font-family: 'JetBrains Mono', 'Fira Code', monospace; 
-    min-height: 100vh;
-    background-image: 
-      radial-gradient(circle at 50% 50%, rgba(0, 255, 65, 0.03) 0%, transparent 80%),
-      linear-gradient(rgba(18, 18, 23, 0.5) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(18, 18, 23, 0.5) 1px, transparent 1px);
-    background-size: 100% 100%, 20px 20px, 20px 20px;
-  }
-  header { 
-    padding: 24px 28px; 
-    display: flex; 
-    align-items: center; 
-    gap: 12px; 
-    border-bottom: 1px solid var(--border);
-    background: rgba(10, 10, 12, 0.8);
-    backdrop-filter: blur(10px);
-  }
-  header h1 { 
-    font-size: 18px; 
-    font-weight: 700; 
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    text-shadow: 0 0 10px var(--accent-glow);
-  }
-  header span { font-size: 11px; color: var(--muted); font-style: italic; }
-  .main { 
-    display: grid; 
-    grid-template-columns: 1fr 380px; 
-    gap: 20px; 
-    padding: 20px; 
-    height: calc(100vh - 80px); 
-  }
-  .left { display: flex; flex-direction: column; gap: 20px; }
-  .input-card { 
-    background: var(--bg2); 
-    border: 1px solid var(--border); 
-    padding: 20px; 
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    position: relative;
-  }
-  .input-card::before {
-    content: '';
-    position: absolute;
-    top: -1px; left: -1px; width: 10px; height: 10px;
-    border-top: 2px solid var(--accent); border-left: 2px solid var(--accent);
-  }
-  .input-row { display: flex; gap: 12px; }
-  input[type=text] { 
-    flex: 1; 
-    background: rgba(0,0,0,0.3); 
-    border: 1px solid var(--border); 
-    border-radius: 2px; 
-    padding: 12px 16px; 
-    color: var(--accent); 
-    font-family: inherit;
-    font-size: 14px; 
-    outline: none; 
-    transition: all .2s; 
-  }
-  input[type=text]:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
-  .btn { 
-    background: transparent; 
-    color: var(--accent); 
-    border: 1px solid var(--accent); 
-    padding: 12px 24px; 
-    font-size: 13px; 
-    font-weight: 600; 
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer; 
-    transition: all .2s; 
-  }
-  .btn:hover { background: var(--accent); color: var(--bg); box-shadow: 0 0 15px var(--accent-glow); }
-  #status { font-size: 11px; color: var(--accent); margin-top: 10px; opacity: 0.8; font-family: monospace; }
-  .progress-bar { height: 2px; background: rgba(0, 255, 65, 0.1); margin-top: 10px; }
-  .progress-fill { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-  
-  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
-  .stat { 
-    background: var(--bg2); 
-    border: 1px solid var(--border); 
-    padding: 12px; 
-    text-align: center; 
-    position: relative;
-  }
-  .stat-val { font-size: 20px; font-weight: 800; }
-  .stat-lbl { font-size: 9px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
-
-  #canvas-wrap { 
-    flex: 1; 
-    background: #050507; 
-    border: 1px solid var(--border); 
-    position: relative; 
-    overflow: hidden; 
-  }
-  #tooltip { 
-    background: rgba(10, 10, 12, 0.95); 
-    border: 1px solid var(--accent); 
-    padding: 12px; 
-    font-family: monospace;
-    color: var(--accent);
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-  }
-
-  .panel { 
-    background: var(--bg2); 
-    border: 1px solid var(--border); 
-    display: flex; 
-    flex-direction: column; 
-    flex: 1; 
-  }
-  .panel-header { padding: 16px; border-bottom: 1px solid var(--border); background: rgba(0, 255, 65, 0.03); }
-  .panel-header h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
-  
-  .filters { padding: 12px; gap: 6px; }
-  .flt { 
-    font-size: 10px; 
-    padding: 5px 12px; 
-    border-radius: 2px; 
-    border: 1px solid var(--border); 
-    background: transparent; 
-    color: var(--muted); 
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  .flt.active { border-color: var(--accent); color: var(--accent); background: rgba(0, 255, 65, 0.05); }
-
-  .lrow { 
-    padding: 16px; 
-    border-bottom: 1px solid rgba(0, 255, 65, 0.05);
-    border-left: 2px solid transparent;
-  }
-  .lrow:hover { background: rgba(0, 255, 65, 0.02); border-left-color: var(--accent); }
-  .ltitle { color: #fff; font-size: 13px; }
-  .lreason { color: var(--muted); font-size: 11px; }
-  .lsummary { 
-    background: rgba(0, 0, 0, 0.4); 
-    border: 1px solid rgba(0, 255, 65, 0.1);
-    color: #ccc;
-    font-family: monospace;
-  }
-  .lscore { border: 1px solid currentColor; }
-
-  .queue-panel { background: rgba(0,0,0,0.2); padding: 12px; }
-  #queue-list { border-color: var(--border); color: var(--accent); }
-  #queue-iframe { filter: invert(0.9) hue-rotate(120deg); border-color: var(--accent); }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+  header { padding: 20px 28px 0; display: flex; align-items: center; gap: 10px; }
+  header h1 { font-size: 17px; font-weight: 600; }
+  header span { font-size: 12px; color: var(--muted); }
+  .main { display: grid; grid-template-columns: 1fr 320px; gap: 14px; padding: 14px 28px 28px; height: calc(100vh - 60px); }
+  .left { display: flex; flex-direction: column; gap: 10px; }
+  .input-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+  .input-row { display: flex; gap: 8px; }
+  input[type=text] { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 9px 13px; color: var(--text); font-size: 14px; outline: none; transition: border-color .2s; }
+  input[type=text]:focus { border-color: var(--accent); }
+  input[type=text]::placeholder { color: var(--muted); }
+  .btn { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity .15s; white-space: nowrap; }
+  .btn:hover { opacity: 0.82; }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  #status { font-size: 12px; color: var(--muted); margin-top: 8px; min-height: 16px; }
+  .progress-bar { height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; margin-top: 8px; display: none; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width .3s; }
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+  .stat { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 9px; text-align: center; }
+  .stat-val { font-size: 18px; font-weight: 700; }
+  .stat-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: .4px; }
+  #canvas-wrap { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); position: relative; overflow: hidden; min-height: 0; }
+  canvas { position: absolute; top:0; left:0; }
+  #tooltip { position: absolute; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 9px 13px; font-size: 12px; pointer-events: none; display: none; max-width: 230px; z-index: 10; }
+  #tooltip .tt-title { font-weight: 600; margin-bottom: 3px; line-height: 1.4; }
+  #tooltip .tt-score { font-size: 11px; margin-bottom: 2px; }
+  #tooltip .tt-reason { font-size: 11px; color: var(--muted); }
+  #empty { position: absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--muted); gap:10px; pointer-events:none; }
+  #empty p { font-size:13px; text-align:center; line-height:1.6; opacity:.7; }
+  .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:11px; color:var(--muted); }
+  .leg { display:flex; align-items:center; gap:5px; }
+  .leg-dot { width:9px; height:9px; border-radius:50%; }
+  .right { display:flex; flex-direction:column; min-height:0; }
+  .panel { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); display:flex; flex-direction:column; flex:1; min-height:0; }
+  .panel-header { padding:12px 14px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .panel-header h2 { font-size:13px; font-weight:600; }
+  .panel-header span { font-size:11px; color:var(--muted); }
+  .filters { padding:8px 14px; display:flex; gap:5px; flex-wrap:wrap; border-bottom:1px solid var(--border); }
+  .flt { font-size:11px; padding:3px 9px; border-radius:99px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all .15s; }
+  .flt.active { background:rgba(124,92,191,.18); color:#b59de8; border-color:rgba(124,92,191,.4); }
+  .link-list { overflow-y:auto; flex:1; padding:2px 0; }
+  .link-list::-webkit-scrollbar { width:3px; }
+  .link-list::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+  .lrow { display:flex; align-items:flex-start; gap:9px; padding:9px 14px; cursor:pointer; transition:background .1s; }
+  .lrow:hover { background:rgba(255,255,255,.03); }
+  .lscore { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; }
+  .linfo { flex:1; min-width:0; }
+  .ltitle { font-size:12px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .lreason { font-size:10px; color:var(--muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .lopen { color:var(--accent); font-size:14px; opacity:.5; flex-shrink:0; text-decoration:none; transition:opacity .15s; }
+  .lopen:hover { opacity:1; }
+  .empty-list { padding:28px 14px; text-align:center; color:var(--muted); font-size:12px; }
 </style>
 </head>
 <body>
@@ -247,10 +140,9 @@ let readingQueue = [], currentQueueIndex = -1;const summaryCache = new Map();
 
 async function fetchWithFallback(url){
   const candidates=[
-    {name:'jina-reader', url:`https://r.jina.ai/${url}`},
-    {name:'corsproxy.io', url:`https://corsproxy.io/?${encodeURIComponent(url)}`},
     {name:'allorigins-raw', url:`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`},
-    {name:'allorigins-get', url:`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`}
+    {name:'allorigins-get', url:`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`},
+    {name:'jina-text-proxy', url:`https://r.jina.ai/http://${url.replace(/^https?:\/\//,'')}`}
   ];
   for(const p of candidates){
     try{
@@ -266,22 +158,15 @@ async function fetchWithFallback(url){
       continue;
     }
   }
-  throw new Error('CORS/Block');
+  try{ const direct=await fetch(url); if(direct.ok) return await direct.text(); throw new Error('Direct fetch HTTP '+direct.status);}catch(e){
+    throw new Error('Tous les proxies ont échoué. Vérifiez votre connexion, CORS ou utilisez un backend proxy. ('+e.message+')');
+  }
 }
 
 async function summarizeUrl(url){
   if(summaryCache.has(url)) return summaryCache.get(url);
   try{
-    const html = await fetchWithFallback(url);
-    
-    // Si c'est Jina Reader, le texte est déjà propre (Markdown)
-    if (html.startsWith('# ') || html.includes('\n')) {
-      const s = html.split('\n').filter(l => l.length > 50)[0] || html.slice(0, 400);
-      const clean = s.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1').replace(/[*#]/g, '').trim();
-      summaryCache.set(url, clean);
-      return clean;
-    }
-
+    const html=await fetchWithFallback(url);
     const parser=new DOMParser();
     const doc=parser.parseFromString(html,'text/html');
     const og=doc.querySelector('meta[property="og:description"]')?.getAttribute('content');
@@ -626,28 +511,17 @@ function renderList(links){
     const c=scoreColor(l.score);
     const safeUrl=l.url.replace(/'/g,'%27');
     const safeTitle=escHtml(l.title);
-    return `<div class="lrow" onclick="this.classList.toggle('expanded')">
+    return `<div class="lrow" onclick="window.open('${safeUrl}','_blank')">
       <div class="lscore" style="background:${c}22;color:${c}">${l.score}</div>
       <div class="linfo">
         <div class="ltitle">${safeTitle}</div>
         <div class="lreason">${escHtml(l.reason)}</div>
-        <div class="lsummary" id="sum-${btoa(safeUrl).slice(0,16)}">Chargement du résumé…</div>
       </div>
+      <button class="flt" onclick="event.stopPropagation();toggleSummary('${safeUrl}',this)">Résumé</button>
       <button class="flt add-queue" data-url='${safeUrl}' data-title='${safeTitle}' onclick="event.stopPropagation()">＋</button>
       <a class="lopen" href="${safeUrl}" target="_blank" onclick="event.stopPropagation()">↗</a>
     </div>`;
   }).join('');
-
-  // Déclencher le chargement des résumés pour les liens visibles dès qu'ils sont cliqués (via la class .expanded)
-  // Ou on peut simplement les charger au fur et à mesure.
-  links.forEach(l => {
-    const id = "sum-" + btoa(l.url.replace(/'/g,'%27')).slice(0,16);
-    summarizeUrl(l.url).then(s => {
-      const target = document.getElementById(id);
-      if(target) target.textContent = s;
-    });
-  });
-
   attachQueueButtons();
 }
 
@@ -655,44 +529,11 @@ function renderList(links){
 let currentMembranesView=false;
 function showMembranes(btn){ document.querySelectorAll('.flt').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); currentMembranesView=true; renderMembranes(clusterLinks(allLinks)); }
 function clusterLinks(links){ const clusters=[]; links.forEach(l=>{ const kws=extractKeywords(l.url,l.title); let placed=false; for(const c of clusters){ const inter=c.keywords.filter(k=>kws.includes(k)); if(inter.length>0){ c.links.push(l); c.keywords = Array.from(new Set(c.keywords.concat(kws))); placed=true; break; } } if(!placed){ clusters.push({keywords:kws,links:[l]}); } }); clusters.sort((a,b)=>b.links.length-a.links.length); return clusters; }
-async function renderMembranes(clusters){ const el=document.getElementById('link-list'); if(!clusters.length){el.innerHTML='<div class="empty-list">Aucun cluster</div>';return;} el.innerHTML=clusters.map((c,ci)=>{ const title = c.keywords[0]||c.links[0].title||('Cluster '+(ci+1)); return `<div class="membrane" data-index="${ci}" style="border-bottom:1px solid var(--border);padding:8px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><strong style="font-size:13px">${escHtml(title)}</strong> <span style="color:var(--muted);font-size:11px">(${c.links.length} liens)</span></div><div><button class="flt" onclick="toggleCluster(${ci})">Afficher</button></div></div><div class="cluster-summary" id="cluster-sum-${ci}" style="margin-top:8px;color:var(--muted);font-size:13px">Chargement du résumé…</div><div class="cluster-links" id="cluster-links-${ci}" style="margin-top:8px;display:none"></div></div>`; }).join('');
- for(const [i,c] of clusters.entries()){ const top=c.links[0]; summarizeUrl(top.url).then(s=>{ const sumEl=document.getElementById('cluster-sum-'+i); if(sumEl) sumEl.textContent = s; }); const linksEl=document.getElementById('cluster-links-'+i); if(linksEl) linksEl.innerHTML = c.links.map(l=>renderMembraneLink(l)).join(''); }
- attachQueueButtons();
+async function renderMembranes(clusters){ const el=document.getElementById('link-list'); if(!clusters.length){el.innerHTML='<div class="empty-list">Aucun cluster</div>';return;} el.innerHTML=clusters.map((c,ci)=>{ const title = c.keywords[0]||c.links[0].title||('Cluster '+(ci+1)); return `<div class="membrane" data-index="${ci}" style="border-bottom:1px solid var(--border);padding:8px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><strong style="font-size:13px">${escHtml(title)}</strong> <span style="color:var(--muted);font-size:11px">(${c.links.length} liens)</span></div><div><button class="flt" onclick="toggleCluster(${ci})">Afficher</button></div></div><div class="cluster-summary" id="cluster-sum-${ci}" style="margin-top:8px;color:var(--muted);font-size:13px">Chargement du résumé…</div><div class="cluster-links" id="cluster-links-${ci}" style="margin-top:8px"></div></div>`; }).join('');
+ for(const [i,c] of clusters.entries()){ const top=c.links[0]; summarizeUrl(top.url).then(s=>{ const sumEl=document.getElementById('cluster-sum-'+i); if(sumEl) sumEl.textContent = s; }); const linksEl=document.getElementById('cluster-links-'+i); if(linksEl) linksEl.innerHTML = c.links.map(l=>`<div class="lrow" style="cursor:default"><div class="lscore" style="background:${scoreColor(l.score)}22;color:${scoreColor(l.score)}">${l.score}</div><div class="linfo"><div class="ltitle">${escHtml(l.title)}</div><div class="lreason">${escHtml(l.reason)}</div></div><button class="flt" onclick="event.stopPropagation();toggleSummary('${l.url.replace(/'/g,'%27')}',this)">Résumé</button><a class="lopen" href="${l.url.replace(/'/g,'%27')}" target="_blank" onclick="event.stopPropagation()">↗</a></div>`).join(''); }
 }
 function toggleCluster(i){ const links=document.getElementById('cluster-links-'+i); if(!links) return; links.style.display = (links.style.display==='none'?'block':'none'); }
-
-function renderMembraneLink(l) {
-  const c = scoreColor(l.score);
-  const safeUrl = l.url.replace(/'/g, '%27');
-  const safeTitle = escHtml(l.title);
-  const id = "sum-mem-" + btoa(safeUrl).slice(0, 16);
-  
-  // Charger le résumé immédiatement pour les clusters
-  summarizeUrl(l.url).then(s => {
-    const target = document.getElementById(id);
-    if(target) target.textContent = s;
-  });
-
-  return `<div class="lrow" onclick="this.classList.toggle('expanded')">
-    <div class="lscore" style="background:${c}22;color:${c}">${l.score}</div>
-    <div class="linfo">
-      <div class="ltitle">${safeTitle}</div>
-      <div class="lreason">${escHtml(l.reason)}</div>
-      <div class="lsummary" id="${id}">Chargement du résumé…</div>
-    </div>
-    <button class="flt add-queue" data-url='${safeUrl}' data-title='${safeTitle}' onclick="event.stopPropagation()">＋</button>
-    <a class="lopen" href="${safeUrl}" target="_blank" onclick="event.stopPropagation()">↗</a>
-  </div>`;
-}
-
-async function renderMembranes(clusters){ const el=document.getElementById('link-list'); if(!clusters.length){el.innerHTML='<div class="empty-list">Aucun cluster</div>';return;} el.innerHTML=clusters.map((c,ci)=>{ const title = c.keywords[0]||c.links[0].title||('Cluster '+(ci+1)); return `<div class="membrane" data-index="${ci}" style="border-bottom:1px solid var(--border);padding:8px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><strong style="font-size:13px">${escHtml(title)}</strong> <span style="color:var(--muted);font-size:11px">(${c.links.length} liens)</span></div><div><button class="flt" onclick="toggleCluster(${ci})">Afficher</button></div></div><div class="cluster-summary" id="cluster-sum-${ci}" style="margin-top:8px;color:var(--muted);font-size:13px">Chargement du résumé…</div><div class="cluster-links" id="cluster-links-${ci}" style="margin-top:8px;display:none"></div></div>`; }).join('');
- for(const [i,c] of clusters.entries()){ const top=c.links[0]; summarizeUrl(top.url).then(s=>{ const sumEl=document.getElementById('cluster-sum-'+i); if(sumEl) sumEl.textContent = s; }); const linksEl=document.getElementById('cluster-links-'+i); if(linksEl) linksEl.innerHTML = c.links.map(l=>renderMembraneLink(l)).join(''); }
- attachQueueButtons();
-}
-
-function toggleSummary(url,btn){ 
-  // Remplacé par le clic sur la ligne entière (.lrow.expanded)
-}
+function toggleSummary(url,btn){ const container = btn.parentElement; let existing = container.querySelector('.summary-block'); if(existing){ existing.remove(); return; } const b=document.createElement('div'); b.className='summary-block'; b.style.marginTop='8px'; b.style.color='var(--muted)'; b.textContent='Chargement du résumé…'; container.appendChild(b); summarizeUrl(url).then(s=>{ b.textContent=s; }); }
 
 function attachQueueButtons(){
   const btns=document.querySelectorAll('.add-queue');

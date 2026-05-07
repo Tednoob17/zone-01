@@ -1,0 +1,34 @@
+<!-- Yet an other fine level, based on a real-world vuln discovered by @caillou -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>#WebSec Level Thirteen</title>
+    <link rel="stylesheet" href="https://websec.fr/static/bootstrap.min.css" />
+</head>
+    <body>
+        <div id="main">
+            <div class="container">
+                <div class="row">
+                    <h1>LevelThirteen <small> - A privilege offer</small></h1>
+                </div>
+                <div class="row">
+                    <p class="lead">
+											A simple tool to display privileges, so you can check them.
+											As usual, the source code can be found <a href="../../level13/source.php.html">here</a>.
+                    </p>
+                </div>
+            </div>
+            <div class="container">
+              <div class="row">
+                <form class="form-inline" method='get'>
+									Ids to display
+                  <input name='ids' class='form-control' type='text' value='1,2,3'>
+                  <input class="form-control btn btn-default" name="submit" value='Go' type='submit'>
+                </form>
+              </div>
+
+            </div>
+        </div>
+    </body>
+</html>

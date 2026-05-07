@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="description" content="Web security challenges from the people of websec.">
+
+    <title>Websec faq</title>
+
+    <link href="https://websec.fr/static/bootstrap.min.css" rel="stylesheet"/>
+    <link href="static/websec.css" rel="stylesheet"/>
+
+    <script src="static/jquery.js" defer type="text/javascript"></script>
+    <script src="static/bootstrap.min.js" defer type="text/javascript"></script>
+    <script src="static/websec.js" defer type="text/javascript"></script>
+    
+    <link rel="icon" href="static/img/favicon.png" type="image/png">
+</head>
+
+<body>
+<header>
+<a href="index.html" class="no-over">
+<pre id="banner">
+                    '||
+... ... ...   ....   || ...   ....    ....    ....
+ ||  ||  |  .|...||  ||'  || ||. '  .|...|| .|   ''
+  ||| |||   ||       ||    | . '|.. ||      ||		-- because you can't resist a good: .php?id=
+   |   |     '|...'  '|...'  |'..|'  '|...'  '|...'
+</pre>
+</a>
+</header>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">websec</a>
+      </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+          
+            <li><a href="login.html">login/register</a></li>
+            <li><a href="scoreboard/index.html">scoreboard</a></li>
+          
+        <li><a href="faq.html">faq</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+    <div class="container">
+        <dl>
+            <dt id="what_faq"><a href="faq.html#what_faq" class="question">What is this?</a></dt>
+            <dd>This is a <a href="https://en.wikipedia.org/wiki/Wargame_(hacking)">wargame</a> site providing various web-based challenges.
+                It was originally created because we felt that there was a lack of good and non-trivial web challenges available,
+                and also because we wanted to share with others interesting problems/issues that we have encountered.
+            </dd>
+
+            <hr/>
+
+            <dt id="how_faq"><a href="faq.html#how_faq" class="question">How to play?</a></dt>
+            <dd>
+                The goal for each challenge is to find the <mark>flag</mark>, a string of the form <mark>WEBSEC{…}</mark>
+		        by exploiting one (or more) web-related vulnerability. <i>Every</i> challenge is solvable.
+                Each levels runs under a specific user in an <b>empty chroot</b>, and comes with a <code>phpinfo.php</code>
+		(it won't help you, but some people asked for it).<br><br>
+
+                You can <a href="login.html">create an account</a> if you
+		wish to <a href="scoreboard/index.html">compete with others</a>, but it's not required.<br>
+            </dd>
+
+            <hr/>
+
+            <dt id="bonus_faq"><a href="faq.html#bonus_faq" class="question">What are the <em>bonus levels</em>?</a></dt>
+            <dd>
+                The bonus levels won't give you any points, and are usually <em>exotic ones</em>
+                about convoluted vulnerabilities, that aren't fitting very well with the rest of the game,
+                but that are still worth spending some time on them if you like to bang your head against walls.
+            </dd>
+
+            <hr/>
+
+            <dt id="rules_faq"><a href="faq.html#rules_faq" class="question">Rules</a></dt>
+            <dd>
+                <ol>
+                    <li>
+                        All kind of <a href="https://en.wikipedia.org/wiki/Denial-of-service_attack">DoS</a> are (lame and) forbidden.
+                        We're creating this wargame on our free time, for fun, so please don't ruin it, for us, and the other players ♥
+                    </li>
+                    <li>If you find an unintended bug or issue, please report it, you'll be credited.</li>
+                    <li>Please refrain from posting detailed public writeups.</li>
+                    <li>Don't be a dick.</li>
+                </ol>
+            </dd>
+
+            <hr/>
+
+            <dt id="accounts_faq"><a href="faq.html#accounts_faq" class="question">Accounts</a></dt>
+            <dd>
+                If you lost your password, you're likely screwed: we don't ask (nor want) email addresses,
+                so we can't send you reset tokens,<br>
+                and except if you manage to prove us that you're the entity behind a nick, we won't delete it
+                (although we might delete inactive or unused accounts), nor reset its password.<br><br>
+
+                <!--
+
+                But if you feel playful enough, send us the result of this script to change your password:
+
+                ```python
+                import hashlib, random, string, codecs
+
+                salt = ''.join(random.sample(string.ascii_letters, 8))
+                h = hashlib.pbkdf2_hmac('sha256', raw_input('Password: '), salt, 10000)
+                print('pbkdf2:sha256:%d$%s$%s' % (10000, salt, codecs.encode(h, 'hex_codec')))
+                ```
+
+                -->
+
+                We're keeping as much logs as your usual VPN provider.
+            </dd>
+
+            <hr/>
+
+            <dt id="contact_faq"><a href="faq.html#contact_faq" class="question">Contact and help</a></dt>
+            <dd>Everyone is likely hanging on the irc channel, <a href='irc://irc.overthewire.org/websec'>#websec</a>.
+                Even if you don't need help, you're welcome to drop by and <s>idle</s>
+                <abbr title="Make sure to check the rule 4 before.">socialize</abbr>.<br><br>
+
+                Also, despite the fact that we do our very best to produce a fun, challenging and interesting wargame,
+                we can't think about everything: if you think you found a way to improve something, don't be afraid to tell us.
+                Moreover, if you have an interesting idea that you want to transform into a level, we're interested too.
+            </dd>
+
+            <hr/>
+
+            <dt id="resources_faq"><a href="faq.html#resources_faq" class="question">Resources</a></dt>
+            <dd>
+                This is a short list of content that we like, and that might help you to get a better understanding of
+                the state of web security.<br><br>
+
+                <ul>
+                    <li><b>Books</b>
+                        <ul>
+                            <li><a href="http://lcamtuf.coredump.cx/tangled/">The Tangled Web: A Guide to Securing Modern Web
+                                Applications</a>,
+                                by <a href="http://lcamtuf.coredump.cx/">Michal (lcamtuf) Zalewski</a></li>
+                            <li><a href="http://mdsec.net/wahh/">The Web Application Hackers Handbook</a>,
+                                by <a href="https://twitter.com/portswigger">Dafydd Stuttard</a> (the creator of <a
+                                        href="https://portswigger.net/">Burp Suite</a>)
+                                and Marcus Pinto
+                            </li>
+                        </ul>
+                    </li>
+                    <br>
+                    <li><b>Online reading</b>
+                        <ul>
+                            <li>The database of <a href="http://websec.ca/kb/sql_injection">websec.ca</a> about sql injections</li>
+                            <li><a href="http://lcamtuf.coredump.cx/postxss/">Postcards from the post-XSS world
+								</a>, by Michal Zalewski</li>
+                            <li>The <a href="http://www.oauthsecurity.com/">OAuth Security Cheatsheet</a></li>
+                            <li>Pentestmonkey's <a href="http://pentestmonkey.net/category/cheat-sheet/sql-injection">cheat sheet</a> about sql injection</li>
+                            <li>Paragon initiative's <a href="https://paragonie.com/blog">blog</a> about common pitfalls in PHP</li>
+                            <li>The <abbr title="Mozilla Developer network">MDN</abbr> <a href="https://developer.mozilla.org/en-US/docs/Web/Security">section</a>
+                                about web security</li>
+                            <li><a href="http://www.phptherightway.com/">PHP the right way</a> is a nice initiative if you don't plan to
+                            transform your web application into a wargame.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </dd>
+
+            <hr/>
+
+            <dt id="friends_faq"><a href="faq.html#friends_faq" class="question">Friends, inspirations and greetings</a></dt>
+            <dd>
+                <ul>
+                    <li>Various CTF and wargames around the world, along with their organisers.</li>
+                    <li>Web application writers around the world, for being a prolific source of inspiration.</li>
+                    <li>Our great testers: blotus, cutz and nurfed.</li>
+                    <li>People on <a href='irc://irc.overthewire.org/websec'>#websec</a>.</li>
+                    <li>Friendly like-minded people:</li>
+                </ul>
+                <div class="container">
+                    
+                    
+                    <div class="col-md-1">
+                        <a href="http://www.darkscience.net" target="_blank">
+                            <img
+                                    src="static/img/darkscience.png"
+                                    class="img-responsive img-thumbnail"
+                                    alt="darkscience's logo"
+                            >
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-1">
+                        <a href="http://bostonkey.party" target="_blank">
+                            <img
+                                    src="static/img/bkp.png"
+                                    class="img-responsive img-thumbnail"
+                                    alt="bkp's logo"
+                            >
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-1">
+                        <a href="http://io.netgarage.org" target="_blank">
+                            <img
+                                    src="static/img/io.png"
+                                    class="img-responsive img-thumbnail"
+                                    alt="io's logo"
+                            >
+                        </a>
+                    </div>
+                    
+                </div>
+            </dd>
+        </dl>
+    </div>
+</main>
+
+<hr/>
+
+<footer class="text-center" id="footer">
+    © the people of <a href="irc://irc.overthewire.org/websec">websec</a> - ♥
+</footer>
+
+</body>
+</html>
