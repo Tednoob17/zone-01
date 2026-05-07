@@ -110,6 +110,7 @@
         <button class="flt" onclick="filterLinks('med',this)">🔵 Moyens</button>
         <button class="flt" onclick="filterLinks('low',this)">🟠 Faibles</button>
         <button class="flt" onclick="filterLinks('ext',this)">🌐 Externes</button>
+        <button class="flt" onclick="showMembranes(this)">🧩 Membranes</button>
       </div>
       <div class="link-list" id="link-list"><div class="empty-list">Aucun lien à afficher.</div></div>
           <div style="border-top:1px solid var(--border);padding:8px 14px;">
@@ -135,8 +136,58 @@
 </div>
 <script>
 let nodes=[], edges=[], animFrame=null, allLinks=[];
-let readingQueue = [], currentQueueIndex = -1;
+let readingQueue = [], currentQueueIndex = -1;const summaryCache = new Map();
 
+async function fetchWithFallback(url){
+  const candidates=[
+    {name:'allorigins-raw', url:`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`},
+    {name:'allorigins-get', url:`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`},
+    {name:'jina-text-proxy', url:`https://r.jina.ai/http://${url.replace(/^https?:\/\//,'')}`}
+  ];
+  for(const p of candidates){
+    try{
+      const r=await fetch(p.url);
+      if(!r.ok) throw new Error(`${p.name} HTTP ${r.status}`);
+      if(p.name==='allorigins-get'){
+        const j=await r.json(); if(j.contents) return j.contents; else throw new Error('no contents');
+      } else {
+        const txt=await r.text(); if(txt && txt.length>20) return txt; else throw new Error('empty body');
+      }
+    }catch(e){
+      console.warn('proxy failed',p.name,e.message);
+      continue;
+    }
+  }
+  try{ const direct=await fetch(url); if(direct.ok) return await direct.text(); throw new Error('Direct fetch HTTP '+direct.status);}catch(e){
+    throw new Error('Tous les proxies ont échoué. Vérifiez votre connexion, CORS ou utilisez un backend proxy. ('+e.message+')');
+  }
+}
+
+async function summarizeUrl(url){
+  if(summaryCache.has(url)) return summaryCache.get(url);
+  try{
+    const html=await fetchWithFallback(url);
+    const parser=new DOMParser();
+    const doc=parser.parseFromString(html,'text/html');
+    const og=doc.querySelector('meta[property="og:description"]')?.getAttribute('content');
+    const md=doc.querySelector('meta[name="description"]')?.getAttribute('content');
+    let text=og||md||'';
+    if(!text){
+      const p=Array.from(doc.querySelectorAll('p')).map(x=>x.textContent.trim()).filter(t=>t.length>60)[0];
+      if(p) text=p;
+    }
+    if(!text){
+      const t=doc.body ? doc.body.textContent.trim().replace(/\s+/g,' ').slice(0,400) : '';
+      text=t;
+    }
+    const s = (text||'Résumé indisponible').replace(/\s+/g,' ').trim().slice(0,400);
+    summaryCache.set(url,s);
+    return s;
+  }catch(e){
+    summaryCache.set(url,'Résumé indisponible ('+e.message+')');
+    return 'Résumé indisponible ('+e.message+')';
+  }
+}
 function getDomain(url){try{return new URL(url).hostname.replace(/^www\./,'');}catch{return '';}}
 
 function extractKeywords(url, title){
@@ -194,11 +245,33 @@ async function analyze(){
   setStatus('Récupération de la page via proxy…');
   setProgress(10);
   try{
-    const proxyUrl=`https://api.allorigins.win/get?url=${encodeURIComponent(rawUrl)}`;
-    const resp=await fetch(proxyUrl);
-    if(!resp.ok) throw new Error(`Proxy HTTP ${resp.status}`);
-    const data=await resp.json();
-    if(!data.contents) throw new Error('Page vide ou inaccessible');
+    async function fetchWithFallback(url){
+      const candidates=[
+        {name:'allorigins-raw', url:`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`},
+        {name:'allorigins-get', url:`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`},
+        {name:'jina-text-proxy', url:`https://r.jina.ai/http://${url.replace(/^https?:\/\//,'')}`}
+      ];
+      for(const p of candidates){
+        try{
+          const r=await fetch(p.url);
+          if(!r.ok) throw new Error(`${p.name} HTTP ${r.status}`);
+          if(p.name==='allorigins-get'){
+            const j=await r.json(); if(j.contents) return j.contents; else throw new Error('no contents');
+          } else {
+            const txt=await r.text(); if(txt && txt.length>20) return txt; else throw new Error('empty body');
+          }
+        }catch(e){
+          console.warn('proxy failed',p.name,e.message);
+          continue;
+        }
+      }
+      try{ const direct=await fetch(url); if(direct.ok) return await direct.text(); throw new Error('Direct fetch HTTP '+direct.status);}catch(e){
+        throw new Error('Tous les proxies ont échoué. Vérifiez votre connexion, CORS ou utilisez un backend proxy. ('+e.message+')');
+      }
+    }
+
+    const dataContents = await fetchWithFallback(rawUrl);
+    const data = { contents: dataContents };
     setProgress(40);
     setStatus('Extraction des liens…');
     const parser=new DOMParser();
@@ -222,16 +295,22 @@ async function analyze(){
     }
     setProgress(75);
     setStatus('Scoring des liens…');
-    const scored=rawLinks.map(l=>({
-      title:(l.anchor.slice(0,60)||getDomain(l.url)),
-      url:l.url,
-      score:scoreLink(l,pageKeywords,rawUrl,pageTitle),
-      reason:reasonForScore(scoreLink(l,pageKeywords,rawUrl,pageTitle),l,pageKeywords),
-      isExternal:getDomain(l.url)!==getDomain(rawUrl)
-    }))
-    .filter(l=>l.score>0&&l.title.length>1)
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,60);
+    // compute raw scores, then normalize to reduce many 100% scores
+    const withRaw = rawLinks.map(l=>{
+      const raw = scoreLink(l,pageKeywords,rawUrl,pageTitle);
+      return {
+        title:(l.anchor.slice(0,60)||getDomain(l.url)),
+        url:l.url,
+        rawScore: raw,
+        isExternal:getDomain(l.url)!==getDomain(rawUrl),
+        anchor: l.anchor
+      };
+    }).filter(l=>l.rawScore>0&&l.title.length>1);
+    const maxRaw = withRaw.length?Math.max(...withRaw.map(x=>x.rawScore)):0;
+    const scored = withRaw.map(w=>{
+      const score = maxRaw>0?Math.round((w.rawScore/maxRaw)*100):0;
+      return { title:w.title, url:w.url, score, reason:reasonForScore(score,{url:w.url,anchor:w.anchor},pageKeywords), isExternal:w.isExternal };
+    }).sort((a,b)=>b.score-a.score).slice(0,60);
     if(scored.length===0) throw new Error('Aucun lien exploitable trouvé');
     setProgress(90);
     allLinks=scored;
@@ -394,12 +473,23 @@ function renderList(links){
         <div class="ltitle">${safeTitle}</div>
         <div class="lreason">${escHtml(l.reason)}</div>
       </div>
+      <button class="flt" onclick="event.stopPropagation();toggleSummary('${safeUrl}',this)">Résumé</button>
       <button class="flt add-queue" data-url='${safeUrl}' data-title='${safeTitle}' onclick="event.stopPropagation()">＋</button>
       <a class="lopen" href="${safeUrl}" target="_blank" onclick="event.stopPropagation()">↗</a>
     </div>`;
   }).join('');
   attachQueueButtons();
 }
+
+// Membranes (grouping) and summaries
+let currentMembranesView=false;
+function showMembranes(btn){ document.querySelectorAll('.flt').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); currentMembranesView=true; renderMembranes(clusterLinks(allLinks)); }
+function clusterLinks(links){ const clusters=[]; links.forEach(l=>{ const kws=extractKeywords(l.url,l.title); let placed=false; for(const c of clusters){ const inter=c.keywords.filter(k=>kws.includes(k)); if(inter.length>0){ c.links.push(l); c.keywords = Array.from(new Set(c.keywords.concat(kws))); placed=true; break; } } if(!placed){ clusters.push({keywords:kws,links:[l]}); } }); clusters.sort((a,b)=>b.links.length-a.links.length); return clusters; }
+async function renderMembranes(clusters){ const el=document.getElementById('link-list'); if(!clusters.length){el.innerHTML='<div class="empty-list">Aucun cluster</div>';return;} el.innerHTML=clusters.map((c,ci)=>{ const title = c.keywords[0]||c.links[0].title||('Cluster '+(ci+1)); return `<div class="membrane" data-index="${ci}" style="border-bottom:1px solid var(--border);padding:8px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><strong style="font-size:13px">${escHtml(title)}</strong> <span style="color:var(--muted);font-size:11px">(${c.links.length} liens)</span></div><div><button class="flt" onclick="toggleCluster(${ci})">Afficher</button></div></div><div class="cluster-summary" id="cluster-sum-${ci}" style="margin-top:8px;color:var(--muted);font-size:13px">Chargement du résumé…</div><div class="cluster-links" id="cluster-links-${ci}" style="margin-top:8px"></div></div>`; }).join('');
+ for(const [i,c] of clusters.entries()){ const top=c.links[0]; summarizeUrl(top.url).then(s=>{ const sumEl=document.getElementById('cluster-sum-'+i); if(sumEl) sumEl.textContent = s; }); const linksEl=document.getElementById('cluster-links-'+i); if(linksEl) linksEl.innerHTML = c.links.map(l=>`<div class="lrow" style="cursor:default"><div class="lscore" style="background:${scoreColor(l.score)}22;color:${scoreColor(l.score)}">${l.score}</div><div class="linfo"><div class="ltitle">${escHtml(l.title)}</div><div class="lreason">${escHtml(l.reason)}</div></div><button class="flt" onclick="event.stopPropagation();toggleSummary('${l.url.replace(/'/g,'%27')}',this)">Résumé</button><a class="lopen" href="${l.url.replace(/'/g,'%27')}" target="_blank" onclick="event.stopPropagation()">↗</a></div>`).join(''); }
+}
+function toggleCluster(i){ const links=document.getElementById('cluster-links-'+i); if(!links) return; links.style.display = (links.style.display==='none'?'block':'none'); }
+function toggleSummary(url,btn){ const container = btn.parentElement; let existing = container.querySelector('.summary-block'); if(existing){ existing.remove(); return; } const b=document.createElement('div'); b.className='summary-block'; b.style.marginTop='8px'; b.style.color='var(--muted)'; b.textContent='Chargement du résumé…'; container.appendChild(b); summarizeUrl(url).then(s=>{ b.textContent=s; }); }
 
 function attachQueueButtons(){
   const btns=document.querySelectorAll('.add-queue');
