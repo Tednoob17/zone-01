@@ -8,15 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@300;400;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a09;
-  --bg2: #111110;
-  --bg3: #1a1a18;
-  --border: #2a2a27;
-  --text: #e8e6df;
-  --muted: #6b6960;
-  --accent: #c8f542;
-  --accent2: #f54242;
-  --accent3: #4299f5;
+  --bg: #050505;
+  --bg2: #0a0a0a;
+  --bg3: #121212;
+  --border: rgba(255,255,255,0.06);
+  --text: #ffffff;
+  --muted: #888888;
+  --accent: #d2ff00;
+  --accent-rgb: 210, 255, 0;
+  --accent2: #ff3e3e;
+  --accent3: #007aff;
   --mono: 'Space Mono', monospace;
   --display: 'Unbounded', sans-serif;
   --body: 'DM Sans', sans-serif;
@@ -30,104 +31,120 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--body);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── NOISE OVERLAY ── */
+/* ── NOISE & GRADIENT OVERLAY ── */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background: 
+    radial-gradient(circle at 50% -20%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1000;
-  opacity: .4;
 }
 
 /* ── NAV ── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 100;
+  z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 40px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(10,10,9,.85);
-  backdrop-filter: blur(12px);
+  padding: 24px 60px;
+  background: rgba(5,5,5,0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .nav-logo {
   font-family: var(--display);
   font-weight: 900;
-  font-size: 13px;
-  letter-spacing: .15em;
-  color: var(--accent);
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: var(--text);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 2px;
 }
 
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: 40px;
   list-style: none;
 }
 
 .nav-links a {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10px;
+  font-weight: 700;
   letter-spacing: .1em;
   color: var(--muted);
   text-decoration: none;
-  transition: color .2s;
+  text-transform: uppercase;
+  transition: color .3s;
 }
 
-.nav-links a:hover { color: var(--text); }
+.nav-links a:hover { color: var(--accent); }
 
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 80px;
+  display: flex;
+  align-items: center;
+  padding: 120px 60px 60px;
   position: relative;
   overflow: hidden;
 }
 
 .hero-voronoi {
   position: absolute;
-  inset: 0;
-  opacity: .07;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60%;
+  height: 80%;
+  opacity: .15;
   pointer-events: none;
 }
 
 .hero-left {
-  padding: 80px 60px 80px 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  max-width: 800px;
   position: relative;
   z-index: 2;
-  border-right: 1px solid var(--border);
 }
 
 .hero-eyebrow {
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: .2em;
+  font-weight: 700;
+  letter-spacing: .3em;
   color: var(--accent);
   margin-bottom: 24px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  text-transform: uppercase;
 }
 
-.hero-eyebrow::before {
+.hero-eyebrow::after {
   content: '';
-  display: block;
-  width: 32px;
+  width: 40px;
   height: 1px;
   background: var(--accent);
 }
@@ -135,570 +152,301 @@ nav {
 h1 {
   font-family: var(--display);
   font-weight: 900;
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: .95;
-  letter-spacing: -.02em;
-  margin-bottom: 32px;
+  font-size: clamp(48px, 8vw, 110px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin-bottom: 40px;
 }
 
 h1 em {
   font-style: normal;
-  color: var(--accent);
-  display: block;
+  color: #222;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.3);
 }
 
 .hero-desc {
-  font-size: 17px;
+  font-size: 20px;
   color: var(--muted);
-  max-width: 480px;
-  line-height: 1.7;
-  margin-bottom: 48px;
+  max-width: 580px;
+  line-height: 1.5;
+  margin-bottom: 56px;
 }
 
 .hero-ctas {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .btn-primary {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: .1em;
-  padding: 14px 28px;
-  background: var(--accent);
-  color: var(--bg);
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform .15s, box-shadow .15s;
-  display: inline-block;
+  font-family: var(--display);
+  font-size: 13px;
   font-weight: 700;
+  padding: 18px 36px;
+  background: var(--accent);
+  color: #000;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(200,245,66,.25);
+  box-shadow: 0 10px 40px rgba(var(--accent-rgb), 0.3);
 }
 
 .btn-ghost {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: .1em;
-  padding: 13px 28px;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 18px 36px;
   background: transparent;
   color: var(--text);
   border: 1px solid var(--border);
-  cursor: pointer;
+  border-radius: 4px;
   text-decoration: none;
-  transition: border-color .15s, color .15s;
-  display: inline-block;
+  transition: background .2s, border-color .2s;
 }
 
-.btn-ghost:hover { border-color: var(--text); }
-
-.hero-right {
-  padding: 80px 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
-  position: relative;
-  z-index: 2;
-}
-
-.hero-stat {
-  padding: 28px 32px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  transition: background .2s;
-  cursor: default;
-}
-
-.hero-stat:hover { background: var(--bg2); }
-
-.stat-num {
-  font-family: var(--display);
-  font-size: 48px;
-  font-weight: 900;
-  color: var(--text);
-  letter-spacing: -.03em;
-}
-
-.stat-num span {
-  font-size: 18px;
-  color: var(--accent);
-  margin-left: 4px;
-}
-
-.stat-label {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .1em;
-  color: var(--muted);
-  text-align: right;
-  max-width: 140px;
-  line-height: 1.5;
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.2);
 }
 
 /* ── MARQUEE ── */
 .marquee-bar {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  background: var(--bg2);
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 12px 0;
+  padding: 20px 0;
+  background: rgba(255,255,255,0.02);
 }
-
-.marquee-inner {
-  display: inline-flex;
-  gap: 0;
-  animation: marquee 30s linear infinite;
-}
-
-.marquee-inner:hover { animation-play-state: paused; }
 
 .marquee-item {
-  font-family: var(--mono);
+  font-family: var(--display);
   font-size: 11px;
-  letter-spacing: .15em;
+  font-weight: 700;
+  letter-spacing: .05em;
   color: var(--muted);
-  padding: 0 40px;
-  border-right: 1px solid var(--border);
+  padding: 0 60px;
+  text-transform: uppercase;
 }
 
 .marquee-item.accent { color: var(--accent); }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* ── SECTION ── */
+/* ── SECTIONS ── */
 section {
-  padding: 120px 80px;
-  border-bottom: 1px solid var(--border);
-}
-
-.section-header {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 40px;
-  margin-bottom: 80px;
-  align-items: start;
+  padding: 160px 60px;
 }
 
 .section-num {
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: .2em;
-  color: var(--muted);
-  padding-top: 6px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 24px;
 }
 
 h2 {
   font-family: var(--display);
   font-weight: 900;
-  font-size: clamp(28px, 4vw, 52px);
+  font-size: clamp(32px, 5vw, 64px);
   line-height: 1;
-  letter-spacing: -.02em;
+  letter-spacing: -0.03em;
+  margin-bottom: 80px;
 }
 
-h2 em {
-  font-style: normal;
-  color: var(--accent);
-}
-
-/* ── CLASS GRID ── */
+/* ── GRID ── */
 .class-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-left: 1px solid var(--border);
-  border-top: 1px solid var(--border);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
 }
 
 .class-card {
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 32px 28px;
-  cursor: pointer;
-  transition: background .2s;
-  position: relative;
-  overflow: hidden;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 40px;
+  border-radius: 8px;
+  transition: border-color .3s, transform .3s;
 }
 
-.class-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transition: transform .25s;
+.class-card:hover {
+  border-color: rgba(var(--accent-rgb), 0.3);
+  transform: translateY(-5px);
 }
-
-.class-card:hover { background: var(--bg2); }
-.class-card:hover::after { transform: scaleX(1); }
 
 .class-tag {
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: .15em;
-  color: var(--accent);
-  margin-bottom: 16px;
-  display: block;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
 .class-name {
   font-family: var(--display);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .class-desc {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-/* ── BUG TABLE ── */
-#bugs { padding: 0 80px 120px; }
-
+/* ── TABLE ── */
 .filter-bar {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-  padding-top: 40px;
-  border-top: 1px solid var(--border);
+  gap: 12px;
+  margin-bottom: 48px;
 }
 
 .filter-btn {
-  font-family: var(--mono);
+  font-family: var(--display);
   font-size: 11px;
-  letter-spacing: .08em;
-  padding: 8px 16px;
-  background: transparent;
-  color: var(--muted);
+  font-weight: 700;
+  padding: 10px 20px;
+  background: var(--bg2);
   border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 4px;
   cursor: pointer;
-  transition: all .15s;
+  transition: all .2s;
 }
 
 .filter-btn.active, .filter-btn:hover {
   background: var(--accent);
-  color: var(--bg);
+  color: #000;
   border-color: var(--accent);
 }
 
 .bug-table {
   width: 100%;
-  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 .bug-table thead th {
+  background: var(--bg2);
+  padding: 20px 24px;
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .15em;
+  font-size: 11px;
+  font-weight: 700;
   color: var(--muted);
   text-align: left;
-  padding: 12px 16px;
   border-bottom: 1px solid var(--border);
 }
-
-.bug-row {
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: background .15s;
-}
-
-.bug-row:hover { background: var(--bg2); }
-.bug-row.open { background: var(--bg3); }
 
 .bug-row td {
-  padding: 20px 16px;
-  vertical-align: top;
+  padding: 24px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
 }
 
-.bug-cve {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--accent3);
-  white-space: nowrap;
+.bug-row:hover td {
+  background: var(--bg2);
 }
 
-.bug-name {
-  font-weight: 500;
-  font-size: 15px;
-}
-
-.bug-year {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.bug-type {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .1em;
-  padding: 4px 10px;
-  display: inline-block;
-}
-
-.type-kernel { background: rgba(66,153,245,.12); color: var(--accent3); }
-.type-browser { background: rgba(200,245,66,.1); color: var(--accent); }
+.bug-cve { color: var(--accent3); font-weight: 700; }
+.bug-name { font-weight: 700; font-size: 16px; }
 
 .level-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: .08em;
-  padding: 4px 10px;
-  display: inline-block;
+  font-weight: 700;
 }
 
-.level-1 { background: rgba(200,245,66,.08); color: #a0c83a; }
-.level-2 { background: rgba(245,185,66,.08); color: #d4a84b; }
-.level-3 { background: rgba(245,130,66,.1); color: #e0834a; }
-.level-4 { background: rgba(245,66,66,.12); color: var(--accent2); }
+.level-1 { background: rgba(0, 255, 128, 0.1); color: #00ff80; }
+.level-2 { background: rgba(var(--accent-rgb), 0.1); color: var(--accent); }
+.level-3 { background: rgba(255, 128, 0, 0.1); color: #ff8000; }
+.level-4 { background: rgba(255, 62, 62, 0.1); color: var(--accent2); }
 
+/* ── EXPAND ── */
 .bug-expand {
-  padding: 0 16px 28px 16px;
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 40px;
+  background: var(--bg2);
 }
-
-.bug-expand.open { display: grid; }
 
 .expand-block {
-  background: var(--bg);
+  background: var(--bg3);
+  padding: 30px;
+  border-radius: 8px;
   border: 1px solid var(--border);
-  padding: 20px 24px;
 }
 
 .expand-label {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .15em;
-  color: var(--muted);
-  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 16px;
+  text-transform: uppercase;
 }
 
-.expand-text {
-  font-size: 14px;
-  line-height: 1.65;
-  color: #c8c6be;
+.expand-text { color: #ccc; font-size: 14px; }
+.expand-summary { font-size: 18px; font-weight: 500; color: #fff; margin-bottom: 0; }
+
+.source-link {
+  margin-top: 24px;
+  padding: 14px 24px;
+  background: var(--accent);
+  color: #000;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 4px;
 }
 
-.expand-tip {
-  grid-column: 1 / -1;
-  background: rgba(200,245,66,.04);
-  border: 1px solid rgba(200,245,66,.2);
-  padding: 20px 24px;
-}
-
-.expand-tip .expand-label { color: var(--accent); }
-
-/* ── QEMU SECTION ── */
-#qemu {
-  padding: 120px 80px;
-  border-bottom: 1px solid var(--border);
-}
-
-.qemu-intro {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 40px;
-  margin-bottom: 80px;
-  align-items: start;
-}
-
+/* ── QEMU STEPS ── */
 .qemu-steps {
-  display: grid;
-  gap: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .qemu-step {
-  display: grid;
-  grid-template-columns: 64px 1fr;
-  border: 1px solid var(--border);
+  display: flex;
   background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
   overflow: hidden;
-  transition: border-color .2s;
 }
-
-.qemu-step:hover { border-color: rgba(200,245,66,.3); }
 
 .step-num {
-  background: var(--bg);
-  border-right: 1px solid var(--border);
+  width: 80px;
+  background: rgba(255,255,255,0.03);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding-top: 32px;
   font-family: var(--display);
-  font-size: 11px;
+  font-size: 24px;
   font-weight: 900;
-  color: var(--accent);
-  letter-spacing: .05em;
-  flex-shrink: 0;
+  color: rgba(255,255,255,0.05);
 }
 
-.step-content {
-  padding: 28px 32px;
-}
-
-.step-title {
-  font-family: var(--display);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: .03em;
-  margin-bottom: 10px;
-  color: var(--text);
-}
-
-.step-desc {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.65;
-  margin-bottom: 16px;
-}
-
+.step-content { padding: 40px; }
+.step-title { font-family: var(--display); font-size: 18px; font-weight: 800; margin-bottom: 12px; }
 .code-block {
-  background: var(--bg);
+  background: #000;
   border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  padding: 16px 20px;
-  font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.8;
-  color: #b8d496;
-  overflow-x: auto;
-  white-space: pre;
-  margin-top: 12px;
+  border-radius: 4px;
+  padding: 24px;
+  margin-top: 24px;
 }
-
-.code-comment { color: var(--muted); font-style: italic; }
-.code-cmd { color: var(--accent); }
-.code-flag { color: var(--accent3); }
-.code-val { color: #f5a742; }
-
-.step-note {
-  margin-top: 14px;
-  padding: 12px 16px;
-  border-left: 2px solid var(--border);
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-/* ── SETUP MATRIX ── */
-.setup-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-top: 60px;
-  border-top: 1px solid var(--border);
-  padding-top: 60px;
-}
-
-.setup-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  padding: 32px 28px;
-}
-
-.setup-target {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .15em;
-  color: var(--accent);
-  margin-bottom: 16px;
-  display: block;
-}
-
-.setup-kernel {
-  font-family: var(--display);
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.setup-distro {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-
-.setup-bugs {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 20px;
-  border-top: 1px solid var(--border);
-  padding-top: 16px;
-}
-
-.setup-bug-item {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--muted);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.setup-bug-item .cve { color: var(--accent3); }
-
-/* ── FOOTER ── */
-footer {
-  padding: 60px 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--border);
-}
-
-.footer-logo {
-  font-family: var(--display);
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: .2em;
-  color: var(--accent);
-}
-
-.footer-note {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: .08em;
-}
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
-  section, #bugs, #qemu { padding: 60px 24px; }
-  nav { padding: 16px 24px; }
-  .class-grid { grid-template-columns: 1fr 1fr; }
-  .setup-grid { grid-template-columns: 1fr; }
-  .section-header { grid-template-columns: 1fr; }
-  .qemu-intro { grid-template-columns: 1fr; }
-  .bug-expand.open { grid-template-columns: 1fr; }
-  .bug-table { font-size: 13px; }
-  footer { flex-direction: column; gap: 16px; text-align: center; }
+@media (max-width: 1024px) {
+  nav { padding: 20px 30px; }
+  .hero { padding: 120px 30px 60px; }
+  section { padding: 100px 30px; }
 }
 </style>
 </head>
@@ -740,35 +488,27 @@ footer {
   </svg>
 
   <div class="hero-left">
-    <span class="hero-eyebrow">KERNEL &amp; BROWSER RESEARCH</span>
-    <h1>Learn vulns<em>from scratch.</em></h1>
+    <span class="hero-eyebrow">RECHERCHE &amp; EXPLOITATION</span>
+    <h1>Kernel /<em>Browser</em> Lab.</h1>
     <p class="hero-desc">
-      Un référentiel de bugs existants classifiés par type, du plus simple au plus complexe. Reproduis sans PoC, comprends le mécanisme, développe tes primitives.
+      Un référentiel brut de vulnérabilités critiques. Apprenez à reproduire des bugs historiques sans PoC prémâché, du débordement de pile aux erreurs JIT complexes.
     </p>
     <div class="hero-ctas">
-      <a href="#bugs" class="btn-primary">EXPLORER LES BUGS →</a>
-      <a href="#qemu" class="btn-ghost">SETUP QEMU</a>
+      <a href="#bugs" class="btn-primary">BIBLIOTHÈQUE DE BUGS</a>
+      <a href="#qemu" class="btn-ghost">CONFIGURER LE LAB</a>
     </div>
   </div>
 
-  <div class="hero-right">
-    <div class="hero-stat">
-      <div class="stat-num">14<span>CVE</span></div>
-      <div class="stat-label">BUGS SÉLECTIONNÉS</div>
-    </div>
-    <div class="hero-stat">
-      <div class="stat-num">6<span>cls</span></div>
-      <div class="stat-label">CLASSES DE VULNÉRABILITÉ</div>
-    </div>
-    <div class="hero-stat">
-      <div class="stat-num">25<span>ans</span></div>
-      <div class="stat-label">2000 → 2025 COUVERTS</div>
-    </div>
-    <div class="hero-stat">
-      <div class="stat-num">4<span>lvl</span></div>
-      <div class="stat-label">DU DÉBUTANT À L'EXPERT</div>
-    </div>
-  </div>
+  <svg class="hero-voronoi" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+    <polygon points="0,0 280,120 180,380 0,450" fill="none" stroke="var(--accent)" stroke-width=".5"/>
+    <polygon points="280,120 680,0 520,280 180,380" fill="none" stroke="var(--accent)" stroke-width=".5"/>
+    <polygon points="680,0 1200,80 980,320 520,280" fill="none" stroke="var(--accent)" stroke-width=".5"/>
+    <polygon points="0,450 180,380 220,700 0,900" fill="none" stroke="var(--accent)" stroke-width=".5"/>
+    <polygon points="180,380 520,280 460,640 220,700" fill="none" stroke="var(--accent)" stroke-width=".5"/>
+    <polygon points="520,280 980,320 820,680 460,640" fill="none" stroke="var(--accent)" stroke-width=".5"/>
+    <circle cx="520" cy="280" r="4" fill="var(--accent)"/>
+    <circle cx="460" cy="640" r="4" fill="var(--accent)"/>
+  </svg>
 </section>
 
 <!-- MARQUEE -->
@@ -1136,75 +876,110 @@ mount_tag=host0,security_model=mapped,id=share</span>
 const bugs = [
   { cve:"CVE-2009-1185", name:"udev local privilege escalation", year:2009, type:"kernel", level:"1", levelLabel:"DÉBUTANT", class:"Race condition",
     desc:"udev ne vérifiait pas que les messages Netlink venaient bien du kernel. Un process local pouvait envoyer des messages falsifiés et déclencher l'exécution de code en tant que root.",
+    summary:"Un message Netlink forgé trompait udev sur l'origine du signal et ouvrait une élévation de privilèges locale, parfait pour comprendre un bug de confiance en la source.",
     impact:"LPE (Local Privilege Escalation)", env:"Ubuntu 8.10 / Debian Lenny",
     why:"Bug simple conceptuellement : un problème d'authentification de source. Bon point d'entrée pour comprendre les race conditions sans toucher à la gestion mémoire.",
-    tip:"Lis le patch sur le dépôt udev, repère la ligne ajoutée (vérification uid=0), puis essaie de reproduire sans le patch dans une VM Ubuntu 8.10." },
+    tip:"Lis le patch sur le dépôt udev, repère la ligne ajoutée (vérification uid=0), puis essaie de reproduire sans le patch dans une VM Ubuntu 8.10.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2009-1185" },
   { cve:"CVE-2010-3081", name:"compat_alloc_user_space() overflow", year:2010, type:"kernel", level:"1", levelLabel:"DÉBUTANT", class:"Integer overflow",
     desc:"Sur les systèmes 64-bit avec support 32-bit (compat), compat_alloc_user_space() ne validait pas la taille passée, permettant un overflow d'entier suivi d'une corruption mémoire.",
+    summary:"Une taille non validée dans le chemin compat 32/64 bits provoquait un overflow d'entier avant écriture mémoire, bon exemple de corruption discrète sur x86_64.",
     impact:"LPE", env:"Linux kernel < 2.6.36, Fedora 13",
     why:"Bon exemple de bug compat 32/64 bit — une catégorie fréquente. Le bug est localisé dans un seul fichier (arch/x86/ia32/ia32entry.S).",
-    tip:"Identifie la fonction, calcule à la main comment la valeur overflow, puis trace ce que ça écrase en mémoire avec gdb." },
+    tip:"Identifie la fonction, calcule à la main comment la valeur overflow, puis trace ce que ça écrase en mémoire avec gdb.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2010-3081" },
   { cve:"CVE-2016-5195", name:"Dirty COW", year:2016, type:"kernel", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Race condition (TOCTOU)",
     desc:"La gestion de Copy-On-Write permettait d'écrire dans un mapping mémoire en lecture seule via une race condition entre deux threads manipulant /proc/self/mem et madvise().",
+    summary:"La course entre COW, madvise et /proc/self/mem permettait d'écrire dans des pages supposées en lecture seule, avec impact LPE et écriture de fichiers root.",
     impact:"LPE + write arbitraire fichiers root", env:"Linux kernel < 4.8.3",
     why:"CVE le plus célèbre de la décennie kernel. La race condition est subtile mais bien documentée. Énorme quantité de ressources.",
-    tip:"Commence par le write-up de Phil Oester. Reproduis la condition de course avec deux threads, un appelant write() et l'autre madvise(MADV_DONTNEED)." },
+    tip:"Commence par le write-up de Phil Oester. Reproduis la condition de course avec deux threads, un appelant write() et l'autre madvise(MADV_DONTNEED).",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2016-5195" },
   { cve:"CVE-2017-7308", name:"AF_PACKET packet_set_ring overflow", year:2017, type:"kernel", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Integer overflow → Heap overflow",
     desc:"Dans le code des sockets AF_PACKET, packet_set_ring() ne validait pas correctement les paramètres de ring buffer, permettant un overflow d'entier suivi d'un heap overflow.",
+    summary:"Les paramètres du ring buffer débordaient à l'allocation, transformant un integer overflow en heap overflow exploitable dans un sous-système réseau très accessible.",
     impact:"LPE", env:"Linux kernel < 4.10.6",
     why:"Illustre la chaîne classique integer overflow → heap corruption. L'exploitation passe par la structure de slab allocator, un concept fondamental.",
-    tip:"Lis le write-up d'Andrey Konovalov (Google). Concentre-toi sur comment l'overflow d'entier se propage dans kmalloc() et ce que ça permet d'écraser." },
+    tip:"Lis le write-up d'Andrey Konovalov (Google). Concentre-toi sur comment l'overflow d'entier se propage dans kmalloc() et ce que ça permet d'écraser.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2017-7308" },
   { cve:"CVE-2021-3156", name:"Sudo Baron Samedit", year:2021, type:"kernel", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Heap buffer overflow",
     desc:"Un heap overflow dans sudo lors du parsing des arguments (backslash en fin) permettait d'écraser des structures heap adjacentes et d'obtenir root sans avoir les droits sudo.",
+    summary:"Le parsing d'arguments de sudo laissait un heap overflow déclenchable localement, utile pour étudier shaping et corruption de structures heap.",
     impact:"LPE via sudo", env:"Toutes distros sudo < 1.9.5p2",
     why:"Bug en espace utilisateur mais impact système total. Parfait pour étudier les heap overflows et la technique de heap shaping.",
-    tip:"Lance sudo avec '\\' en argument et observe le crash dans gdb. Analyse les structures heap avant/après avec pwndbg ou GEF." },
+    tip:"Lance sudo avec '\\' en argument et observe le crash dans gdb. Analyse les structures heap avant/après avec pwndbg ou GEF.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2021-3156" },
   { cve:"CVE-2022-0847", name:"Dirty Pipe", year:2022, type:"kernel", level:"3", levelLabel:"AVANCÉ", class:"Logic bug (flags non initialisés)",
     desc:"Un nouveau pipe_buffer pouvait hériter du flag PIPE_BUF_FLAG_CAN_MERGE d'un buffer précédent, permettant d'écrire dans des pages de cache en lecture seule.",
+    summary:"Un flag non réinitialisé dans pipe_buffer autorisait l'écriture dans le page cache en lecture seule, sans corruption mémoire classique mais avec impact root.",
     impact:"LPE via écrasement fichiers SUID", env:"Linux kernel 5.8 à 5.16.11",
     why:"Découvert en cherchant une corruption de fichier. Illustre comment un bug de logique (pas de memory corruption) mène à un impact critique.",
-    tip:"Lis le write-up original de Max Kellermann sur son blog. Reproduis l'écriture dans un fichier read-only via splice() + write() sur un pipe." },
+    tip:"Lis le write-up original de Max Kellermann sur son blog. Reproduis l'écriture dans un fichier read-only via splice() + write() sur un pipe.",
+    referenceLabel:"Dirty Pipe write-up", referenceUrl:"https://dirtypipe.cm4all.com/" },
   { cve:"CVE-2023-0461", name:"net/tls use-after-free", year:2023, type:"kernel", level:"4", levelLabel:"EXPERT", class:"Use-After-Free",
     desc:"Dans kTLS, une mauvaise gestion du cycle de vie des sockets permettait un use-after-free sur les structures tls_context.",
+    summary:"Le cycle de vie des structures kTLS cassait la garantie de validité du pointeur et ouvrait un use-after-free dans un sous-système réseau moderne.",
     impact:"LPE", env:"Linux kernel < 6.2",
     why:"UAF kernel modernes sont la classe reine de l'exploitation kernel actuelle. Illustre les subtilités de lifetime management dans les sous-systèmes réseau.",
-    tip:"Commence par comprendre kTLS et le cycle de vie des socket structures. Utilise KASAN sur une VM pour voir le UAF se déclencher avant de lire le patch." },
+    tip:"Commence par comprendre kTLS et le cycle de vie des socket structures. Utilise KASAN sur une VM pour voir le UAF se déclencher avant de lire le patch.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2023-0461" },
   { cve:"CVE-2024-1086", name:"nf_tables use-after-free", year:2024, type:"kernel", level:"4", levelLabel:"EXPERT", class:"Use-After-Free",
     desc:"Dans Netfilter (nf_tables), nft_verdict_init() permettait de libérer et réutiliser un objet, menant à un UAF exploitable pour obtenir root via namespaces.",
+    summary:"Une séquence d'initialisation/réutilisation d'objet dans nf_tables produisait un UAF exploitable via namespaces et règles netfilter.",
     impact:"LPE full-chain", env:"Linux kernel 3.15–6.8",
     why:"Un des bugs kernel les plus exploités en 2024. Le write-up de Notselwyn est un chef-d'œuvre de documentation d'exploitation kernel moderne.",
-    tip:"Lis absolument le write-up de notselwyn sur GitHub avant tout. Comprends d'abord nf_tables (règles, sets, expressions) avant de regarder le bug." },
+    tip:"Lis absolument le write-up de notselwyn sur GitHub avant tout. Comprends d'abord nf_tables (règles, sets, expressions) avant de regarder le bug.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2024-1086" },
   { cve:"CVE-2006-4655", name:"Firefox crypto.generateCRMFRequest overflow", year:2006, type:"browser", level:"1", levelLabel:"DÉBUTANT", class:"Buffer overflow (stack)",
     desc:"La fonction JavaScript crypto.generateCRMFRequest() ne validait pas la longueur de ses paramètres, permettant un stack overflow contrôlé depuis JavaScript.",
+    summary:"Une API JS non bornée passait trop de données au moteur natif et exposait un stack overflow simple à déclencher depuis une page web.",
     impact:"RCE via page web", env:"Firefox 1.5 / SeaMonkey",
     why:"Bug très simple : une API JS non bornée. Bon point d'entrée pour comprendre comment le JS interagit avec le C++ du moteur.",
-    tip:"Installe Firefox 1.5 dans ta VM QEMU. Appelle la fonction avec une string très longue et observe le crash dans un debugger." },
+    tip:"Installe Firefox 1.5 dans ta VM QEMU. Appelle la fonction avec une string très longue et observe le crash dans un debugger.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2006-4655" },
   { cve:"CVE-2010-0249", name:"IE Aurora (Operation Aurora)", year:2010, type:"browser", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Use-After-Free (DOM)",
     desc:"Un UAF dans la gestion des événements onmouseover d'IE permettait d'accéder à un objet DOM libéré. Exploité dans des attaques ciblées contre Google.",
+    summary:"Un handler DOM libéré puis réutilisé permettait un UAF navigateur classique, révélateur des erreurs de gestion de cycle de vie des événements.",
     impact:"RCE", env:"IE 6/7/8",
     why:"Un des premiers UAF DOM médiatisés. La logique de libération des objets event handler est bien documentée dans des dizaines de write-ups.",
-    tip:"Le PoC original est public. Lis-le pour comprendre comment le DOM libère les objets avant de les référencer via les handlers d'événements." },
+    tip:"Le PoC original est public. Lis-le pour comprendre comment le DOM libère les objets avant de les référencer via les handlers d'événements.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2010-0249" },
   { cve:"CVE-2014-1705", name:"V8 out-of-bounds typed arrays", year:2014, type:"browser", level:"2", levelLabel:"INTERMÉDIAIRE", class:"Out-of-Bounds R/W",
     desc:"Le moteur V8 de Chrome ne vérifiait pas correctement les bornes lors d'opérations sur les TypedArrays, permettant une lecture/écriture hors des limites du buffer alloué.",
+    summary:"Des contrôles de bornes insuffisants sur les TypedArrays ouvraient un OOB read/write qui sert de base à beaucoup d'exploitations JS engine.",
     impact:"RCE renderer", env:"Chrome < 33.0.1750.152",
     why:"Les bugs TypedArray sont une classe fondamentale de bugs JS engine. Ce bug est simple dans son principe : un index non borné.",
-    tip:"Lis le rapport Chromium. Essaie de déclencher l'OOB avec arr[arr.length + n] et compare avec les bounds checks des versions modernes." },
+    tip:"Lis le rapport Chromium. Essaie de déclencher l'OOB avec arr[arr.length + n] et compare avec les bounds checks des versions modernes.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2014-1705" },
   { cve:"CVE-2016-1646", name:"V8 array.concat type confusion", year:2016, type:"browser", level:"3", levelLabel:"AVANCÉ", class:"Type confusion",
     desc:"Une type confusion dans Array.prototype.concat de V8 permettait de créer un tableau avec un type interne incorrect, ouvrant la voie à une lecture/écriture arbitraire.",
+    summary:"Une confusion de type dans concat mélangeait des représentations internes incompatibles, créant les primitives nécessaires à une R/W arbitraire.",
     impact:"RCE renderer Chrome", env:"Chrome < 49.0.2623.108",
     why:"La type confusion V8 est la classe dominante des bugs navigateurs modernes. Illustre comment une confusion de représentation interne se transforme en primitives.",
-    tip:"Lis le write-up de Choongwoo Han. Comprends d'abord la représentation interne V8 des tableaux (JSArray, FixedArray, Smi vs HeapObject) avant le bug." },
+    tip:"Lis le write-up de Choongwoo Han. Comprends d'abord la représentation interne V8 des tableaux (JSArray, FixedArray, Smi vs HeapObject) avant le bug.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2016-1646" },
   { cve:"CVE-2021-21220", name:"Chrome V8 TurboFan bounds check elision", year:2021, type:"browser", level:"4", levelLabel:"EXPERT", class:"JIT compiler bug",
     desc:"Le compilateur JIT TurboFan élisait incorrectement des bounds checks sur les tableaux après certaines transformations d'optimisation. 0-day exploité in-the-wild.",
+    summary:"Une optimisation JIT supprimait à tort un contrôle de bornes après transformation, ce qui transforme une erreur de compilation en RCE renderer.",
     impact:"RCE renderer (0-day in-the-wild)", env:"Chrome < 89.0.4389.128",
     why:"Les bugs JIT sont le sommet de la difficulté browser. L'élision de bounds checks par le compilateur d'optimisation demande de comprendre TurboFan en profondeur.",
-    tip:"Commence par le blog d'Exodus Intelligence sur TurboFan. Installe une version ancienne de Chrome dans une VM QEMU isolée — jamais sur ta machine principale." },
+    tip:"Commence par le blog d'Exodus Intelligence sur TurboFan. Installe une version ancienne de Chrome dans une VM QEMU isolée — jamais sur ta machine principale.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2021-21220" },
   { cve:"CVE-2023-4863", name:"libwebp heap buffer overflow", year:2023, type:"browser", level:"4", levelLabel:"EXPERT", class:"Heap buffer overflow (parsing)",
     desc:"Un heap overflow dans le décodage des images WebP (algorithme Huffman) affectait Chrome, Firefox, Safari et des dizaines d'autres apps. Exploité in-the-wild.",
+    summary:"Le décodage Huffman du format WebP débordait le tas et a propagé un bug de parsing tiers à tout l'écosystème navigateur.",
     impact:"RCE cross-platform", env:"Chrome < 116.0.5845.187, Firefox < 117.0.1",
     why:"Cas d'étude sur comment un bug dans une lib tierce (libwebp) se propage à tout l'écosystème. Exemple de parsing bug complexe avec impact réel.",
-    tip:"Lis le write-up de Google Project Zero. Comprends le format WebP et le décodage Huffman avant de regarder le bug spécifique dans les sources libwebp." }
+    tip:"Lis le write-up de Google Project Zero. Comprends le format WebP et le décodage Huffman avant de regarder le bug spécifique dans les sources libwebp.",
+    referenceLabel:"NVD", referenceUrl:"https://nvd.nist.gov/vuln/detail/CVE-2023-4863" }
 ];
+
+function getBaseReference(bug) {
+  return {
+    label: bug.referenceLabel || 'Référence de base',
+    url: bug.referenceUrl || `https://nvd.nist.gov/vuln/detail/${bug.cve}`
+  };
+}
 
 function renderTable(data) {
   const tbody = document.getElementById('bugBody');
@@ -1234,22 +1009,41 @@ function toggleExpand(i, b, tr) {
   openIdx = i;
   document.querySelectorAll('.bug-row').forEach(r => r.classList.remove('open'));
   tr.classList.add('open');
+  const reference = getBaseReference(b);
   const exp = document.createElement('tr');
   exp.innerHTML = `<td colspan="6" style="padding:0">
     <div class="bug-expand open">
+      <div class="expand-block" style="grid-column: 1 / -1; border-left: 4px solid var(--accent);">
+        <div class="expand-label">RÉSUMÉ CONTEXTUEL</div>
+        <div class="expand-text expand-summary">${b.summary}</div>
+      </div>
       <div class="expand-block">
-        <div class="expand-label">DESCRIPTION</div>
+        <div class="expand-label">DESCRIPTION DÉTAILLÉE</div>
         <div class="expand-text">${b.desc}</div>
-        <div style="margin-top:12px"><span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)">IMPACT — </span><span style="font-size:13px;color:#e0834a">${b.impact}</span></div>
+        <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border)">
+          <span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase">Impact technique — </span>
+          <span style="font-size:14px;color:var(--accent2);font-weight:700">${b.impact}</span>
+        </div>
       </div>
       <div class="expand-block">
         <div class="expand-label">POURQUOI CE BUG ?</div>
         <div class="expand-text">${b.why}</div>
-        <div style="margin-top:12px"><span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)">ENV — </span><span style="font-size:13px;color:var(--muted)">${b.env}</span></div>
+        <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border)">
+          <span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase">Environnement — </span>
+          <span style="font-size:14px;color:var(--muted)">${b.env}</span>
+        </div>
       </div>
-      <div class="expand-block expand-tip">
-        <div class="expand-label">CONSEIL DE REPRODUCTION</div>
-        <div class="expand-text">${b.tip}</div>
+      <div class="expand-block" style="background: rgba(var(--accent-rgb), 0.03); border-color: rgba(var(--accent-rgb), 0.2);">
+        <div class="expand-label" style="color:var(--accent)">CONSEIL DE REPRODUCTION</div>
+        <div class="expand-text" style="color:#fff">${b.tip}</div>
+      </div>
+      <div class="expand-block" style="display:flex; flex-direction:column; justify-content:center; align-items:flex-start;">
+        <div class="expand-label">RESSOURCE EXTERNE</div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:20px">Consultez l'article de référence pour approfondir l'analyse technique et la chronologie du bug.</p>
+        <a class="source-link" href="${reference.url}" target="_blank" rel="noreferrer">
+          <span style="margin-right:8px">${reference.label}</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
       </div>
     </div></td>`;
   tr.after(exp);

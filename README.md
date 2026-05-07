@@ -1,10 +1,39 @@
 # zone-01
 
-Documentation et outils de la pédagogie Zone01 / 01-edu 
+Archive locale et espace de navigation pour la pédagogie Zone01 / 01-edu.
 
 ---
 
-## Cloner ce dépôt
+## Organisation du dépôt
+
+Le dépôt mélange trois familles de contenus:
+
+- Interface et navigation: pages HTML racine, graphe de liens, vues d'index.
+- Outils et serveurs: scripts, serveur d'archive, utilitaires de maintenance.
+- Miroirs 01-edu: repos pédagogiques, sujets, tests, branches.
+
+Arborescence cible recommandée:
+
+```text
+zone-01/
+  site/            # pages d'accueil et de navigation
+  tools/           # scripts et serveurs locaux
+  content/         # pages et docs consultables
+  assets/          # médias partagés
+  generated/       # cache local, exports, artefacts
+  01-edu-repos/    # repos 01-edu regroupés par usage
+```
+
+Règles simples:
+
+- Garde à la racine seulement les points d'entrée visibles.
+- Range tout cache ou export temporaire dans `generated/`.
+- Laisse les sous-repos 01-edu intacts, mais documente-les par catégorie.
+- Évite de déplacer un sous-projet complet si ses liens relatifs sont déjà utilisés par le site.
+
+---
+
+## Démarrage rapide
 
 ```bash
 git clone https://github.com/Tednoob17/zone-01
@@ -109,6 +138,11 @@ docker build -t go_tests_training .
 ## Structure du dépôt
 
 ```
+site/                  # Index, branches, outils, vues statiques
+tools/                 # archive-server.js, fix-repos.sh, utilitaires
+content/               # Pages d'aide, archives HTML, documents consultables
+assets/                # Images, PDF, médias partagés
+generated/             # .local-archive et autres artefacts locaux
 01-edu-repos/
   go-tests/            # Moulinette Go (Docker)
   rust-tests/          # Moulinette Rust (Docker)
@@ -118,6 +152,10 @@ docker build -t go_tests_training .
   Branch-AI/           # Branche spécialisation IA
   Branch-Blockchain/   # Branche Blockchain & Crypto
   UX-UI/               # Branche UX/UI
+  framework/           # Bibliothèques partagées Deno
+  devtools/            # Front-end loging / DB management
+  play-with-containers/ # Environnement microservices
+  crud-master-py/      # Variante Python de CRUD master
 
 ```
 

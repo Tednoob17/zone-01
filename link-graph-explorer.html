@@ -55,13 +55,17 @@
   .link-list { overflow-y:auto; flex:1; padding:2px 0; }
   .link-list::-webkit-scrollbar { width:3px; }
   .link-list::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
-  .lrow { display:flex; align-items:flex-start; gap:9px; padding:9px 14px; cursor:pointer; transition:background .1s; }
+  .lrow { display:flex; align-items:flex-start; gap:9px; padding:12px 14px; cursor:pointer; transition:background .1s; border-bottom:1px solid rgba(255,255,255,0.02); }
   .lrow:hover { background:rgba(255,255,255,.03); }
+  .lrow.open-item { background:rgba(124,92,191,0.05); }
   .lscore { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; }
   .linfo { flex:1; min-width:0; }
-  .ltitle { font-size:12px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .lreason { font-size:10px; color:var(--muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .lopen { color:var(--accent); font-size:14px; opacity:.5; flex-shrink:0; text-decoration:none; transition:opacity .15s; }
+  .ltitle { font-size:12px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text); }
+  .lreason { font-size:10px; color:var(--muted); margin-top:2px; line-height:1.4; }
+  .lsummary { font-size:11px; color:#aaa; margin-top:6px; background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; border-left:2px solid var(--accent); line-height:1.5; display:none; }
+  .lrow.expanded .lsummary { display:block; }
+  .lrow.expanded .lreason { white-space: normal; }
+  .lopen { color:var(--accent); font-size:14px; opacity:.5; flex-shrink:0; text-decoration:none; transition:opacity .15s; margin-top: 2px; }
   .lopen:hover { opacity:1; }
   .empty-list { padding:28px 14px; text-align:center; color:var(--muted); font-size:12px; }
 </style>
@@ -190,6 +194,35 @@ async function summarizeUrl(url){
 }
 function getDomain(url){try{return new URL(url).hostname.replace(/^www\./,'');}catch{return '';}}
 
+function buildTitleFromUrl(url, anchor=''){
+  const cleanAnchor=(anchor||'').trim().replace(/\s+/g,' ');
+  if(cleanAnchor.length>1) return cleanAnchor.slice(0,60);
+  try{
+    const u=new URL(url);
+    const last=u.pathname.split('/').filter(Boolean).pop()||u.hostname;
+    const pretty=decodeURIComponent(last).replace(/[-_]+/g,' ').trim();
+    return (pretty||u.hostname).slice(0,60);
+  }catch{
+    return 'lien';
+  }
+}
+
+function extractUrlsFromText(text, pageBase, sourceUrl){
+  const matches=(text||'').match(/https?:\/\/[^\s"'<>\]\)]+/g)||[];
+  const seen=new Set();
+  const out=[];
+  for(const raw of matches){
+    let normalized=raw.replace(/[),.;:!?]+$/,'');
+    try{
+      normalized=new URL(normalized,pageBase).href.split('#')[0];
+    }catch{continue;}
+    if(!normalized||normalized===sourceUrl||seen.has(normalized)) continue;
+    seen.add(normalized);
+    out.push({url:normalized,anchor:''});
+  }
+  return out;
+}
+
 function extractKeywords(url, title){
   const stopwords=new Set(['the','a','an','of','in','on','at','to','for','and','or','is','are','was','were','de','le','la','les','du','des','en','et','un','une','avec','sur','par','pour','dans']);
   return (url+' '+title).toLowerCase().split(/[\s\-_/.,:#()[\]?&=+]+/).filter(w=>w.length>2&&!stopwords.has(w)&&!/^\d+$/.test(w));
@@ -293,21 +326,35 @@ async function analyze(){
       seen.add(fullUrl);
       rawLinks.push({url:fullUrl, anchor:a.textContent.trim()});
     }
+    if(rawLinks.length===0){
+      const fallbackLinks=extractUrlsFromText(data.contents,pageBase,rawUrl);
+      for(const l of fallbackLinks){
+        if(seen.has(l.url)) continue;
+        seen.add(l.url);
+        rawLinks.push(l);
+      }
+    }
     setProgress(75);
     setStatus('Scoring des liens…');
     // compute raw scores, then normalize to reduce many 100% scores
-    const withRaw = rawLinks.map(l=>{
+    const withRaw = rawLinks.map((l,index)=>{
       const raw = scoreLink(l,pageKeywords,rawUrl,pageTitle);
       return {
-        title:(l.anchor.slice(0,60)||getDomain(l.url)),
+        title:buildTitleFromUrl(l.url,l.anchor),
         url:l.url,
         rawScore: raw,
+        index,
         isExternal:getDomain(l.url)!==getDomain(rawUrl),
         anchor: l.anchor
       };
-    }).filter(l=>l.rawScore>0&&l.title.length>1);
-    const maxRaw = withRaw.length?Math.max(...withRaw.map(x=>x.rawScore)):0;
-    const scored = withRaw.map(w=>{
+    }).filter(l=>l.title.length>1);
+    if(withRaw.length===0) throw new Error('Aucun lien détecté sur cette page (proxy/CORS).');
+    const hasPositiveScore=withRaw.some(x=>x.rawScore>0);
+    const normalizedInput=hasPositiveScore
+      ? withRaw
+      : withRaw.map(x=>({ ...x, rawScore: Math.max(1,30-Math.floor(x.index/3)) }));
+    const maxRaw = Math.max(...normalizedInput.map(x=>x.rawScore));
+    const scored = normalizedInput.map(w=>{
       const score = maxRaw>0?Math.round((w.rawScore/maxRaw)*100):0;
       return { title:w.title, url:w.url, score, reason:reasonForScore(score,{url:w.url,anchor:w.anchor},pageKeywords), isExternal:w.isExternal };
     }).sort((a,b)=>b.score-a.score).slice(0,60);
@@ -322,7 +369,8 @@ async function analyze(){
     document.getElementById('legend').style.display='flex';
     document.getElementById('empty').style.display='none';
     setProgress(100);
-    setStatus(`✓ ${scored.length} liens extraits sur ${rawLinks.length} analysés`);
+    const fallbackNote=hasPositiveScore?'':' (mode fallback activé)';
+    setStatus(`✓ ${scored.length} liens extraits sur ${rawLinks.length} analysés${fallbackNote}`);
   }catch(err){
     setStatus('⚠ Erreur : '+err.message);
     setProgress(0);
@@ -467,17 +515,28 @@ function renderList(links){
     const c=scoreColor(l.score);
     const safeUrl=l.url.replace(/'/g,'%27');
     const safeTitle=escHtml(l.title);
-    return `<div class="lrow" onclick="window.open('${safeUrl}','_blank')">
+    return `<div class="lrow" onclick="this.classList.toggle('expanded')">
       <div class="lscore" style="background:${c}22;color:${c}">${l.score}</div>
       <div class="linfo">
         <div class="ltitle">${safeTitle}</div>
         <div class="lreason">${escHtml(l.reason)}</div>
+        <div class="lsummary" id="sum-${btoa(safeUrl).slice(0,16)}">Chargement du résumé…</div>
       </div>
-      <button class="flt" onclick="event.stopPropagation();toggleSummary('${safeUrl}',this)">Résumé</button>
       <button class="flt add-queue" data-url='${safeUrl}' data-title='${safeTitle}' onclick="event.stopPropagation()">＋</button>
       <a class="lopen" href="${safeUrl}" target="_blank" onclick="event.stopPropagation()">↗</a>
     </div>`;
   }).join('');
+
+  // Déclencher le chargement des résumés pour les liens visibles dès qu'ils sont cliqués (via la class .expanded)
+  // Ou on peut simplement les charger au fur et à mesure.
+  links.forEach(l => {
+    const id = "sum-" + btoa(l.url.replace(/'/g,'%27')).slice(0,16);
+    summarizeUrl(l.url).then(s => {
+      const target = document.getElementById(id);
+      if(target) target.textContent = s;
+    });
+  });
+
   attachQueueButtons();
 }
 
@@ -485,11 +544,44 @@ function renderList(links){
 let currentMembranesView=false;
 function showMembranes(btn){ document.querySelectorAll('.flt').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); currentMembranesView=true; renderMembranes(clusterLinks(allLinks)); }
 function clusterLinks(links){ const clusters=[]; links.forEach(l=>{ const kws=extractKeywords(l.url,l.title); let placed=false; for(const c of clusters){ const inter=c.keywords.filter(k=>kws.includes(k)); if(inter.length>0){ c.links.push(l); c.keywords = Array.from(new Set(c.keywords.concat(kws))); placed=true; break; } } if(!placed){ clusters.push({keywords:kws,links:[l]}); } }); clusters.sort((a,b)=>b.links.length-a.links.length); return clusters; }
-async function renderMembranes(clusters){ const el=document.getElementById('link-list'); if(!clusters.length){el.innerHTML='<div class="empty-list">Aucun cluster</div>';return;} el.innerHTML=clusters.map((c,ci)=>{ const title = c.keywords[0]||c.links[0].title||('Cluster '+(ci+1)); return `<div class="membrane" data-index="${ci}" style="border-bottom:1px solid var(--border);padding:8px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><strong style="font-size:13px">${escHtml(title)}</strong> <span style="color:var(--muted);font-size:11px">(${c.links.length} liens)</span></div><div><button class="flt" onclick="toggleCluster(${ci})">Afficher</button></div></div><div class="cluster-summary" id="cluster-sum-${ci}" style="margin-top:8px;color:var(--muted);font-size:13px">Chargement du résumé…</div><div class="cluster-links" id="cluster-links-${ci}" style="margin-top:8px"></div></div>`; }).join('');
- for(const [i,c] of clusters.entries()){ const top=c.links[0]; summarizeUrl(top.url).then(s=>{ const sumEl=document.getElementById('cluster-sum-'+i); if(sumEl) sumEl.textContent = s; }); const linksEl=document.getElementById('cluster-links-'+i); if(linksEl) linksEl.innerHTML = c.links.map(l=>`<div class="lrow" style="cursor:default"><div class="lscore" style="background:${scoreColor(l.score)}22;color:${scoreColor(l.score)}">${l.score}</div><div class="linfo"><div class="ltitle">${escHtml(l.title)}</div><div class="lreason">${escHtml(l.reason)}</div></div><button class="flt" onclick="event.stopPropagation();toggleSummary('${l.url.replace(/'/g,'%27')}',this)">Résumé</button><a class="lopen" href="${l.url.replace(/'/g,'%27')}" target="_blank" onclick="event.stopPropagation()">↗</a></div>`).join(''); }
+async function renderMembranes(clusters){ const el=document.getElementById('link-list'); if(!clusters.length){el.innerHTML='<div class="empty-list">Aucun cluster</div>';return;} el.innerHTML=clusters.map((c,ci)=>{ const title = c.keywords[0]||c.links[0].title||('Cluster '+(ci+1)); return `<div class="membrane" data-index="${ci}" style="border-bottom:1px solid var(--border);padding:8px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><strong style="font-size:13px">${escHtml(title)}</strong> <span style="color:var(--muted);font-size:11px">(${c.links.length} liens)</span></div><div><button class="flt" onclick="toggleCluster(${ci})">Afficher</button></div></div><div class="cluster-summary" id="cluster-sum-${ci}" style="margin-top:8px;color:var(--muted);font-size:13px">Chargement du résumé…</div><div class="cluster-links" id="cluster-links-${ci}" style="margin-top:8px;display:none"></div></div>`; }).join('');
+ for(const [i,c] of clusters.entries()){ const top=c.links[0]; summarizeUrl(top.url).then(s=>{ const sumEl=document.getElementById('cluster-sum-'+i); if(sumEl) sumEl.textContent = s; }); const linksEl=document.getElementById('cluster-links-'+i); if(linksEl) linksEl.innerHTML = c.links.map(l=>renderMembraneLink(l)).join(''); }
+ attachQueueButtons();
 }
 function toggleCluster(i){ const links=document.getElementById('cluster-links-'+i); if(!links) return; links.style.display = (links.style.display==='none'?'block':'none'); }
-function toggleSummary(url,btn){ const container = btn.parentElement; let existing = container.querySelector('.summary-block'); if(existing){ existing.remove(); return; } const b=document.createElement('div'); b.className='summary-block'; b.style.marginTop='8px'; b.style.color='var(--muted)'; b.textContent='Chargement du résumé…'; container.appendChild(b); summarizeUrl(url).then(s=>{ b.textContent=s; }); }
+
+function renderMembraneLink(l) {
+  const c = scoreColor(l.score);
+  const safeUrl = l.url.replace(/'/g, '%27');
+  const safeTitle = escHtml(l.title);
+  const id = "sum-mem-" + btoa(safeUrl).slice(0, 16);
+  
+  // Charger le résumé immédiatement pour les clusters
+  summarizeUrl(l.url).then(s => {
+    const target = document.getElementById(id);
+    if(target) target.textContent = s;
+  });
+
+  return `<div class="lrow" onclick="this.classList.toggle('expanded')">
+    <div class="lscore" style="background:${c}22;color:${c}">${l.score}</div>
+    <div class="linfo">
+      <div class="ltitle">${safeTitle}</div>
+      <div class="lreason">${escHtml(l.reason)}</div>
+      <div class="lsummary" id="${id}">Chargement du résumé…</div>
+    </div>
+    <button class="flt add-queue" data-url='${safeUrl}' data-title='${safeTitle}' onclick="event.stopPropagation()">＋</button>
+    <a class="lopen" href="${safeUrl}" target="_blank" onclick="event.stopPropagation()">↗</a>
+  </div>`;
+}
+
+async function renderMembranes(clusters){ const el=document.getElementById('link-list'); if(!clusters.length){el.innerHTML='<div class="empty-list">Aucun cluster</div>';return;} el.innerHTML=clusters.map((c,ci)=>{ const title = c.keywords[0]||c.links[0].title||('Cluster '+(ci+1)); return `<div class="membrane" data-index="${ci}" style="border-bottom:1px solid var(--border);padding:8px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><strong style="font-size:13px">${escHtml(title)}</strong> <span style="color:var(--muted);font-size:11px">(${c.links.length} liens)</span></div><div><button class="flt" onclick="toggleCluster(${ci})">Afficher</button></div></div><div class="cluster-summary" id="cluster-sum-${ci}" style="margin-top:8px;color:var(--muted);font-size:13px">Chargement du résumé…</div><div class="cluster-links" id="cluster-links-${ci}" style="margin-top:8px;display:none"></div></div>`; }).join('');
+ for(const [i,c] of clusters.entries()){ const top=c.links[0]; summarizeUrl(top.url).then(s=>{ const sumEl=document.getElementById('cluster-sum-'+i); if(sumEl) sumEl.textContent = s; }); const linksEl=document.getElementById('cluster-links-'+i); if(linksEl) linksEl.innerHTML = c.links.map(l=>renderMembraneLink(l)).join(''); }
+ attachQueueButtons();
+}
+
+function toggleSummary(url,btn){ 
+  // Remplacé par le clic sur la ligne entière (.lrow.expanded)
+}
 
 function attachQueueButtons(){
   const btns=document.querySelectorAll('.add-queue');
