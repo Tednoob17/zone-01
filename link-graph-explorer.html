@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Link Graph Explorer</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f13;
+    --bg2: #16161d;
+    --bg3: #1e1e28;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8e8f0;
+    --muted: #888899;
+    --accent: #7c5cbf;
+    --green: #4caf7d;
+    --blue: #4a90d9;
+    --orange: #f5a623;
+    --gray: #6b6b7b;
+    --radius: 12px;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+  header { padding: 24px 32px 0; display: flex; align-items: center; gap: 12px; }
+  header .logo { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  header h1 { font-size: 18px; font-weight: 600; color: var(--text); }
+  header span { font-size: 13px; color: var(--muted); }
+  .main { display: grid; grid-template-columns: 1fr 340px; gap: 16px; padding: 16px 32px 32px; height: calc(100vh - 72px); }
+  .left { display: flex; flex-direction: column; gap: 12px; }
+  .input-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+  .input-row { display: flex; gap: 8px; }
+  .input-row input {
+    flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; color: var(--text); font-size: 14px; outline: none;
+    transition: border-color .2s;
+  }
+  .input-row input:focus { border-color: var(--accent); }
+  .input-row input::placeholder { color: var(--muted); }
+  .btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 10px 20px; font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: opacity .15s, transform .1s; white-space: nowrap;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  #status { font-size: 12px; color: var(--muted); margin-top: 8px; min-height: 16px; display: flex; align-items: center; gap: 6px; }
+  .dot-anim { display: inline-flex; gap: 3px; }
+  .dot-anim span { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; animation: blink 1.2s infinite; }
+  .dot-anim span:nth-child(2) { animation-delay: .2s; }
+  .dot-anim span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+
+  #canvas-wrap {
+    flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    position: relative; overflow: hidden; min-height: 0;
+  }
+  canvas { position: absolute; top: 0; left: 0; cursor: default; }
+  #tooltip {
+    position: absolute; background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 14px; font-size: 12px; pointer-events: none; display: none;
+    max-width: 220px; z-index: 10; backdrop-filter: blur(8px);
+  }
+  #tooltip .tt-title { font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+  #tooltip .tt-score { font-size: 11px; margin-bottom: 2px; }
+  #tooltip .tt-reason { font-size: 11px; color: var(--muted); }
+  #empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--muted); gap: 10px; pointer-events: none; }
+  #empty svg { opacity: 0.3; }
+  #empty p { font-size: 14px; text-align: center; opacity: 0.7; line-height: 1.6; }
+
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* RIGHT PANEL */
+  .right { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+  .panel { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); display: flex; flex-direction: column; min-height: 0; flex: 1; }
+  .panel-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .panel-header h2 { font-size: 14px; font-weight: 600; }
+  .panel-header span { font-size: 12px; color: var(--muted); }
+  .filters { padding: 10px 16px; display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+  .flt {
+    font-size: 11px; padding: 4px 10px; border-radius: 99px;
+    border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer;
+    transition: all .15s;
+  }
+  .flt.active { background: rgba(124,92,191,0.2); color: #a987e8; border-color: rgba(124,92,191,0.4); }
+  .link-list { overflow-y: auto; flex: 1; padding: 4px 0; }
+  .link-list::-webkit-scrollbar { width: 4px; }
+  .link-list::-webkit-scrollbar-track { background: transparent; }
+  .link-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .lrow { display: flex; align-items: flex-start; gap: 10px; padding: 10px 16px; transition: background .1s; cursor: pointer; }
+  .lrow:hover { background: rgba(255,255,255,0.03); }
+  .lscore { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .linfo { flex: 1; min-width: 0; }
+  .ltitle { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lreason { font-size: 11px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lopen { color: var(--accent); font-size: 16px; opacity: 0.6; flex-shrink: 0; transition: opacity .15s; text-decoration: none; }
+  .lopen:hover { opacity: 1; }
+  .empty-list { padding: 32px 16px; text-align: center; color: var(--muted); font-size: 13px; }
+
+  /* Stats bar */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .stat { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px; text-align: center; }
+  .stat-val { font-size: 20px; font-weight: 700; }
+  .stat-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🔗</div>
+  <h1>Link Graph Explorer</h1>
+  <span>— Visualisez les liens d'un article par pertinence</span>
+</header>
+
+<div class="main">
+  <div class="left">
+    <div class="input-card">
+      <div class="input-row">
+        <input type="text" id="url-input" placeholder="https://en.wikipedia.org/wiki/X86-64" value="https://en.wikipedia.org/wiki/X86-64"/>
+        <button class="btn" id="analyze-btn" onclick="analyze()">Analyser</button>
+      </div>
+      <div id="status"></div>
+    </div>
+
+    <div class="stats" id="stats" style="display:none">
+      <div class="stat"><div class="stat-val" id="s-total" style="color:var(--text)">0</div><div class="stat-lbl">Total</div></div>
+      <div class="stat"><div class="stat-val" id="s-high" style="color:var(--green)">0</div><div class="stat-lbl">Très pertinents</div></div>
+      <div class="stat"><div class="stat-val" id="s-med" style="color:var(--blue)">0</div><div class="stat-lbl">Pertinents</div></div>
+      <div class="stat"><div class="stat-val" id="s-low" style="color:var(--orange)">0</div><div class="stat-lbl">Connexes</div></div>
+    </div>
+
+    <div id="canvas-wrap">
+      <canvas id="c"></canvas>
+      <div id="tooltip"><div class="tt-title"></div><div class="tt-score"></div><div class="tt-reason"></div></div>
+      <div id="empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        <p>Entrez une URL et cliquez sur <strong>Analyser</strong><br>pour visualiser le graphe de liens</p>
+      </div>
+    </div>
+
+    <div class="legend" id="legend" style="display:none">
+      <div class="leg"><div class="leg-dot" style="background:var(--green)"></div>Très pertinent (≥80)</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--blue)"></div>Pertinent (≥55)</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--orange)"></div>Connexe (≥35)</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--gray)"></div>Faible (&lt;35)</div>
+      <div class="leg" style="margin-left:auto;color:var(--muted);font-size:11px">Clic sur un nœud = ouvrir le lien</div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Liens analysés</h2>
+        <span id="link-count">—</span>
+      </div>
+      <div class="filters">
+        <button class="flt active" onclick="filterLinks('all',this)">Tous</button>
+        <button class="flt" onclick="filterLinks('high',this)">🟢 Très pertinents</button>
+        <button class="flt" onclick="filterLinks('med',this)">🔵 Pertinents</button>
+        <button class="flt" onclick="filterLinks('low',this)">🟠 Connexes</button>
+        <button class="flt" onclick="filterLinks('weak',this)">⚫ Faibles</button>
+      </div>
+      <div class="link-list" id="link-list">
+        <div class="empty-list">Aucun lien à afficher.<br>Lancez une analyse.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⚠️ REMPLACEZ PAR VOTRE CLÉ API ANTHROPIC -->
+<script>
+const API_KEY = 'VOTRE_CLE_API_ICI'; // sk-ant-...
+
+let nodes = [], edges = [], animFrame = null, allLinks = [];
+
+function scoreColor(s) {
+  if (s >= 80) return '#4caf7d';
+  if (s >= 55) return '#4a90d9';
+  if (s >= 35) return '#f5a623';
+  return '#6b6b7b';
+}
+function scoreCat(s) {
+  if (s >= 80) return 'high';
+  if (s >= 55) return 'med';
+  if (s >= 35) return 'low';
+  return 'weak';
+}
+
+function setStatus(msg, loading = false) {
+  const el = document.getElementById('status');
+  if (loading) {
+    el.innerHTML = `<div class="dot-anim"><span></span><span></span><span></span></div> ${msg}`;
+  } else {
+    el.textContent = msg;
+  }
+}
+
+async function analyze() {
+  const url = document.getElementById('url-input').value.trim();
+  if (!url) return;
+  const btn = document.getElementById('analyze-btn');
+  btn.disabled = true;
+  document.getElementById('empty').style.display = 'flex';
+  document.getElementById('stats').style.display = 'none';
+  document.getElementById('legend').style.display = 'none';
+  nodes = []; edges = []; allLinks = [];
+  if (animFrame) cancelAnimationFrame(animFrame);
+  setStatus('Analyse en cours via Claude…', true);
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-calls': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: `Tu es un expert en analyse de contenu web et en cartographie des connaissances.
+L'utilisateur te donne une URL d'article. Tu dois générer une liste réaliste de 15-20 liens que cet article contiendrait typiquement.
+Pour chaque lien, évalue sa pertinence par rapport au sujet PRINCIPAL de l'article.
+
+CRITÈRES DE SCORE:
+- 80-100: Lien directement lié au cœur du sujet (sous-concepts, définitions clés, standards)
+- 55-79: Lien pertinent mais secondaire (contexte, histoire, domaines voisins)
+- 35-54: Lien connexe mais éloigné (concepts généraux, catégories parentes)
+- 0-34: Lien peu pertinent (navigation, références génériques)
+
+Réponds UNIQUEMENT en JSON valide sans markdown ni backticks:
+{"article_title":"...","subject":"...","links":[{"title":"...","url":"...","score":85,"reason":"..."}]}
+
+Le champ "reason" doit être très court (6-8 mots max).`,
+        messages: [{ role: 'user', content: `Analyse les liens de cet article : ${url}` }]
+      })
+    });
+
+    if (!resp.ok) throw new Error(`API error ${resp.status}: ${await resp.text()}`);
+
+    const data = await resp.json();
+    const text = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch(e) {
+      const m = text.match(/\{[\s\S]*\}/);
+      if (m) parsed = JSON.parse(m[0]);
+      else throw new Error('Réponse JSON invalide');
+    }
+
+    allLinks = parsed.links || [];
+    allLinks.sort((a,b) => b.score - a.score);
+
+    buildGraph(parsed.article_title || url, allLinks);
+    renderStats(allLinks);
+    renderList(allLinks);
+    document.getElementById('link-count').textContent = allLinks.length + ' liens';
+    document.getElementById('stats').style.display = 'grid';
+    document.getElementById('legend').style.display = 'flex';
+    document.getElementById('empty').style.display = 'none';
+    setStatus(`✓ ${allLinks.length} liens analysés et scorés`);
+
+  } catch(err) {
+    setStatus('⚠ Erreur : ' + err.message);
+    console.error(err);
+  }
+  btn.disabled = false;
+}
+
+function buildGraph(centerTitle, links) {
+  const wrap = document.getElementById('canvas-wrap');
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+  const canvas = document.getElementById('c');
+  canvas.width = W; canvas.height = H;
+  const cx = W / 2, cy = H / 2;
+
+  const label = centerTitle.length > 16 ? centerTitle.slice(0,16)+'…' : centerTitle;
+  nodes = [{
+    id: 0, x: cx, y: cy, r: 36, label, color: '#7c5cbf',
+    type: 'center', vx: 0, vy: 0
+  }];
+
+  links.forEach((l, i) => {
+    const angle = (2 * Math.PI * i / links.length) - Math.PI / 2;
+    const dist = 90 + (100 - l.score) * 1.3;
+    const r = l.score >= 80 ? 22 : l.score >= 55 ? 18 : l.score >= 35 ? 14 : 10;
+    nodes.push({
+      id: i+1, x: cx + Math.cos(angle)*dist, y: cy + Math.sin(angle)*dist,
+      r, label: l.title.length > 10 ? l.title.slice(0,10)+'…' : l.title,
+      color: scoreColor(l.score), link: l, vx: 0, vy: 0
+    });
+    edges.push({ from: 0, to: i+1 });
+  });
+
+  startSim(W, H);
+  setupInteraction(canvas);
+}
+
+function startSim(W, H) {
+  const canvas = document.getElementById('c');
+  const ctx = canvas.getContext('2d');
+  let tick = 0;
+
+  function frame() {
+    tick++;
+    if (tick < 300) {
+      for (let i = 1; i < nodes.length; i++) {
+        const n = nodes[i];
+        for (let j = 1; j < nodes.length; j++) {
+          if (i === j) continue;
+          const o = nodes[j];
+          const dx = n.x - o.x, dy = n.y - o.y;
+          const d = Math.sqrt(dx*dx + dy*dy) || 0.1;
+          const minD = n.r + o.r + 16;
+          if (d < minD) {
+            const f = 0.35 * (minD - d) / d;
+            n.vx += dx * f; n.vy += dy * f;
+          }
+        }
+        const c = nodes[0];
+        const dx = c.x - n.x, dy = c.y - n.y;
+        const d = Math.sqrt(dx*dx + dy*dy) || 0.1;
+        const target = 95 + (100 - (n.link?.score || 50)) * 1.4;
+        const diff = (d - target) / d;
+        n.vx += dx * diff * 0.05;
+        n.vy += dy * diff * 0.05;
+        const mg = n.r + 10;
+        if (n.x < mg) n.vx += 2;
+        if (n.x > W - mg) n.vx -= 2;
+        if (n.y < mg) n.vy += 2;
+        if (n.y > H - mg) n.vy -= 2;
+        n.vx *= 0.80; n.vy *= 0.80;
+        n.x += n.vx; n.y += n.vy;
+      }
+    }
+    draw(ctx, W, H);
+    animFrame = requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+function draw(ctx, W, H) {
+  ctx.clearRect(0, 0, W, H);
+  // Edges
+  edges.forEach(e => {
+    const a = nodes[e.from], b = nodes[e.to];
+    const score = b.link?.score || 0;
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.strokeStyle = b.color + '33';
+    ctx.lineWidth = score >= 80 ? 1.5 : score >= 55 ? 1 : 0.6;
+    ctx.stroke();
+  });
+  // Nodes
+  nodes.forEach(n => {
+    // Glow for high-score nodes
+    if (n.link?.score >= 80) {
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r + 5, 0, Math.PI*2);
+      ctx.fillStyle = n.color + '22'; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+    ctx.fillStyle = n.hovered ? n.color + 'ff' : n.color + 'cc';
+    ctx.fill();
+    if (n.hovered) {
+      ctx.strokeStyle = '#ffffff44'; ctx.lineWidth = 2; ctx.stroke();
+    }
+    // Label
+    const fs = n.id === 0 ? 11 : n.r > 18 ? 10 : 9;
+    ctx.font = `600 ${fs}px 'Segoe UI', system-ui, sans-serif`;
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const words = n.label.split(' '), lines = [];
+    let cur = '';
+    words.forEach(w => {
+      const test = cur ? cur + ' ' + w : w;
+      if (ctx.measureText(test).width > n.r * 1.6) { if (cur) lines.push(cur); cur = w; }
+      else cur = test;
+    });
+    if (cur) lines.push(cur);
+    const lh = fs + 2;
+    lines.forEach((l, i) => ctx.fillText(l, n.x, n.y + (i - (lines.length-1)/2) * lh));
+  });
+}
+
+function setupInteraction(canvas) {
+  const tt = document.getElementById('tooltip');
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    let found = null;
+    nodes.forEach(n => {
+      n.hovered = Math.sqrt((mx-n.x)**2+(my-n.y)**2) < n.r;
+      if (n.hovered) found = n;
+    });
+    if (found?.link) {
+      const crect = canvas.getBoundingClientRect();
+      const tx = e.clientX - crect.left;
+      const ty = e.clientY - crect.top;
+      tt.style.display = 'block';
+      tt.style.left = Math.min(tx + 14, crect.width - 230) + 'px';
+      tt.style.top = Math.max(ty - 60, 8) + 'px';
+      tt.querySelector('.tt-title').textContent = found.link.title;
+      const c = found.color;
+      tt.querySelector('.tt-score').innerHTML = `<span style="color:${c}">● Score ${found.link.score}/100</span>`;
+      tt.querySelector('.tt-reason').textContent = found.link.reason;
+      canvas.style.cursor = 'pointer';
+    } else {
+      tt.style.display = 'none';
+      canvas.style.cursor = 'default';
+    }
+  });
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    nodes.forEach(n => {
+      if (Math.sqrt((mx-n.x)**2+(my-n.y)**2) < n.r && n.link?.url) {
+        window.open(n.link.url, '_blank');
+      }
+    });
+  });
+  canvas.addEventListener('mouseleave', () => {
+    tt.style.display = 'none';
+    nodes.forEach(n => n.hovered = false);
+  });
+}
+
+function renderStats(links) {
+  document.getElementById('s-total').textContent = links.length;
+  document.getElementById('s-high').textContent = links.filter(l => l.score >= 80).length;
+  document.getElementById('s-med').textContent = links.filter(l => l.score >= 55 && l.score < 80).length;
+  document.getElementById('s-low').textContent = links.filter(l => l.score < 55).length;
+}
+
+function filterLinks(type, btn) {
+  document.querySelectorAll('.flt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = {
+    all: () => true,
+    high: l => l.score >= 80,
+    med: l => l.score >= 55 && l.score < 80,
+    low: l => l.score >= 35 && l.score < 55,
+    weak: l => l.score < 35
+  };
+  renderList(allLinks.filter(f[type] || f.all));
+}
+
+function renderList(links) {
+  const el = document.getElementById('link-list');
+  if (!links.length) {
+    el.innerHTML = '<div class="empty-list">Aucun lien dans cette catégorie</div>';
+    return;
+  }
+  el.innerHTML = links.map(l => {
+    const c = scoreColor(l.score);
+    return `<div class="lrow" onclick="window.open('${l.url}','_blank')">
+      <div class="lscore" style="background:${c}22;color:${c}">${l.score}</div>
+      <div class="linfo">
+        <div class="ltitle">${l.title}</div>
+        <div class="lreason">${l.reason}</div>
+      </div>
+      <a class="lopen" href="${l.url}" target="_blank" onclick="event.stopPropagation()">↗</a>
+    </div>`;
+  }).join('');
+}
+
+// Resize handler
+window.addEventListener('resize', () => {
+  if (nodes.length > 0) {
+    const wrap = document.getElementById('canvas-wrap');
+    const canvas = document.getElementById('c');
+    canvas.width = wrap.clientWidth;
+    canvas.height = wrap.clientHeight;
+  }
+});
+</script>
+</body>
+</html>
