@@ -112,17 +112,102 @@ websecfr/
 
 ---
 
+---
+
 ## 🔧 Configuration Avancée
 
-### Modifier les Flags
-Édite `app.py` et la section `correct_flags` :
+### Routes Disponibles (Flask)
 
-```python
-correct_flags = {
-    'level01': 'ton_flag_ici',
-    'level02': 'un_autre_flag',
+#### Pages Web
+- `GET /` - Accueil avec liste des défis disponibles
+- `GET /dashboard` - Tableau de bord avec progression et statistiques
+- `GET /challenge/<level_id>` - Page du défi spécifique
+
+#### API Endpoints
+- `POST /api/verify/<level_id>` - Vérifier une soumission de flag
+  ```json
+  POST /api/verify/level01
+  Content-Type: application/json
+  
+  {"flag": "admin"}
+  
+  Response:
+  {
+    "success": true,
+    "message": "✓ Flag correct! Excellent exploit!",
+    "points": 30
+  }
+  ```
+
+- `GET /api/hint/<level_id>` - Obtenir un indice progressif
+  ```json
+  GET /api/hint/level01
+  
+  Response:
+  {
+    "hint": "Try looking at the database...",
+    "hint_number": 1,
+    "total_hints": 3
+  }
+  ```
+
+### Système de Flags
+
+Les flags sont centralisés dans `flags.json`:
+
+```json
+{
+  "level01": {
+    "flag": "correct_answer",
+    "hints": ["First hint", "Second hint", "Third hint"],
+    "difficulty": "Beginner",
+    "description": "Challenge description here"
+  },
+  "level02": {
+    "flag": "1 or 1=1",
+    "hints": ["Think about SQL keywords...", "Try with case variation", "Encoding might help"],
+    "difficulty": "Intermediate",
+    "description": "Bypass keyword filtering"
+  }
 }
 ```
+
+**Caractéristiques du système de flags:**
+- ✅ Vérification **case-insensitive** par défaut
+- ✅ Indices **progressifs** (3 max par défi)
+- ✅ Tentatives **loggées** dans `.stats/<level_id>_attempts.log`
+- ✅ Progression **sauvegardée** en session Flask
+- ✅ Points **attribués** à chaque réussite
+
+### Dashboard Statistiques
+
+Accédez à `/dashboard` pour voir:
+- **Défis résolus** vs total
+- **Points totaux** accumulés
+- **Barre de progression**
+- **Tableau récapitulatif** :
+  - Nom du défi
+  - Status (Résolu / Non commencé)
+  - Difficulté
+  - Nombre de tentatives
+  - Lien direct au défi
+
+### Modifier les Flags
+
+Édite simplement `flags.json` - **pas besoin de modifier le code Python** :
+
+```json
+{
+  "level01": {
+    "flag": "ton_nouveau_flag",
+    "hints": ["Indice 1", "Indice 2", "Indice 3"],
+    "difficulty": "Beginner",
+    "description": "Description du défi"
+  }
+}
+```
+
+Redémarre le serveur pour que les modifications prennent effet.
 
 ### Ajouter des Défis Personnalisés
 1. Crée un nouveau dossier `levelXX/` dans `websec.fr/`
