@@ -247,9 +247,10 @@ let readingQueue = [], currentQueueIndex = -1;const summaryCache = new Map();
 
 async function fetchWithFallback(url){
   const candidates=[
+    {name:'jina-reader', url:`https://r.jina.ai/${url}`},
+    {name:'corsproxy.io', url:`https://corsproxy.io/?${encodeURIComponent(url)}`},
     {name:'allorigins-raw', url:`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`},
-    {name:'allorigins-get', url:`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`},
-    {name:'jina-text-proxy', url:`https://r.jina.ai/http://${url.replace(/^https?:\/\//,'')}`}
+    {name:'allorigins-get', url:`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`}
   ];
   for(const p of candidates){
     try{
@@ -265,15 +266,22 @@ async function fetchWithFallback(url){
       continue;
     }
   }
-  try{ const direct=await fetch(url); if(direct.ok) return await direct.text(); throw new Error('Direct fetch HTTP '+direct.status);}catch(e){
-    throw new Error('Tous les proxies ont échoué. Vérifiez votre connexion, CORS ou utilisez un backend proxy. ('+e.message+')');
-  }
+  throw new Error('CORS/Block');
 }
 
 async function summarizeUrl(url){
   if(summaryCache.has(url)) return summaryCache.get(url);
   try{
-    const html=await fetchWithFallback(url);
+    const html = await fetchWithFallback(url);
+    
+    // Si c'est Jina Reader, le texte est déjà propre (Markdown)
+    if (html.startsWith('# ') || html.includes('\n')) {
+      const s = html.split('\n').filter(l => l.length > 50)[0] || html.slice(0, 400);
+      const clean = s.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1').replace(/[*#]/g, '').trim();
+      summaryCache.set(url, clean);
+      return clean;
+    }
+
     const parser=new DOMParser();
     const doc=parser.parseFromString(html,'text/html');
     const og=doc.querySelector('meta[property="og:description"]')?.getAttribute('content');
