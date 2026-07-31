@@ -1,11 +1,8 @@
 # zone-01
 
 Archive locale et espace de navigation pour la pédagogie Zone01 / 01-edu.
-
 ---
-
 ## Organisation du dépôt
-
 
 Arborescence cible recommandée:
 
@@ -20,7 +17,6 @@ zone-01/
 ```
 
 Règles simples:
-
 - Garde à la racine seulement les points d'entrée visibles.
 - Range tout cache ou export temporaire dans `generated/`.
 - Laisse les sous-repos 01-edu intacts, mais documente-les par catégorie.
