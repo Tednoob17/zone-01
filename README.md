@@ -1,8 +1,16 @@
 # zone-01
 
 Archive locale et espace de navigation pour la pédagogie Zone01 / 01-edu.
+
 ---
+
 ## Organisation du dépôt
+
+Le dépôt mélange trois familles de contenus:
+
+- Interface et navigation: pages HTML racine, graphe de liens, vues d'index.
+- Outils et serveurs: scripts, serveur d'archive, utilitaires de maintenance.
+- Miroirs 01-edu: repos pédagogiques, sujets, tests, branches.
 
 Arborescence cible recommandée:
 
@@ -17,6 +25,7 @@ zone-01/
 ```
 
 Règles simples:
+
 - Garde à la racine seulement les points d'entrée visibles.
 - Range tout cache ou export temporaire dans `generated/`.
 - Laisse les sous-repos 01-edu intacts, mais documente-les par catégorie.
