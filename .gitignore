@@ -5,3 +5,13 @@ app-release.apk
 
 # Android/Gradle transient cache
 **/.kotlin/
+
+# LaTeX build artifacts (regenerable)
+*.aux
+*.log
+*.toc
+*.out
+*.pyg
+*.fdb_latexmk
+*.fls
+*.synctex.gz

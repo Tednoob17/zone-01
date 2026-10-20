@@ -1,0 +1,985 @@
+#### Criteria
+'If you think design is expensive, you should look at the cost of bad design’ Ralf Speth | Former CEO Jaguar Land Rover
+'It’s about catching customers in the act, and providing highly relevant and highly contextual information’ Paul Maritz | CEO Pivotal
+**Analogous examples:**
+**Briefs:**
+**Complementary examples:**
+**Deliverables :**
+**Deliverables**:
+**Dual complementary or Tetradic examples**
+**Estimated time:** 4 weeks
+**Estimated time:** 5 weeks
+**Examples of Problem statements:**
+**General recommendations:**
+**How might we create a digital sport anyone (including athletes, non-athletes, disabled) could play between now and the next Olympics edition?**
+**How might we help sports fans organize local Olympic Games in between 2 international editions?**
+**How might we provide relevant and on-demand information about the environmental and social impact of the Olympics through our platform?**
+**Instructions**:
+**Mandatory: ask them if they would be available for an anonymous in-person interview (over the phone, in-person, through video chat: whatever they are more comfortable with) because you'll have to conduct at least 3 interviews further on.**
+**Monochromatic examples:**
+**Quote :**
+**Resource:**
+**Resources**
+**Resources**:
+**Split complementary examples:**
+**Team size**: 2
+**Team size:** 1
+**Team size:** 3 people max
+**Team size:** max 3 people
+**Tips:** Recommended steps
+**Tips:** Vocabulary
+**Triadic examples**
+**Websites or Apps:**
+**Websites:**
+*Airbnb, Google, Apple, Amazon, Facebook, Instagram and WhatsApp are not accepted.
+*You can replace Pierre with your own persona.*
+-  Focused on the solution, not the problem —> The problem statement is supposed to rephrase the brief and take into account the insights from the previous phase.
+-  Harassment case report rates increase by 20% within 2 years
+-  How might make sure Pierre doesn’t get drunk the night before the race?
+-  How might we make sure Pierre drinks the cups that are offered during the race?
+-  Too narrow —> There are plenty of options to avoid dehydration without drinking the cups that are offered during the race.
+-  [Atomic Design Methodology](https://atomicdesign.bradfrost.com/chapter-2/)
+- ![Color wheel combinations](Resource.png)
+- "When ______, I want to _____ So I can _____"
+- "When we buy a product, we essentially 'hire' it to help us do a job. If it does the job well, the next time we're confronted with the same job, we tend to hire that product again. If it does a crummy job, we 'fire' it." Clayton M Christensen 'Know your customers: JtBD"
+- 'Always design a thing in its larger context: a chair in a room, a room in a house, a house in an environment, an environment in a city plan’ Eero Sarrinen | Knoll
+- 'When we identify user stories early in the design process, we let them dictate the design decisions. Rather than let our preconceived ideas of how the product should be or should look do it.' UX Booth
+- 1 atom
+- 1 drawing per action
+- 1 for a button
+- 1 for a description
+- 1 for a title
+- 1 for the text
+- 1 molecule
+- 1 organism
+- 1 template
+- 1 to 3 KPIs
+- 1 to 3 hypotheses
+- 10 organizations appear on the landscape
+- 10 organizations appear on the table
+- 1: A physics teacher that wants to make his website catchy for 12 year-olds.
+- 1: Adding a filter based on their current mood
+- 2 half circles to draw the circle around the timer
+- 2 numbers can be switched as long as the layering of layers is respected
+- 2 to 3 main colors
+- 2: A Sri Lankan wedding planner website that wants to breathe sobriety and modernity.
+- 2: Offer a selection of 3 movies to be watched
+- 3 series of wireframes (6 to 12 screens per flow) on Figma
+- 3 to 5 main topics
+- 3 user flows on a board (digital or pictures of a paper board)
+- 3: An e-commerce platform that sells West African wax and wants to feel more luxurious in its spirit to stand out.
+- 3: Ask users to rate the movie after watching it for further recommendation
+- 4 problem statements to adapt the initial brief based on the research findings
+- 4: An NGO that helps parents of kids with autism, wants to spread joy and hope for a fundraiser.
+- 5 high-fidelity screens from Figma
+- 5 to 10 scripts from users
+- 90% of the 15-18 year-olds knows a harassment witness response process within 2 years
+- A 3-page Figma file with 3 different elements from a website (it can be from 3 different websites) that are accessible. The three measures must be different.
+- A 3-page Figma file with 3 different elements from an app (it can be from 3 different apps) that are accessible. The three measures must be different.
+- A Figma document with your persona's user journey
+- A Figma file
+- A Figma file gathering 5 examples of **feedback** micro-interactions or animations. In each example, show the different versions of the element.
+- A Figma file gathering 5 screenshots of breadcrumbs.
+- A Figma file gathering 5 screenshots of calendars.
+- A Figma file gathering 5 screenshots of radio buttons.
+- A Figma file gathering 5 screenshots of time pickers.
+- A Figma file gathering 5 screenshots of toggle buttons.
+- A Figma file gathering at least 5 signs of consistency.
+- A Figma file including 10 elements from easyJet design system
+- A Figma file including for each digital product (websites or apps)
+- A Figma file including screenshots of the main page, URL and extracted colors next to the screenshots.
+- A Figma file including screenshots of the main page, URL, extracted colors and the matching color codes.
+- A Figma file including the screens with lines on top to show grids. One page per screen or frame.
+- A Figma file of 4 pages
+- A Figma file per moodboard
+- A Figma file showing all the typographies used in each website or app.
+- A Figma file with 4 moodboards from Ex. 4 and typography:
+- A Figma file with 5 combinations of multi state elements.
+- A Figma file with Pierre’s user journey.
+- A Figma file with a library including
+- A Figma file with a library including:
+- A Figma file with a moodboard for a climbing group. Include:
+- A Figma file with a moodboard for a dating app. Include:
+- A Figma file with the image
+- A Figma file with the wireframes (mid-fi)
+- A Figma moodboard that includes:
+- A PDF docuemnt with a report on what you learnt and a list of the 5 main iterations that you'd like to do on the next version
+- A PDF document gathering your strategy. Please include:
+- A PDF document including your objective(s) and your hypotheses, the questions, an introduction and a conclusion.
+- A PDF document that includes the script with all the steps + logistics
+- A PDF document that represents the main concept out of the workshop
+- A PDF document with 3 ideas that came out the 2 workshops.
+- A PDF document with 3 scripts
+- A PDF document with 3 to 6 recommendations
+- A PDF document with a problem statement starting with a "How Might We"
+- A PDF document with a test protocol
+- A PDF document with an interview guide
+- A PDF document with one problem statement and 3 KPIs to measure the impact of the solution
+- A PDF document with the conclusions from each test and 3 major ideas to improve the prototype
+- A PDF document with the ideation workshop script
+- A PDF document with the key learnings from this phase
+- A PDF document with the outcomes of the desirability test
+- A PDF document with the script of the tool context
+- A PDF document with the scripts from all the 6 interviews.
+- A PDF document with the usability test script
+- A PDF document with:
+- A PDF page of the site map.
+- A PDF persona card extracted from a Figma file
+- A board with all the ideas (on paper or digitally on Miro or Figma)
+- A broadcast strategy
+- A card sorting workshop script with the research goals (PDF document)
+- A chart to show the competitive landscape, with 2 axes of your choice (digital, psychological, local, closeness to students, institutional, etc.) (PDF)
+- A closed room for 20 minutes where everyone feels comfortable
+- A competitive report with an introduction that explains your main conclusions (PDF)
+- A complete Jobs-to-Be-Done on a PDF document
+- A completed chart
+- A comprehensive user flow on a board (digital or pictures of a paper version)
+- A comprehensive user flow on a board (digital or pictures of a physical one)
+- A conclusion with next steps and a thank you.
+- A desirability testing board with 25+ different adjectives
+- A document to express your main feedback after running your broadcast strategy: what worked best? have you encountered any difficulties? What were they? How did you overcome them?
+- A document to show the new content organization (it can be a picture of the board with sticky notes or the digital version).
+- A duplicated and completed chhecklist on a sheet document (Google Sheets, Airtable, Excel, etc.)
+- A few ideas about how to reach them
+- A few scan questions (demographics)
+- A funnel process (>)
+- A good user persona is the one based on user research, without regard to how many attributes we can describe.
+- A persona is fictional: do not use one of your users’ names, but a name that is consistent with your users’ demographics and social group. In this case, we'll choose a man as 3 out of 4 are men, and Pierre as a first name so it's different (but consistent) from Joe's, Nathan's, Guillaume's and Anaelle's.
+- A plan A, a plan B, a plan C
+- A proper introduction that describes the interviewer and the purpose of this interview
+- A report including the 5 recommended steps described below
+- A report with your conclusions, your impressions and your key learnings from this iteration (PDF document out of Microsoft Word, Pages, Google Docs or any word-processing software)
+- A table to compare the organizations on 5 to 10 criteria (PDF)
+- A testing protocol script
+- A time frame, on PDF or on Figma, of the project, including the working days ahead, each phase of the process, the main tools you plan to use for each phase and the time you plan to spend for each tool.
+- A user persona on a PDF document
+- Adapt the line to Pierre’s thoughts and emotions.
+- Adobe Illustrator
+- Alibaba
+- All you layers are names and organized
+- All your layers are named and organized
+- An Affinity Diagram (pictures of the Affinity Diagram on paper or on digital tools like Miro)
+- An Empathy Map (pictures of the Empathy Map on paper or on digital tools like Miro)
+- An affinity diagram from your interviews (PDF or digital, on Miro or Figma for example)
+- An animated Mid-Fi prototype on Figma
+- An animated high-fidelity prototype on Figma
+- An animated prototype on Figma
+- An animated wireframe prototype (mid-fi)
+- An introduction of each concept that came out of the ideation
+- Analogous
+- Analytics
+- App WikiArt
+- Apple design system (head bar)
+- Appropriate —> The problem statement is narrow enough to be specific for one painpoint, and broad enough to let creativity suggest many options. Also, it takes into accounts some of the key insights from the previous phases.
+- As to the age, average the ages of your selected users. In this case, 32 (Joe is 30, Nathan is 39, Guillaume is 30 and Anaelle is 29).
+- As to the script, you can refer to "Athlete, keep hydrated" Quest, Ideation Exercise.
+- Ask the participants to do, at each round, the following:
+- Ask them to turn off their phones
+- At least 10 multistate variations
+- At least 2 different messages
+- At least 5 atoms
+- At least 5 molecules
+- At least 5 multistate elements
+- At least 5 organisms
+- At least graphic design 20 elements
+- At least graphic design 30 elements
+- At least one atom
+- At least one molecule
+- At least one organism
+- At this stage, it’s important to focus on the problem, not on the solution! You can start tackling the problem after (re)defining it.
+- Avoid confirmation biais: don’t tell them the values and ask them to approve them!
+- Bold, italic, normal, light, etc. are fonts, not typography.
+- Booking.com
+- Breadcrumbs to indicate where you are in terms of navigation
+- Break down the story step-by-step and define Pierre’s actions.
+- Button
+- Card sorting
+- Choose 1 main idea to solve the problem
+- Classify your recommendations in heuristic criteria
+- Closed-ended, unbiased questions, max 10
+- Color contrast
+- Colors (2 to 3 main colors)
+- Comparison between V1 and V2 of the prototype in the report
+- Competitive analysis
+- Complementary
+- Completed tool (scripts from user interviews, results from a quantitative analysis, etc.)
+- Completed tool: a board with all the ideas - on paper or digitally on Miro or Figma
+- Conduct 3 interviews with teenagers
+- Content
+- Create a PDF document and write at least 6 insights and the name of the person(s) who said it.
+- Create a user persona based on several users from the same category
+- Create an interview guide
+- Creating a great design isn’t just about understanding what the user wants. It’s also about understanding and delivering on what the business needs.
+- Define
+- Define the opportunities to improve Pierre’s overall experience every time you see a pain point.
+- Define the scope of the test
+- Define the scope.
+- Define your research goals
+- Definition of 'insight': A key learning from what you have seen, read or heard.
+- Describe the steps and the instructions
+- Description or subtitle
+- Design needs to fail.
+- Design needs to fail. Failure is even a necessary step, but ideally it should happen before a product is launched, during the prototype and test phases
+- Detect consistency, that helps users understand a digital product at the first glance.
+- Detect people who face the same kinds of problems and group them.
+- Directions:
+- Document everything you do, take notes, open a medium account to identify and show your deliverables, thoughts and feedback. It will be useful for your portoflio!
+- Documenting the what and why of each element promotes organization and makes the handoff to the development team much smoother.' UX Booth
+- Doesn’t drink too much right before the race because it hurts my stomach (Nathan, Anaelle)
+- Double complementary
+- Drawing a user journey first might be helpful before rushing into wireframes
+- Drawing paper prototypes before going digital might save you some time ;)
+- Easyjet App
+- Empathy / User Research
+- Empathy Map
+- Enrich your graphic general knowledge
+- Error states
+- Establish metrics:  How are you proving your design is efficient?
+- Etc...
+- Exampels of KPIs (fake data! Not to be copied or used!):
+- Example: [Paper Prototyping - The Practical Beginners guide](https://www.uxpin.com/studio/blog/paper-prototyping-the-practical-beginners-guide/)
+- Example: [Wellness App](https://medium.com/@ebtaskin/story-of-my-very-first-ux-ui-design-project-at-ironhack-bootcamp-955addeb760e)
+- Examples of correct problem statements:
+- Examples of insights from the scripts (non-exhaustive list):
+- Examples of measures
+- Examples of moodboards (in addition, the moodboard should include the color codes):
+- Examples of signs of consistency:
+- Examples of typography applied to graphic elements
+- Examples of wrong problem statements:
+- Explain the context and introduce Pierre (or your persona)
+- Explain the goal:
+- Explore Noun Project to get icons
+- Extract at least 6 insights and write them down on a PDF file
+- Feedback is the situation when the app specifically sends a piece of information to the user, like:
+- Feel free to browse Google Chrome options to detect typography ;-)
+- Find participants
+- First, draw low-fidelity prototypes on paper. One main screen = 1 mobile frame. No micro-interactions nor multistate are needed for this exercise.
+- Focus on each action and define Pierre’s thoughts and main emotion among the list.
+- Focused on the solution, not the problem —> The problem statement is supposed to rephrase the brief and take into account the insights from the previous phase.
+- Font: Roboto Bold, Normal, Black with 0 to 7% space between letters
+- Fonts: Avenir
+- Fonts: SF Compact for the iOS elements,  Futura STD Condensed for the Nike signs
+- For customers
+- For each insight, name who said it.
+- For restaurants
+- For runners
+- For runners’ managers
+- Gather all the ideas.
+- Get Out of the Box. Be curious. Follow design trends on YouTube, LinkedIn, in podcasts, on Instagram accounts. Explore the internet when you discover a new concept. Build your own design culture.
+- Get back to the values and spirit you chose in Ex 1. Extract 2 to 5 adjectives.
+- Give the participants 3 stickers each and ask them to vote for the best three options.
+- Good to know: Desirability testing is great to assess the impressions a design gives to the users. Whereas Usability testing is great to understand what users understand your prototype and how they navigate across the product.
+- Google Ventures - Design Sprint: The Five-Act interview
+- Gradient to fill the main circle
+- Groups
+- Have fun!!
+- Have you ever found yourself in trouble due to hydration? What happened?
+- Highlighted or enlarged text when hovering
+- How can you reach them? Through which channels? On which forums, groups, with which hashtags? Will you try to get them through influencers?
+- How did you get prepared?
+- How did you manage your hydration?
+- How might make sure Pierre doesn’t get drunk the night before the race?
+- How might we help Pierre (or your persona) measure and prepare his hydration before a race?
+- How might we help Pierre measure and prepare his hydration before a race?
+- How might we make sure Pierre doesn’t get dehydrated?
+- How might we make sure Pierre drinks the cups that are offered during the race?
+- How might we provide Pierre some drink that contains everything he needs to avoid dehydration?
+- How might we provide Pierre with a drink that contains everything he needs to avoid dehydration?
+- How often do you run?
+- How was it? Tell me about the experience you had.
+- How will you approach them? What message will you write?
+- I run races with friends or peers (Joe, Nathan, Guillaume)
+- Ideation
+- Identify objectives: What are you proving?
+- If Pierre couldn’t stop talking 24/7
+- If Pierre had 5 arms
+- If Pierre had a twin who was constantly with him
+- If Pierre was 105 years old
+- If Pierre was 5 years old
+- If Pierre was a billionaire
+- If Pierre was a bird
+- If Pierre was a turtle
+- If Pierre was always late
+- If Pierre was blind
+- If Pierre was deaf
+- If Pierre was dishonest
+- If Pierre was naked
+- If Pierre was very clumsy
+- If Pierre was very forgetful (and lost memory every 5 minutes)
+- If the outcomes are not consistent with the values, 3 suggestions on how to make the moodboard and design library evolve.
+- If the selected adjectives chosen by the users are consistent with the ones you had chosen, congratulations!
+- If the selected adjectives chosen by the users are not consistent, that’s fine! Make 3 suggestions about how to make your moodboard and library evolve.
+- If there isn’t a solution that stands out of the crowd, hang them on a board and organize them according to these two parameters: easy to implement and efficient. Example in the resources.
+- If you design for everyone, you delight no one.
+- In forms, the title of the case should be above the text zone
+- In the document, add the link to a survey ready to be spread
+- In this context, 4 users = 4 personas = 4 user journeys = 4 prototypes
+- In your prototypes, if necessary, show your audience the user journey for each persona when there is one order.
+- Information saved
+- Insights must be either shared by several people or consistent with what other people have already experienced
+- Instagram account: [Typespire](https://www.instagram.com/typespire/)
+- Instagram account: [You are typography](https://www.instagram.com/youaretypography/)
+- Instagram account: [ui.netwrk](https://www.instagram.com/ui.netwrk/)
+- Instagram account: [ux_ui.world](https://www.instagram.com/ui_ux.world/)
+- Instagram account: [uxuidailytips](https://www.instagram.com/uiuxdailytips/)
+- Interrail
+- Interview guide:
+- Jobs-to-be-done (JTBD)
+- KPIs: [check the SMART list](https://www.grow.com/blog/how-to-use-smart-goals-to-build-your-kpis))
+- Key learnings from the tests (5 tests are required)
+- Key learnings from this phase
+- Let’s be creative! Get inspiration from visuals before diving in.
+- Let’s find as many solutions as possible to the question: “How might we help Pierre (or your persona) measure and prepare his hydration before a race?”, given the following contraints (unveil them one after the other: 1 minute per constraint, 1 constraint per round):
+- Linear color background
+- Links color that is different from the body text's
+- Make a presentation as if you were showing your work to Bruno. Make sure there are at least 5 people in the audience.
+- Make a presentation as if you were showing your work to Yara. Make sure there are at least 5 people in the audience.
+- Make a presentation as if you were showing your work to your client. Make sure there are at least 5 people in the audience.
+- Make both presentations as if you were showing your work to DeliverNow team. Make sure there are at least 5 people in the audience.
+- Make connections. Use LinkedIn, your friends, friends of friends to frequently meet designers and ask them about how they practice design in their organization. Who know, some day thay may remember you and offer you a contract!
+- Make your presentations as if you were showing your work to DeliverNow team. Make sure there are at least 5 people in the audience.
+- Mind the aesthetics of your delivrable! 1 page per site should be good.
+- Mind the presentation!
+- Mix up some insights and details from the interview scripts to write a journey that is consistent with Pierre’s personality.
+- Monochromatic
+- Named and organized layers
+- Named layers
+- On a PDF document, write at least 5 key figures or insights you extracted from the articles.
+- On a PDF document, write down one problem statement that summarizes the main problem that Pierre has when he runs.
+- On each moodboard, several pictures (5 to 12) that are graphically consistent in terms of colors
+- On each page, a screenshot of a template, an organism, a molecule and an atom
+- On each screen, indicate the layers order with numbers. 1 being the background image, 2 the element right on top, etc.
+- One color code per color (RGB, Hex or HSB)
+- One main idea to solve the problem next to the board
+- One problem statement
+- Online harassment drops by 30% within 5 years
+- Out of scope —> This is not about dehydration, nor about running.
+- Payment accepted
+- People experience dehydration when they lose 2% of their body mass loss (BML) in fluids/water/sweat.
+- Persona
+- Photos from the tests
+- Picture of a paper prototype
+- Pictures from the desirability test
+- Pictures of 1 storyboard to describe your solution, on paper
+- Pictures of a paper prototype
+- Pictures of a paper prototype (low-fi)
+- Pictures of the 2 sessions
+- Pictures of the new test
+- Pictures of the ongoing test
+- Pictures of the session
+- Please label your document! Title and name of the website.
+- Please make sure you use:
+- Podcast recommendation: [How to Ask Great UX Research Questions](https://open.spotify.com/episode/5UlvTKyVObeCDxkc8DAakU?si=fjMEHCdjRXWkYhwKhxIopQ)
+- Prepare a board with 25+ adjectives, randomly distributed.
+- Prepare some papers or sticky notes, stickers, a jar, and pens.
+- Prepare the material
+- Problem Statement
+- Prototype
+- Put the sticky note in a jar
+- Read all the scripts very carefully
+- Read them out loud
+- Recommended steps
+- Recruit 5 users
+- Refreshed feed
+- Run a card sorting workshop on 5 people
+- Runs several times a week (Joe, Nathan, Guillaume, Anaelle)
+- Set a timer for each round.
+- Several paths are encouraged
+- Several problem statements can be possible for each persona and user journey, but for this exercise, we are guiding you towards one.
+- Show your design to 5 different people, and ask them to select the adjectives among the list from the board that they are inspired with.
+- Split complementary
+- Sprint athletes are generally less concerned about the effects of dehydration than are endurance athletes.
+- Start by asking yourself what key elements may appear in an e-commerce app.
+- Start by drawing on paper, then pass it on to a digital tool.
+- Suggest a new taxonomy (content organization)
+- Surveys are not accurate in providing behavioural data because USERS OMIT STEPS IN THE MIDDLE AND MEMORIES ARE FAULTY.
+- Sweat helps the body to maintain optimal body temperature.
+- Symbols and variants for the songs (1 page for the Symbols)
+- Symptoms of dehydration can be headache, dizziness, nausea, lightheadedness, or fatigue.
+- Test
+- Test the prototype with 3 people. To do so, prepare a usability testing guide following the [Design Sprint Five-Act interview](https://www.youtube.com/watch?v=U9ZG19XTbd4)
+- The "I want to" part involves a practical action
+- The "So I can" part involves a psychological or emotional purpose
+- The "When" part involves a visit on the website
+- The JTBD is tool that goes as a conclusion to another of the previous tools. Make sure:
+- The actions are linked with arrows
+- The animated high-fidelity prototype (a demo-video) with the 4 user journeys
+- The animated mid-fidelity prototype (a demo-video) with the 4 user journeys
+- The channels you intend to use - be specific and include the links to the groups, forums, pages, account you plan to reach
+- The completed tool is a [Persona board](https://miro.medium.com/max/1400/0*RbHfR6BHhhFIENNf). Make sure the key insights come from the field, from reality, but the persona itself is different from only one user.
+- The completed tool is a [User Journey Map](https://d2slcw3kip6qmk.cloudfront.net/marketing/blog/2017Q3/SEO-initiative-customer-journey-mapping/CustomerJourneyMap1.png).
+- The completed tool is a report. Make sure there is;
+- The completed tool is a series of quantitative data from at least 100 answers.
+- The completed tool is an [Empathy Map](https://miro.medium.com/max/700/1*I1ffOWdPWQva3dCMQE-TAQ.png).
+- The completed tool is either:
+- The following is the interview script used to conduct the seven user interviews.
+- The font is GOTHAM
+- The font is RAJDANHI
+- The frame for each iWatch screen is watch 44 mm 184 x 224
+- The frame is Android 360 x 640px
+- The frame is a desktop 1440 x 1024
+- The frame is desktop 1440 x 1048 px
+- The frame is iPhone 13 Pro Max 428 x 926 px
+- The main colors extracted and shown on the side
+- The main feedback from usability testings (5x4)
+- The main purpose of the form
+- The persona has to be sport-oriented, as it is the context of this research. However, broader information, like the scan info (jobs, location, etc.) are more than welcome to give more context.
+- The prototype is meant to answer questions, so keep it focused. You just need a real-looking facade to which customers can react.
+- The research goals must be close to "rearrange the content"
+- The script is the form. Make sure there is:
+- The script is the interview guide. Make sure there is:
+- The script is the list of insights the student uses to create the Empathy map
+- The script is the list of insights the student uses to create the User Journey.
+- The script is the list of insights the students uses to create the persona
+- The script is the strategy. The student explains what they are looking for and how they plan to find it.
+- The sentence is complete
+- The user has a specific goal
+- Then, draw your mid-fidelity screens on Figma with simple shapes, in black and white.
+- There are pictures of the ongoing workshop
+- There is a [competitive landscape](https://venngage-wordpress.s3.amazonaws.com/uploads/2019/03/g2crowd-grid.png)
+- There is a [competitive table](https://venngage-wordpress.s3.amazonaws.com/uploads/2019/03/product-features-comparison-matrix.png)
+- There is a new content organization shown in a table with sticky notes (it can be a picture or digital)
+- There is a script including the research goals.
+- There is a series of actions organised in rectangles (actions) or diamond (choice)
+- There is a starting point and and ending point - which is the goal of the user
+- There is an introduction
+- This report will be handed on to the CEO. Pay attention to the details and make sure the document is clean and easy to use!
+- Timing: 15 minutes for the presentation and 5 minutes for Q&A.
+- Title
+- To get trustworthy results in your test, you can’t ask your customers to use their imagination. You’ve got to show them something realistic. If you do, their reactions will be genuine.
+- To prototype your solution, you’ll need a temporary change of philosophy: from perfect to just enough, from long-term quality to temporary simulation.
+- Too broad —> The problem statement is out of the scope of running, so the solutions cannot be integrated in the specific context of running.
+- Too narrow —> There are plenty of options to avoid dehydration without drinking the cups that are offered during the race.
+- Triadic
+- Trust the design process. One step after another.
+- Typography
+- UX Strategy is the method by which you validate that your solution solves a problem for real customers in a dynamic marketplace because the market is constantly changing.
+- Up to you to find more!
+- Upload the PDF or Figma document on Github, labeled as follows: “Name_FirstName_DeliverableName_Date_VersionNumber”. For example, it can be labeled as “Doe_John_MidFiPrototype_05242024_V1”.
+- Upload the document on Github, labeled as follows: “Name_FirstName_DeliverableName_Date_VersionNumber”. For example, it can be labeled as “Doe_John_MidFiPrototype_05242024_V1”.
+- Use as many tools as needed, and make sure you do all the process in 4 working days!
+- Use as many tools as needed, be make sure you do all the process in 4 working days!
+- Use the Color Pipette to detect the color codes!
+- Use the Color Pipette to extract the colors!
+- Use the material you got from exercise 1.
+- User Flow
+- User Interface Design is a hybrid role and can bring together concepts from interaction design, visual design, information architecture and even Front End Development
+- User Journey
+- User interviews
+- User research findings from qualitative and quantitative research (persona, figures, etc.) for the 4 users
+- Vocabulary
+- What do you remember about the way you hydrated?
+- What have you planned if they don't answer right away?
+- What sports do you practice?
+- What was the last race you ran?
+- What words and what tone will you use?
+- What would you have done differently? Why?
+- What would you never do again? Why?
+- What you need for an in-person ideation workshop:
+- When was the last time you went out for a run?
+- When you find 2+ people who face the same kind of problem, you can merge their testimonials to create a persona. In this case, Joe, Nathan, Guillaume and Anaelle who run races from time to time (they have run at least one race in their life, but less than 3 times a year) and have faced dehydration problems.
+- Whimsical
+- Who are you targeting? Teenagers, bullies, persecutor, witnesses, parents, teachers, people in the administration? From where?
+- Who you are targeting (remember, you can focus on your hometown as well as the whole planet)
+- Wireframes (6 to 12 screens) from the home page to the product page, on Figma
+- Wireframes (mid-fi) to upload on the Figma file
+- With 2 relevant axes
+- With 5 to 10 criteria
+- Write a conclusion to thank the user
+- Write an introduction to greet ther user
+- Write down their ideas on a sticky note (1 idea per sticky note)
+- You can find HSB (Hue, Saturation, Brightness) as well as HSV (Hue, Saturation, Value) depending of the source.
+- You can show the main colors with filled squares or circles next to the screenshots.
+- You can use Avenir Book instead of easyJet’s font
+- You can use Figma to extract the colors you need and export your file to PDF.
+- You can use existing Libraries by browsing the Figma community resources
+- You can use the document from the previous exercise to add the color codes on Figma.
+- You can, for instance, describe Pierre’s first marathon. The first phase could be the preparation, the second phase the race itself, and the third one how he feels about the race when he has done it.
+- You may use Card Sorting and User flows
+- You may use Figma and extract a PDF document out of it.
+- You may use Figma.
+- You use linear color function
+- You use masks to change the shape of an imported image
+- You use masks to change the shape of an imported image (Amsterdam, Maldives, New Delhi, Sydney icons)
+- You use masks to change the shape of the imported image
+- [10 things to know about card sorting](http://www.measuringu.com/blog/card-sorting.php)
+- [13 unusual brainstorming methods that work](http://www.huffingtonpost.com/young-entrepreneur-council/13-unusual-brainstorming_b_3880619.html)
+- [17 reasons to use storyboards in UX design](https://uxdesign.cc/17-reasons-to-use-a-storyboards-in-ux-design-2bc6fea73e20?source=friends_link&sk=5bb2722f1f9ff06d4f22b0abfe52f508)
+- [1st screen example](https://www.figma.com/file/KOzd8yZuJvGLmZLuXjBgDg/UI-III-Ex-1.1)
+- [3 proven methods to organize a brainstorming session](https://uxdesign.cc/brainstorm-79e51f20f313)
+- [3 ways good design makes you happy - TED talk by Don Norman](https://www.ted.com/talks/don_norman_3_ways_good_design_makes_you_happy)
+- [7 tips for designing consistency](https://designshack.net/articles/graphics/7-tips-for-designing-consistency/)
+- [A Lean UX Customer Journey Map](https://uxdesign.cc/proto-journey-a-lean-ux-customer-journey-map-30ea3a241edc)
+- [A big list of UX KPIs and metrics](https://www.cxpartners.co.uk/our-thinking/big_list_of_ux_kpis_and_metrics/)
+- [A metrics-driven approach to evaluate success of UX design](https://uxdesign.cc/a-metrics-driven-approach-to-evaluate-success-of-ux-design-dd3bea098820?sk=acf1b1f7f0a7663d34d11906339b4698)
+- [A new usability heuristic evaluation checklist](https://uxplanet.org/a-new-usability-heuristic-evaluation-checklist-259f588da308)
+- [A sum up of all the tools that have been practiced](https://www.figma.com/file/x0xfoz9TaEDiAfGPFqKJcs/RECAP-UX%2FUI-Program?node-id=0%3A1). Focus on the UX part!
+- [Accessibility testing — W3C Wik](https://www.w3.org/wiki/Accessibility_testing)i
+- [Accuracy of Urine Color to Detect Equal to or Greater Than 2% Body Mass Loss in Men Journal of Athletic Training](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4741257/)
+- [Affinity Diagram and Relation Examples](https://www.youtube.com/watch?v=VngWHIE4k9s)
+- [Airtable](https://www.airtable.com/)
+- [Analyzing usability testing data](https://uxdesign.cc/analysing-usability-testing-data-97667ae4999e)
+- [Android Mobile Template](https://i.pinimg.com/originals/43/8e/de/438ede24264eb9552b635d34142eac29.png)
+- [Asking the right questions](https://uxdesign.cc/asking-the-right-questions-on-user-research-interviews-and-testing-427261742a67)
+- [Atomic Design Methodology](https://atomicdesign.bradfrost.com/chapter-2/)
+- [Basics on how to conduct card sorting](https://uxdesign.cc/basics-on-how-to-conduct-card-sorting-6e4ccc7cc261?sk=cafd49e16c71a72c3fad93e63c1998f1)
+- [Beginning graphic design: Typography](https://edu.gcfglobal.org/en/beginning-graphic-design/typography/1/)
+- [Beginning graphic design](https://edu.gcfglobal.org/en/beginning-graphic-design/)
+- [Better research through surveys](https://uxmastery.com/better-user-research-through-surveys/)
+- [Brainwriting #2](https://dux.typepad.com/dux/2011/01/method-2-of-100-brainwriting-brainwriting-is-an-ideation-method-for-quickly-generating-ideas-by-asking-people-to-write-thei.html)
+- [Brainwriting](https://business.tutsplus.com/tutorials/how-to-use-brainwriting-for-rapid-idea-generation--cms-26451)
+- [Building a design system library - Lyft](https://medium.com/tap-to-dismiss/building-a-design-system-library-532ef2492811)
+- [Card Sorting — what, how & the perks](https://uxdesign.cc/card-sorting-what-how-the-perks-29f6cb020270)
+- [Card sorting: a definitive guide](http://boxesandarrows.com/card-sorting-a-definitive-guide/)
+- [Competitive Analysis Templates](https://venngage.com/blog/competitor-analysis-template/)
+- [Competitive Analysis: How to approach it effectively](https://uxdesign.cc/competitive-analysis-how-to-approach-it-effectively-def97d130d2c)
+- [Consistency and Standards - Examples of Nielsens's Design Heuristics](https://medium.com/@gregoralbrecht/consistency-and-standards-nielsens-design-heuristic-explained-ac91f450fd8)
+- [Create a design system - Figma course](https://www.youtube.com/watch?v=RYDiDpW2VkM)
+- [Creative Confidence - Book by Tom Keller](https://booksvooks.com/creative-confidence-unleashing-the-creative-potential-within-us-all-pdf.html)
+- [Creative Confidence by Tom Keller](https://booksvooks.com/creative-confidence-unleashing-the-creative-potential-within-us-all-pdf.html)
+- [Creative Confidence by Tom Keller](https://booksvooks.com/nonscrolablepdf/creative-confidence-unleashing-the-creative-potential-within-us-all-pdf-1.html?page=1)
+- [Dehydration and its effects on performance - Human Kinetics](https://us.humankinetics.com/blogs/excerpt/dehydration-and-its-effects-on-performance)
+- [Delta Records](https://deltarecords.net/)
+- [Designing a great survey with 3 simple steps](https://uxdesign.cc/designing-a-great-survey-with-3-simple-steps-283abaa67ad6)
+- [Desirability Testing analyzing an emotional response to a design](https://www.slideshare.net/megangrocki/desirability-testing-analyzing-emotional-response-to-a-design-11262575)
+- [Effective brainstorming (without feeling lost)](https://uxdesign.cc/effective-brainstorming-without-being-lost-b68750bbfac5?sk=5d5a332f7e3f2a43364c031b01b13229)
+- [Effective presentation skills](https://academic.oup.com/femsle/article/364/24/fnx235/4587905)
+- [Efficiently Manage Your Designs - How Mockplus State Page Helps To View & Manage Multiple State](https://help.mockplus.com/p/372)
+- [Empathy Map by Krisztina Szerovay](https://uxknowledgebase.com/empathy-map-ca037e7686b6)
+- [Example here with Nintendo.com](https://www.figma.com/file/ahSnWRZeKBO62oJDiXltxY/UI-III---Ex-2)
+- [Example here](https://www.figma.com/file/fzqDkk8Zc8qJCiSMbKV0Ei/UI-II---Ex-1?node-id=0%3A1)
+- [Example of a Style Guide in UI](https://www.pinterest.pt/pin/454019206175050454/)
+- [Example of a caption here](https://www.figma.com/file/SbQMPjfLOzg92g8YZFlrRh/UI-I---Ex-5)
+- [Example](https://d2slcw3kip6qmk.cloudfront.net/marketing/blog/2017Q3/SEO-initiative-customer-journey-mapping/CustomerJourneyMap1.png)
+- [Examples of UI Buttons library](https://www.pinterest.co.kr/pin/663014376380850291/)
+- [FIGMA FILE (to duplicate)](https://www.figma.com/file/U26mctkrOqxiUeAlNHzSxW/UI-IV---Ex-3---E-COMMERCE%3A-Design-screens!?node-id=0%3A1)
+- [Figma article about Symbols and Variants](https://help.figma.com/hc/en-us/articles/360056440594-Create-and-use-variants)
+- [Fluid replacement for the physically active - Journal of Athletic Training](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5634236/)
+- [Fluids and hydration in prolonged endurance performance - Pubmed](https://pubmed.ncbi.nlm.nih.gov/15212747/)
+- [Font](https://en.wikipedia.org/wiki/Font)
+- [From low-fidelity to high-fidelity](https://mockitt.wondershare.com/prototyping/low-fidelity-vs-high-fidelity.html)
+- [Gareth graphic studio](https://www.youtube.com/c/GarethDavidStudio)
+- [Glyph](https://en.wikipedia.org/wiki/Glyph)
+- [Google Fonts](https://fonts.google.com/) is another great friend to have by your side
+- [Google Forms](https://docs.google.com/forms/u/0/)
+- [Heuristic analysis for UX: How to run a usability evaluation](https://uxdesign.cc/heuristic-analysis-for-ux-how-to-run-a-usability-evaluation-12c86d43936f)
+- [Heuristic analysis in the design process](https://uxdesign.cc/heuristic-analysis-in-the-design-process-usability-inspection-methods-d200768eb38d)
+- [How UX storyboards can transform your creative process](https://uxdesign.cc/ux-storyboarding-2ce43875f3de?sk=41b28ecef8c52d9944e5e636881111cf)
+- [How to conduct user interviews](https://uxdesign.cc/how-to-conduct-user-interviews-fe4b8c34b0b7?sk=9625632a522a9309a91297191e668565)
+- [How to create a Customer Journey Map](https://www.youtube.com/watch?v=mSxpVRo3BLg)
+- [How to create a good site map](https://www.smokeylemon.com/blog/how-to-create-a-good-sitemap/)
+- [How to design better products through user interviews](https://uxdesign.cc/how-to-design-better-products-through-user-interviews-4c5142bb1fc4)
+- [How to do a user interview (tutorial from Google Ventures)](https://www.youtube.com/watch?v=Qq3OiHQ-HCU)
+- [How to get more survey responses](https://rafflepress.com/how-to-get-more-survey-responses/)
+- [How to make a User Flow diagram](https://www.lucidchart.com/blog/how-to-make-a-user-flow-diagram)
+- [How to start sketching and wireframing](https://uxdesign.cc/how-to-start-sketching-and-wireframing-84a821f092e2)
+- [How to storyboard experiences](https://uxdesign.cc/how-to-storyboard-experiences-fc051e2bc04d)
+- [How to use SMART goals to build your KPIs](https://www.grow.com/blog/how-to-use-smart-goals-to-build-your-kpis)
+- [How to write a user testing report that people will actually read](https://uxdesign.cc/how-to-write-a-user-testing-report-that-people-will-actually-read-652d15d2f92e)
+- [Ideation method: Worst possible idea](https://www.interaction-design.org/literature/article/learn-how-to-use-the-best-ideation-methods-worst-possible-idea)
+- [Introduction to design systems](https://www.youtube.com/watch?v=xEuBCUngJ_U)
+- [Introduction to heuristic evaluation: a beginner’s guide](https://uxdesign.cc/introduction-to-heuristic-evaluation-658705606518)
+- [Jobs-to-be-done framework](https://www.productplan.com/glossary/jobs-to-be-done-framework/)
+- [Journey Mapping : Template on Figma](https://www.figma.com/file/5tittjiznRCWTNR2xI5FIT/Untitled?node-id=0%3A1)
+- [Journey Mapping example on Figma](https://www.figma.com/file/5tittjiznRCWTNR2xI5FIT/Untitled?node-id=0%3A1)
+- [Journey Mapping template](https://d2slcw3kip6qmk.cloudfront.net/marketing/blog/2017Q3/SEO-initiative-customer-journey-mapping/CustomerJourneyMap1.png)
+- [Journey Mapping: How to build it](https://www.lucidchart.com/blog/how-to-build-customer-journey-maps)
+- [KPI is an imperative tool for UX designers](https://uxdesign.cc/kpi-is-the-most-important-tool-ux-designers-should-be-learning-to-use-af31651120fc?sk=e619213adfda152171d597fc3ab1053a)
+- [Lean Survey Canvas: How to use it](https://medium.com/think-big-work-smart/the-lean-survey-canvas-1b0a00cab200)
+- [Luaka Bop](https://www.luakabop.com/)
+- [Make your persona great again](https://uxdesign.cc/personas-e60c1c06ead1)
+- [Mash Up](https://cdn.shopify.com/s/files/1/0259/7876/5396/files/IDEO_U_Ideation_Method_Mash-Up.pdf?33258)
+- [Material Design Awards 2019](https://design.google/library/material-design-awards-2019/)
+- [Measuring product design impact — KPIs, NPS, UX, WTF](https://uxdesign.cc/measuring-product-design-impact-kpis-nps-ux-wtf-3fe6a26e7400?sk=52c1f3842edbe90524f6da1fe85db71d)
+- [Micro-interactions: why, when,  and how to use them to boost the UX](https://uxdesign.cc/micro-interactions-why-when-and-how-to-use-them-to-boost-the-ux-17094b3baaa0)
+- [Nielsen's 10 usability heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/)
+- [Persona framework](https://miro.medium.com/max/1400/0*RbHfR6BHhhFIENNf)
+- [Persona, journey maps, user flow, site map, OH MY!](https://uxdesign.cc/personas-journey-maps-site-maps-and-user-flows-oh-my-e71d044b4bcb)
+- [Podcast What is wrong with UX?](https://www.usersknow.com/podcast/2016/10/10/ua1wdsszhx2pemugxc1e0qj0a3l9cs)
+- [Problem statement](https://www.indeed.com/career-advice/career-development/what-is-a-problem-statement)
+- [Respondent - Tool to find users](https://www.respondent.io)
+- [Rimas Music](https://rimasmusic.com/)
+- [Running a usability test](https://www.usability.gov/how-to-and-tools/methods/running-usability-tests.html)
+- [Salesforce UX - 7 tips every designer needs to know about accessibility](https://medium.com/salesforce-ux/7-things-every-designer-needs-to-know-about-accessibility-64f105f0881b)
+- [Site flows vs User Flows](https://uxmovement.com/wireframes/site-flows-vs-user-flows-when-to-use-which/)
+- [Sketching (podcast)](https://www.usersknow.com/podcast/2016/10/10/ua1wdsszhx2pemugxc1e0qj0a3l9cs)
+- [Stuck on a problem? Just ask how might we](https://relab.academy/design-thinking/stuck-on-a-problem-just-ask-how-might-we/)
+- [The 5-pass reduction wireframing: A minimalist UX technique](https://uxdesign.cc/the-5-pass-reduction-wireframing-a-minimalist-ux-technique-aa415aad9ce2?sk=a218ac4db9d1049249bd381fbc5edeee)
+- [The art of designing good wireframes](https://uxdesign.cc/the-art-of-designing-good-wireframes-8a2a9c10a95b)
+- [The art of guerrilla usability testing](http://www.uxbooth.com/articles/the-art-of-guerrilla-usability-testing/)
+- [The effects of Hydration on Athletic Performance](https://sportscardiologybc.org/the-effects-of-hydration-on-athletic-performance/)
+- [The importance of consistency in design work](https://yesimadesigner.com/the-importance-of-consistancy-in-design-work/)
+- [The importance of hydration - Harvard School of Public Health](https://www.hsph.harvard.edu/news/hsph-in-the-news/the-importance-of-hydration/)
+- [The myth of brainstorming](https://uxdesign.cc/the-myth-of-brainstorming-8517e02facc0?sk=995d601cbf988d574e86dd71364cb92f)
+- [The user experience of surveys](https://uxdesign.cc/the-user-experience-of-surveys-a5420c82604a)
+- [The value of consistent design](https://www.invisionapp.com/inside-design/consistent-design/)
+- [Toggle Switch - Tips](https://uxplanet.org/toggle-switch-5-simple-design-tips-for-better-design-b4046eff4a2f)
+- [Tool : Heuristic evaluation checklist](https://drive.google.com/file/d/10KbfbNZA1oVS1sXbjjXLPPmdZ6nqVkdc/view)
+- [Tool: Ideation Voting Board Framework on Figma](https://www.figma.com/file/nTAWiacCffXvd8dXsLP3Sb/Ideation-Voting-Framework)
+- [Tool: User Journey Mapping Template on Figma](https://www.figma.com/file/sXdUDoTXwItU7dyQYVkY1w/Tool---User-Journey-Map)
+- [Typeform](https://www.typeform.com/)
+- [UX Myth: Accessibility is expensive and difficult](https://uxmyths.com/post/654091803/myth-5-accessibility-is-expensive-and-difficult)
+- [UX Surveys: a quick guide to get the most out of them](https://uxdesign.cc/ux-surveys-a-quick-guide-to-get-the-most-out-of-them-1889d136be6a)
+- [Universal Music Latin America](https://www.universalmusica.com/)
+- [Unleashing the power of a UX KPI](https://articles.uie.com/power_of_ux_kpi/)
+- [Unsplash](https://unsplash.com/) for visuals
+- [Updates Empathy Map Canvas by Dave Gray](https://medium.com/the-xplane-collection/updated-empathy-map-canvas-46df22df3c8a)
+- [Usability testing: what is it and how to do it?](https://uxdesign.cc/usability-testing-what-is-it-how-to-do-it-51356e5de5d)
+- [Use freely-usable images!](https://buffer.com/library/free-images/)
+- [User flow glossary](https://www.productplan.com/glossary/user-flow/)
+- [User surveys - How to survey your users](https://refiner.io/blog/user-surveys/)
+- [Using comic strips and storyboards to test your UX concepts](https://uxdesign.cc/using-comic-strips-and-storyboards-to-test-your-ux-concepts-cccad7ac7f71)
+- [Using ‘How Might We’ Questions to Ideative on the Right Problems](https://www.nngroup.com/articles/how-might-we-questions/)
+- [Video tutorial on Figma](https://www.youtube.com/watch?v=FTFaQWZBqQ8)
+- [Voting process at the end of an ideation workshop](https://www.interaction-design.org/literature/article/how-to-select-the-best-idea-by-the-end-of-an-ideation-session)
+- [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+- [What accessibility is and why it’s so important](https://uxdesign.cc/what-accessibility-is-and-why-its-so-important-9c56e033ff26)
+- [What are breadcrumbs?](https://www.seoptimer.com/blog/breadcrumbs-website/)
+- [What is Material Design - Wikipedia](https://en.wikipedia.org/wiki/Material_Design)
+- [What is Typography](https://www.renderforest.com/blog/what-is-typography)
+- [What is a job to be done?](https://jobs-to-be-done.com/what-is-jobs-to-be-done-fea59c8e39eb)
+- [What is a radio button?](https://www.justinmind.com/blog/radio-button-design-examples/)
+- [What is an Affinity Diagram and how to use it](https://miro.com/blog/create-affinity-diagrams/)
+- [What you really get from a heuristic evaluation](https://uxmag.com/articles/what-you-really-get-from-a-heuristic-evaluation)
+- [Where Good ideas come from by Steven Johnson](https://www.ted.com/talks/steven_johnson_where_good_ideas_come_from)
+- [Where good ideas come from](https://www.ted.com/talks/steven_johnson_where_good_ideas_come_from)
+- [Why is Typography important?](https://careerfoundry.com/en/blog/ui-design/beginners-guide-to-typography/)
+- [Why prioritze web accessibility](https://blog.hubspot.com/service/why-prioritize-web-accessibility)
+- [Why should product teams use wireframes more often?](https://uxdesign.cc/why-should-product-teams-use-wireframes-more-often-60e34a2bc55)
+- [Why use micro-interactions in your design](https://hike.one/update/why-use-micro-animations-in-your-design)
+- [Worst Idea](https://www.interaction-design.org/literature/article/learn-how-to-use-the-best-ideation-methods-worst-possible-idea)
+- [Zoho Music](https://www.zohomusic.com/)
+- [http://blank.com.pt/](http://blank.com.pt/)
+- [http://slaveryfootprint.org/](http://slaveryfootprint.org/)
+- [http://www.bbqgrillsandfire.com/](http://www.bbqgrillsandfire.com/)
+- [http://www.jwilouvres.com.au/](http://www.jwilouvres.com.au/)
+- [https://adopte1poule.fr/](https://adopte1poule.fr/)
+- [https://artisanscanada.com/](https://artisanscanada.com/)
+- [https://brainbakery.com/en/](https://brainbakery.com/en/)
+- [https://brave.com/es/](https://brave.com/es/)
+- [https://bumble.com/](https://bumble.com/)
+- [https://calendar.google.com/](https://calendar.google.com/)
+- [https://campesinorum.com/](https://campesinorum.com/)
+- [https://caseperlatesta.com/wp-content/uploads/2015/09/Moodboard23_grey_peach-1024x1024.jpg](https://caseperlatesta.com/wp-content/uploads/2015/09/Moodboard23_grey_peach-1024x1024.jpg)
+- [https://coloursandmaterials.wordpress.com/2014/09/16/colour-system/](https://coloursandmaterials.wordpress.com/2014/09/16/colour-system/)
+- [https://flythenest.io/en/](https://flythenest.io/en/)
+- [https://gomim.com/en/](https://gomim.com/en/)
+- [https://i.pinimg.com/564x/ee/9d/d6/ee9dd6fbb82b0e5b4dd2924580b765dd.jpg](https://i.pinimg.com/564x/ee/9d/d6/ee9dd6fbb82b0e5b4dd2924580b765dd.jpg)
+- [https://jobs-to-be-done.com/](https://jobs-to-be-done.com/)
+- [https://lovestylecomunicacion.com/wp-content/uploads/2017/09/A.png](https://lovestylecomunicacion.com/wp-content/uploads/2017/09/A.png)
+- [https://normalnow.com/](https://normalnow.com/)
+- [https://pt.wikipedia.org/wiki/Mario_Botta](https://pt.wikipedia.org/wiki/Mario_Botta)
+- [https://squilla.io/](https://squilla.io/)
+- [https://texas-private-investigator.com/](https://texas-private-investigator.com/)
+- [https://unric.org/no](https://unric.org/no)
+- [https://www.airtable.com/](https://www.airtable.com/)
+- [https://www.barkbox.com/](https://www.barkbox.com/)
+- [https://www.benefitcosmetics.com/](https://www.benefitcosmetics.com/)
+- [https://www.decathlon.com/collections/kids-gift-ideas](https://www.decathlon.com/collections/kids-gift-ideas)
+- [https://www.doctorswithoutborders.org/](https://www.doctorswithoutborders.org/)
+- [https://www.ebay.com/](https://www.ebay.com/)
+- [https://www.ikea.com/](https://www.ikea.com/)
+- [https://www.jrpass.com/](https://www.jrpass.com/)
+- [https://www.kineuphorics.com/](https://www.kineuphorics.com/)
+- [https://www.komoot.com/](https://www.komoot.com/) (App)
+- [https://www.lobster.es/](https://www.lobster.es/)
+- [https://www.ma-tea.de/](https://www.ma-tea.de/)
+- [https://www.natuurenmilieu.nl/](https://www.natuurenmilieu.nl/)
+- [https://www.nhp.gov.in/](https://www.nhp.gov.in/)
+- [https://www.rolandgarros.com/](https://www.rolandgarros.com/fr-fr)
+- [https://www.strongbowcider.com/bug-exterminator-brisbane](https://www.strongbowcider.com/bug-exterminator-brisbane)
+- [https://www.thesiff.com/](https://www.thesiff.com/)
+- [https://www.tomorrowland.com/fr/festival/bienvenue](https://www.tomorrowland.com/fr/festival/bienvenue)
+- [iPhone Template](https://www.cssauthor.com/wp-content/uploads/2014/01/iPhone-5S-Template-PSD.jpg)
+- a conclusion with next steps and a thank you.
+- a few scan questions (demographics)
+- a funnel process (>)
+- a proper introduction that describes the interviewer and the purpose of this interview
+- adds the product to the cart
+- alignment
+- arrives on the homepage
+- atoms
+- browses the content
+- checks one product page
+- checks out
+- colors
+- consistent product pages (with identical frameworks)
+- molecules
+- open-ended questions, max 10
+- or an [Affinity Diagram](https://www.youtube.com/watch?v=VngWHIE4k9s) with the main elements
+- organisms
+- same shaped buttons
+- screenshots of the main page
+- the kind of color combination.
+- the main colors and
+- the main purpose of the interview
+- the matching URL
+- ‘A customer journey map is a visualization of the process that a person goes through in order to accomplish a goal. It’s used for understanding and addressing customer needs and pain points’ Norman Nielsen Group
+- ‘Brainstorming means using the brain to storm a creative problem. Do so in commando fashion, with each stormer attacking the same objective.’ Alex Faickney Osborn
+- ‘If you’re not embarrassed by the first version of your product, you’ve launched too late’ Reid Hoffman | LinkedIn
+- ‘Interaction design focuses on the design of behavior of a person’s interaction with a digital interface. It is also concerned with satisfying the needs and desires of the people who will interact with a product or service.’ Alan Cooper, About Face: The Essentials of Interaction Design
+- “More options = More problems.” Scott Belsky | VP of Product & Community Adobe
+- “Surveys measure and categorize attitudes or collect self-reported data that can help track or discover important issues to address.” Norman Nielsen Group
+- “UX Strategy lies at the intersection of UX and business. It provides a much better chance of creating successful products. It enables teams to see the “Big Picture” to achieve the business goals under uncertain conditions” Jamie Levy | UX Strategy: How to Devise Innovative Digital Products That People Want
+/!\ The screenshots date back to nov 2021. They may differ from the current version of [Nintendo.com](http://Nintendo.com) but the rules are the same
+1 idea, quote, or piece of information = 1 sticky note.
+1. Define your objective, what you are looking for when interviewing people. Usually, this has to do with your user's habits, and the most painful problems they have regarding this topic.
+1. Define your objective, what you are looking for when spreading your form to people. Usually, this has to do with figures, proportions, etc.
+1. Know the business requirements and demographic of the end-users.
+1. Use paper or digital sticky notes (Post-its or Miro.com) to isolate the pieces of information your interviewees shared with you.
+2. Decide on which reporting tools and heuristics to use (in this case: this [heuristic evaluation checklist](https://drive.google.com/file/d/10KbfbNZA1oVS1sXbjjXLPPmdZ6nqVkdc/view)).
+2. When all your scripts are written/typed down on sticky notes, gather them in clusters based on themes, opinions, habits, or anything they could have in common.
+2. Write down 1 to 3 hypotheses you have regarding this topic, that needs to be either confirmed or disproved.
+2. Write down 1 to 3 hypotheses you have regarding this topic, that you need to either confirm or disprove.
+3. Evaluate the experience and identify usability issues.
+3. Label the clusters.
+4. Analyze and aggregate the data.
+4. Draw conclusions
+4. For each topic, write 1 to 3 closed-ended questions. Remember, your user has to answer with a choice in a list of prepared answers or use the option "other" to write down the answer they can't find in the prepared list.
+4. For each topic, write 1 to 3 open-ended questions. Remember, your user cannot answer with “Yes” or “No!” Ex: How, Why, What, When, Tell me about the last time you did... etc. If you really need to introduce a new topic by a close-ended question, ask why right after.
+4. For each topic, write 1 to 3 open-ended questions. Remember, your user cannot answer with “Yes” or “No”! Ex: How, Why, What, When, Tell me about the last time you did... etc. If you really need to introduce a new topic by a close-ended question, ask why right after.
+5. Fill an empathy map ONLY with the content from your affinity diagram.
+5. Present the results.
+5. Write some screening questions to have a few pieces of demographics (age, job, location, etc.)
+5. Write some screening questions to have a few pieces of demographics (age, job, location, etc.). This allows you to make sure the answers you get are from your target.
+6. Structure your questions in a funnel : start with broad questions to focus on specific topics or situations. Remember to stay neutral in your tone to let the user tell their own story. Try to focus on 10 main questions.
+6. Structure your questions in a funnel: start with broad questions to focus on specific topics or situation. Remember to stay neutral in your tone to let the user tell their own story. Try to focus on 10 main questions.
+6. Structure your questions in a funnel: start with broad questions to focus on specific topics or situations. Remember to stay neutral in your tone to ket the user tell their own story. Try to focus on 10 main questions.
+7. Write a greeting introduction, describing briefly (1) who you are and (2) what you are looking for. No need to say too much, but enough to provide a framework and the purpose of the form.
+7. Write a greeting introduction, describing briefly (1) who you are and (2) what you are looking for. No need to say too much, but enough to provide a framework and the purpose of the interview.
+8. Write a conclusion to thank your user for their time, and prepare the next steps. Ex: ask to be put in touch with someone they know and who could be interested in this topic, etc.
+8. Write a conclusion to thank your user for their time, and prepare the next steps. Ex: ask to have this form spread to 3 people, etc.
+A is leader, B is time-keeper and C focuses on logistics
+A music label specialized in music from South America asks you to improve the user experience. This quest is about heuristics and content organization!
+After designing your own style guide with a moodboard, colors and typography, you can use the series of consistency principles, atomic design structure, the techniques to build you own library and then a series of screens. Step by step, you’ll have built an animated high-fidelity prototype.
+After knowing more about trends and "What" people do thanks to surveys, the main goal is to understand "why".
+Also think about the values and spirit you want to spread through this moodboard, we’ll get back to it in Ex. 5.
+Always base your decisions on the data, not on your biases.
+Among these 4 websites, make snapshots of these elements:
+And remember, you are not your user!
+And remember: You are not your user!
+Animate your 5 screens on Figma. Think about multistate!!
+Animate your wireframes on Figma.
+Any design is like a joke …if you have to explain it, it’s bad.
+As a matter of fact, they realized they didn’t know this generation (15 to 18-year-olds) very well. So they are asking you to conduct user research to meet this population and understand them.
+Ask them about what they would do on a music label website. Ask them why, why and why to understand the emotion behind an action, and the purpose behind a simple visit on a website.
+At least 3 of your interviews must be with strangers. You'd be surprised how people are happy to help and looooove talking about themselves.
+B is leader, C is time-keeper and A focuses on logistics.
+Barbara works at Coworking Square, which is a coworking place in Amsterdam.
+Based on a moodboard you have composed, create a design system with at least 20 elements, including atoms, molecules and organisms, and include multistates.
+Based on a moodboard, create a design system with at least 20 elements, including atoms, molecules and organisms, and include multistates.
+Based on the 3 features that have come out of the ideation workshops led by your collegues, design 3 user flows (1 per feature).
+Based on the 3 user flows, design 3 series of wireframes.
+Based on the audit you made in Ex.1, write a set of 3 to 6 recommendations to improve heuristics and usability.
+Based on the insights from the analytics and user interviews, comment the scope of possible problem statements.
+Based on the main concept out of the workshop you led, design the user flow a user has to follow to access the main service.
+Based on the moodboard you designed in Ex 1, create a design system with at least 30 elements, including atoms, molecules and organisms, and include multistates.
+Based on the new taxonomy (content categorization), show the different paths a user has to take to reach the product with a series of wireframes.
+Based on the wireframes and your design system library, take your mid-fidelity prototype to a high-fidelity level!
+Based on your persona card, and the interview scripts, design Pierre’s user journey.
+Based on your previous tests, pick one of your 3 prototypes.
+Based on your previous work and your empathy map, define a problem statement that would clarify the main problem you want to tackle.
+Based on your previous work, your persona and your user journey's main painpoint, define a problem statement that would clarify the main problem you want to tackle.
+Based on your research (Empathy & Define), define a problem statement to narrow the problem and KPIs to measure the success.
+Be careful! Feedback is helpful to provide information to the user, not just showing a catchy design. You need to make the difference.
+Browse the internet and find at least 5 different examples of breadcrumbs from websites or apps.
+Browse the internet and find at least 5 different examples of calendars from websites or apps.
+Browse the internet and find at least 5 different examples of feedback micro-interactions or micro-animations on websites or apps.
+Browse the internet and find at least 5 different examples of radio buttons from websites or apps.
+Browse the internet and find at least 5 different examples of time pickers from websites or apps.
+Browse the internet and find at least 5 different examples of toggle buttons from websites or apps.
+Bruno loves fashion. He loves buying clothes! As he is cautious with the environment, he prefers buying second-hand clothing. However, the existing platforms are not very user-friendly.
+C is leader, A is time-keeper and B focuses on logistics.
+Chances are that... If you have gone through all possible solutions, you’ve found the good one.
+Choose a website you find particularly accessible. Find at least 3 concrete examples of accessible measures and explain how they ease the reading or perception of visual content.
+Choose an app you find particularly accessible. Find at least 3 concrete examples of accessible measures and explain how they ease the reading or perception of visual content.
+Compare these 10 organizations' main actions, channels, values, according to the criteria you assume are relevant.
+Complete the JTBD template below including the true purpose of your "user".
+Conduct a competitive analysis among 10 associations or organizations fighting school harassment.
+Conduct a heuristic analysis on **one** of these websites:
+Copy 10 elements from easyJet design system, including
+Copy these images on Figma
+Copy this image on Figma.
+Create 4 different moodboards based on these 4 briefs and extract a color palette.
+Creation of a sports app with data tracking on mobile and e-watch (data visualization)
+Creation of an ecommerce platform for second-hand clothes on desktop and mobile
+Creation of a room booking service on desktop
+Define and run your broadcast strategy among teenagers (15-18 years old)
+DeliverNow is a company that helps restaurants deliver take-away food, thanks to a series of runners.
+Design a Food delivery app (interfaces and user journey for (1) the restaurant owners, (2) the clients, (3) the delivery men (4) the delivery men managers, on mobile and desktop.
+Design a User Journey to represent your persona in their environment across the time, with key steps or actions related to our current topic (harassment).
+Design a storyboard of Pierre (or your persona) using your idea as a solution. Show all the steps (from 6 to 12) with drawings on paper.
+Design a style guide (= a moodboard with typography + examples of typography with buttons, title, description and content).
+Design is about solving problems. Fall in Love with the Problem, Not the Solution.
+Develop your idea!
+Do you have any questions before we start?
+Download [this image](https://storage.googleapis.com/gd-wagtail-prod-assets/original_images/MDA2018_inline_02.jpg) which is a snapshot of 3 screens of Lyft, and detect the order in which the layers were set.
+Each insight or key figure should be justified by a quote and the title of the article.
+Elsa is a seamstress. She makes swimsuits on demand through her instagram account. It's going well, her community is growing as well as the amount of requests from customers.
+Even though a proper survey requires at least 100 answers, for this exercise we request you to get 40.
+Examples of insights you can extract from the articles:
+Failure is even a necessary step, but ideally it should happen before a product is launched, during the prototype and test phases
+Features:
+Finally, the restaurants complain because they have a hard time managing the preparation of the food on-site and take-away.’
+Find 3 digital products (websites or apps) that use each kind of color palette combination:
+Find 3 friends outside of the program and run a quick ideation session (20 minutes).
+Find at least five combinations of multi state elements.
+Find consistent typography for your moodboards from Ex. 4.
+First, draw low-fidelity prototypes on paper. One main screen = 1 mobile frame.
+Focus on the 1st journey. Prepare a test protocol with your research goals (what you want to test), test it on 5 different people and write down 3 ways to improve the prototype.
+Focus on the 2nd journey. Prepare a test protocol with your research goals (what you want to test), test it on 5 different people and write down 3 ways to improve the prototype.
+Focus on the 3rd journey. Prepare a test protocol with your research goals (what you want to test), test it on 5 different people and write down 3 ways to improve the prototype.
+For now, she manages everything with paper calendars but that’s not really efficient.
+For now, she only works with private messages but she wishes she could spend less time on that part.
+Gather in groups of 2. During the first run, one is the facilitator and the other is the time-keeper and in charge of logistics. Switch roles for the second run.
+Get as many ideas as possible within a defined timeframe, and narrow them down to 3 main ideas with a voting process (in pair or in group). Take pictures!
+Give another dimension to your user flow and turn your user flow into a paper prototype (12 screens max).
+Go outside! Meet random people in cafés, at the bus, on city squares, in parks, on benches, introduce yourself and ask for 15 minutes of their time. Run your interview guide and write down anything that could be helpful, like reactions, hesitations, etc. You can use a dictaphone to make sure you're not missing anything. But in this case, let the interviewee know and ask for their permission!
+Go to [Sony.com](http://sony.com) and observe the buttons and call to actions. When you hover or click on them, they change!
+Go to these 7 websites and make the color palettes out of them (3 to 4 main colors).
+Go to these websites and detect the typographies used.
+Hello! My name is Agathe and I am conducting research about athletes and people who practice sports regularly. Hence, I'd be very happy to ask you some questions about the way you run, your habits, and the pain points you may have.
+However, she loses a lot of time every time there is a request. To complete an order, she needs to ask for the shape of the swimsuit, the size, the color preferences and the expected delivery time. On top of that, she needs to make sure she has enough time to sew one piece - every piece requires 6 hours.
+Hydration
+I have a last favor to ask you: is there anyone you know who runs frequently and would be available for a talk?
+Ideation techniques:
+Implement the 3 ideas you wrote down as suggestions.
+In order to do so, you need to be creative and strategic!
+In the present situation, the websites are not ideal to complete the Jobs-to-be-Done your user has in mind. So let's practice card sorting to rearrange the content of the website!
+In this quest, you’ll have to build your own interface.
+In this scenario, the principal of your high school heard you were a designer. They chose to reach you to help them face school harassment among teenagers.
+In this series of exercises, you’ll be asked to open your eyes and collect graphic elements from various websites. You’ll see grids across screens, multi state buttons, how to make a design accessible for all, breadcrumbs, toggle buttons, radio buttons, calendar, time picker with 2 main goals:
+It's on you to find other and more!
+Let's browse!
+Let's create a persona based on your quantitative research and your interviews.
+Let's practice Jobs-to-be-done to be more specific about how a music label website could be improved.
+Let’s be critical, creative and impactful!
+Make a prototype including the chosen solution.
+Make screenshots of the different states of buttons, menu titles, filters etc. Then, gather and organize them.
+Make sure
+Make sure for each flow:
+Most articles you'll find will be about user journeys or customer journeys. Keep in mind that you can adapt this methodology to any persona with any kind of situation or process, even at school, outside the school, in the digital world, etc.
+Now you have discovered and practiced many tools in the design process, organize a time frame for the next 4 working days.
+Now you have your persona, it's time to set it in motion.
+Now, let’s find creative solutions! Remember, the solution should not be digital! Forget about devices for this quest ;)
+Once again, feel free to get as much inspiration as you need from existing design systems. Dribbble, consistency and structure are your best friends!
+Once your strategy is prepared, run it!
+Open these 5 images on Figma and draw lines and grids every time you find aligned elements.
+Open your written scripts and extract the relevant information.
+Organize a card sorting workshop with the content of the website you chose in Ex. 1.
+Organize and run an ideation workshop with 4 - 8 participants to find ideas to solve this problem statement:
+Our runners complain about the allocation of routes among them.
+Pay attention not to use the same ideation technique as in Ex 1!
+Pay attention not to use the same ideation technique as in ex 2!
+Phase 1: Mid-project presentation audit
+Phase 2: Final presentation audit
+Pick a product (a record, a song or an album) from your music label website.
+Pick a website or an app of your choice*. Highlight 5 signs of consistency across the pages.
+Prepare a protocol for usability testing.
+Prepare a survey to gather quantitative data from your users.
+Prepare a testing protocol and run it!
+Prototypes are created for testing purposes, that’s why creating a prototype without running tests on it makes no sense.
+Quest n°3 is about Empathy.
+Questions to ask in the feedback forms
+Quote:
+Races
+Read about Jobs-to-be-Done and the psychologic dimension behind this tool.
+Read these articles and extract at least 5 key figures or insights that may be useful in understanding what athletes or sport practicing people experience related to hydration.
+Remember, you are not the user, so your opinions are not absolute truth.
+Reminder: Your persona is fictional and should not have the exact name or picture as someone you interviewed, but remember a persona is here so you can make decisions as a designer.
+Resources:
+Run
+Run 6 interviews. Go in pairs, one being the interviewer and the other the note taker.
+Run a desirability test!
+Run a heuristic audit on one of these 3 different websites or app:
+Run another series of test (and adapt your test protocol if necessary).
+Run at least one of the Define tools in the design process.
+Run at least one of the Empathy tools in the design process.
+Run at least one of the Ideation techniques in the design process.
+Run the test on 5 people!
+School harassment describes school-based harassment behaviors. It is characterized by the repeated use of violence, including mockery and other humiliations.
+Select 5 screens that will show the user flow of a customer who:
+Select at least one tool for each phase, name it, and take into account the amount of time each phase may require.
+She asks you to design an app on a watch and on mobile that could solve her problem.
+She calls you to design a website that could solve her problem.
+She needs help to manage bookings. Among the 50 spots that are in the working space, 35 can be rented by month or by week, and 15 are hot spots that can be booked for one day.
+Show a tested high-fidelity prototype of each of the 4 journeys.
+So this project’s goal is to make holidays more comfortable fo everyone. But first, as in all design processes, you need to understand the real problem behind stressful moments!
+Stick to the website you have chosen in Ex.1 and design a site map. The site map should include all the pages of the website as well as the connections and hierarchy.
+Structure your main ideas into a comprehensive user flow.
+Test your wireframe prototype with 5 different people and write down the 5 main iterations that need to be made on the next version.
+Thank you so much for your time!
+That's it, we went through all the questions I had.
+The Olympics committee calls on you to get fresh ideas for the next Olympic Games.
+The chosen problem statement is: “How might we help Pierre (or your persona) measure and prepare his hydration before a race?”
+The final presentation of your work will take place 2 weeks after the mid presentation, where you’ll show a tested high-fidelity prototype of each of the 4 journeys.
+The final presentation of your work will take place 2 weeks after the mid presentation, where you’ll show a tested high-fidelity prototype.
+The final presentation of your work will take place one week after the mid presentation, where you’ll show a tested high-fidelity prototype.
+The managers can’t manage their drivers well since they don’t have a clear enough vision of the runners.
+The point is to take on the role of a UX auditor. You’ll be asked to make the audit of a website or an app, and then to write a series of recommendations to improve it.
+The point of this phase is to make sure the values and the spirit you chose for your design.
+The timeline can be of a day, a few hours, or a week. Please include the key moments related to harassment alongside the emotions related to each step. Use the material from your interviews and surveys.
+The very last step will be to test it on users to detect the impressions they get when they discover your app.
+Then, define 3 KPIs (Key performance Indicators) that will help you measure the definition of Done and the success of the solution.
+Then, draw your mid-fidelity screens on Figma with simple shapes, in black and white.
+Then, find someone (your "user") around you who likes music a lot.
+Then, highlight the main pain points that need to be solved.
+Then, write down the script on a written document, and give elements of context regarding each interview (place, time, name, etc.)
+They recently had bad comments from customers:
+They want to launch a platform for people who want to watch movies but don’t want to spend endless time selecting one.
+Think about multistate!!
+This first UI quest is a series of exercises to practice colors, moodboards, typography and replicate screens on Figma!
+This first project is very special: you are asked to end up with a non-digital solution. As a matter of fact, innovation does not always rhyme with digital. So let’s be creative and get out of the box!
+This interview will probably last 20 to 30 minutes.
+This series of exercises is a great occasion for you to discover how libraries are made in UI, thanks to Atomic Design.
+Thus, they ask your team to redesign the full experience:
+To be used in proper studies and get viable results, a form should gather at least 100 answers. The answers should give you countable data you can use to prove a point and confirm trends, not verbatims or details.
+To do so:
+To find creative solutions to your problem statement, use one of these techniques in groups of 5 people, twice.
+Tools:
+Use your components, call to actions and visuals to complete the wireframes.
+Vocabulary
+Welcome to the 2nd quest of UI!
+Welcome to the 2nd quest.
+Welcome to the 3rd quest of UI.
+Welcome to the very first quest of this program.
+Welcome to this very last quest!
+Write a report with the conclusion you made out of this iteration loop.
+Yara is a runner. She runs 5 times a week and she’s passionate! She’d like to challenge her own performance to make sure she is making progress.
+Yara uses an Apple Watch and her iPhone.
+You are asked to design a dating app.
+You are part of a climbing group and volunteer to rebrand the website of your club.
+You are replacing someone in the company who has already worked on the user research, the problem statement and the list of features they plan to develop. Your goal is to prototype and test these features.
+You can include one, two, of the three main ideas from your ideation process, depending on how consistent it would be for the users.
+You can offer them a coffee to thank them, sometimes a smile suffices!
+You can pick 10 organizations worldwide, or from your home region or home country. Let's browse!
+You gather a team of 3 to think and design a website and an app for second-hand products.
+You have to meet Bruno after 2 weeks to give a first presentation of your work, after completing a tested mid-fidelity prototype.
+You have to meet her after one week to give a first presentation of your work, after completing a tested mid-fidelity prototype.
+You have to meet your client after 3 weeks to give a first presentation of your work, after completing a tested mid-fidelity prototype for each user 4 journeys.
+You may use the How Might We exercise in pairs.
+You need to create an interview guide to get information from your user.
+You need to detect: How many errors do users make? How severe are these errors? How easily can they recover from the errors?
+You offer to help her design a solution to manage her time and workshop better. You have 4 working days.
+Your agency works on a digital product to create an e-commerce app for second-hand electronic devices. You collaborate with a UX designer from your team. They have deisgned the wireframes and pass it on to you!
+Your company's client is a movie theaters chain called, Movie 4 all.
+Your job is to explore your topic and use various tools included in this “Empathize” phase.
+Your mission, should you choose to accept it, is to find a way to improve athletes’ experience related to their hydration when running.
+Your mission, should you choose to accept it, is to focus on going on holidays with friends. As you may have noticed, experiencing weekends or other kinds of holidays is super nice, but may lead to some moments of irritation.
+Your persona card should include common trends amongst the people you got data from (habits, verbatims, fears, drivers, frustration, and pain points).
+You’ll get guidelines and suggestions to run ideation workshops, and bring your ideas to life with three different prototypes, that you will animate and test.
+You’ll team up by groups of 3 and focus each on one problem statement.
+‘77% of users return to content and information sites because of ease-of-use. Only 22% return because the site belongs to a favorite brand.’ Forrester
+‘Each use case is represented as a sequence of simple steps, beginning with a user’s goal and ending when that goal is fulfilled.’ Usability.gov
+‘Every problem is an opportunity for design. By framing your challenge as a How Might We question, you’ll set yourself up for an innovative solution’ IDEO
+‘Focus unswervingly, on the customer’ Jesse Hertzberg | Former COO of Squarespace
+‘I need to know more about the environmental impact of the pieces I buy. I’d like to know how old they are, where they are coming from, to measure their life and the amount of kilometres they have traveled. When a new pair of jeans arrive at the ready-to-wear store in Europe, they consumed approximately 11,000 litres of water and travelled 65,000 kilometres. I’d like to monitor that kind of data.’
+‘I wish I could have consistent data about my trainings, more than what already exists. I can run with my watch and I’d like to analyse and share my results with my sport coach.”
+‘I wish my clients could book spots weekly, monthly or daily online and pay everything upfront so I don’t have to deal with billing above all’
+‘Our customers currently face problems with wrong estimated delivery times, the amount of unnecessary cutlery and condiments.
+‘Out of clutter, find simplicity. From discord, find harmony. In the middle of difficulty, lies opportunity.’ Albert Einstein
+‘Speak human: Use the words your users use.’ Dan Saffer | Microinteractions
+‘The organization, search, and navigation systems that help people to complete tasks, find what they need, and understand what they’ve found’ Peter Morville | Information Architecture for the WWW
+“If I had an hour to solve a problem, I’d spend 55 minutes thinking about the problem and 5 minutes thinking about solutions.” Albert Einstein
+“No product is an island. A product is more than the product. It is a cohesive, integrated set of experiences” Don Norman
+“To ask open-ended questions is the best approach, but it’s easy to get into the weeds in data analysis when every answer is a paragraph or two of prose. Users quickly tire of answering many open-ended questions, which usually require a lot of typing and explanation.” Norman Nielsen Group

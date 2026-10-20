@@ -1,0 +1,70 @@
+% Filigrane PAR MODULE : \uxfond (PNG A4 dilue 30 %). Cadre noir vectoriel commun.
+% Proportions original 744 px : marge 20/744, trait 1/744. Exterieur BLANC.
+% Cadre via eso-pic +\put (coordonnees absolues) — pas de remember picture (decalage).
+\usepackage{eso-pic}
+
+\providecommand{\uxfond}{../../resources/fond/norme_fond_paliers_30.png}
+
+\newlength{\uxmargin}
+\newlength{\uxthick}
+\newlength{\uxinnerw}
+\newlength{\uxinnerh}
+\setlength{\uxmargin}{0.02688\paperwidth}% 20/744
+\setlength{\uxthick}{0.001344\paperwidth}% 1/744
+\setlength{\uxinnerw}{\dimexpr\paperwidth-2\uxmargin-2\uxthick\relax}
+\setlength{\uxinnerh}{\dimexpr\paperheight-2\uxmargin-2\uxthick\relax}
+
+% Contenu strictement a l'interieur du trait (+ jour confortable).
+\geometry{%
+  includeheadfoot,
+  left=22mm,
+  right=22mm,
+  top=20mm,
+  bottom=18mm,
+  headheight=30pt,
+  headsep=5mm,
+  footskip=12mm%
+}
+
+\AddToShipoutPictureBG{%
+  \AtPageLowerLeft{%
+    % Fond blanc page entiere
+    \put(0,0){\color{white}\rule{\paperwidth}{\paperheight}}%
+    % Filigrane module a l'interieur du cadre
+    \put(\LenToUnit{\dimexpr\uxmargin+\uxthick\relax},\LenToUnit{\dimexpr\uxmargin+\uxthick\relax}){%
+      \includegraphics[width=\uxinnerw,height=\uxinnerh]{\uxfond}}%
+    % Cadre noir : bas, haut, gauche, droite
+    \put(\LenToUnit{\uxmargin},\LenToUnit{\uxmargin}){%
+      \color{black}\rule{\dimexpr\paperwidth-2\uxmargin\relax}{\uxthick}}%
+    \put(\LenToUnit{\uxmargin},\LenToUnit{\dimexpr\paperheight-\uxmargin-\uxthick\relax}){%
+      \color{black}\rule{\dimexpr\paperwidth-2\uxmargin\relax}{\uxthick}}%
+    \put(\LenToUnit{\uxmargin},\LenToUnit{\uxmargin}){%
+      \color{black}\rule{\uxthick}{\dimexpr\paperheight-2\uxmargin\relax}}%
+    \put(\LenToUnit{\dimexpr\paperwidth-\uxmargin-\uxthick\relax},\LenToUnit{\uxmargin}){%
+      \color{black}\rule{\uxthick}{\dimexpr\paperheight-2\uxmargin\relax}}%
+  }%
+}
+
+\makeatletter
+\fancyhf{}
+\fancyheadoffset{0pt}
+\renewcommand{\headrulewidth}{0pt}
+\lhead{\parbox[t]{0.56\textwidth}{\RaggedRight\footnotesize\sloppy\@title}}
+\rhead{\parbox[t]{0.36\textwidth}{\RaggedLeft\footnotesize\sloppy\@subtitle}}
+\cfoot{\thepage}
+% Coupures : underscore et slash dans les noms de fichiers / consignes
+\DeclareRobustCommand{\_}{\textunderscore\allowbreak}
+\makeatother
+
+% Evite les depassements de longues lignes (Github, Name_FirstName_...)
+\sloppy
+\emergencystretch=3em
+\hbadness=10000
+
+% Sommaire type 42 : chapitres seulement
+\setcounter{tocdepth}{0}
+\renewcommand{\cftchappresnum}{}
+\renewcommand{\cftchapaftersnum}{}
+\setlength{\cftchapnumwidth}{2.0em}
+\setlength{\cftbeforechapskip}{0.35em}
+\cftsetindents{chapter}{0em}{2.0em}

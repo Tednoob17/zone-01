@@ -1,0 +1,116 @@
+#******************************************************************************#
+#                                                                              #
+#               Makefile.LaTeX for LaTeX                                       #
+#               Created on : Mon Oct  5 17:01:29 2015                          #
+#               Make by : Uriel "Korfuri" Corfa <uriel@corfa.fr>               #
+#               Made by : David "Thor" GIRON <thor@staff.42.fr>                #
+#               Adapted by : JeuneCrack                                         #
+#                                                                              #
+#******************************************************************************#
+
+RESSOURCE_FILES		=	$(RELPATH)/Makefile.LaTeX	\
+						$(RELPATH)/atbeginend.sty	\
+						$(RELPATH)/tocloft.sty		\
+						$(RELPATH)/minted.sty		\
+						$(RELPATH)/multirow.sty		\
+						$(RELPATH)/training.cls		\
+						$(RELPATH)/info.pdf		\
+						$(RELPATH)/helphint.pdf		\
+						$(RELPATH)/warn.pdf
+
+ALL_DEPENDENCIES	=	$(RESSOURCE_FILES) $(DEPS)
+
+export TEXINPUTS	:=	.:..:$(RELPATH):${TEXINPUTS}:
+
+# Normalize path to avoid space-splitting issues ("Experimental Pool/")
+empty :=
+space := $(empty) $(empty)
+_CURDIR := $(subst $(space),_,$(CURDIR))
+_RELPATH := $(subst $(space),_,$(RELPATH))
+
+# Auto-detect BASENAME from directory structure
+# e.g. F_CUL-001_cyber_culture/subject/ -> F_CUL-001_cyber_culture
+# e.g. M_BRW-001_browser_hacking/subject/part1/ -> M_BRW-001_browser_hacking_part1
+# Root curriculum (no subject/ subdirectory) is left unchanged
+_CURDIR_NAME := $(notdir $(_CURDIR))
+ifeq ($(_CURDIR_NAME),subject)
+  BASENAME := $(notdir $(patsubst %/,%,$(dir $(_CURDIR))))
+else
+  _PARENT := $(notdir $(patsubst %/,%,$(dir $(_CURDIR))))
+  ifeq ($(_PARENT),subject)
+    _GPARENT := $(dir $(patsubst %/,%,$(dir $(_CURDIR))))
+    BASENAME := $(notdir $(patsubst %/,%,$(_GPARENT)))_$(_CURDIR_NAME)
+  endif
+endif
+
+# Rewrite TARGETS: en.subject.pdf -> $(BASENAME)_en.pdf, etc.
+ifdef BASENAME
+_BASE_TARGETS := $(TARGETS)
+TARGETS :=
+ifneq ($(filter en.subject.pdf,$(_BASE_TARGETS)),)
+  TARGETS += $(BASENAME)_en.pdf
+endif
+ifneq ($(filter fr.subject.pdf,$(_BASE_TARGETS)),)
+  TARGETS += $(BASENAME)_fr.pdf
+endif
+endif
+
+all: $(TARGETS)
+
+clean:
+	rm -f *.aux *.ent *.log *.out *.toc *.nav *.snm *.vrb *.pyg
+
+distclean: clean
+	rm -f $(TARGETS)
+
+re: distclean all
+
+# pdflatex when TeX Live is installed. Otherwise tectonic, which reads the
+# same source (the stepped background is in the LaTeX, not painted afterwards).
+PDFLATEX_BIN := $(shell command -v pdflatex 2>/dev/null)
+TECTONIC_BIN := $(shell command -v tectonic 2>/dev/null)
+
+define compile_tex
+	if [ -n "$(PDFLATEX_BIN)" ]; then \
+		pdflatex -shell-escape -halt-on-error $(1) && \
+		pdflatex -shell-escape -halt-on-error $(1); \
+	elif [ -n "$(TECTONIC_BIN)" ]; then \
+		"$(TECTONIC_BIN)" --keep-logs --outdir . \
+			-Z search-path=$(abspath $(RELPATH)) \
+			-Z paper-size=a4 \
+			-Z shell-escape \
+			$(1); \
+	else \
+		echo "Neither pdflatex nor tectonic is on PATH"; \
+		exit 1; \
+	fi
+endef
+
+# Renamed build rules for module PDFs
+ifdef BASENAME
+
+$(BASENAME)_en.pdf: en.subject.tex Makefile $(ALL_DEPENDENCIES)
+	$(call compile_tex,en.subject.tex)
+	cp en.subject.pdf $@
+	@echo "Build OK -> $@"
+
+$(BASENAME)_fr.pdf: fr.subject.tex Makefile $(ALL_DEPENDENCIES)
+	$(call compile_tex,fr.subject.tex)
+	cp fr.subject.pdf $@
+	@echo "Build OK -> $@"
+
+else
+
+# Generic rule for root curriculum or other cases
+%.pdf: %.tex Makefile $(ALL_DEPENDENCIES)
+	$(call compile_tex,$<)
+	@echo "Build OK"
+
+endif
+
+view: all
+	(type xpdf > /dev/null 2>&1 && xpdf ${TARGETS}) ||\
+	(type evince > /dev/null 2>&1 && evince ${TARGETS})
+
+
+#******************************************************************************#
