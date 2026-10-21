@@ -1,22 +1,11 @@
-# Mapping filigrane UX/UI — une image DISTINCTE par module (16/16)
-# Source SVGs à la racine du repo zone-01-main.
-# PNG générés : Pool/UX-UI/resources/fond/<module>.png (A4 2480×3508, dilution 30 % sur blanc)
-# Images non assignées (réserve) : stacked-steps-haikei(8).svg, stacked-steps-haikei(9).svg, stacked-steps-haikei(10).svg
-# Ancien fond partagé norme_fond_paliers_30.png : conservé mais N'EST PLUS utilisé par les sujets.
-
-UX-00-athlete-keep-hydrated	45ed-steps-haikei.svg
-UX-01-going-on-holidays	45ed-steps-haikei(1).svg
-UX-02-lets-fight-harassment	45ed-steps-haikei(2).svg
-UX-03-the-olympics	45ed-steps-haikei(3).svg
-UX-04-music-on	45ed-steps-haikei(4).svg
-UX-05-sunday-night-movie	45ed-steps-haikei(5).svg
-UX-06-seamstress	45ed-steps-haikei(6).svg
-UI-00-colors-and-moodboard	45ed-steps-haikei(7).svg
-UI-01-atomic-design	stacked-steps-haikei.svg
-UI-02-rules	stacked-steps-haikei(1).svg
-UI-03-building-an-interface	stacked-steps-haikei(2).svg
-UI-04-heuristics	stacked-steps-haikei(3).svg
-PR-00-get-a-room	stacked-steps-haikei(4).svg
-PR-01-lets-do-some-sports	stacked-steps-haikei(5).svg
-PR-02-lets-fair-trade	stacked-steps-haikei(6).svg
-PR-03-a-table	stacked-steps-haikei(7).svg
+# Filigrane de page PARTAGE pour tous les modules UX-UI
+#   Source : /fili.svg (racine du repo)
+#   PNG    : Pool/UX-UI/resources/fond/fili_fond_30.png (A4 2480×3508, dilution 30 %)
+#
+# Illustration UNIQUE (avant-propos seulement, jamais sur la couverture) :
+#   Pool/UX-UI/resources/jeunecrack.png
+#   (copie de experimentalpool/resources/jeunecrack.png)
+#
+# Couverture / maketitle : pas de \schoollogo, pas d'image Haikei.
+# Les PNG Haikei dans resources/fond/<module>.png et intros/*.jpg ne sont
+# plus utilisés comme logo de couverture ni comme filigrane.

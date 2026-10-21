@@ -15,3 +15,8 @@ app-release.apk
 *.fdb_latexmk
 *.fls
 *.synctex.gz
+
+__pycache__/
+*.pyc
+
+Pool/UX-UI/resources/fond/_chunk_*.json

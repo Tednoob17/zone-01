@@ -834,7 +834,15 @@ Vous pouvez vous servir d'un outil pour vérifier un mot, comme d'un dictionnair
 """
 
 
-def subject_tex(module, lang, image, credit):
+JEUNECRACK_REL = "../../resources/jeunecrack.png"
+FILI_FOND_REL = "../../resources/fond/fili_fond_30.png"
+JEUNECRACK_CREDIT = "JeuneCrack"
+
+
+def subject_tex(module, lang, image=None, credit=None):
+    """Cover has no illustration (empty schoollogo). Image only in foreword."""
+    image = image or JEUNECRACK_REL
+    credit = credit or JEUNECRACK_CREDIT
     if lang == "en":
         title = module["en"]
         summary = module["summary_en"]
@@ -855,7 +863,6 @@ def subject_tex(module, lang, image, credit):
     else:
         prereq = "The previous module of this piscine, or none if this is your first."
     return f"""\\documentclass{{training}}
-\\schoollogo{{{image}}}
 {langswitch}\\input{{../../resources/latex/fond.tex}}
 
 \\begin{{document}}
@@ -897,12 +904,17 @@ def exercise_chapter(lang, number, title):
     )
 
 
-def exercise_tex(number, title, files, body):
+def exercise_tex(number, title, files, body, lang="en"):
+    authorize = (
+        "Those named in the exercise"
+        if lang == "en"
+        else "Ceux nommés dans l'exercice"
+    )
     return (
         f"\\exnumber{{{number}}}\n"
         f"\\extitle{{{title}}}\n"
         f"\\exfiles{{{files}}}\n"
-        f"\\exauthorize{{Those named in the exercise}}\n"
+        f"\\exauthorize{{{authorize}}}\n"
         f"\\makeheaderfiles\n\n"
         f"{body}\n"
     )
@@ -915,9 +927,11 @@ def convert_identity(svg_name, dest):
     )
 
 
-def makefile(image_rel):
+def makefile(image_rel=None):
+    # Shared illustration + shared watermark; cover has neither as schoollogo.
+    _ = image_rel
     return f"""TARGETS = en.subject.pdf fr.subject.pdf
-DEPS = {image_rel} ../../resources/fond/norme_fond_paliers_30.png
+DEPS = {JEUNECRACK_REL} {FILI_FOND_REL}
 RELPATH = ../../resources/latex/
 include $(RELPATH)/Makefile.LaTeX
 """
@@ -927,8 +941,6 @@ def main():
     assignment = assign_svgs()
     mapping = load_maps()
     missing = set()
-    credits_path = POOL / "resources/intros/credits.json"
-    credits = json.loads(credits_path.read_text(encoding="utf-8")) if credits_path.exists() else {}
     (POOL / "svg-assignment.txt").write_text(
         "\n".join(
             f"{name}\t{assignment[name]}" for name in (m["dir"] for m in MODULES)
@@ -936,15 +948,12 @@ def main():
         + "\n",
         encoding="utf-8",
     )
+    image_rel = JEUNECRACK_REL
+    credit = JEUNECRACK_CREDIT
     for module in MODULES:
         subject = POOL / module["dir"] / "subject"
         for lang in ("en", "fr"):
             (subject / "exercises" / lang).mkdir(parents=True, exist_ok=True)
-        image_rel = f"../../resources/intros/{module['dir']}.jpg"
-        info = credits.get(module["dir"], {})
-        artist = info.get("artist") or "Wikimedia Commons"
-        license_name = info.get("license") or "free license"
-        credit = f"{artist}, {license_name}"
         (subject / "Makefile").write_text(makefile(image_rel), encoding="utf-8")
         inputs = {"en": [], "fr": []}
         for index, folder in enumerate(module["ex"]):
@@ -962,11 +971,23 @@ def main():
             turn_en = files_to_turn_in(md, number, "en")
             turn_fr = files_to_turn_in(fr_md, number, "fr")
             (subject / "exercises" / "en" / f"ex{number}.tex").write_text(
-                exercise_tex(number, render_inline(normalize(en_title)), latex_escape(turn_en), en_body),
+                exercise_tex(
+                    number,
+                    render_inline(normalize(en_title)),
+                    latex_escape(turn_en),
+                    en_body,
+                    lang="en",
+                ),
                 encoding="utf-8",
             )
             (subject / "exercises" / "fr" / f"ex{number}.tex").write_text(
-                exercise_tex(number, render_inline(normalize(fr_title)), latex_escape(turn_fr), fr_body),
+                exercise_tex(
+                    number,
+                    render_inline(normalize(fr_title)),
+                    latex_escape(turn_fr),
+                    fr_body,
+                    lang="fr",
+                ),
                 encoding="utf-8",
             )
             inputs["en"].append(exercise_chapter("en", number, en_title))

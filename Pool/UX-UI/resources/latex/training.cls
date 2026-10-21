@@ -169,8 +169,12 @@
 \def \maketitle {
   \begin{titlepage}
     \begin{center}
-      \includegraphics[height=6.6cm,width=0.62\textwidth,keepaspectratio]{\@schoollogo}
-      \vskip 5em
+      \ifx\@schoollogo\@empty
+        \vskip 2em
+      \else
+        \includegraphics[height=6.6cm,width=0.62\textwidth,keepaspectratio]{\@schoollogo}
+        \vskip 5em
+      \fi
       {\huge \@title}
       \vskip 2em
       {\LARGE \@subtitle}

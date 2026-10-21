@@ -1,4 +1,4 @@
 TARGETS = en.subject.pdf fr.subject.pdf
-DEPS = ../../resources/intros/PR-02-lets-fair-trade.jpg ../../resources/fond/PR-02-lets-fair-trade.png
+DEPS = ../../resources/jeunecrack.png ../../resources/fond/fili_fond_30.png
 RELPATH = ../../resources/latex/
 include $(RELPATH)/Makefile.LaTeX
