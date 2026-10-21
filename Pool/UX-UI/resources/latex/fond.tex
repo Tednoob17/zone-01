@@ -1,7 +1,9 @@
-% Filigrane PARTAGE : fili_fond_30.png (dérivé de fili.svg, dilution 30 % sur blanc).
-% Identique pour tous les modules. Illustration unique : jeunecrack.png (avant-propos seulement).
+% Filigrane PARTAGE : filia_fond_30.png (dérivé de filia.svg, dilution 30 % sur blanc).
+% Secours : fili_fond_30.png (fili.svg) conservé à côté, non branché.
+% Identique pour tous les modules.
+% Logo couverture : jeunecrack.png via \\schoollogo (tous les modules).
+% Avant-propos : image thématique du module (resources/intros/<module>.jpg).
 % Cadre noir vectoriel : proportions 744 px (marge 20/744, trait 1/744), exterieur BLANC.
-% Pas d'illustration sur la page de titre ; le filigrane reste le fond de page.
 \usepackage{eso-pic}
 
 \newlength{\uxmargin}
@@ -29,7 +31,7 @@
   \AtPageLowerLeft{%
     \put(0,0){\color{white}\rule{\paperwidth}{\paperheight}}%
     \put(\LenToUnit{\dimexpr\uxmargin+\uxthick\relax},\LenToUnit{\dimexpr\uxmargin+\uxthick\relax}){%
-      \includegraphics[width=\uxinnerw,height=\uxinnerh]{../../resources/fond/fili_fond_30.png}}%
+      \includegraphics[width=\uxinnerw,height=\uxinnerh]{../../resources/fond/filia_fond_30.png}}%
     \put(\LenToUnit{\uxmargin},\LenToUnit{\uxmargin}){%
       \color{black}\rule{\dimexpr\paperwidth-2\uxmargin\relax}{\uxthick}}%
     \put(\LenToUnit{\uxmargin},\LenToUnit{\dimexpr\paperheight-\uxmargin-\uxthick\relax}){%

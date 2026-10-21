@@ -20,3 +20,6 @@ __pycache__/
 *.pyc
 
 Pool/UX-UI/resources/fond/_chunk_*.json
+
+# Local PDF visual-check artefacts (venv, pip caches, PNG snapshots)
+Pool/UX-UI/resources/_visual_check/

@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Build the UX/UI piscine as 42-style bilingual LaTeX modules.
 
-The page watermark is the shared norme_fond_paliers_30.png, drawn inside
-the vector frame from fond.tex. Each module gets one free thematic photo
-as the cover logo and as the foreword figure. Fonts stay those of training.cls.
+The page watermark is the shared filia_fond_30.png (from filia.svg), drawn
+inside the vector frame from fond.tex. fili_fond_30.png is kept as fallback.
+Cover logo is always jeunecrack.png (\\schoollogo).
+Each module gets one free thematic photo in the foreword only.
+Fonts stay those of training.cls.
 """
 
 import json
@@ -807,7 +809,7 @@ The order is the order of the quest. Skipping a step because a later screen look
 
 \subsection*{About the pictures}
 
-The mark on the cover is the picture of this module. The pale steps behind the text are the page ground. Neither one is a hint.
+The mark on the cover is the project logo. The picture in the foreword is the illustration of this module. The pale ground behind the text is the page watermark. None of them is a hint.
 
 \subsection*{About machines that write}
 
@@ -826,7 +828,7 @@ L'ordre est celui de la quête. Sauter une étape parce qu'un écran plus tard s
 
 \subsection*{Des images}
 
-La marque en couverture est l'image de ce module. Les paliers pâles derrière le texte sont le fond de page. Ni l'un ni l'autre n'est un indice.
+La marque en couverture est le logo du projet. L'image de l'avant-propos est l'illustration de ce module. Le fond pâle derrière le texte est le filigrane de page. Aucun n'est un indice.
 
 \subsection*{Des machines qui écrivent}
 
@@ -835,28 +837,49 @@ Vous pouvez vous servir d'un outil pour vérifier un mot, comme d'un dictionnair
 
 
 JEUNECRACK_REL = "../../resources/jeunecrack.png"
-FILI_FOND_REL = "../../resources/fond/fili_fond_30.png"
-JEUNECRACK_CREDIT = "JeuneCrack"
+FILI_FOND_REL = "../../resources/fond/filia_fond_30.png"
+INTROS_DIR = POOL / "resources" / "intros"
+CREDITS_PATH = INTROS_DIR / "credits.json"
+
+
+def load_intro_credits():
+    return json.loads(CREDITS_PATH.read_text(encoding="utf-8"))
+
+
+def intro_rel(module_dir):
+    return f"../../resources/intros/{module_dir}.jpg"
+
+
+def intro_credit(module_dir, credits, lang):
+    meta = credits[module_dir]
+    artist = meta.get("artist", "").strip()
+    license_ = meta.get("license", "").strip()
+    parts = [p for p in (artist, license_) if p]
+    label = " / ".join(parts) if parts else module_dir
+    if lang == "en":
+        return f"Picture: {label}"
+    return f"Image : {label}"
 
 
 def subject_tex(module, lang, image=None, credit=None):
-    """Cover has no illustration (empty schoollogo). Image only in foreword."""
-    image = image or JEUNECRACK_REL
-    credit = credit or JEUNECRACK_CREDIT
+    """Cover logo = JeuneCrack via \\schoollogo. Thematic image in foreword only."""
+    image = image or intro_rel(module["dir"])
+    if credit is None:
+        credit = intro_credit(module["dir"], load_intro_credits(), lang)
     if lang == "en":
         title = module["en"]
         summary = module["summary_en"]
         culture = module["culture_en"]
         fore = "Foreword"
         langswitch = ""
-        caption = f"Picture: {credit}"
+        caption = credit if credit.startswith("Picture:") else f"Picture: {credit}"
     else:
         title = module["fr"]
         summary = module["summary_fr"]
         culture = module["culture_fr"]
         fore = "Avant-propos"
         langswitch = "\\setlang{french}\n"
-        caption = f"Image : {credit}"
+        caption = credit if credit.startswith("Image :") else f"Image : {credit}"
     code = module["dir"].split("-")[0]
     if lang == "fr":
         prereq = "Le module précédent de cette piscine, ou aucun si c'est le premier."
@@ -867,6 +890,7 @@ def subject_tex(module, lang, image=None, credit=None):
 
 \\begin{{document}}
 
+\\schoollogo{{{JEUNECRACK_REL}}}
 \\title{{{latex_escape(title)}}}
 \\subtitle{{Piscine UX/UI --- {code}}}
 \\member{{Piscine UX/UI}}{{https://github.com/01-edu/UX-UI}}
@@ -927,11 +951,10 @@ def convert_identity(svg_name, dest):
     )
 
 
-def makefile(image_rel=None):
-    # Shared illustration + shared watermark; cover has neither as schoollogo.
-    _ = image_rel
+def makefile(image_rel):
+    # Cover logo (JeuneCrack) + thematic foreword image + shared watermark.
     return f"""TARGETS = en.subject.pdf fr.subject.pdf
-DEPS = {JEUNECRACK_REL} {FILI_FOND_REL}
+DEPS = {JEUNECRACK_REL} {image_rel} {FILI_FOND_REL}
 RELPATH = ../../resources/latex/
 include $(RELPATH)/Makefile.LaTeX
 """
@@ -940,6 +963,7 @@ include $(RELPATH)/Makefile.LaTeX
 def main():
     assignment = assign_svgs()
     mapping = load_maps()
+    credits = load_intro_credits()
     missing = set()
     (POOL / "svg-assignment.txt").write_text(
         "\n".join(
@@ -948,10 +972,15 @@ def main():
         + "\n",
         encoding="utf-8",
     )
-    image_rel = JEUNECRACK_REL
-    credit = JEUNECRACK_CREDIT
     for module in MODULES:
-        subject = POOL / module["dir"] / "subject"
+        name = module["dir"]
+        if name not in credits:
+            raise SystemExit(f"missing intro credit for {name}")
+        intro_path = INTROS_DIR / f"{name}.jpg"
+        if not intro_path.is_file():
+            raise SystemExit(f"missing intro image {intro_path}")
+        image_rel = intro_rel(name)
+        subject = POOL / name / "subject"
         for lang in ("en", "fr"):
             (subject / "exercises" / lang).mkdir(parents=True, exist_ok=True)
         (subject / "Makefile").write_text(makefile(image_rel), encoding="utf-8")
@@ -993,7 +1022,12 @@ def main():
             inputs["en"].append(exercise_chapter("en", number, en_title))
             inputs["fr"].append(exercise_chapter("fr", number, fr_title))
         for lang in ("en", "fr"):
-            tex = subject_tex(module, lang, image_rel, credit) + "".join(inputs[lang]) + "\\end{document}\n"
+            credit = intro_credit(name, credits, lang)
+            tex = (
+                subject_tex(module, lang, image_rel, credit)
+                + "".join(inputs[lang])
+                + "\\end{document}\n"
+            )
             (subject / f"{lang}.subject.tex").write_text(tex, encoding="utf-8")
     missing_path = POOL / "resources/fond/fr_untranslated.txt"
     missing_path.write_text("\n".join(sorted(missing)) + ("\n" if missing else ""), encoding="utf-8")

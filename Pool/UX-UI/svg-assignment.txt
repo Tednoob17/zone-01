@@ -1,11 +1,16 @@
-# Filigrane de page PARTAGE pour tous les modules UX-UI
-#   Source : /fili.svg (racine du repo)
-#   PNG    : Pool/UX-UI/resources/fond/fili_fond_30.png (A4 2480×3508, dilution 30 %)
-#
-# Illustration UNIQUE (avant-propos seulement, jamais sur la couverture) :
-#   Pool/UX-UI/resources/jeunecrack.png
-#   (copie de experimentalpool/resources/jeunecrack.png)
-#
-# Couverture / maketitle : pas de \schoollogo, pas d'image Haikei.
-# Les PNG Haikei dans resources/fond/<module>.png et intros/*.jpg ne sont
-# plus utilisés comme logo de couverture ni comme filigrane.
+UX-00-athlete-keep-hydrated	stacked-steps-haikei(7).svg
+UX-01-going-on-holidays	stacked-steps-haikei(1).svg
+UX-02-lets-fight-harassment	stacked-steps-haikei(5).svg
+UX-03-the-olympics	stacked-steps-haikei(6).svg
+UX-04-music-on	stacked-steps-haikei(6).svg
+UX-05-sunday-night-movie	stacked-steps-haikei(2).svg
+UX-06-seamstress	stacked-steps-haikei(4).svg
+UI-00-colors-and-moodboard	stacked-steps-haikei.svg
+UI-01-atomic-design	stacked-steps-haikei(1).svg
+UI-02-rules	stacked-steps-haikei(2).svg
+UI-03-building-an-interface	stacked-steps-haikei(5).svg
+UI-04-heuristics	stacked-steps-haikei(7).svg
+PR-00-get-a-room	stacked-steps-haikei(4).svg
+PR-01-lets-do-some-sports	stacked-steps-haikei(3).svg
+PR-02-lets-fair-trade	stacked-steps-haikei.svg
+PR-03-a-table	stacked-steps-haikei(3).svg
